@@ -24,7 +24,8 @@ namespace crmSeries.Api
         {
             SimpleInjectorConfig.ConfigureServices(services, _configuration);
             CorsConfig.ConfigureServices(services);
-            // DatabaseConfig.ConfigureServices(services, _configuration);
+            AuthConfig.ConfigureServices(services);
+            DatabaseConfig.ConfigureServices(services, _configuration);
             MvcConfig.ConfigureServices(services);
             SwaggerConfig.ConfigureServices(services);
         }
@@ -33,7 +34,6 @@ namespace crmSeries.Api
         {
             AutoMapperConfig.Configure();
             SimpleInjectorConfig.Configure(app);
-            // DatabaseConfig.Configure(app);
             RewriteConfig.Configure(app, env);
             CorsConfig.Configure(app, _configuration, env);
             MvcConfig.Configure(app, env);

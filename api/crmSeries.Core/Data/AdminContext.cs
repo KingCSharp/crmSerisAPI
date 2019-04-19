@@ -5,14 +5,10 @@ namespace crmSeries.Core.Data
 {
     public class AdminContext : DbContext
     {
-        public AdminContext()
+        public AdminContext(DbContextOptions options)
+            : base(options)
         {
         }
-
-        //public AdminContext(DbContextOptions<AdminContext> options)
-        //    : base(options)
-        //{
-        //}
 
         public virtual DbSet<AddressLookupValue> AddressLookupValue { get; set; }
         public virtual DbSet<AppData> AppData { get; set; }
@@ -35,7 +31,7 @@ namespace crmSeries.Core.Data
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=crmseriesbeta.database.windows.net;user=beta;password=KNHdQ7CJQM;database=AdminBeta;");
+                //optionsBuilder.UseSqlServer("Server=crmseriesbeta.database.windows.net;user=beta;password=KNHdQ7CJQM;database=AdminBeta;");
             }
         }
 

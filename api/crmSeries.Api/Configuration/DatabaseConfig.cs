@@ -2,8 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using SimpleInjector;
-using crmSeries.Core.Configuration;
 using crmSeries.Core.Data;
 
 namespace crmSeries.Api.Configuration
@@ -12,17 +10,17 @@ namespace crmSeries.Api.Configuration
     {
         public static void ConfigureServices(IServiceCollection services, IConfiguration config)
         {
-            //services.AddDbContext<DataContext>(options => DatabaseCoreConfig.ConfigureBuilder(options, config));
-            //services.AddScoped<DbContext>(provider => provider.GetService<DataContext>());
+            services.AddDbContext<AdminContext>(options => 
+                options.UseSqlServer(config.GetConnectionString("AdminContext")));
         }
 
         public static void Configure(IApplicationBuilder app)
         {
-        //    using (var scope = app.ApplicationServices.CreateScope())
-        //    {
-        //        var context = scope.ServiceProvider.GetService<DataContext>();
-        //        var container = scope.ServiceProvider.GetService<Container>();
-        //    }
+            //    using (var scope = app.ApplicationServices.CreateScope())
+            //    {
+            //        var context = scope.ServiceProvider.GetService<DataContext>();
+            //        var container = scope.ServiceProvider.GetService<Container>();
+            //    }
         }
     }
 }

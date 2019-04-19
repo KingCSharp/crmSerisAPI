@@ -10,6 +10,9 @@ using System;
 using crmSeries.Api.Controllers;
 using crmSeries.Core.Configuration;
 using crmSeries.Core.Mediator;
+using crmSeries.Core.Security;
+using crmSeries.Core.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace crmSeries.Api.Configuration
 {
@@ -24,6 +27,17 @@ namespace crmSeries.Api.Configuration
             _container.Options.DefaultScopedLifestyle = new AsyncScopedLifestyle();
 
             _container.ConfigureCore(config);
+
+            _container.Register<HttpIdentityContext>(Lifestyle.Scoped);
+            _container.Register<IIdentityContext>(() =>
+            {
+                if (_container.IsVerifying)
+                {
+                    return new NullIdentityContext();
+                }
+                return new DeferredHttpIdentityContext(
+                    new Lazy<HttpIdentityContext>(_container.GetInstance<HttpIdentityContext>));
+            });
 
             _container.RegisterInitializer<BaseApiController>(controller =>
             {

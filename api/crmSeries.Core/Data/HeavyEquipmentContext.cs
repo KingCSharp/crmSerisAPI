@@ -5,14 +5,10 @@ namespace crmSeries.Core.Data
 {
     public class HeavyEquipmentContext : DbContext
     {
-        public HeavyEquipmentContext()
+        public HeavyEquipmentContext(DbContextOptions options)
+            : base(options)
         {
         }
-
-        //public HeavyEquipmentContext(DbContextOptions<HeavyEquipmentContext> options)
-        //    : base(options)
-        //{
-        //}
 
         public virtual DbSet<Activity> Activity { get; set; }
         public virtual DbSet<Branch> Branch { get; set; }
@@ -242,11 +238,11 @@ namespace crmSeries.Core.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (!optionsBuilder.IsConfigured)
-            {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Data Source=crmseriesbeta.database.windows.net;Initial Catalog=HeavyEquipmentBeta;User ID=beta;Password=KNHdQ7CJQM;Connect Timeout=30;Encrypt=True;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
-            }
+//            if (!optionsBuilder.IsConfigured)
+//            {
+//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+//                optionsBuilder.UseSqlServer(DefaultConnectionString);
+//            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

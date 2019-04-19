@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using crmSeries.Api.Filters;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
@@ -23,6 +24,7 @@ namespace crmSeries.Api.Configuration
                     }
                 });
 
+                options.OperationFilter<APIKeyHeaderFilter>();
                 options.OperationFilter<HideRouteParams>();
                 options.DescribeAllEnumsAsStrings();
             });

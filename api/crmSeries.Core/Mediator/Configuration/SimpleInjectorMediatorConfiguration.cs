@@ -48,8 +48,8 @@ namespace crmSeries.Core.Mediator.Configuration
 
             container.RegisterDecorator(typeof(IRequestHandler<>), typeof(AdminTransactionHandler<>), IsAdminContext);
             container.RegisterDecorator(typeof(IRequestHandler<,>), typeof(AdminTransactionHandler<,>), IsAdminContext);
-            container.RegisterDecorator(typeof(IRequestHandler<>), typeof(HeavyEquipmentTransactionHandler<>), IsHeavyEquipmentContext);
-            container.RegisterDecorator(typeof(IRequestHandler<,>), typeof(HeavyEquipmentTransactionHandler<,>), IsHeavyEquipmentContext);
+            //container.RegisterDecorator(typeof(IRequestHandler<>), typeof(HeavyEquipmentTransactionHandler<>), IsHeavyEquipmentContext);
+            //container.RegisterDecorator(typeof(IRequestHandler<,>), typeof(HeavyEquipmentTransactionHandler<,>), IsHeavyEquipmentContext);
         }
     }
 }

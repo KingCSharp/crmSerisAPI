@@ -8,6 +8,8 @@ using System.Reflection;
 using crmSeries.Core.Data;
 using crmSeries.Core.Mediator.BackgroundJobs;
 using crmSeries.Core.Mediator.Configuration;
+using crmSeries.Core.Security;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace crmSeries.Core.Configuration
 {
@@ -61,25 +63,25 @@ namespace crmSeries.Core.Configuration
 
         private static void ConfigureDatabase(Container container, IConfiguration config)
         {
-            container.Register<AdminContext>(Lifestyle.Scoped);
-            container.Register<HeavyEquipmentContext>(Lifestyle.Scoped);
+            //container.Register<HeavyEquipmentContext>(Lifestyle.Scoped);
+            container.Register(() => new HeavyEquipmentContext(
+                new DbContextOptionsBuilder()
+                    .UseSqlServer(GetConnectionString(container))
+                    .Options
+            ), Lifestyle.Scoped);
 
-            //container.Register(() =>
-            //{
-            //    var options = new DbContextOptionsBuilder();
-            //    DatabaseCoreConfig.ConfigureBuilder(options, config);
-            //    return options.Options;
-            //});
+            container.Register(() => new AdminContext(
+                new DbContextOptionsBuilder()
+                .UseSqlServer(config.GetConnectionString("AdminContext"))
+                    .Options
+            ), Lifestyle.Scoped);
+        }
 
-            //container.Register(() => new DataContext(
-            //    container.GetInstance<DbContextOptions>()
-            //), Lifestyle.Scoped);
+        private static string GetConnectionString(Container container)
+        {
+            var identityContext = container.GetService<IIdentityContext>();
 
-            //container.Register<IDataContext>(() => new DataContext(
-            //    container.GetInstance<DbContextOptions>()
-            //), Lifestyle.Scoped);
-
-            //container.Register<DbContext>(container.GetInstance<DataContext>, Lifestyle.Scoped);
+            return identityContext.RequestingUser.DatabaseConnectionString;
         }
 
         private static void ConfigureMediator(Container container, Assembly[] configAssemblies)

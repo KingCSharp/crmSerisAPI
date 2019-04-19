@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using crmSeries.Core.Exceptions;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using System.Security;
 
 namespace crmSeries.API.Filters
 {
@@ -26,8 +26,4 @@ namespace crmSeries.API.Filters
 			context.Exception = null;
 		}
 	}
-
-    public class AuthorizationFailedException : SecurityException
-    {
-    }
 }
