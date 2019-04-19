@@ -15,7 +15,7 @@ namespace crmSeries.API.Controllers
         // POST: api/leads
         [HttpPost]
         [Produces(typeof(AddResponse))]
-        public Task<IActionResult> Post(AddLeadRequest addLeadRequest)
+        public Task<IActionResult> Post([FromBody]AddLeadRequest addLeadRequest)
         {
             return HandleAsync(addLeadRequest);
 
