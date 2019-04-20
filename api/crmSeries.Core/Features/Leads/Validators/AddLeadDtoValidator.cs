@@ -48,6 +48,66 @@ namespace crmSeries.Core.Features.Leads.Validators
                 .SetValidator(new PhoneNumberValidator())
                 .Unless(x => string.IsNullOrEmpty(x.CompanyPhone))
                 .WithMessage(ErrorMessages.Leads.CompanyPhoneInvalid);
+
+            RuleFor(x => x.CompanyName)
+                .MaximumLength(100);
+
+            RuleFor(x => x.FirstName)
+                .MaximumLength(50);
+
+            RuleFor(x => x.LastName)
+                .MaximumLength(50);
+
+            RuleFor(x => x.Phone)
+                .MaximumLength(20);
+
+            RuleFor(x => x.Email)
+                .MaximumLength(100);
+
+            RuleFor(x => x.Description)
+                .MaximumLength(250);
+
+            RuleFor(x => x.Address1)
+                .MaximumLength(100);
+
+            RuleFor(x => x.City)
+                .MaximumLength(50);
+
+            RuleFor(x => x.State)
+                .MaximumLength(50);
+
+            RuleFor(x => x.Zip)
+                .MaximumLength(10);
+
+            RuleFor(x => x.County)
+                .MaximumLength(50);
+
+            RuleFor(x => x.Country)
+                .MaximumLength(25);
+
+            RuleFor(x => x.Cell)
+                .MaximumLength(20);
+
+            RuleFor(x => x.Address2)
+                .MaximumLength(100);
+
+            RuleFor(x => x.CompanyPhone)
+                .MaximumLength(100);
+
+            RuleFor(x => x.Web)
+                .MaximumLength(200);
+
+            RuleFor(x => x.Fax)
+                .MaximumLength(50);
+
+            RuleFor(x => x.Title)
+                .MaximumLength(10);
+
+            RuleFor(x => x.Position)
+                .MaximumLength(100);
+
+            RuleFor(x => x.Department)
+                .MaximumLength(100);
         }
     }
 }
