@@ -4,7 +4,7 @@ using System.Text;
 
 namespace crmSeries.Core.Mediator
 {
-    public class AddResponse : Response
+    public class AddResponse
     {
         public int Id { get; set; }
     }
