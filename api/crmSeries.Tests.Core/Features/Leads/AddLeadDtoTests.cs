@@ -14,6 +14,7 @@ namespace crmSeries.Tests.Core.Features.Leads
         [TestCase("John", "John", null)]
         [TestCase("John ", "John", null)]
         [TestCase("John   ", "John", null)]
+        [TestCase(null, null, null)]
         public void NameProperties_MapsProperly(string fullname, string firstname, string lastname)
         {
             // Arrange

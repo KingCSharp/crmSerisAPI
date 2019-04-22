@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using crmSeries.Core.Exceptions;
+using crmSeries.Core.Mediator;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
@@ -17,13 +19,23 @@ namespace crmSeries.API.Filters
 
         private void HandleException(ExceptionContext context, Exception exception)
         {
+            var response = new Response
+            {
+                Errors = new List<Error>
+                {
+                    new Error
+                    {
+                        ErrorMessage = exception.Message ?? "Unauthorized."
+                    }
+                }
+            };
+
             if (exception is AuthorizationFailedException)
             {
                 context.Result = new ObjectResult(new
                 {
-                    code = 403,
-                    hasErrors = true,
-                    message = exception.Message ?? "Unauthorized."
+                    errors = response.Errors,
+                    hasErrors = response.HasErrors
                 })
                 {
                     StatusCode = 403
@@ -33,10 +45,8 @@ namespace crmSeries.API.Filters
             {
                 context.Result = new ObjectResult(new
                 {
-                    code = 500,
-                    hasErrors = true,
-                    message = "A server error occurred.",
-                    detailedMessage = exception.Message
+                    errors = response.Errors,
+                    hasErrors = response.HasErrors
                 })
                 {
                     StatusCode = 500

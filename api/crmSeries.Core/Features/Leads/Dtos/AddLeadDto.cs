@@ -27,12 +27,14 @@ namespace crmSeries.Core.Features.Leads.Dtos
         public string Position { get; set; }
         public string Department { get; set; }
 
-        public string FirstName => Name.Split(' ')[0];
+        public string FirstName => Name?.Split(' ')[0];
 
         public string LastName
         {
             get
             {
+                if (Name == null) return null;
+
                 var @strings = Regex.Replace(Name, @"\s+", " ")
                     .Split(' ');
 
