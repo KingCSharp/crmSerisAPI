@@ -3,6 +3,7 @@ using AutoMapper;
 using crmSeries.Core.Data;
 using crmSeries.Core.Domain.HeavyEquipment;
 using crmSeries.Core.Dtos;
+using crmSeries.Core.Features.Leads.Dtos;
 using crmSeries.Core.Features.Leads.Validators;
 using crmSeries.Core.Mediator;
 using crmSeries.Core.Mediator.Decorators;

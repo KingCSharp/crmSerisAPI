@@ -1,4 +1,5 @@
 ﻿using crmSeries.Core.Dtos;
+using crmSeries.Core.Features.Leads.Dtos;
 using crmSeries.Core.Validation;
 using FluentValidation;
 
@@ -8,25 +9,16 @@ namespace crmSeries.Core.Features.Leads.Validators
     {
         public AddLeadDtoValidator()
         {
-            CascadeMode = CascadeMode.StopOnFirstFailure;
+            RuleFor(x => x)
+                .Must(IncludePhoneNumberOrEmail)
+                .WithMessage(ErrorMessages.Leads.PhoneOrEmailRequired);
 
-            RuleFor(x => x.CompanyName)
-                .NotEmpty();
-
-            RuleFor(x => x.FirstName)
-                .NotEmpty();
-
-            RuleFor(x => x.LastName)
-                .NotEmpty();
-
-            RuleFor(x => x.Email)
-                .NotEmpty();
-
-            RuleFor(x => x.Phone)
+            RuleFor(x => x.Name)
                 .NotEmpty();
 
             RuleFor(x => x.Email)
                 .EmailAddress()
+                .Unless(x => string.IsNullOrEmpty(x.Email))
                 .WithMessage(ErrorMessages.Leads.EmailAddressInvalid);
 
             RuleFor(x => x.Phone)
@@ -52,11 +44,8 @@ namespace crmSeries.Core.Features.Leads.Validators
             RuleFor(x => x.CompanyName)
                 .MaximumLength(100);
 
-            RuleFor(x => x.FirstName)
-                .MaximumLength(50);
-
-            RuleFor(x => x.LastName)
-                .MaximumLength(50);
+            RuleFor(x => x.Name)
+                .MaximumLength(100);
 
             RuleFor(x => x.Phone)
                 .MaximumLength(20);
@@ -108,6 +97,14 @@ namespace crmSeries.Core.Features.Leads.Validators
 
             RuleFor(x => x.Department)
                 .MaximumLength(100);
+        }
+
+        private bool IncludePhoneNumberOrEmail(AddLeadDto dto)
+        {
+            var result = !string.IsNullOrEmpty(dto.Phone) ||
+                   !string.IsNullOrEmpty(dto.Email);
+
+            return result;
         }
     }
 }

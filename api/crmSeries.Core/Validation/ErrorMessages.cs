@@ -162,20 +162,6 @@ namespace crmSeries.Core.Validation
             }
         }
 
-        public static class Groups
-        {
-            public const string IdIsRequired = "A group ID is required.";
-            public const string NameRequired = "A group name is required.";
-            public const string NotFound = "Group not found.";
-        }
-
-        public static class Notifications
-        {
-            public const string GroupsRequired = "At least one group must be selected.";
-            public const string TitleRequired = "A notification title is required.";
-
-        }
-
         public static class Leads
         {
             public const string EmailAddressInvalid = "The Email field is invalid.";
@@ -183,6 +169,7 @@ namespace crmSeries.Core.Validation
             public const string CellInvalid = "The Cell field is invalid.";
             public const string FaxInvalid = "The Fax field is invalid.";
             public const string CompanyPhoneInvalid = "The Company Phone field is invalid.";
+            public const string PhoneOrEmailRequired = "You must submit either phone number or E-Mail.";
         }
 
         public static class API

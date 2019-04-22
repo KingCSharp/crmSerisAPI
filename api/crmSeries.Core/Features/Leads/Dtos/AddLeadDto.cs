@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
+﻿using System.Linq;
+using System.Text.RegularExpressions;
+using Microsoft.EntityFrameworkCore.Internal;
 
-namespace crmSeries.Core.Dtos
+namespace crmSeries.Core.Features.Leads.Dtos
 {
     public class AddLeadDto
     {
         public string CompanyName { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
+        public string Name { get; set; }
         public string Phone { get; set; }
         public string Email { get; set; }
         public string Description { get; set; }
@@ -28,5 +26,28 @@ namespace crmSeries.Core.Dtos
         public string Title { get; set; }
         public string Position { get; set; }
         public string Department { get; set; }
+
+        public string FirstName => Name.Split(' ')[0];
+
+        public string LastName
+        {
+            get
+            {
+                var @strings = Regex.Replace(Name, @"\s+", " ")
+                    .Split(' ');
+
+                if (@strings.Length >= 2)
+                {
+                    var lastName = string.Join(" ", @strings.Skip(1)
+                        .Select(x => x.Trim()));
+
+                    if (string.IsNullOrWhiteSpace(lastName))
+                        return null;
+
+                    return lastName;
+                }
+                return null;
+            }
+        }
     }
 }
