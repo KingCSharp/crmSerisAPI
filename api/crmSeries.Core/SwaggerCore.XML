@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>crmSeries.Core</name>
+    </assembly>
+    <members>
+        <member name="T:crmSeries.Core.Features.Leads.Dtos.AddLeadDto">
+            <summary>
+            The DTO object representing the data to add a lead.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Leads.Dtos.AddLeadDto.CompanyName">
+            <summary>
+            The company name of the contact for this lead.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Leads.Dtos.AddLeadDto.Name">
+            <summary>
+            The leads name.  Required field.  Maximum length: 100 
+            <remarks>
+            The API will convert this to firstName and lastName in the database if possible.
+            If only one name is given, it will populate the firstName column of your database only.
+            </remarks>
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Leads.Dtos.AddLeadDto.Phone">
+             <summary>
+             The lead's phone number.  Maximum length: 20
+             <remarks>
+             Must be a valid US phone number or start with a ‘+’ and a country code for international
+             numbers. 
+            
+             Required if a valid email is NOT submitted within the request body.
+             </remarks>
+             </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Leads.Dtos.AddLeadDto.Email">
+             <summary>
+             The lead's E-Mail.  Maximum length: 100
+             <remarks>
+             Must be a valid E-Mail address.
+            
+             Required if a valid phone is NOT submitted within the request body.
+             </remarks>
+             </summary>
+        </member>
+    </members>
+</doc>

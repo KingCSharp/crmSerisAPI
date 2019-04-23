@@ -14,7 +14,8 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile></DocumentationFile>
+    <DocumentationFile>Swagger.XML</DocumentationFile>
+    <OutputPath></OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
@@ -44,6 +45,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\crmSeries.Core\crmSeries.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Swagger.XML">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

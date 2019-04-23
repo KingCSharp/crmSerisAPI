@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>crmSeries.API</name>
+    </assembly>
+    <members>
+        <member name="M:crmSeries.API.Controllers.LeadsController.Post(crmSeries.Core.Features.Leads.AddLeadRequest)">
+            <summary>
+            Adds a Lead to the system.
+            </summary>
+            <param name="addLeadRequest">The AddLeadRequest object.</param>
+            <remarks>Along with name, this API requires that either phone number or E-Mail be passed into the
+            request.</remarks>
+        </member>
+    </members>
+</doc>

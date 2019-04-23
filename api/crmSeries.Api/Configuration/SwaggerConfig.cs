@@ -1,9 +1,12 @@
-﻿using crmSeries.Api.Filters;
+﻿using System;
+using System.Reflection;
+using crmSeries.Api.Filters;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
 using crmSeries.API.Filters;
+using crmSeries.Core.Features.Leads;
 using Swashbuckle.AspNetCore.SwaggerUI;
 
 namespace crmSeries.Api.Configuration
@@ -24,6 +27,12 @@ namespace crmSeries.Api.Configuration
                     }
                 });
 
+                options.IncludeXmlComments(
+                    $@"{System.AppDomain.CurrentDomain.BaseDirectory}\Swagger.XML");
+
+                options.IncludeXmlComments(
+                    $@"{System.AppDomain.CurrentDomain.BaseDirectory}\SwaggerCore.XML");
+                
                 options.OperationFilter<APIKeyHeaderFilter>();
                 options.OperationFilter<HideRouteParams>();
                 options.DescribeAllEnumsAsStrings();
@@ -39,7 +48,6 @@ namespace crmSeries.Api.Configuration
                 options.RoutePrefix = "docs";
                 options.DocExpansion(DocExpansion.None);
                 options.SwaggerEndpoint("/swagger/v1/swagger.json", "crmSeries API v1");
-
             });
         }
     }

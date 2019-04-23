@@ -5,6 +5,11 @@
     <LangVersion>7.2</LangVersion>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>SwaggerCore.XML</DocumentationFile>
+    <OutputPath></OutputPath>
+  </PropertyGroup>
+
   <ItemGroup>
     <Compile Remove="Decorators\**" />
     <EmbeddedResource Remove="Decorators\**" />
@@ -31,5 +36,11 @@
     <PackageReference Include="System.ServiceModel.Primitives" Version="4.5.3" />
     <PackageReference Include="System.ServiceModel.Security" Version="4.5.3" />
     <PackageReference Include="AutoMapper" Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="SwaggerCore.XML">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>
