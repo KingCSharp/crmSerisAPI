@@ -11,12 +11,12 @@
         </member>
         <member name="P:crmSeries.Core.Features.Leads.Dtos.AddLeadDto.CompanyName">
             <summary>
-            The company name of the contact for this lead.
+            The company name of the contact for this lead.  Maximum length: 100 
             </summary>
         </member>
         <member name="P:crmSeries.Core.Features.Leads.Dtos.AddLeadDto.Name">
             <summary>
-            The leads name.  Required field.  Maximum length: 100 
+            The leads name.  Required field.  Maximum length: 100
             <remarks>
             The API will convert this to firstName and lastName in the database if possible.
             If only one name is given, it will populate the firstName column of your database only.
@@ -43,6 +43,111 @@
              Required if a valid phone is NOT submitted within the request body.
              </remarks>
              </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Leads.Dtos.AddLeadDto.Description">
+            <summary>
+            The description of the lead.  Maximum length: 250
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Leads.Dtos.AddLeadDto.Address1">
+            <summary>
+            The street address for the company of the contact for the lead.  Maximum length: 100
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Leads.Dtos.AddLeadDto.Address2">
+            <summary>
+            The extra address information for the company of the contact for the lead.  Maximum length: 100
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Leads.Dtos.AddLeadDto.City">
+            <summary>
+            The city for the company of the contact for the lead.  Maximum length: 50
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Leads.Dtos.AddLeadDto.State">
+            <summary>
+            The state for the company of the contact for the lead.  Maximum length: 50
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Leads.Dtos.AddLeadDto.Zip">
+            <summary>
+            The zip code for the company of the contact for this lead.  Maximum length: 10
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Leads.Dtos.AddLeadDto.County">
+            <summary>
+            The county/parish for the company of the contact for this lead.  Maximum length: 50
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Leads.Dtos.AddLeadDto.Country">
+            <summary>
+            The country for the company of the contact for this lead.  Maximum length: 25
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Leads.Dtos.AddLeadDto.Cell">
+            <summary>
+            The cell phone number of the contact for this lead.  Maximum length: 20
+            <remarks>
+            Must be a valid US phone number or start with a ‘+’ and a country code for international
+            numbers. 
+            </remarks>
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Leads.Dtos.AddLeadDto.Comments">
+            <summary>
+            Comments submitted by the contact for this lead.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Leads.Dtos.AddLeadDto.CompanyPhone">
+            <summary>
+            The phone number for the company of the contact for this lead.  Maximum length: 100
+            <remarks>
+            Must be a valid US phone number or start with a ‘+’ and a country code for international
+            numbers. 
+            </remarks>
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Leads.Dtos.AddLeadDto.Web">
+            <summary>
+            The web site URL for the company of the contact for this lead.  Maximum length: 200
+            <remarks>
+            Must be a valid, well-formed URI string.
+            </remarks>
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Leads.Dtos.AddLeadDto.Fax">
+            <summary>
+            The fax number for the company of the contact for this lead.  Maximum length: 50
+            <remarks>
+            Must be a valid US phone number or start with a ‘+’ and a country code for international
+            numbers. 
+            </remarks>
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Leads.Dtos.AddLeadDto.Title">
+            <summary>
+            The title of the contact for this lead (e.g., Mr., Mrs., Dr., etc.)  Maximum length: 10
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Leads.Dtos.AddLeadDto.Position">
+            <summary>
+            The name of the position in the company of the contact for this lead.  Maximum length: 100
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Leads.Dtos.AddLeadDto.Department">
+            <summary>
+            The department of the company that the contact for this lead works in.  Maximum length: 100
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Leads.Dtos.AddLeadDto.FirstName">
+            <summary>
+            The first name of the contact for this lead.  Maximum length: 50
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Leads.Dtos.AddLeadDto.LastName">
+            <summary>
+            The last name of the contact for this lead.  Maximum length: 50
+            </summary>
         </member>
     </members>
 </doc>
