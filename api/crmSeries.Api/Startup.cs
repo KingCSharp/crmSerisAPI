@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using crmSeries.API.Configuration;
 using crmSeries.Core.Configuration;
 using crmSeries.Api.Configuration;
+using Exceptionless;
 
 namespace crmSeries.Api
 {
@@ -39,6 +40,7 @@ namespace crmSeries.Api
             MvcConfig.Configure(app, env);
             SwaggerConfig.Configure(app, env);
             FluentValidationConfig.Configure();
+            app.UseExceptionless(_configuration["Common:Exceptionless:Key"]);
         }
     }
 }

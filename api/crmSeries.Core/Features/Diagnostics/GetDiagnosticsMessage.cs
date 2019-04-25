@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using crmSeries.Core.Data;
 using crmSeries.Core.Mediator;
+using crmSeries.Core.Mediator.Attributes;
 using crmSeries.Core.Mediator.Decorators;
 
 namespace crmSeries.Core.Features.Diagnostics
