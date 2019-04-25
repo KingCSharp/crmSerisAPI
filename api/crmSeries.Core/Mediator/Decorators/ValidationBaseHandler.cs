@@ -37,10 +37,6 @@ namespace crmSeries.Core.Mediator.Decorators
         }
     }
 
-    public class DoNotValidateAttribute : Attribute
-    {
-    }
-
     public class ValidationHandler<TRequest> : IRequestHandler<TRequest> where TRequest : IRequest
     {
         private readonly Func<IRequestHandler<TRequest>> _decorateeFactory;

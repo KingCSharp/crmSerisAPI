@@ -1,11 +1,14 @@
-﻿using FluentValidation;
+﻿using System;
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using SimpleInjector;
 using System.Collections.Generic;
 using System.Net;
 using System.Reflection;
+using crmSeries.Core.Common;
 using crmSeries.Core.Data;
+using crmSeries.Core.Logging;
 using crmSeries.Core.Mediator.BackgroundJobs;
 using crmSeries.Core.Mediator.Configuration;
 using crmSeries.Core.Security;
@@ -34,20 +37,19 @@ namespace crmSeries.Core.Configuration
             container.RegisterInstance(settings);
             
             ConfigureDatabase(container, config);
-
+            ConfigureLogging(container);
             ConfigureMediator(container, configAssemblies);
         }
 
+        private static void ConfigureLogging(Container container)
+        {
+            container.Register<ILogger, CompositeLogger>(Lifestyle.Singleton);
+            container.Collection.Register<ILogger>(typeof(ExceptionlessLogger));
+        }
+   
         private static CommonSettings ConfigureCommonSettings(IConfiguration config)
         {
             var settings = new CommonSettings();
-
-            settings.AdminUser.Email = config["Common:AdminUser:Email"];
-            settings.AdminUser.FirstName = config["Common:AdminUser:FirstName"];
-            settings.AdminUser.LastName = config["Common:AdminUser:LastName"];
-            settings.AdminUser.LinkObject = config["Common:AdminUser:LinkObject"];
-
-            settings.Account.LinkTokenExpirationHours = config.GetValue<int>("Common:Account:LinkTokenExpirationHours");
 
             settings.Smtp.Host = config["Common:Smtp:Host"];
             settings.Smtp.Port = config.GetValue<int>("Common:Smtp:Port");
@@ -58,12 +60,13 @@ namespace crmSeries.Core.Configuration
                 config["Common:Smtp:Password"]
             );
 
+            settings.Exceptionless.UseExceptionless = config.GetValue<bool>("Common:Exceptionless:Use");
+            
             return settings;
         }
 
         private static void ConfigureDatabase(Container container, IConfiguration config)
         {
-            //container.Register<HeavyEquipmentContext>(Lifestyle.Scoped);
             container.Register(() => new HeavyEquipmentContext(
                 new DbContextOptionsBuilder()
                     .UseSqlServer(GetConnectionString(container))

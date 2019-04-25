@@ -1,5 +1,7 @@
 ﻿using SimpleInjector;
 using System.Reflection;
+using crmSeries.Core.Extensions;
+using crmSeries.Core.Mediator.Attributes;
 using crmSeries.Core.Mediator.Decorators;
 using crmSeries.Core.Mediator.Mediators;
 
@@ -35,11 +37,12 @@ namespace crmSeries.Core.Mediator.Configuration
             bool ShouldValidate(DecoratorPredicateContext context) =>
                 !context.ImplementationType.RequestHasAttribute(typeof(DoNotValidateAttribute));
 
+            bool ShouldLog(DecoratorPredicateContext context) =>
+                !context.ImplementationType.RequestHasAttribute(typeof(DoNotLogAttribute));
+
+
             bool IsAdminContext(DecoratorPredicateContext context) =>
                 context.ImplementationType.RequestHasAttribute(typeof(AdminContextAttribute));
-
-            bool IsHeavyEquipmentContext(DecoratorPredicateContext context) =>
-                context.ImplementationType.RequestHasAttribute(typeof(HeavyEquipmentContextAttribute));
             
             container.Register(typeof(IRequestHandler<>), assemblies);
             container.Register(typeof(IRequestHandler<,>), assemblies);
@@ -48,8 +51,9 @@ namespace crmSeries.Core.Mediator.Configuration
 
             container.RegisterDecorator(typeof(IRequestHandler<>), typeof(AdminTransactionHandler<>), IsAdminContext);
             container.RegisterDecorator(typeof(IRequestHandler<,>), typeof(AdminTransactionHandler<,>), IsAdminContext);
-            //container.RegisterDecorator(typeof(IRequestHandler<>), typeof(HeavyEquipmentTransactionHandler<>), IsHeavyEquipmentContext);
-            //container.RegisterDecorator(typeof(IRequestHandler<,>), typeof(HeavyEquipmentTransactionHandler<,>), IsHeavyEquipmentContext);
+
+            container.RegisterDecorator(typeof(IRequestHandler<>), typeof(LoggingHandler<>), ShouldLog);
+            container.RegisterDecorator(typeof(IRequestHandler<,>), typeof(LoggingHandler<,>), ShouldLog);
         }
     }
 }

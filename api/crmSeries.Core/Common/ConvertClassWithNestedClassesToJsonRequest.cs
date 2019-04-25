@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using crmSeries.Core.Extensions;
 using crmSeries.Core.Mediator;
+using crmSeries.Core.Mediator.Attributes;
 using crmSeries.Core.Mediator.Decorators;
 
 namespace crmSeries.Core.Common
