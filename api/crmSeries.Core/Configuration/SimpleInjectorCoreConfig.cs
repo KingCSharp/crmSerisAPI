@@ -13,6 +13,7 @@ using crmSeries.Core.Mediator.BackgroundJobs;
 using crmSeries.Core.Mediator.Configuration;
 using crmSeries.Core.Security;
 using Microsoft.Extensions.DependencyInjection;
+using crmSeries.Core.Notifications.Email;
 
 namespace crmSeries.Core.Configuration
 {
@@ -39,6 +40,22 @@ namespace crmSeries.Core.Configuration
             ConfigureDatabase(container, config);
             ConfigureLogging(container);
             ConfigureMediator(container, configAssemblies);
+            ConfigureEmailNotifier(container, config);
+        }
+
+        private static void ConfigureEmailNotifier(Container container, IConfiguration config)
+        {
+            container.Register<IEmailNotifier, EmailNotifier>();
+            container.Register(() => new EmailConfig
+            {
+                SenderName = config["Common:Smtp:SenderName"],
+                FromAddress = config["Common:Smtp:FromAddress"],
+                Host = config["Common:Smtp:Host"],
+                Port = config.GetValue<int>("Common:Smtp:Port"),
+                Username = config["Common:Smtp:Username"],
+                Password = config["Common:Smtp:Password"],
+                UseSsl = config.GetValue<bool>("Common:Smtp:UseSsl")
+            });
         }
 
         private static void ConfigureLogging(Container container)

@@ -21,5 +21,13 @@ namespace crmSeries.Core.Common
             public const string Ssn = "(?=\\d{5})\\d";
             public const string SsnMask = "x";
         }
+
+        public static class Emails
+        {
+            public static class Leads
+            {
+                public const string DealerNameKey = "{DealerName}";
+            }
+        }
     }
 }
