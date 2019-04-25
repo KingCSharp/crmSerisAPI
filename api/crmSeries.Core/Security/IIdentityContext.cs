@@ -51,7 +51,8 @@ namespace crmSeries.Core.Security
                 var apiUser = new ApiUser
                 {
                     DealerName = dealer.DealerName,
-                    DatabaseConnectionString = dealer.Dbstring
+                    DatabaseConnectionString = dealer.Dbstring,
+                    EmailAddress = "patt4179@gmail.com" //TODO: Replace this with the Dealer email field when it gets added
                 };
 
                 return _cachedUser = apiUser;

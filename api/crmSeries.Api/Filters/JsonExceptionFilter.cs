@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using crmSeries.Core.Exceptions;
 using crmSeries.Core.Mediator;
+using Exceptionless;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
@@ -43,6 +44,7 @@ namespace crmSeries.API.Filters
             }
             else
             {
+                context.Exception.ToExceptionless().Submit();
                 context.Result = new ObjectResult(new
                 {
                     errors = response.Errors,
