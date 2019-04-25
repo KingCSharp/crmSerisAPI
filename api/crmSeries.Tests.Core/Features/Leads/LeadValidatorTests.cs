@@ -21,15 +21,10 @@ namespace crmSeries.Tests.Core.Features.Leads
         {
             _addLeadRequest = new AddLeadRequest
             {
-                Name = "John Doe"
+                Name = "John Doe",
+                Email = "john@doe.com",
+                Phone = "2254003348"
             };
-        }
-
-        public void SetRequiredFields()
-        {
-            _addLeadRequest.Name = "John Doe";
-            _addLeadRequest.Email = "john@doe.com";
-            _addLeadRequest.Phone = "2254003348";
         }
 
         [TestCase(null, null, false, ErrorMessages.Leads.PhoneOrEmailRequired)]
@@ -83,7 +78,6 @@ namespace crmSeries.Tests.Core.Features.Leads
             string errorMessage = null)
         {
             // Arrange
-            SetRequiredFields();
             _addLeadRequest.Phone = phone;
             _addLeadRequest.Cell = cell;
             _addLeadRequest.CompanyPhone = companyPhone;
@@ -113,7 +107,6 @@ namespace crmSeries.Tests.Core.Features.Leads
             string errorMessage = null)
         {
             // Arrange
-            SetRequiredFields();
             _addLeadRequest.Name = name;
 
             // Act

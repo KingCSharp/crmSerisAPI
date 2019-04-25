@@ -29,7 +29,6 @@ namespace crmSeries.Api
             DatabaseConfig.ConfigureServices(services, _configuration);
             MvcConfig.ConfigureServices(services);
             SwaggerConfig.ConfigureServices(services);
-            EmailNotifierConfig.ConfigureServices(services, _configuration);
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
