@@ -1,5 +1,8 @@
 ﻿using crmSeries.Core.Domain.HeavyEquipment;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Linq;
 
 namespace crmSeries.Core.Data
 {
@@ -8407,6 +8410,57 @@ namespace crmSeries.Core.Data
                     .IsUnicode(false)
                     .HasDefaultValueSql("('')");
             });
+
+            modelBuilder.Query<WorkflowRuleMatch>();
+            modelBuilder.Query<WorkflowRuleFieldUpdateMatch>();
+            modelBuilder.Query<WorkflowRuleUserAssignment>();
+        }
+
+        public List<int?> SP_WorkflowRuleMatch(string module, int recordId, string trigger)
+        {
+            var p_module = new SqlParameter("@Module", module);
+            var p_recordId = new SqlParameter("@RecordID", recordId);
+            var p_trigger = new SqlParameter("@Trigger", trigger);
+
+            return this.Query<WorkflowRuleMatch>()
+                .FromSql("EXECUTE dbo.WorkflowRuleMatch @Module, @RecordID, @Trigger",
+                    p_module,
+                    p_recordId,
+                    p_trigger)
+                .Select(x => x.ConditionID)
+                .ToList();
+        }
+
+        public List<int?> SP_WorkflowRuleUserAssignment(string recordType, int recordId, string actionType, int actionId)
+        {
+            var p_recordType = new SqlParameter("@RecordType", recordType);
+            var p_recordId = new SqlParameter("@RecordID", recordId);
+            var p_actionType = new SqlParameter("@ActionType", actionType);
+            var p_actionId = new SqlParameter("@ActionID", actionId);
+
+            return this.Query<WorkflowRuleUserAssignment>()
+                .FromSql("EXECUTE dbo.WorkflowRuleUserAssignment @RecordType, @RecordID, @ActionType, @ActionID",
+                    p_recordType,
+                    p_recordId,
+                    p_actionType,
+                    p_actionId)
+                .Select(x => x.UserID)
+                .ToList();
+        }
+
+        public List<int?> SP_WorkflowRuleFieldUpdateMatch(string module, int recordId, string fields)
+        {
+            var p_module = new SqlParameter("@Module", module);
+            var p_recordId = new SqlParameter("@RecordID", recordId);
+            var p_fields = new SqlParameter("@Fields", fields);
+
+            return this.Query<WorkflowRuleFieldUpdateMatch>()
+                .FromSql("EXECUTE dbo.WorkflowRuleFieldUpdateMatch @Module, @RecordID, @Fields",
+                    p_module,
+                    p_recordId,
+                    p_fields)
+                .Select(x => x.ConditionID)
+                .ToList();
         }
     }
 }
