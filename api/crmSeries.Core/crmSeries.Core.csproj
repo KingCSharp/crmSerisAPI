@@ -41,6 +41,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Data\Templates\standard-email-template.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="SwaggerCore.XML">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

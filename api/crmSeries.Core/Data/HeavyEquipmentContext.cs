@@ -8431,7 +8431,7 @@ namespace crmSeries.Core.Data
                 .ToList();
         }
 
-        public List<int?> SP_WorkflowRuleUserAssignment(string recordType, int recordId, string actionType, int actionId)
+        public List<int?> GetWorkflowRuleUserAssignments(string recordType, int recordId, string actionType, int actionId)
         {
             var p_recordType = new SqlParameter("@RecordType", recordType);
             var p_recordId = new SqlParameter("@RecordID", recordId);

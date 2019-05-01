@@ -12,4 +12,7 @@ namespace crmSeries.Core.Mediator.Attributes
     {
     }
 
+    public class Transactionless : Attribute
+    {
+    }
 }

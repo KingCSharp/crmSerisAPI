@@ -41,10 +41,10 @@ namespace crmSeries.Core.Features.Leads
             _emailNotifier.SendEmailAsync(GenerateEmail(request));
 
             return new AddResponse
-            {
-                Id = lead.LeadId
-            }
-            .AsResponseAsync();
+                {
+                    Id = lead.LeadId
+                }
+                .AsResponseAsync();
         }
 
         private EmailMessage GenerateEmail(AddLeadDto lead)
@@ -84,13 +84,13 @@ namespace crmSeries.Core.Features.Leads
 
         private string GetFieldInfo(string fieldName, string fieldValue)
         {
-            if(!string.IsNullOrEmpty(fieldValue))
+            if (!string.IsNullOrEmpty(fieldValue))
             {
-                return "<tr><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><strong>" + 
-                    fieldName.SplitWords() +
-                    "</strong></td><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>" + 
-                    fieldValue + 
-                    "</td></tr>";
+                return "<tr><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><strong>" +
+                       fieldName.SplitWords() +
+                       "</strong></td><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>" +
+                       fieldValue +
+                       "</td></tr>";
             }
 
             return string.Empty;
