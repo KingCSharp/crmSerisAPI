@@ -14,20 +14,37 @@ using Task = crmSeries.Core.Domain.HeavyEquipment.Task;
 
 namespace crmSeries.Core.Features.Workflows
 {
+    // BackgroundJob.Enqueue(() => workflowService.WorkflowRuleMatch("Lead",
+    // LeadID, "Created", null, curUser.Email, GlobalFunctions.GenerateOffsetTimestamp()));
+
     [HeavyEquipmentContext]
     public class ExecuteWorkflowRuleRequest : IRequest<ExecuteWorkflowResponse>
     {
+        /// <summary>
+        /// The type of module we are executing the workflow against.
+        /// </summary>
         public string Module { get; set; }
 
-        public int RecordId { get; set; }
+        /// <summary>
+        /// The identifier of the entity for the type of module.  For example,
+        /// if the module is leads, this represents the identifier for a specific
+        /// lead.
+        /// </summary>
+        public int EntityId { get; set; }
 
-        public string Trigger { get; set; }
+        /// <summary>
+        /// The type of action for this workflow.  Examples include
+        /// "Created" and "Edited"
+        /// </summary>
+        public string ActionType { get; set; }
 
         public string Fields { get; set; }
 
+        /// <summary>
+        /// The E-Mail of the primary user of the company.  This E-Mail is
+        /// acquired from the IIdentityContext based on a specific API key.
+        /// </summary>
         public string Email { get; set; }
-
-        public string ApiKey { get; set; }
     }
 
     public class ExecuteWorkflowResponse
@@ -60,34 +77,13 @@ namespace crmSeries.Core.Features.Workflows
             {
                 IEnumerable<WorkflowRuleTask> tasks = GetTasks(conditionIds);
 
-                foreach (var t in tasks)
+                foreach (var task in tasks)
                 {
-                    List<int?> userIds = GetUserIds(request);
+                    List<int?> userIds = GetUserIds(request.EntityId, task.TaskId);
 
                     if (userIds.Any())
                     {
-                        foreach (int userId in userIds.ToList())
-                        {
-                            var task = new Task
-                            {
-                                Subject = t.TaskSubject,
-                                Status = t.TaskStatus,
-                                Priority = t.TaskPriority,
-                                Comments = t.TaskDescription,
-                                DueDate = t.TaskDueDateTrigger == "plus"
-                                    ? DateTime.UtcNow.Date.AddDays(t.TaskDueDateInterval)
-                                    : DateTime.UtcNow.Date.AddDays(-t.TaskDueDateInterval),
-                                RelatedRecordId = 0, // RecordID 
-                                RelatedRecordType = request.Module,
-                                UserId = userId,
-                                ContactId = 0,
-                                Reminder = t.TaskReminder,
-                                ReminderRepeatSchedule = "None",
-                            };
-
-                            _dataContext.Task.Add(task);
-                            _dataContext.SaveChanges();
-                        }
+                        AddTask(request, userIds, task);
                     }
                 }
 
@@ -119,7 +115,7 @@ namespace crmSeries.Core.Features.Workflows
                         GetEmailBody(email.TemplateId);
 
                     var baseUrl = ""; // TODO - Add this to our appsettings.json.
-                    string actionURL = $"{baseUrl}/{request.Module}/Details/{request.RecordId}";
+                    string actionURL = $"{baseUrl}/{request.Module}/Details/{request.EntityId}";
 
                     emailTemplate = emailTemplate.Replace("{{Title}}", emailContent["subject"]);
                     emailTemplate = emailTemplate.Replace("{{Body}}", emailContent["body"]);
@@ -135,6 +131,51 @@ namespace crmSeries.Core.Features.Workflows
             }
 
             return new ExecuteWorkflowResponse().AsResponseAsync();
+        }
+
+        private void AddTask(
+            ExecuteWorkflowRuleRequest request, 
+            IEnumerable<int?> userIds, 
+            WorkflowRuleTask task)
+        {
+            foreach (int userId in userIds.ToList())
+            {
+                var taskEntity = new Task
+                {
+                    Subject = task.TaskSubject,
+                    Status = task.TaskStatus,
+                    Priority = task.TaskPriority,
+                    Comments = task.TaskDescription,
+                    DueDate = task.TaskDueDateTrigger == "plus"
+                        ? DateTime.UtcNow.Date.AddDays(task.TaskDueDateInterval)
+                        : DateTime.UtcNow.Date.AddDays(-task.TaskDueDateInterval),
+                    RelatedRecordId = request.EntityId, 
+                    RelatedRecordType = request.Module,
+                    UserId = userId,
+                    ContactId = 0,
+                    Reminder = task.TaskReminder,
+                    ReminderDate = null,
+                    ReminderRepeatSchedule = "None",
+                    CalendarId = "",
+                    EventId = "",
+                    CompleteDate = null,
+                    StartDate = null
+                };
+
+                if (taskEntity.Status == "Completed")
+                {
+                    taskEntity.CompleteDate = DateTimeOffset.UtcNow;
+                }
+                if (taskEntity.Status == "In Progress" || taskEntity.Status == "Completed")
+                {
+                    taskEntity.StartDate = DateTimeOffset.UtcNow;
+                }
+                if (task.TaskId == 0)
+                {
+                    _dataContext.Task.Add(taskEntity);
+                }
+                _dataContext.SaveChanges();
+            }
         }
 
         private Dictionary<string, string> GetEmailBody(int emailTemplateId)
@@ -166,21 +207,19 @@ namespace crmSeries.Core.Features.Workflows
         {
             return _dataContext.GetWorkflowRuleUserAssignments(
                 request.Module,
-                request.RecordId,
-                request.Trigger, // Is Trigger action type?
-                0 // Action Id 
+                request.EntityId,
+                request.ActionType, 
+                0 // Action Id ??
             );    
         }
 
-        private List<int?> GetUserIds(ExecuteWorkflowRuleRequest request)
+        private List<int?> GetUserIds(int entityId, int taskId)
         {
-            // workflowRepository.ListWorkflowRuleAssignments(Module, RecordID, "Task", t.TaskID);
-            // Should Task be hardcoded? 
             var assignments = _dataContext.GetWorkflowRuleUserAssignments(
-                "record-type",
-                request.RecordId,
+                WorkflowConstants.Modules.Leads,
+                entityId,
                 "Task",
-                0 // Task Id????
+                taskId
             );
 
             return assignments;
@@ -197,37 +236,23 @@ namespace crmSeries.Core.Features.Workflows
         {
             List<int?> conditionIds;
 
-            if (String.IsNullOrEmpty(request.Fields))
+            if (string.IsNullOrEmpty(request.Fields))
             {
                 conditionIds = _dataContext
                     .SP_WorkflowRuleMatch(
                         request.Module,
-                        request.RecordId,
-                        request.Trigger).ToList();
+                        request.EntityId,
+                        request.ActionType).ToList();
             }
             else
             {
                 conditionIds = _dataContext.SP_WorkflowRuleFieldUpdateMatch(
                     request.Module,
-                    request.RecordId,
-                    request.Trigger).ToList();
+                    request.EntityId,
+                    request.ActionType).ToList();
             }
 
             return conditionIds;
-        }
-
-        private string GetEmailTemplate()
-        {
-            //Take a saved standard email template
-
-            string template = "<TODO MY EMAIL TEMPLATE>";
-            return template;
-
-            //Read template file from the App_Data folder
-            // TODO - Find a better way to store this.  Probably a constants file.
-            // string templatePath = Path.Combine(HostingEnvironment.ApplicationPhysicalPath, "App_Data", "Templates", "NotificationEmail.html");
-            //var sr = new StreamReader(templatePath);
-            //template = sr.ReadToEnd();
         }
 
         private IEnumerable<WorkflowRuleTask> GetTasks(ICollection<int?> conditionIds)

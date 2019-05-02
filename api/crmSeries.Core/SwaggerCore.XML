@@ -149,5 +149,29 @@
             The last name of the contact for this lead.  Maximum length: 50
             </summary>
         </member>
+        <member name="P:crmSeries.Core.Features.Workflows.ExecuteWorkflowRuleRequest.Module">
+            <summary>
+            The type of module we are executing the workflow against.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Workflows.ExecuteWorkflowRuleRequest.EntityId">
+            <summary>
+            The identifier of the entity for the type of module.  For example,
+            if the module is leads, this represents the identifier for a specific
+            lead.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Workflows.ExecuteWorkflowRuleRequest.ActionType">
+            <summary>
+            The type of action for this workflow.  Examples include
+            "Created" and "Edited"
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Workflows.ExecuteWorkflowRuleRequest.Email">
+            <summary>
+            The E-Mail of the primary user of the company.  This E-Mail is
+            acquired from the IIdentityContext based on a specific API key.
+            </summary>
+        </member>
     </members>
 </doc>

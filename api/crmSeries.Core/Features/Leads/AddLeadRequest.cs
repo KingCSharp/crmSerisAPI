@@ -8,9 +8,11 @@ using crmSeries.Core.Domain.HeavyEquipment;
 using crmSeries.Core.Extensions;
 using crmSeries.Core.Features.Leads.Dtos;
 using crmSeries.Core.Features.Leads.Validators;
+using crmSeries.Core.Features.Workflows;
 using crmSeries.Core.Mediator;
 using crmSeries.Core.Mediator.Decorators;
 using crmSeries.Core.Notifications.Email;
+using crmSeries.Core.Security;
 using FluentValidation;
 
 namespace crmSeries.Core.Features.Leads
@@ -23,12 +25,16 @@ namespace crmSeries.Core.Features.Leads
     public class AddLeadRequestHandler : IRequestHandler<AddLeadRequest, AddResponse>
     {
         private readonly HeavyEquipmentContext _context;
-        private readonly IEmailNotifier _emailNotifier;
+        private readonly IIdentityContext _identityContext;
+        private readonly IRequestHandler<ExecuteWorkflowRuleRequest, ExecuteWorkflowResponse> _executeWorkflowHandler;
 
-        public AddLeadRequestHandler(HeavyEquipmentContext context, IEmailNotifier emailNotifier)
+        public AddLeadRequestHandler(HeavyEquipmentContext context,
+            IIdentityContext identityContext,
+            IRequestHandler<ExecuteWorkflowRuleRequest, ExecuteWorkflowResponse> executeWorkflowHandler)
         {
             _context = context;
-            _emailNotifier = emailNotifier;
+            _identityContext = identityContext;
+            _executeWorkflowHandler = executeWorkflowHandler;
         }
 
         public Task<Response<AddResponse>> HandleAsync(AddLeadRequest request)
@@ -38,13 +44,24 @@ namespace crmSeries.Core.Features.Leads
             _context.Set<Lead>().Add(lead);
             _context.SaveChanges();
 
-            _emailNotifier.SendEmailAsync(GenerateEmail(request));
+            var response = _executeWorkflowHandler.HandleAsync(new ExecuteWorkflowRuleRequest
+            {
+                EntityId = lead.LeadId,
+                ActionType = WorkflowConstants.ActionTypes.Created,
+                Module = WorkflowConstants.Modules.Leads,
+                Email = _identityContext.RequestingUser.EmailAddress,
+                Fields = null,
+            }).Result;
+
+            if (response.HasErrors)
+            {
+                // Handle it.
+            }
 
             return new AddResponse
-                {
-                    Id = lead.LeadId
-                }
-                .AsResponseAsync();
+            {
+                Id = lead.LeadId
+            }.AsResponseAsync();
         }
 
         private EmailMessage GenerateEmail(AddLeadDto lead)
