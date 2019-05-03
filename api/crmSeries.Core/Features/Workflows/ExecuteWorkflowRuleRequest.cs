@@ -57,15 +57,18 @@ namespace crmSeries.Core.Features.Workflows
         private readonly HeavyEquipmentContext _dataContext;
         private readonly IIdentityContext _identityContext;
         private readonly IRequestHandler<GetEmailTemplateRequest, string> _getEmailTemplateHandler;
+        private readonly IEmailNotifier _emailNotifier;
 
         public ExecuteWorkflowRuleHandler(
             HeavyEquipmentContext dataContext,
             IIdentityContext identityContext,
-            IRequestHandler<GetEmailTemplateRequest, string> getEmailTemplateHandler)
+            IRequestHandler<GetEmailTemplateRequest, string> getEmailTemplateHandler,
+            IEmailNotifier emailNotifier)
         {
             _dataContext = dataContext;
             _identityContext = identityContext;
             _getEmailTemplateHandler = getEmailTemplateHandler;
+            _emailNotifier = emailNotifier;
         }
 
         public Task<Response<ExecuteWorkflowResponse>> HandleAsync(
@@ -89,48 +92,105 @@ namespace crmSeries.Core.Features.Workflows
 
                 List<WorkflowRuleEmail> emails = GetEmails(conditionIds);
 
-                var userIdsForEmail = GetUserIdsForEmail(request);
-
-                List<EmailAddress> toAddresses = new List<EmailAddress>();
-
-                if (userIdsForEmail.Any())
-                {
-                    IEnumerable<EmailAddress> emailAddresses =
-                        GetEmailAddresses(userIdsForEmail);
-
-                    toAddresses = emailAddresses.Select(x => new EmailAddress
-                    {
-                        Address = x.Address,
-                        Name = x.Name
-                    }).ToList();
-                }
-
-                string emailTemplate = _getEmailTemplateHandler
-                    .HandleAsync(new GetEmailTemplateRequest()).Result.Data;
-
                 foreach (var email in emails)
                 {
-                    // TODO - Send E-Mails.
-                    Dictionary<string, string> emailContent =
-                        GetEmailBody(email.TemplateId);
+                    var userIdsForEmail = GetUserIdsForEmail(request, email.Id);
 
-                    var baseUrl = ""; // TODO - Add this to our appsettings.json.
-                    string actionURL = $"{baseUrl}/{request.Module}/Details/{request.EntityId}";
+                    List<EmailAddress> toAddresses = new List<EmailAddress>();
 
-                    emailTemplate = emailTemplate.Replace("{{Title}}", emailContent["subject"]);
-                    emailTemplate = emailTemplate.Replace("{{Body}}", emailContent["body"]);
-                    emailTemplate = emailTemplate.Replace("{{action_url}}", actionURL);
-
-                    var msg = new EmailMessage
+                    if (userIdsForEmail.Any())
                     {
-                        Body = emailTemplate,
-                        Subject = emailContent["subject"],
-                        ToAddresses = toAddresses
-                    };
+                        IEnumerable<EmailAddress> emailAddresses =
+                            GetEmailAddresses(userIdsForEmail);
+
+                        toAddresses = emailAddresses.Select(x => new EmailAddress
+                        {
+                            Address = x.Address,
+                            Name = x.Name
+                        }).ToList();
+
+                        string emailTemplate = _getEmailTemplateHandler
+                            .HandleAsync(new GetEmailTemplateRequest()).Result.Data;
+
+                        Dictionary<string, string> emailContent =
+                            GetEmailBody(email.TemplateId);
+
+                        emailTemplate = ReplaceEmailFields(emailTemplate, emailContent, request);
+
+                        var msg = new EmailMessage
+                        {
+                            Body = emailTemplate,
+                            Subject = emailContent["subject"],
+                            ToAddresses = toAddresses
+                        };
+
+                        _emailNotifier.SendEmailAsync(msg);
+                    }
                 }
             }
 
             return new ExecuteWorkflowResponse().AsResponseAsync();
+        }
+
+        private string ReplaceEmailFields(
+            string emailTemplate, 
+            Dictionary<string, string> emailContent, 
+            ExecuteWorkflowRuleRequest request)
+        {
+            var baseUrl = ""; // TODO - Add this to our appsettings.json.
+            string actionURL = $"{baseUrl}/{request.Module}/Details/{request.EntityId}";
+
+            emailTemplate = emailTemplate.Replace("{{Title}}", emailContent["subject"]);
+            emailTemplate = emailTemplate.Replace("{{Body}}", emailContent["body"]);
+            emailTemplate = emailTemplate.Replace("{{action_url}}", actionURL);
+
+            return ReplaceModuleFields(request.Module, request.EntityId, emailTemplate);
+        }
+
+        private string ReplaceModuleFields(string module, int entityId, string emailTemplate)
+        {
+            switch(module)
+            {
+                case "Lead":
+                    var lead = _dataContext.Lead.Single(x => x.LeadId == entityId);
+                    var leadStatus = _dataContext.LeadStatus.SingleOrDefault(x => x.StatusId == lead.StatusId);
+                    var leadSource = _dataContext.CompanySource.SingleOrDefault(x => x.SourceId == lead.SourceId);
+                    var leadOwner = _dataContext.User.SingleOrDefault(x => x.UserId == lead.OwnerId);
+
+                    emailTemplate = emailTemplate.Replace("[(LeadDescription)]", lead.Description);
+                    emailTemplate = emailTemplate.Replace("[(LeadComments)]", lead.Comments);
+                    emailTemplate = emailTemplate.Replace("[(LeadStatus)]", leadStatus == null ? "" : leadStatus.Status);
+                    emailTemplate = emailTemplate.Replace("[(LeadSource)]", leadSource == null ? "" : leadSource.Source);
+                    emailTemplate = emailTemplate.Replace("[(LeadOwner)]", leadOwner == null ? "" : leadOwner.FirstName + " " + leadOwner.LastName);
+                    emailTemplate = emailTemplate.Replace("[(CompanyName)]", lead.CompanyName);
+                    emailTemplate = emailTemplate.Replace("[(Address1)]", lead.Address1);
+                    emailTemplate = emailTemplate.Replace("[(Address2)]", lead.Address2);
+                    emailTemplate = emailTemplate.Replace("[(City)]", lead.City);
+                    emailTemplate = emailTemplate.Replace("[(State)]", lead.State);
+                    emailTemplate = emailTemplate.Replace("[(Zip)]", lead.Zip);
+                    emailTemplate = emailTemplate.Replace("[(County)]", lead.County);
+                    emailTemplate = emailTemplate.Replace("[(Country)]", lead.Country);
+                    emailTemplate = emailTemplate.Replace("[(CompanyPhone)]", lead.Phone);
+                    emailTemplate = emailTemplate.Replace("[(FirstName)]", lead.FirstName);
+                    emailTemplate = emailTemplate.Replace("[(LastName)]", lead.LastName);
+                    emailTemplate = emailTemplate.Replace("[(Title)]", lead.Title);
+                    emailTemplate = emailTemplate.Replace("[(Position)]", lead.Position);
+                    emailTemplate = emailTemplate.Replace("[(Department)]", lead.Department);
+                    emailTemplate = emailTemplate.Replace("[(Email)]", lead.Email);
+
+                    if (lead.DateAssigned == null)
+                    {
+                        emailTemplate = emailTemplate.Replace("[(DateAssigned)]", "Not Assigned");
+                    }
+                    else
+                    {
+                        DateTimeOffset dt = lead.DateAssigned.Value;
+                        emailTemplate = emailTemplate.Replace("[(DateAssigned)]", dt.DateTime.ToShortDateString());
+                    }
+                    return emailTemplate;
+            }
+
+            return "";
         }
 
         private void AddTask(
@@ -170,7 +230,7 @@ namespace crmSeries.Core.Features.Workflows
                 {
                     taskEntity.StartDate = DateTimeOffset.UtcNow;
                 }
-                if (task.TaskId == 0)
+                if (taskEntity.TaskId == 0)
                 {
                     _dataContext.Task.Add(taskEntity);
                 }
@@ -203,13 +263,13 @@ namespace crmSeries.Core.Features.Workflows
                 }).ToList();
         }
 
-        private List<int?> GetUserIdsForEmail(ExecuteWorkflowRuleRequest request)
+        private List<int?> GetUserIdsForEmail(ExecuteWorkflowRuleRequest request, int emailId)
         {
             return _dataContext.GetWorkflowRuleUserAssignments(
                 request.Module,
                 request.EntityId,
-                request.ActionType, 
-                0 // Action Id ??
+                "Email",
+                emailId
             );    
         }
 
