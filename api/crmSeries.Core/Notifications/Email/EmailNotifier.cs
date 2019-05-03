@@ -20,7 +20,6 @@ namespace crmSeries.Core.Notifications.Email
             _identityContext = identityContext;
         }
 
-        //TODO: Add CC and BCC support
         public async Task SendEmailAsync(EmailMessage message)
         {
             try
