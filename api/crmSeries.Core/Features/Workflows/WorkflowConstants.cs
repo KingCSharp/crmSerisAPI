@@ -30,25 +30,20 @@ namespace crmSeries.Core.Features.Workflows
 
         public static class ActionTypes
         {
-            private static List<string> _validActionTypes = new List<string>
+            private static readonly List<string> _validActionTypes = new List<string>
             {
                 Created,
                 Edited,
                 Email,
                 Task
             };
-            public static ReadOnlyCollection<string> ValidActionTypes
-            {
-                get
-                {
-                    return _validActionTypes.AsReadOnly();
-                }
-            }
+            public static ReadOnlyCollection<string> ValidActionTypes => _validActionTypes.AsReadOnly();
 
             public const string Created = "Created";
             public const string Edited = "Edited";
             public const string Email = "Email";
             public const string Task = "Task";
+            public const string Entered = "Entered";
         }
 
         public static class Server
