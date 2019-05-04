@@ -45,7 +45,7 @@ namespace crmSeries.Core.Features.Leads
             {
                 EntityId = lead.LeadId,
                 ActionType = WorkflowConstants.ActionTypes.Created,
-                Module = WorkflowConstants.Modules.Leads
+                Module = WorkflowConstants.Modules.Lead
             }).Result;
 
             if (response.HasErrors)

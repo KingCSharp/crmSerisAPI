@@ -167,9 +167,61 @@
             "Created" and "Edited"
             </summary>
         </member>
+        <member name="M:crmSeries.Core.Features.Workflows.ExecuteWorkflowRuleHandler.HandleTasks(crmSeries.Core.Features.Workflows.ExecuteWorkflowRuleRequest,System.Collections.Generic.List{System.Int32})">
+            <summary>
+            If any tasks are set to be added to a user given this module and action type, this will add them.
+            </summary>
+        </member>
+        <member name="M:crmSeries.Core.Features.Workflows.ExecuteWorkflowRuleHandler.HandleEmails(crmSeries.Core.Features.Workflows.ExecuteWorkflowRuleRequest,System.Collections.Generic.List{System.Int32})">
+            <summary>
+            Sends any emails that need to be sent for this module's action.
+            </summary>
+        </member>
+        <member name="M:crmSeries.Core.Features.Workflows.ExecuteWorkflowRuleHandler.ReplaceEmailFields(System.String,System.Collections.Generic.Dictionary{System.String,System.String},crmSeries.Core.Features.Workflows.ExecuteWorkflowRuleRequest)">
+            <summary>
+            Takes an email template and replaces placeholder strings with their proper values.
+            </summary>
+        </member>
+        <member name="M:crmSeries.Core.Features.Workflows.ExecuteWorkflowRuleHandler.ReplaceModuleFields(System.String,System.Int32,System.String)">
+            <summary>
+            Replaces placeholder strings in an email template with the entity's fields for the entity's type.
+            </summary>
+        </member>
+        <member name="M:crmSeries.Core.Features.Workflows.ExecuteWorkflowRuleHandler.GetEmailBody(System.Int32)">
+            <summary>
+            Queries the EmailTemplate table and returns a matching html template for the module.
+            </summary>
+        </member>
+        <member name="M:crmSeries.Core.Features.Workflows.ExecuteWorkflowRuleHandler.GetEmailAddresses(System.Collections.Generic.ICollection{System.Int32})">
+            <summary>
+            Queries the User table and returns a list of email addresses for matching users
+            </summary>
+        </member>
         <member name="M:crmSeries.Core.Features.Workflows.ExecuteWorkflowRuleHandler.GetUserIdsForEmail(crmSeries.Core.Features.Workflows.ExecuteWorkflowRuleRequest,System.Int32)">
             <summary>
             Queries the WorkflowRuleAssignment table and returns the AssignmentObjectID as the UserID
+            </summary>
+        </member>
+        <member name="M:crmSeries.Core.Features.Workflows.ExecuteWorkflowRuleHandler.GetUserIds(System.Int32,System.Int32)">
+            <summary>
+            Queries the GetWorkflowRuleUserAssignments sproc and returns a list of User IDs
+            for users that have a WorkFlowRuleAssignmen for the provided task
+            </summary>
+        </member>
+        <member name="M:crmSeries.Core.Features.Workflows.ExecuteWorkflowRuleHandler.GetEmails(System.Collections.Generic.List{System.Int32})">
+            <summary>
+            Queries the WorkflowRuleEmail table and returns email template IDs for the specified conditionIds
+            </summary>
+        </member>
+        <member name="M:crmSeries.Core.Features.Workflows.ExecuteWorkflowRuleHandler.GetConditionIds(crmSeries.Core.Features.Workflows.ExecuteWorkflowRuleRequest)">
+            <summary>
+            Queries the WorkflowRuleMatch sproc and returns a list of conditionIDs that match
+            the given module and action type
+            </summary>
+        </member>
+        <member name="M:crmSeries.Core.Features.Workflows.ExecuteWorkflowRuleHandler.GetTasks(System.Collections.Generic.ICollection{System.Int32})">
+            <summary>
+            Queries the WorkflowRuleTask table and returns WorkflowRuleTasks matching the specified conditionIds
             </summary>
         </member>
     </members>

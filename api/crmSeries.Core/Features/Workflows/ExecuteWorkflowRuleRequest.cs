@@ -7,6 +7,7 @@ using crmSeries.Core.Features.Notifications;
 using crmSeries.Core.Mediator;
 using crmSeries.Core.Mediator.Decorators;
 using crmSeries.Core.Notifications.Email;
+using crmSeries.Core.Validation;
 using FluentValidation;
 using Microsoft.Extensions.Configuration;
 
@@ -34,7 +35,6 @@ namespace crmSeries.Core.Features.Workflows
         public string ActionType { get; set; }
     }
 
-    //TODO: Add XML documentation
     public class ExecuteWorkflowResponse
     {
     }
@@ -79,6 +79,9 @@ namespace crmSeries.Core.Features.Workflows
             return new ExecuteWorkflowResponse().AsResponseAsync();
         }
 
+        /// <summary>
+        /// If any tasks are set to be added to a user given this module and action type, this will add them.
+        /// </summary>
         private void HandleTasks(ExecuteWorkflowRuleRequest request, List<int> conditionIds)
         {
             IEnumerable<WorkflowRuleTask> tasks = GetTasks(conditionIds);
@@ -101,6 +104,9 @@ namespace crmSeries.Core.Features.Workflows
             }
         }
 
+        /// <summary>
+        /// Sends any emails that need to be sent for this module's action.
+        /// </summary>
         private void HandleEmails(ExecuteWorkflowRuleRequest request, List<int> conditionIds)
         {
             List<WorkflowRuleEmail> emails = GetEmails(conditionIds);
@@ -142,6 +148,9 @@ namespace crmSeries.Core.Features.Workflows
             }
         }
 
+        /// <summary>
+        /// Takes an email template and replaces placeholder strings with their proper values.
+        /// </summary>
         private string ReplaceEmailFields(
             string emailTemplate,
             Dictionary<string, string> emailContent,
@@ -157,6 +166,9 @@ namespace crmSeries.Core.Features.Workflows
             return ReplaceModuleFields(request.Module, request.EntityId, emailTemplate);
         }
 
+        /// <summary>
+        /// Replaces placeholder strings in an email template with the entity's fields for the entity's type.
+        /// </summary>
         private string ReplaceModuleFields(string module, int entityId, string emailTemplate)
         {
             switch (module)
@@ -173,6 +185,9 @@ namespace crmSeries.Core.Features.Workflows
             return string.Empty;
         }
 
+        /// <summary>
+        /// Queries the EmailTemplate table and returns a matching html template for the module.
+        /// </summary>
         private Dictionary<string, string> GetEmailBody(int emailTemplateId)
         {
             var template = _dataContext.EmailTemplate
@@ -186,6 +201,9 @@ namespace crmSeries.Core.Features.Workflows
             return emailBody;
         }
 
+        /// <summary>
+        /// Queries the User table and returns a list of email addresses for matching users
+        /// </summary>
         private IEnumerable<EmailAddress> GetEmailAddresses(ICollection<int> userIds)
         {
             return _dataContext.User
@@ -210,10 +228,14 @@ namespace crmSeries.Core.Features.Workflows
             );
         }
 
+        /// <summary>
+        /// Queries the GetWorkflowRuleUserAssignments sproc and returns a list of User IDs
+        /// for users that have a WorkFlowRuleAssignmen for the provided task
+        /// </summary>
         private List<int> GetUserIds(int entityId, int taskId)
         {
             var assignments = _dataContext.GetWorkflowRuleUserAssignments(
-                WorkflowConstants.Modules.Leads,
+                WorkflowConstants.Modules.Lead,
                 entityId,
                 WorkflowConstants.ActionTypes.Task,
                 taskId
@@ -222,6 +244,9 @@ namespace crmSeries.Core.Features.Workflows
             return assignments;
         }
 
+        /// <summary>
+        /// Queries the WorkflowRuleEmail table and returns email template IDs for the specified conditionIds
+        /// </summary>
         private List<WorkflowRuleEmail> GetEmails(List<int> conditionIds)
         {
             return _dataContext.WorkflowRuleEmail
@@ -229,6 +254,10 @@ namespace crmSeries.Core.Features.Workflows
                 .ToList();
         }
 
+        /// <summary>
+        /// Queries the WorkflowRuleMatch sproc and returns a list of conditionIDs that match
+        /// the given module and action type
+        /// </summary>
         private List<int> GetConditionIds(ExecuteWorkflowRuleRequest request)
         {
             List<int> conditionIds;
@@ -242,6 +271,9 @@ namespace crmSeries.Core.Features.Workflows
             return conditionIds;
         }
 
+        /// <summary>
+        /// Queries the WorkflowRuleTask table and returns WorkflowRuleTasks matching the specified conditionIds
+        /// </summary>
         private IEnumerable<WorkflowRuleTask> GetTasks(ICollection<int> conditionIds)
         {
             return _dataContext.WorkflowRuleTask
@@ -249,15 +281,30 @@ namespace crmSeries.Core.Features.Workflows
                 .ToList();
         }
 
-        //TODO: VALIDATE THIS
-        // module - make sure it's lead, company, or user - read from constants as a (truly) readonly list
-        // validate action types
-        // entity id is non-zero
-        // write unit tests for validator as well
         public class ExecuteWorkflowValidator : AbstractValidator<ExecuteWorkflowRuleRequest>
         {
             public ExecuteWorkflowValidator()
             {
+                RuleFor(x => x.Module)
+                .Must(BeAValidModule)
+                .WithMessage(ErrorMessages.ExecuteWorkflowRuleRequest.ModuleInvalid);
+
+                RuleFor(x => x.ActionType)
+                    .Must(BeAValidActionType)
+                    .WithMessage(ErrorMessages.ExecuteWorkflowRuleRequest.ActionTypeInvalid);
+
+                RuleFor(x => x.EntityId)
+                    .NotEqual(0);
+            }
+
+            private bool BeAValidModule(string module)
+            {
+                return WorkflowConstants.Modules.ValidModules.Contains(module);
+            }
+
+            private bool BeAValidActionType(string actionType)
+            {
+                return WorkflowConstants.ActionTypes.ValidActionTypes.Contains(actionType);
             }
         }
     }
