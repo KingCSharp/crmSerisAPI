@@ -167,10 +167,9 @@
             "Created" and "Edited"
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.Workflows.ExecuteWorkflowRuleRequest.Email">
+        <member name="M:crmSeries.Core.Features.Workflows.ExecuteWorkflowRuleHandler.GetUserIdsForEmail(crmSeries.Core.Features.Workflows.ExecuteWorkflowRuleRequest,System.Int32)">
             <summary>
-            The E-Mail of the primary user of the company.  This E-Mail is
-            acquired from the IIdentityContext based on a specific API key.
+            Queries the WorkflowRuleAssignment table and returns the AssignmentObjectID as the UserID
             </summary>
         </member>
     </members>

@@ -25,15 +25,12 @@ namespace crmSeries.Core.Features.Leads
     public class AddLeadRequestHandler : IRequestHandler<AddLeadRequest, AddResponse>
     {
         private readonly HeavyEquipmentContext _context;
-        private readonly IIdentityContext _identityContext;
         private readonly IRequestHandler<ExecuteWorkflowRuleRequest, ExecuteWorkflowResponse> _executeWorkflowHandler;
 
         public AddLeadRequestHandler(HeavyEquipmentContext context,
-            IIdentityContext identityContext,
             IRequestHandler<ExecuteWorkflowRuleRequest, ExecuteWorkflowResponse> executeWorkflowHandler)
         {
             _context = context;
-            _identityContext = identityContext;
             _executeWorkflowHandler = executeWorkflowHandler;
         }
 
@@ -48,9 +45,7 @@ namespace crmSeries.Core.Features.Leads
             {
                 EntityId = lead.LeadId,
                 ActionType = WorkflowConstants.ActionTypes.Created,
-                Module = WorkflowConstants.Modules.Leads,
-                Email = _identityContext.RequestingUser.EmailAddress,
-                Fields = null,
+                Module = WorkflowConstants.Modules.Leads
             }).Result;
 
             if (response.HasErrors)
@@ -62,55 +57,6 @@ namespace crmSeries.Core.Features.Leads
             {
                 Id = lead.LeadId
             }.AsResponseAsync();
-        }
-
-        private EmailMessage GenerateEmail(AddLeadDto lead)
-        {
-            var body = new StringBuilder();
-            body.Append($"Dear {Constants.Emails.Leads.DealerNameKey} Representative,<br/><br/>");
-            body.Append("This email is to notify you that a new lead was submitted to your crmSeries:<br/><br/>");
-            body.Append("<table>");
-            body.Append(GetFieldInfo(nameof(lead.Title), lead.Title));
-            body.Append(GetFieldInfo(nameof(lead.Name), lead.Name));
-            body.Append(GetFieldInfo(nameof(lead.Phone), lead.Phone));
-            body.Append(GetFieldInfo(nameof(lead.Email), lead.Email));
-            body.Append(GetFieldInfo(nameof(lead.Cell), lead.Cell));
-            body.Append(GetFieldInfo(nameof(lead.Fax), lead.Fax));
-            body.Append(GetFieldInfo(nameof(lead.CompanyName), lead.CompanyName));
-            body.Append(GetFieldInfo(nameof(lead.Department), lead.Department));
-            body.Append(GetFieldInfo(nameof(lead.Position), lead.Position));
-            body.Append(GetFieldInfo(nameof(lead.CompanyPhone), lead.CompanyPhone));
-            body.Append(GetFieldInfo(nameof(lead.Web), lead.Web));
-            body.Append(GetFieldInfo(nameof(lead.Address1), lead.Address1));
-            body.Append(GetFieldInfo(nameof(lead.Address2), lead.Address2));
-            body.Append(GetFieldInfo(nameof(lead.City), lead.City));
-            body.Append(GetFieldInfo(nameof(lead.State), lead.State));
-            body.Append(GetFieldInfo(nameof(lead.Zip), lead.Zip));
-            body.Append(GetFieldInfo(nameof(lead.County), lead.County));
-            body.Append(GetFieldInfo(nameof(lead.Country), lead.Country));
-            body.Append(GetFieldInfo(nameof(lead.Comments), lead.Comments));
-            body.Append(GetFieldInfo(nameof(lead.Description), lead.Description));
-            body.Append("</table>");
-
-            return new EmailMessage
-            {
-                Subject = "crmSeries - New Lead",
-                Body = body.ToString()
-            };
-        }
-
-        private string GetFieldInfo(string fieldName, string fieldValue)
-        {
-            if (!string.IsNullOrEmpty(fieldValue))
-            {
-                return "<tr><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><strong>" +
-                       fieldName.SplitWords() +
-                       "</strong></td><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>" +
-                       fieldValue +
-                       "</td></tr>";
-            }
-
-            return string.Empty;
         }
     }
 

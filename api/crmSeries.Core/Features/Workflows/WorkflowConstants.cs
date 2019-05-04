@@ -15,6 +15,23 @@ namespace crmSeries.Core.Features.Workflows
         {
             public const string Created = "Created";
             public const string Edited = "Edited";
+            public const string Email = "Email";
+            public const string Task = "Task";
+        }
+
+        public static class Server
+        {
+            public const string BasePathKey = "Common:Server:BaseURL";
+        }
+
+        public static class Triggers
+        {
+            public const string Plus = "plus";
+        }
+
+        public static class Reminders
+        {
+            public const string None = "None";
         }
     }
 }
