@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using crmSeries.Core.Data;
 using crmSeries.Core.Domain.HeavyEquipment;
 using crmSeries.Core.Features.Workflows;
@@ -38,7 +39,8 @@ namespace crmSeries.Core.Features.Leads
 
                 // TODO - Find out from Mark if he really wants this to work this way.
                 OldValue = null,
-                NewValue = null
+                NewValue = null,
+                TimeStamp = DateTime.Now
             });
 
             _context.SaveChanges();
