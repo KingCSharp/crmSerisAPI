@@ -2,6 +2,7 @@
 using crmSeries.Api.Controllers;
 using crmSeries.Core.Common;
 using crmSeries.Core.Features.Diagnostics;
+using crmSeries.Core.Features.Notifications;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,8 +18,13 @@ namespace crmSeries.API.Controllers
         public Task<IActionResult> Get()
         {
             return HandleAsync(new GetDiagnosticsMessageRequest());
+        }
 
-            //return Ok("I'm up and running.");
+        [HttpGet]
+        [Route("/email-template/")]
+        public Task<IActionResult> GetEmailTemplate()
+        {
+            return HandleAsync(new GetEmailTemplateRequest());
         }
     }
 }

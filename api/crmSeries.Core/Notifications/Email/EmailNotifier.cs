@@ -20,21 +20,10 @@ namespace crmSeries.Core.Notifications.Email
             _identityContext = identityContext;
         }
 
-        //TODO: Add CC and BCC support
         public async Task SendEmailAsync(EmailMessage message)
         {
             try
             {
-                message.ToAddresses.Add(new EmailAddress
-                {
-                    Name = _identityContext.RequestingUser.DealerName,
-                    Address = _identityContext.RequestingUser.EmailAddress
-                });
-
-                message.Body = message.Body.Replace(
-                    Constants.Emails.Leads.DealerNameKey,
-                    _identityContext.RequestingUser.DealerName);
-
                 var mimeMessage = new MimeMessage();
                 mimeMessage.From.Add(new MailboxAddress(_emailConfig.SenderName, _emailConfig.FromAddress));
                 message.ToAddresses.ForEach(a => { mimeMessage.To.Add(new MailboxAddress(a.Name, a.Address)); });

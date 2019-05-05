@@ -176,5 +176,11 @@ namespace crmSeries.Core.Validation
         {
             public const string APIConnectionNotFound = "No connection exists for the provided API key.";
         }
+
+        public static class ExecuteWorkflowRuleRequest
+        {
+            public const string ModuleInvalid = "The Module provided is not valid.";
+            public const string ActionTypeInvalid = "The Action Type provided is not valid";
+        }
     }
 }

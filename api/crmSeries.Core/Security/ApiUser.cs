@@ -5,7 +5,5 @@
         public string DealerName { get; set; }
 
         public string DatabaseConnectionString { get; set; }
-
-        public string EmailAddress { get; set; }
     }
 }
