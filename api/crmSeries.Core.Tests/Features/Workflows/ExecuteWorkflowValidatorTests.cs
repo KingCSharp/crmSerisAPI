@@ -3,7 +3,7 @@ using crmSeries.Core.Validation;
 using NUnit.Framework;
 using static crmSeries.Core.Features.Workflows.ExecuteWorkflowRuleHandler;
 
-namespace crmSeries.Tests.Core.Features.Workflows
+namespace crmSeries.Core.Tests.Features.Workflows
 {
     [TestFixture]
     public class ExecuteWorkflowValidatorTests

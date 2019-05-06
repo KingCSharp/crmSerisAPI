@@ -3,7 +3,7 @@ using crmSeries.Core.Validation;
 using NUnit.Framework;
 using System.Text.RegularExpressions;
 
-namespace crmSeries.Tests.Core.Features.Leads
+namespace crmSeries.Core.Tests.Features.Leads
 {
     [TestFixture]
     public class LeadValidatorTests

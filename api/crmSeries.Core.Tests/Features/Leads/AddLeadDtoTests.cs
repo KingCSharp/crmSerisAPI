@@ -1,7 +1,7 @@
 using crmSeries.Core.Features.Leads.Dtos;
 using NUnit.Framework;
 
-namespace crmSeries.Tests.Core.Features.Leads
+namespace crmSeries.Core.Tests.Features.Leads
 {
     [TestFixture]
     public class AddLeadDtoTests
