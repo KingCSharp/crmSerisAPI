@@ -51,7 +51,8 @@ namespace crmSeries.Core.Security
                 var apiUser = new ApiUser
                 {
                     DealerName = dealer.DealerName,
-                    DatabaseConnectionString = dealer.Dbstring
+                    DatabaseConnectionString = dealer.Dbstring,
+                    DealerId = dealer.DealerId
                 };
 
                 return _cachedUser = apiUser;

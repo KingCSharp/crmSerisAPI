@@ -162,6 +162,11 @@ namespace crmSeries.Core.Validation
             }
         }
 
+        public static class Companies
+        {
+            public const string UserNotFoundWithEmail = "No user was found with the provided email.";
+        }
+
         public static class Leads
         {
             public const string EmailAddressInvalid = "The Email field is invalid.";

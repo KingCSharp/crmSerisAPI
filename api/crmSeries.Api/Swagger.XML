@@ -4,6 +4,18 @@
         <name>crmSeries.API</name>
     </assembly>
     <members>
+        <member name="M:crmSeries.API.Controllers.CompaniesController.GetCompanies(System.String)">
+            <summary>
+            Gets a list of companies assigned to a user.
+            </summary>
+            <param name="email">The email of the current user.</param>
+        </member>
+        <member name="M:crmSeries.API.Controllers.CompaniesController.GetCompany(System.Int32)">
+            <summary>
+            Gets a single company by id.
+            </summary>
+            <param name="id">The id of the company.</param>
+        </member>
         <member name="M:crmSeries.API.Controllers.LeadsController.Post(crmSeries.Core.Features.Leads.AddLeadRequest)">
             <summary>
             Adds a Lead to the system.
