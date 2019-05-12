@@ -26,7 +26,7 @@ namespace crmSeries.Core.Features.Companies
         public Task<Response<CompanyFull>> HandleAsync(GetCompanyFullRequest request)
         {
             var company = _context.Company
-                .FirstOrDefault(x => x.CompanyId == request.CompanyId);
+                .SingleOrDefault(x => x.CompanyId == request.CompanyId);
 
             return new CompanyFull
             {
