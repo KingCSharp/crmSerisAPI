@@ -162,21 +162,6 @@ namespace crmSeries.Core.Validation
             }
         }
 
-        public static class Companies
-        {
-            public const string UserNotFoundWithEmail = "No user was found with the provided email.";
-        }
-
-        public static class Leads
-        {
-            public const string EmailAddressInvalid = "The Email field is invalid.";
-            public const string PhoneInvalid = "The Phone field is invalid.";
-            public const string CellInvalid = "The Cell field is invalid.";
-            public const string FaxInvalid = "The Fax field is invalid.";
-            public const string CompanyPhoneInvalid = "The Company Phone field is invalid.";
-            public const string PhoneOrEmailRequired = "You must submit either phone number or E-Mail.";
-        }
-
         public static class API
         {
             public const string APIConnectionNotFound = "No connection exists for the provided API key.";
