@@ -43,6 +43,9 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
     <PackageReference Include="SimpleInjector.Integration.AspNetCore.Mvc.Core" Version="4.5.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="4.0.1" />
+    <PackageReference Include="IdentityServer4" Version="2.3.2" />
+    <PackageReference Include="IdentityServer4.AspNetIdentity" Version="2.3.0" />
+    <PackageReference Include="IdentityServer4.EntityFramework" Version="2.3.2" />
   </ItemGroup>
 
   <ItemGroup>

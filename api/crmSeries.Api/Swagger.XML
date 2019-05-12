@@ -4,6 +4,60 @@
         <name>crmSeries.API</name>
     </assembly>
     <members>
+        <member name="M:crmSeries.API.Controllers.CompaniesController.GetCompanies">
+            <summary>
+            Gets a list of all companies assigned to the current user.
+            </summary>
+        </member>
+        <member name="M:crmSeries.API.Controllers.CompaniesController.GetPagedCompanies(crmSeries.Core.Logic.Queries.PagedQueryRequest)">
+            <summary>
+            Gets a paged list of companies assigned to the current user.
+            </summary>
+            <param name="pagedQuery">Contains information for the current page and page count.</param>
+        </member>
+        <member name="M:crmSeries.API.Controllers.CompaniesController.GetCompaniesFull">
+            <summary>
+            Gets a list of all companies assigned to the current user including all addresses and contacts.
+            </summary>
+        </member>
+        <member name="M:crmSeries.API.Controllers.CompaniesController.GetPagedCompaniesFull(crmSeries.Core.Logic.Queries.PagedQueryRequest)">
+            <summary>
+            Gets a paged list of all companies assigned to the current user including all addresses and contacts.
+            </summary>
+            <param name="pagedQuery">Contains information for the current page and page count.</param>
+        </member>
+        <member name="M:crmSeries.API.Controllers.CompaniesController.GetAllCompanies">
+            <summary>
+            Gets a list of all companies.
+            </summary>
+        </member>
+        <member name="M:crmSeries.API.Controllers.CompaniesController.GetPagedAllCompanies">
+            <summary>
+            Gets a paged list of all companies.
+            </summary>
+        </member>
+        <member name="M:crmSeries.API.Controllers.CompaniesController.GetAllCompaniesFull">
+            <summary>
+            Gets a list of all companies including all addresses and contacts.
+            </summary>
+        </member>
+        <member name="M:crmSeries.API.Controllers.CompaniesController.GetPagedAllCompaniesFull">
+            <summary>
+            Gets a paged list of all companies including all addresses and contacts.
+            </summary>
+        </member>
+        <member name="M:crmSeries.API.Controllers.CompaniesController.GetCompany(System.Int32)">
+            <summary>
+            Gets a single company by id.
+            </summary>
+            <param name="id">The id of the company.</param>
+        </member>
+        <member name="M:crmSeries.API.Controllers.CompaniesController.GetCompanyFull(System.Int32)">
+            <summary>
+            Gets a single company by id including all addresses and contacts.
+            </summary>
+            <param name="id">The id of the company.</param>
+        </member>
         <member name="M:crmSeries.API.Controllers.LeadsController.Post(crmSeries.Core.Features.Leads.AddLeadRequest)">
             <summary>
             Adds a Lead to the system.

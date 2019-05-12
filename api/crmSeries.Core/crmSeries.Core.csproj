@@ -38,6 +38,9 @@
     <PackageReference Include="System.ServiceModel.Primitives" Version="4.5.3" />
     <PackageReference Include="System.ServiceModel.Security" Version="4.5.3" />
     <PackageReference Include="AutoMapper" Version="8.0.0" />
+    <PackageReference Include="IdentityServer4" Version="2.3.2" />
+    <PackageReference Include="IdentityServer4.AspNetIdentity" Version="2.3.0" />
+    <PackageReference Include="IdentityServer4.EntityFramework" Version="2.3.2" />
   </ItemGroup>
 
   <ItemGroup>

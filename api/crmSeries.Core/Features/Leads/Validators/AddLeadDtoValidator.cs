@@ -1,5 +1,6 @@
 ﻿using crmSeries.Core.Dtos;
 using crmSeries.Core.Features.Leads.Dtos;
+using crmSeries.Core.Features.Leads.Utility;
 using crmSeries.Core.Validation;
 using FluentValidation;
 
@@ -11,7 +12,7 @@ namespace crmSeries.Core.Features.Leads.Validators
         {
             RuleFor(x => x)
                 .Must(IncludePhoneNumberOrEmail)
-                .WithMessage(ErrorMessages.Leads.PhoneOrEmailRequired);
+                .WithMessage(LeadsConstants.ErrorMessages.PhoneOrEmailRequired);
 
             RuleFor(x => x.Name)
                 .NotEmpty();
@@ -19,27 +20,27 @@ namespace crmSeries.Core.Features.Leads.Validators
             RuleFor(x => x.Email)
                 .EmailAddress()
                 .Unless(x => string.IsNullOrEmpty(x.Email))
-                .WithMessage(ErrorMessages.Leads.EmailAddressInvalid);
+                .WithMessage(LeadsConstants.ErrorMessages.EmailAddressInvalid);
 
             RuleFor(x => x.Phone)
                 .SetValidator(new PhoneNumberValidator())
                 .Unless(x => string.IsNullOrEmpty(x.Phone))
-                .WithMessage(ErrorMessages.Leads.PhoneInvalid);
+                .WithMessage(LeadsConstants.ErrorMessages.PhoneInvalid);
 
             RuleFor(x => x.Cell)
                 .SetValidator(new PhoneNumberValidator())
                 .Unless(x => string.IsNullOrEmpty(x.Cell))
-                .WithMessage(ErrorMessages.Leads.CellInvalid);
+                .WithMessage(LeadsConstants.ErrorMessages.CellInvalid);
 
             RuleFor(x => x.Fax)
                 .SetValidator(new PhoneNumberValidator())
                 .Unless(x => string.IsNullOrEmpty(x.Fax))
-                .WithMessage(ErrorMessages.Leads.FaxInvalid);
+                .WithMessage(LeadsConstants.ErrorMessages.FaxInvalid);
 
             RuleFor(x => x.CompanyPhone)
                 .SetValidator(new PhoneNumberValidator())
                 .Unless(x => string.IsNullOrEmpty(x.CompanyPhone))
-                .WithMessage(ErrorMessages.Leads.CompanyPhoneInvalid);
+                .WithMessage(LeadsConstants.ErrorMessages.CompanyPhoneInvalid);
 
             RuleFor(x => x.CompanyName)
                 .MaximumLength(100);

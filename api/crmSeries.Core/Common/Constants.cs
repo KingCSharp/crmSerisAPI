@@ -9,6 +9,7 @@ namespace crmSeries.Core.Common
             public const string ApiKey = "api-key";
             public const string ApiKeyPolicy = "api-key-policy";
             public const string UnauthorizedApiKey = "The api-key is unauthorized for this API.";
+            public const string Email = "email";
         }
 
         public static class DateTimes
