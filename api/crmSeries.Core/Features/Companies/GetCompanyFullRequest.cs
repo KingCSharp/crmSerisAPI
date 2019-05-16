@@ -35,8 +35,11 @@ namespace crmSeries.Core.Features.Companies
                 .SingleOrDefault(x => x.CompanyId == request.CompanyId);
 
             if (company == null)
-                throw new NullReferenceException(CompaniesConstants.ErrorMessages.CompanyIdNotValid);
-
+                return Response<CompanyFullDto>.ErrorAsync(new Error
+                {
+                    ErrorMessage = CompaniesConstants.ErrorMessages.CompanyIdNotValid
+                });
+            
             return new CompanyFullDto
             {
                 Details = Mapper.Map<CompanyDto>(company),

@@ -235,9 +235,9 @@
             Setting a number beyond the last page will just return the last page of data.
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Logic.Queries.PagedQueryRequest.PageSize">
+        <member name="F:crmSeries.Core.Logic.Queries.PagedQueryRequest._pageSize">
             <summary>
-            The number of items returned for the page.
+            The number of items returned for the page. Maximum size of 100.
             </summary>
         </member>
     </members>

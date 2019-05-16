@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Security.Claims;
 using crmSeries.Core.Common;
 using crmSeries.Core.Data;
 using crmSeries.Core.Domain.Admin;
