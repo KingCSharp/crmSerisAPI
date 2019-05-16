@@ -1,20 +1,21 @@
 ﻿using crmSeries.Core.Data;
-using crmSeries.Core.Domain.HeavyEquipment;
+using crmSeries.Core.Features.Companies.Dtos;
 using crmSeries.Core.Mediator;
 using crmSeries.Core.Mediator.Decorators;
 using FluentValidation;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 
 namespace crmSeries.Core.Features.Companies
 {
     [HeavyEquipmentContext]
-    public class GetCompanyRequest : IRequest<Company>
+    public class GetCompanyRequest : IRequest<CompanyDto>
     {
         public int CompanyId { get; set; }
     }
 
-    public class GetCompanyRequestHandler : IRequestHandler<GetCompanyRequest, Company>
+    public class GetCompanyRequestHandler : IRequestHandler<GetCompanyRequest, CompanyDto>
     {
         private readonly HeavyEquipmentContext _context;
         public GetCompanyRequestHandler(HeavyEquipmentContext context)
@@ -22,10 +23,10 @@ namespace crmSeries.Core.Features.Companies
             _context = context;
         }
 
-        public Task<Response<Company>> HandleAsync(GetCompanyRequest request)
+        public Task<Response<CompanyDto>> HandleAsync(GetCompanyRequest request)
         {
-            return _context.Company
-                .SingleOrDefault(x => x.CompanyId == request.CompanyId)
+            return Mapper.Map<CompanyDto>(_context.Company
+                .SingleOrDefault(x => x.CompanyId == request.CompanyId))
                 .AsResponseAsync();
         }
     }

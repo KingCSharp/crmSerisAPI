@@ -7,17 +7,20 @@ using FluentValidation;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using crmSeries.Core.Features.CompanyAssignedAddresses.Dtos;
+using crmSeries.Core.Features.Contacts.Dtos;
 
 namespace crmSeries.Core.Features.Companies
 {
     [HeavyEquipmentContext]
-    public class GetAllCompaniesFullPagedRequest : IRequest<PagedQueryResult<CompanyFull>>
+    public class GetAllCompaniesFullPagedRequest : IRequest<PagedQueryResult<CompanyFullDto>>
     {
         public PagedQueryRequest Query { get; set; }
     }
 
     public class GetAllCompaniesFullPagedRequestHandler :
-        IRequestHandler<GetAllCompaniesFullPagedRequest, PagedQueryResult<CompanyFull>>
+        IRequestHandler<GetAllCompaniesFullPagedRequest, PagedQueryResult<CompanyFullDto>>
     {
         private readonly HeavyEquipmentContext _context;
         public GetAllCompaniesFullPagedRequestHandler(HeavyEquipmentContext context)
@@ -25,26 +28,26 @@ namespace crmSeries.Core.Features.Companies
             _context = context;
         }
 
-        public Task<Response<PagedQueryResult<CompanyFull>>> HandleAsync(GetAllCompaniesFullPagedRequest request)
+        public Task<Response<PagedQueryResult<CompanyFullDto>>> HandleAsync(GetAllCompaniesFullPagedRequest request)
         {
-            var resultList = new List<CompanyFull>();
-            var companyList = _context.Company.AsEnumerable();
-            int resultCount = companyList.Count(); // Store this since we call it twice below
+            var companyList = _context.Company.AsQueryable();
+            int resultCount = companyList.Count();
 
-            foreach (var company in
-                companyList
-                .Skip((request.Query.PageNumber - 1) * request.Query.PageSize)
-                .Take(request.Query.PageSize))
-            {
-                resultList.Add(new CompanyFull
+            var resultList = companyList.Skip((request.Query.PageNumber - 1) * request.Query.PageSize)
+                .Take(request.Query.PageSize)
+                .Select(company => new CompanyFullDto
                 {
-                    Details = company,
-                    Addresses = _context.CompanyAssignedAddress.Where(x => x.CompanyId == company.CompanyId).ToList(),
-                    Contacts = _context.Contact.Where(x => x.CompanyId == company.CompanyId).ToList()
-                });
-            }
+                    Details = Mapper.Map<CompanyDto>(company),
+                    Addresses = Mapper.Map<List<CompanyAssignedAddressDto>>(
+                        _context.CompanyAssignedAddress
+                        .Where(x => x.CompanyId == company.CompanyId).ToList()),
+                    Contacts = Mapper.Map<List<ContactDto>>(
+                        _context.Contact
+                        .Where(x => x.CompanyId == company.CompanyId).ToList())
+                })
+                .ToList();
 
-            return new PagedQueryResult<CompanyFull>
+            return new PagedQueryResult<CompanyFullDto>
             {
                 Items = resultList,
                 PageCount = resultCount / request.Query.PageSize,

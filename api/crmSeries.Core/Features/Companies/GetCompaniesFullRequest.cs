@@ -1,6 +1,9 @@
-﻿using crmSeries.Core.Data;
+﻿using AutoMapper;
+using crmSeries.Core.Data;
 using crmSeries.Core.Domain.HeavyEquipment;
 using crmSeries.Core.Features.Companies.Dtos;
+using crmSeries.Core.Features.CompanyAssignedAddresses.Dtos;
+using crmSeries.Core.Features.Contacts.Dtos;
 using crmSeries.Core.Mediator;
 using crmSeries.Core.Mediator.Attributes;
 using crmSeries.Core.Mediator.Decorators;
@@ -14,11 +17,11 @@ namespace crmSeries.Core.Features.Companies
 {
     [HeavyEquipmentContext]
     [DoNotValidate]
-    public class GetCompaniesFullRequest : IRequest<IEnumerable<CompanyFull>>
+    public class GetCompaniesFullRequest : IRequest<IEnumerable<CompanyFullDto>>
     {
     }
 
-    public class GetCompaniesFullRequestHandler : IRequestHandler<GetCompaniesFullRequest, IEnumerable<CompanyFull>>
+    public class GetCompaniesFullRequestHandler : IRequestHandler<GetCompaniesFullRequest, IEnumerable<CompanyFullDto>>
     {
         private readonly HeavyEquipmentContext _context;
         private readonly IIdentityContext _identity;
@@ -29,9 +32,9 @@ namespace crmSeries.Core.Features.Companies
             _identity = identity;
         }
 
-        public Task<Response<IEnumerable<CompanyFull>>> HandleAsync(GetCompaniesFullRequest request)
+        public Task<Response<IEnumerable<CompanyFullDto>>> HandleAsync(GetCompaniesFullRequest request)
         {
-            var companiesList = new List<CompanyFull>();
+            var companiesList = new List<CompanyFullDto>();
 
             if (_identity.RequestingUser.CurrentUser != null)
             {
@@ -39,20 +42,24 @@ namespace crmSeries.Core.Features.Companies
                     (from company in _context.Company
                      join assignedUser in _context.CompanyAssignedUser
                      on company.CompanyId equals assignedUser.CompanyId
-                     join user in _context.User
-                     on assignedUser.UserId equals user.UserId
-                     where user.UserId == _identity.RequestingUser.CurrentUser.UserId
+                     where assignedUser.UserId == _identity.RequestingUser.CurrentUser.UserId
                      select company)
                      .OrderBy(x => x.CompanyId)
                      .Distinct();
 
                 foreach (var company in companies)
                 {
-                    companiesList.Add(new CompanyFull
+                    companiesList.Add(new CompanyFullDto
                     {
-                        Details = company,
-                        Addresses = _context.CompanyAssignedAddress.Where(x => x.CompanyId == company.CompanyId).ToList(),
-                        Contacts = _context.Contact.Where(x => x.CompanyId == company.CompanyId).ToList()
+                        Details = Mapper.Map<CompanyDto>(company),
+                        Addresses = Mapper.Map<List<CompanyAssignedAddressDto>>(
+                            _context.CompanyAssignedAddress
+                            .Where(x => x.CompanyId == company.CompanyId)
+                            .ToList()),
+                        Contacts = Mapper.Map<List<ContactDto>>(
+                            _context.Contact
+                            .Where(x => x.CompanyId == company.CompanyId)
+                            .ToList())
                     });
                 }
             }

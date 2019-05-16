@@ -9,17 +9,20 @@ using FluentValidation;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using crmSeries.Core.Features.CompanyAssignedAddresses.Dtos;
+using crmSeries.Core.Features.Contacts.Dtos;
 
 namespace crmSeries.Core.Features.Companies
 {
     [HeavyEquipmentContext]
-    public class GetCompaniesFullPagedRequest : IRequest<PagedQueryResult<CompanyFull>>
+    public class GetCompaniesFullPagedRequest : IRequest<PagedQueryResult<CompanyFullDto>>
     {
         public PagedQueryRequest Query { get; set; }
     }
 
     public class GetCompaniesFullPagedRequestHandler : 
-        IRequestHandler<GetCompaniesFullPagedRequest, PagedQueryResult<CompanyFull>>
+        IRequestHandler<GetCompaniesFullPagedRequest, PagedQueryResult<CompanyFullDto>>
     {
         private readonly HeavyEquipmentContext _context;
         private readonly IIdentityContext _identity;
@@ -30,35 +33,39 @@ namespace crmSeries.Core.Features.Companies
             _identity = identity;
         }
 
-        public Task<Response<PagedQueryResult<CompanyFull>>> HandleAsync(GetCompaniesFullPagedRequest request)
+        public Task<Response<PagedQueryResult<CompanyFullDto>>> HandleAsync(GetCompaniesFullPagedRequest request)
         {
-            var resultList = new List<CompanyFull>();
-            var result = new PagedQueryResult<CompanyFull>();
+            var resultList = new List<CompanyFullDto>();
+            var result = new PagedQueryResult<CompanyFullDto>();
 
             if (_identity.RequestingUser.CurrentUser != null)
             {
                 var companyList = (from companies in _context.Company
                                    join assignedUser in _context.CompanyAssignedUser
                                     on companies.CompanyId equals assignedUser.CompanyId
-                                   join user in _context.User
-                                    on assignedUser.UserId equals user.UserId
-                                   where user.UserId == _identity.RequestingUser.CurrentUser.UserId
+                                   where assignedUser.UserId == _identity.RequestingUser.CurrentUser.UserId
                                    select companies)
                     .OrderBy(x => x.CompanyId)
                     .Distinct();
 
-                int resultCount = companyList.Count(); // Store this since we call it twice below
+                int resultCount = companyList.Count();
 
                 foreach (var company in 
                     companyList
                     .Skip((request.Query.PageNumber - 1) * request.Query.PageSize)
                     .Take(request.Query.PageSize))
                 {
-                    resultList.Add(new CompanyFull
+                    resultList.Add(new CompanyFullDto
                     {
-                        Details = company,
-                        Addresses = _context.CompanyAssignedAddress.Where(x => x.CompanyId == company.CompanyId).ToList(),
-                        Contacts = _context.Contact.Where(x => x.CompanyId == company.CompanyId).ToList()
+                        Details = Mapper.Map<CompanyDto>(company),
+                        Addresses = Mapper.Map<List<CompanyAssignedAddressDto>>(
+                            _context.CompanyAssignedAddress
+                            .Where(x => x.CompanyId == company.CompanyId)
+                            .ToList()),
+                        Contacts = Mapper.Map<List<ContactDto>>(
+                            _context.Contact
+                            .Where(x => x.CompanyId == company.CompanyId)
+                            .ToList())
                     });
                 }
 

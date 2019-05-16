@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using crmSeries.Api.Controllers;
-using crmSeries.Core.Domain.HeavyEquipment;
 using crmSeries.Core.Features.Companies;
 using crmSeries.Core.Features.Companies.Dtos;
 using crmSeries.Core.Logic.Queries;
@@ -14,23 +13,12 @@ namespace crmSeries.API.Controllers
     public class CompaniesController : BaseApiController
     {
         /// <summary>
-        /// Gets a list of all companies assigned to the current user.
-        /// </summary>
-        // GET: api/companies
-        [HttpGet]
-        [Produces(typeof(IEnumerable<Company>))]
-        public Task<IActionResult> GetCompanies()
-        {
-            return HandleAsync(new GetCompaniesRequest());
-        }
-
-        /// <summary>
         /// Gets a paged list of companies assigned to the current user.
         /// </summary>
         /// <param name="pagedQuery">Contains information for the current page and page count.</param>
         // GET: api/companies/paged
         [HttpGet]
-        [Produces(typeof(PagedQueryResult<Company>))]
+        [Produces(typeof(PagedQueryResult<CompanyDto>))]
         [Route("paged")]
         public Task<IActionResult> GetPagedCompanies(PagedQueryRequest pagedQuery)
         {
@@ -45,7 +33,7 @@ namespace crmSeries.API.Controllers
         /// </summary>
         // GET: api/companies/full
         [HttpGet]
-        [Produces(typeof(IEnumerable<CompanyFull>))]
+        [Produces(typeof(IEnumerable<CompanyFullDto>))]
         [Route("full")]
         public Task<IActionResult> GetCompaniesFull()
         {
@@ -58,7 +46,7 @@ namespace crmSeries.API.Controllers
         /// <param name="pagedQuery">Contains information for the current page and page count.</param>
         // GET: api/companies/full/paged
         [HttpGet]
-        [Produces(typeof(PagedQueryResult<CompanyFull>))]
+        [Produces(typeof(PagedQueryResult<CompanyFullDto>))]
         [Route("full/paged")]
         public Task<IActionResult> GetPagedCompaniesFull(PagedQueryRequest pagedQuery)
         {
@@ -69,39 +57,18 @@ namespace crmSeries.API.Controllers
         }
 
         /// <summary>
-        /// Gets a list of all companies.
-        /// </summary>
-        // GET: api/companies/all
-        [HttpGet]
-        [Produces(typeof(IEnumerable<Company>))]
-        [Route("all")]
-        public Task<IActionResult> GetAllCompanies()
-        {
-            return HandleAsync(new GetAllCompaniesRequest());
-        }
-
-        /// <summary>
         /// Gets a paged list of all companies.
         /// </summary>
         // GET: api/companies/all/paged
         [HttpGet]
-        [Produces(typeof(PagedQueryResult<CompanyFull>))]
+        [Produces(typeof(PagedQueryResult<CompanyFullDto>))]
         [Route("all/paged")]
-        public Task<IActionResult> GetPagedAllCompanies()
+        public Task<IActionResult> GetPagedAllCompanies(PagedQueryRequest pagedQuery)
         {
-            return HandleAsync(new GetAllCompaniesPagedRequest());
-        }
-
-        /// <summary>
-        /// Gets a list of all companies including all addresses and contacts.
-        /// </summary>
-        // GET: api/companies/all/full
-        [HttpGet]
-        [Produces(typeof(IEnumerable<Company>))]
-        [Route("all/full")]
-        public Task<IActionResult> GetAllCompaniesFull()
-        {
-            return HandleAsync(new GetAllCompaniesFullRequest());
+            return HandleAsync(new GetAllCompaniesPagedRequest
+            {
+                Query = pagedQuery
+            });
         }
 
         /// <summary>
@@ -109,11 +76,14 @@ namespace crmSeries.API.Controllers
         /// </summary>
         // GET: api/companies/all/full/paged
         [HttpGet]
-        [Produces(typeof(PagedQueryResult<CompanyFull>))]
+        [Produces(typeof(PagedQueryResult<CompanyFullDto>))]
         [Route("all/full/paged")]
-        public Task<IActionResult> GetPagedAllCompaniesFull()
+        public Task<IActionResult> GetPagedAllCompaniesFull(PagedQueryRequest pagedQuery)
         {
-            return HandleAsync(new GetAllCompaniesFullPagedRequest());
+            return HandleAsync(new GetAllCompaniesFullPagedRequest
+            {
+                Query = pagedQuery
+            });
         }
 
         /// <summary>
@@ -122,7 +92,7 @@ namespace crmSeries.API.Controllers
         /// <param name="id">The id of the company.</param>
         // GET: api/companies/id
         [HttpGet]
-        [Produces(typeof(Company))]
+        [Produces(typeof(CompanyDto))]
         [Route("{id:int}")]
         public Task<IActionResult> GetCompany(int id)
         {
@@ -138,7 +108,7 @@ namespace crmSeries.API.Controllers
         /// <param name="id">The id of the company.</param>
         // GET: api/companies/id/full
         [HttpGet]
-        [Produces(typeof(CompanyFull))]
+        [Produces(typeof(CompanyFullDto))]
         [Route("{id:int}/full")]
         public Task<IActionResult> GetCompanyFull(int id)
         {
