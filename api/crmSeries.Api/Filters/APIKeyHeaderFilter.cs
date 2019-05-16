@@ -18,6 +18,14 @@ namespace crmSeries.Api.Filters
                 Type = "string",
                 Required = true
             });
+
+            operation.Parameters.Add(new NonBodyParameter
+            {
+                Name = "email",
+                In = "header",
+                Type = "string",
+                Required = false
+            });
         }
     }
 }

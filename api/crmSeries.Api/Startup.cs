@@ -29,6 +29,7 @@ namespace crmSeries.Api
             DatabaseConfig.ConfigureServices(services, _configuration);
             MvcConfig.ConfigureServices(services);
             SwaggerConfig.ConfigureServices(services);
+            IdentityServerConfig.ConfigureServices(services);
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -41,6 +42,8 @@ namespace crmSeries.Api
             SwaggerConfig.Configure(app, env);
             FluentValidationConfig.Configure();
             app.UseExceptionless(_configuration["Common:Exceptionless:Key"]);
+            app.UseIdentityServer();
+            app.UseAuthentication();
         }
     }
 }

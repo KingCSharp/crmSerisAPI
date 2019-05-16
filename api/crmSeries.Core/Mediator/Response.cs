@@ -19,5 +19,14 @@ namespace crmSeries.Core.Mediator
     public class Response<TResult> : Response
     {
         public TResult Data { get; set; }
+
+        public static new Response<TResult> FromErrors(List<Error> errors) => 
+            new Response<TResult> { Errors = errors };
+
+        public static new Task<Response<TResult>> ErrorsAsync(List<Error> errors) =>
+            Task.FromResult(FromErrors(errors));
+
+        public static new Task<Response<TResult>> ErrorAsync(Error error) =>
+            Task.FromResult(FromErrors(new List<Error> { error }));
     }
 }

@@ -1,4 +1,5 @@
 using crmSeries.Core.Features.Leads;
+using crmSeries.Core.Features.Leads.Utility;
 using crmSeries.Core.Validation;
 using NUnit.Framework;
 using System.Text.RegularExpressions;
@@ -28,8 +29,8 @@ namespace crmSeries.Core.Tests.Features.Leads
             };
         }
 
-        [TestCase(null, null, false, ErrorMessages.Leads.PhoneOrEmailRequired)]
-        [TestCase("", "", false, ErrorMessages.Leads.PhoneOrEmailRequired)]
+        [TestCase(null, null, false, LeadsConstants.ErrorMessages.PhoneOrEmailRequired)]
+        [TestCase("", "", false, LeadsConstants.ErrorMessages.PhoneOrEmailRequired)]
         [TestCase("5042599759", "", true)]
         [TestCase("5042599759", null, true)]
         [TestCase("", "foo@foobar.com", true)]
@@ -54,20 +55,20 @@ namespace crmSeries.Core.Tests.Features.Leads
                 Assert.AreEqual( errorMessage, result.Errors[0].ErrorMessage);
         }
 
-        [TestCase("5555555555", null, null, null, false, ErrorMessages.Leads.PhoneInvalid)]
-        [TestCase("44 1865 722180", null, null, null, false, ErrorMessages.Leads.PhoneInvalid)]
+        [TestCase("5555555555", null, null, null, false, LeadsConstants.ErrorMessages.PhoneInvalid)]
+        [TestCase("44 1865 722180", null, null, null, false, LeadsConstants.ErrorMessages.PhoneInvalid)]
         [TestCase("2254003348", null, null, null, true)]
         [TestCase("+44 1865 722180", null, null, null, true)]
-        [TestCase(null, "5555555555", null, null, false, ErrorMessages.Leads.CellInvalid)]
-        [TestCase(null, "44 1865 722180", null, null, false, ErrorMessages.Leads.CellInvalid)]
+        [TestCase(null, "5555555555", null, null, false, LeadsConstants.ErrorMessages.CellInvalid)]
+        [TestCase(null, "44 1865 722180", null, null, false, LeadsConstants.ErrorMessages.CellInvalid)]
         [TestCase(null, "2254003348", null, null, true)]
         [TestCase(null, "+44 1865 722180", null, null, true)]
-        [TestCase(null, null, "5555555555", null, false, ErrorMessages.Leads.CompanyPhoneInvalid)]
-        [TestCase(null, null, "44 1865 722180", null, false, ErrorMessages.Leads.CompanyPhoneInvalid)]
+        [TestCase(null, null, "5555555555", null, false, LeadsConstants.ErrorMessages.CompanyPhoneInvalid)]
+        [TestCase(null, null, "44 1865 722180", null, false, LeadsConstants.ErrorMessages.CompanyPhoneInvalid)]
         [TestCase(null, null, "2254003348", null, true)]
         [TestCase(null, null, "+44 1865 722180", null, true)]
-        [TestCase(null, null, null, "5555555555", false, ErrorMessages.Leads.FaxInvalid)]
-        [TestCase(null, null, null, "44 1865 722180", false, ErrorMessages.Leads.FaxInvalid)]
+        [TestCase(null, null, null, "5555555555", false, LeadsConstants.ErrorMessages.FaxInvalid)]
+        [TestCase(null, null, null, "44 1865 722180", false, LeadsConstants.ErrorMessages.FaxInvalid)]
         [TestCase(null, null, null, "2254003348", true)]
         [TestCase(null, null, null, "+44 1865 722180", true)]
         public void Validate_PhoneNumbersInvalid_ReturnsAppropriateErrorMessage(
