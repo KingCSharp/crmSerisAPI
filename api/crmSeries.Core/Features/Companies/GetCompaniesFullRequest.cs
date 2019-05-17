@@ -24,9 +24,9 @@ namespace crmSeries.Core.Features.Companies
     public class GetCompaniesFullRequestHandler : IRequestHandler<GetCompaniesFullRequest, IEnumerable<CompanyFullDto>>
     {
         private readonly HeavyEquipmentContext _context;
-        private readonly IIdentityContext _identity;
+        private readonly IIdentityUserContext _identity;
         public GetCompaniesFullRequestHandler(HeavyEquipmentContext context,
-            IIdentityContext identity)
+            IIdentityUserContext identity)
         {
             _context = context;
             _identity = identity;

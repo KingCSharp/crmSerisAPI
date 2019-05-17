@@ -99,7 +99,7 @@ namespace crmSeries.Core.Configuration
 
         private static string GetConnectionString(Container container)
         {
-            var identityContext = container.GetService<IIdentityContext>();
+            var identityContext = container.GetService<IIdentityApiContext>();
 
             return identityContext.RequestingUser.DatabaseConnectionString;
         }

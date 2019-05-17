@@ -43,6 +43,24 @@
             </summary>
             <param name="id">The id of the company.</param>
         </member>
+        <member name="M:crmSeries.API.Controllers.ContactsController.Get(crmSeries.Core.Logic.Queries.PagedQueryRequest)">
+            <summary>
+            Gets a list of all contacts assigned to the current user.
+            </summary>
+            <param name="paginationInfo">The paging information for this request.</param>
+        </member>
+        <member name="M:crmSeries.API.Controllers.ContactsController.GetContactsById(System.Int32)">
+            <summary>
+            Gets a contact entity based on the contact entity's contact id.
+            </summary>
+            <param name="id">The unqiue identifier of the contact.</param>
+        </member>
+        <member name="M:crmSeries.API.Controllers.ContactsController.Delete(System.Int32)">
+            <summary>
+            Sets the contact to deleted.
+            </summary>
+            <param name="id">The unique identifer of the contact</param>
+        </member>
         <member name="M:crmSeries.API.Controllers.LeadsController.Post(crmSeries.Core.Features.Leads.AddLeadRequest)">
             <summary>
             Adds a Lead to the system.

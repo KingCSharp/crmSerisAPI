@@ -7,8 +7,20 @@ namespace crmSeries.Core.Features.Companies.Dtos
 {
     public class CompanyFullDto
     {
+
+        /// <summary>
+        /// The company details.
+        /// </summary>
         public CompanyDto Details { get; set; }
+
+        /// <summary>
+        /// The addresses for the company.
+        /// </summary>
         public List<CompanyAssignedAddressDto> Addresses { get; set; }
+
+        /// <summary>
+        /// The contacts for the company.
+        /// </summary>
         public List<ContactDto> Contacts { get; set; }
     }
 }

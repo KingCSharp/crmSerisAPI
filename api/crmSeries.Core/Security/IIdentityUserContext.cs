@@ -6,32 +6,31 @@ using crmSeries.Core.Data;
 using crmSeries.Core.Domain.Admin;
 using crmSeries.Core.Domain.HeavyEquipment;
 using crmSeries.Core.Exceptions;
-using crmSeries.Core.Mediator.Decorators;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 
 namespace crmSeries.Core.Security
 {
-    public interface IIdentityContext
+    public interface IIdentityUserContext
     {
-        ApiUser RequestingUser { get; }
+        IdentityUser RequestingUser { get; }
     }
 
-    public class HttpIdentityContext : IIdentityContext
+    public class HttpIdentityUserContext : IIdentityUserContext
     {
         private readonly AdminContext _context;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        private ApiUser _cachedUser;
+        private IdentityUser _cachedUser;
         private HeavyEquipmentContext _userContext;
 
-        public HttpIdentityContext(AdminContext dataContext,
+        public HttpIdentityUserContext(AdminContext dataContext,
             IHttpContextAccessor httpContextAccessor)
         {
             _context = dataContext;
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public ApiUser RequestingUser
+        public IdentityUser RequestingUser
         {
             get
             {
@@ -41,7 +40,7 @@ namespace crmSeries.Core.Security
                 }
 
                 var apiKey = _httpContextAccessor.HttpContext.Request.Headers[Constants.Auth.ApiKey];
-                var currentUserEmail = _httpContextAccessor.HttpContext.Request.Headers[Constants.Auth.Email];
+                var currentUserEmail = _httpContextAccessor.HttpContext.Request.Headers[Constants.Auth.Email].ToString();
 
                 var dealer = _context
                     .Set<Dealer>()
@@ -59,17 +58,18 @@ namespace crmSeries.Core.Security
                         .Options
                 );
 
-                User currentUser = string.IsNullOrEmpty(currentUserEmail) ? null :
-                    _userContext
-                    .Set<User>()
-                    .AsNoTracking()
-                    .SingleOrDefault(x => x.Email == currentUserEmail);
+                User currentUser = string.IsNullOrEmpty(currentUserEmail)
+                    ? null
+                    : _userContext
+                        .Set<User>()
+                        .AsNoTracking()
+                        .SingleOrDefault(x => x.Email.ToLower() == currentUserEmail.ToLower());
 
-                var apiUser = new ApiUser
+                if (currentUser == null)
+                    throw new Exception(Constants.Auth.NoUser);
+
+                var apiUser = new IdentityUser
                 {
-                    DealerName = dealer.DealerName,
-                    DatabaseConnectionString = dealer.Dbstring,
-                    DealerId = dealer.DealerId,
                     CurrentUser = currentUser
                 };
 
@@ -78,23 +78,23 @@ namespace crmSeries.Core.Security
         }
     }
 
-    public class DeferredHttpIdentityContext : IIdentityContext
+    public class DeferredHttpIdentityUserContext : IIdentityUserContext
     {
-        private readonly Lazy<HttpIdentityContext> _deferredContext;
+        private readonly Lazy<HttpIdentityUserContext> _deferredContext;
 
-        public DeferredHttpIdentityContext(Lazy<HttpIdentityContext> deferredContext)
+        public DeferredHttpIdentityUserContext(Lazy<HttpIdentityUserContext> deferredContext)
         {
             _deferredContext = deferredContext;
         }
 
-        public ApiUser RequestingUser => _deferredContext.Value.RequestingUser;
+        public IdentityUser RequestingUser => _deferredContext.Value.RequestingUser;
     }
 
-    public class NullIdentityContext : IIdentityContext
+    public class NullIdentityUserContext : IIdentityUserContext
     {
-        public ApiUser RequestingUser => new ApiUser
+        public IdentityUser RequestingUser => new IdentityUser
         {
-            DatabaseConnectionString = "fake-string"
+            CurrentUser = null
         };
     }
 }

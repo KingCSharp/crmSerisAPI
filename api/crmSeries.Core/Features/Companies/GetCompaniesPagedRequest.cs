@@ -21,9 +21,9 @@ namespace crmSeries.Core.Features.Companies
     public class GetCompaniesPagedRequestHandler : IRequestHandler<GetCompaniesPagedRequest, PagedQueryResult<CompanyDto>>
     {
         private readonly HeavyEquipmentContext _context;
-        private readonly IIdentityContext _identity;
+        private readonly IIdentityUserContext _identity;
         public GetCompaniesPagedRequestHandler(HeavyEquipmentContext context,
-            IIdentityContext identity)
+            IIdentityUserContext identity)
         {
             _context = context;
             _identity = identity;

@@ -12,12 +12,10 @@ namespace crmSeries.Core.Notifications.Email
     public class EmailNotifier : IEmailNotifier
     {
         private readonly EmailConfig _emailConfig;
-        private readonly IIdentityContext _identityContext;
 
-        public EmailNotifier(EmailConfig emailConfig, IIdentityContext identityContext)
+        public EmailNotifier(EmailConfig emailConfig)
         {
             _emailConfig = emailConfig;
-            _identityContext = identityContext;
         }
 
         public async Task SendEmailAsync(EmailMessage message)

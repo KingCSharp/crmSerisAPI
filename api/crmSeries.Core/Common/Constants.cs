@@ -10,6 +10,7 @@ namespace crmSeries.Core.Common
             public const string ApiKeyPolicy = "api-key-policy";
             public const string UnauthorizedApiKey = "The api-key is unauthorized for this API.";
             public const string Email = "email";
+            public const string NoUser = "No users found for this request.";
         }
 
         public static class DateTimes

@@ -11,8 +11,6 @@ using crmSeries.Api.Controllers;
 using crmSeries.Core.Configuration;
 using crmSeries.Core.Mediator;
 using crmSeries.Core.Security;
-using crmSeries.Core.Data;
-using Microsoft.EntityFrameworkCore;
 
 namespace crmSeries.Api.Configuration
 {
@@ -28,15 +26,27 @@ namespace crmSeries.Api.Configuration
 
             _container.ConfigureCore(config);
 
-            _container.Register<HttpIdentityContext>(Lifestyle.Scoped);
-            _container.Register<IIdentityContext>(() =>
+            _container.Register<HttpIdentityUserContext>(Lifestyle.Scoped);
+            _container.Register<IIdentityUserContext>(() =>
             {
                 if (_container.IsVerifying)
                 {
-                    return new NullIdentityContext();
+                    return new NullIdentityUserContext();
                 }
-                return new DeferredHttpIdentityContext(
-                    new Lazy<HttpIdentityContext>(_container.GetInstance<HttpIdentityContext>));
+                return new DeferredHttpIdentityUserContext(
+                    new Lazy<HttpIdentityUserContext>(_container.GetInstance<HttpIdentityUserContext>));
+            });
+
+
+            _container.Register<HttpIdentityApiContext>(Lifestyle.Scoped);
+            _container.Register<IIdentityApiContext>(() =>
+            {
+                if (_container.IsVerifying)
+                {
+                    return new NullIdentityApiContext();
+                }
+                return new DeferredHttpIdentityApiContext(
+                    new Lazy<HttpIdentityApiContext>(_container.GetInstance<HttpIdentityApiContext>));
             });
 
             _container.RegisterInitializer<BaseApiController>(controller =>
