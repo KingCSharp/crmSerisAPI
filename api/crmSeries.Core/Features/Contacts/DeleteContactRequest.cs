@@ -4,6 +4,7 @@ using crmSeries.Core.Mediator;
 using crmSeries.Core.Mediator.Decorators;
 using FluentValidation;
 using System.Linq;
+using crmSeries.Core.Features.Leads.Utility;
 
 namespace crmSeries.Core.Features.Contacts
 {
@@ -30,7 +31,7 @@ namespace crmSeries.Core.Features.Contacts
             var contact = _context.Contact.SingleOrDefault(x => x.ContactId == request.ContactId);
 
             if (contact == null)
-                return Response.ErrorAsync("No contact with this id found.");
+                return Response.ErrorAsync(ContactsConstants.ErrorMessages.ContactNotFound);
 
             contact.Active = false;
             contact.Deleted = true;
