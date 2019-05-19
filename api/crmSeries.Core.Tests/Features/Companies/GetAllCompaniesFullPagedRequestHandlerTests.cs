@@ -48,7 +48,7 @@ namespace crmSeries.Core.Tests.Companies
             }
         }
 
-            [Test]
+        [Test]
         public void NormalRequest_NoCompaniesFound_ReturnsEmptyResults()
         {
             // Arrange 
