@@ -294,6 +294,26 @@
             The contact identifier.
             </summary>
         </member>
+        <member name="P:crmSeries.Core.Features.Contacts.Dtos.GetContactDto.CompanyName">
+            <summary>
+            The company name associated with this contact.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Contacts.Dtos.GetContactDto.Deleted">
+            <summary>
+            The flag for soft deletion.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Contacts.Dtos.GetContactDto.Active">
+            <summary>
+            The flag for whether this contact is active or not.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Contacts.Dtos.GetContactDto.LastModified">
+            <summary>
+            The date, if any, that the entity was modified.
+            </summary>
+        </member>
         <member name="P:crmSeries.Core.Features.Contacts.Dtos.EditContactDto.ContactId">
             <summary>
             The contact identifier.

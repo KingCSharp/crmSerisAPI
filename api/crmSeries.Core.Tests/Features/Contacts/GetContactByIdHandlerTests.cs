@@ -1,11 +1,10 @@
 ﻿using crmSeries.Core.Data;
 using crmSeries.Core.Domain.HeavyEquipment;
-using crmSeries.Core.Features.Companies;
 using crmSeries.Core.Features.Contacts;
 using NUnit.Framework;
 
 
-namespace crmSeries.Core.Tests.Companies
+namespace crmSeries.Core.Tests.Contacts
 {
     [TestFixture]
     public class GetContactByIdHandlerTests : BaseUnitTest
@@ -18,7 +17,22 @@ namespace crmSeries.Core.Tests.Companies
 
             using (var context = new HeavyEquipmentContext(options))
             {
-                context.Contact.Add(new Contact { ContactId = 1 });
+                var company = new Company
+                {
+                    CompanyId = 1,
+                    CompanyName = "Foo Company"
+                };
+
+                context.Company.Add(company);
+
+                var contact = new Contact
+                {
+                    ContactId = 1,
+                    CompanyId = 1
+                };
+
+                context.Contact.Add(contact);
+
                 context.SaveChanges();
                 var handler = new GetContactByIdHandler(context);
 
@@ -28,7 +42,8 @@ namespace crmSeries.Core.Tests.Companies
                 //Assert 
                 Assert.AreEqual(response.Result.HasErrors, false);
                 Assert.IsNotNull(response.Result.Data);
-                Assert.AreEqual(response.Result.Data.ContactId, 1);
+                Assert.AreEqual(response.Result.Data.ContactId, contact.ContactId);
+                Assert.AreEqual(response.Result.Data.CompanyName, company.CompanyName);
             }
         }
 

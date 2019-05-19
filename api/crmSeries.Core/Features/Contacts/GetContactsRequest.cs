@@ -10,6 +10,7 @@ using crmSeries.Core.Features.Contacts.Dtos;
 using System.Threading.Tasks;
 using AutoMapper.QueryableExtensions;
 using crmSeries.Core.Extensions;
+using crmSeries.Core.Domain.HeavyEquipment;
 
 namespace crmSeries.Core.Features.Contacts
 {
@@ -31,17 +32,37 @@ namespace crmSeries.Core.Features.Contacts
             _context = context;
             _identity = identity;
         }
-        
+
         public Task<Response<PagedQueryResult<GetContactDto>>> HandleAsync(GetContactsRequest request)
         {
             var result = new PagedQueryResult<GetContactDto>();
 
-            var contacts = (from c in _context.Contact
-                    join assignedUser in _context.CompanyAssignedUser
-                        on c.CompanyId equals assignedUser.CompanyId
-                    where assignedUser.UserId == _identity.RequestingUser.CurrentUser.UserId && 
+            var contacts =
+                (from c in _context.Set<Contact>()
+                    join assignedUser in _context.Set<CompanyAssignedUser>() 
+                        on c.CompanyId equals assignedUser .CompanyId
+                    join company in _context.Set<Company>() 
+                        on c.CompanyId equals company.CompanyId
+                    where assignedUser.UserId == _identity.RequestingUser.CurrentUser.UserId &&
                           c.Active && !c.Deleted
-                    select c)
+                    select new
+                    {
+                        c.ContactId,
+                        c.CompanyId,
+                        c.FirstName,
+                        c.MiddleName,
+                        c.LastName,
+                        c.NickName,
+                        c.Phone,
+                        c.Cell,
+                        c.Fax,
+                        c.Email,
+                        c.Title,
+                        c.Position,
+                        c.Department,
+                        c.LastModified,
+                        company.CompanyName
+                    })
                 .AsQueryable();
 
             var count = contacts.Count();
@@ -51,15 +72,9 @@ namespace crmSeries.Core.Features.Contacts
             result.PageNumber = request.PageInfo.PageNumber;
             result.PageSize = request.PageInfo.PageSize;
 
-            if (count > 0)
-            {
-                result.Items = contacts.ProjectTo<GetContactDto>().GetPagedData(request.PageInfo)
-                    .ToList();
-            }
-            else
-            {
-                result.Items = new List<GetContactDto>();
-            }
+            result.Items = contacts.ProjectTo<GetContactDto>()
+                .GetPagedData(request.PageInfo)
+                .ToList();
 
             return result.AsResponseAsync();
         }

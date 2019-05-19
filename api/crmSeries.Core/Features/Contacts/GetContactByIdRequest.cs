@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using AutoMapper.QueryableExtensions;
 using crmSeries.Core.Data;
+using crmSeries.Core.Domain.HeavyEquipment;
 using crmSeries.Core.Features.Contacts.Dtos;
 using crmSeries.Core.Mediator;
 using crmSeries.Core.Mediator.Decorators;
@@ -30,7 +31,27 @@ namespace crmSeries.Core.Features.Contacts
 
         public Task<Response<GetContactDto>> HandleAsync(GetContactByIdRequest request)
         {
-            return _context.Contact
+            return (from c in _context.Set<Contact>()
+                    join company in _context.Set<Company>()
+                        on c.CompanyId equals company.CompanyId
+                    select new
+                    {
+                        c.ContactId,
+                        c.CompanyId,
+                        c.FirstName,
+                        c.MiddleName,
+                        c.LastName,
+                        c.NickName,
+                        c.Phone,
+                        c.Cell,
+                        c.Fax,
+                        c.Email,
+                        c.Title,
+                        c.Position,
+                        c.Department,
+                        c.LastModified,
+                        company.CompanyName
+                    })
                 .ProjectTo<GetContactDto>()
                 .SingleOrDefault(x => x.ContactId == request.ContactId)
                 .AsResponseAsync();

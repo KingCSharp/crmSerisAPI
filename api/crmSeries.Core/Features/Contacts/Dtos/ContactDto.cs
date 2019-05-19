@@ -1,4 +1,6 @@
-﻿namespace crmSeries.Core.Features.Contacts.Dtos
+﻿using System;
+
+namespace crmSeries.Core.Features.Contacts.Dtos
 {
     public class BaseContactDto
     {
@@ -69,6 +71,26 @@
         /// The contact identifier.
         /// </summary>
         public int ContactId { get; set; }
+
+        /// <summary>
+        /// The company name associated with this contact.
+        /// </summary>
+        public string CompanyName { get; set; }
+
+        /// <summary>
+        /// The flag for soft deletion.
+        /// </summary>
+        public bool Deleted { get; set; }
+
+        /// <summary>
+        /// The flag for whether this contact is active or not.
+        /// </summary>
+        public bool Active { get; set; }
+
+        /// <summary>
+        /// The date, if any, that the entity was modified.
+        /// </summary>
+        public DateTime? LastModified { get; set; }
     }
 
     public class AddContactDto : BaseContactDto
@@ -91,5 +113,6 @@
         /// The flag for whether this contact is active or not.
         /// </summary>
         public bool Active { get; set; }
+
     }
 }

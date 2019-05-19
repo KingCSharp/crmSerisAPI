@@ -1,7 +1,7 @@
 ﻿using crmSeries.Core.Features.Contacts;
 using NUnit.Framework;
 
-namespace crmSeries.Core.Tests.Features.Companies
+namespace crmSeries.Core.Tests.Features.Contacts
 {
     [TestFixture]
     public class GetContactByIdValidatorTests

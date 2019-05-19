@@ -5,7 +5,7 @@ using crmSeries.Core.Features.Leads.Utility;
 using NUnit.Framework;
 using System.Linq;
 
-namespace crmSeries.Core.Tests.Companies
+namespace crmSeries.Core.Tests.Contacts
 {
     [TestFixture]
     public class DeleteContactHandlerTests : BaseUnitTest

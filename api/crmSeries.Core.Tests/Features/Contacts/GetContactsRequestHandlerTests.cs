@@ -4,8 +4,7 @@ using crmSeries.Core.Features.Contacts;
 using crmSeries.Core.Logic.Queries;
 using NUnit.Framework;
 
-
-namespace crmSeries.Core.Tests.Companies
+namespace crmSeries.Core.Tests.Contacts
 {
     [TestFixture]
     public class GetContactsRequestHandlerTests : BaseUnitTest
@@ -31,6 +30,14 @@ namespace crmSeries.Core.Tests.Companies
                         Active = true,
                         Deleted = false
                     });
+
+                    var company = new Company
+                    {
+                        CompanyId = i,
+                        CompanyName = "Foo Company"
+                    };
+
+                    context.Company.Add(company);
                     context.CompanyAssignedUser.Add(new CompanyAssignedUser
                     {
                         CompanyId = i,
