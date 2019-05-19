@@ -134,6 +134,11 @@
             The date that the company information was last modified.
             </summary>
         </member>
+        <member name="P:crmSeries.Core.Features.Companies.Dtos.CompanyDto.Favorite">
+            <summary>
+            Flag for if this company record is set as a favorite by the user.
+            </summary>
+        </member>
         <member name="P:crmSeries.Core.Features.Companies.Dtos.CompanyFullDto.Details">
             <summary>
             The company details.

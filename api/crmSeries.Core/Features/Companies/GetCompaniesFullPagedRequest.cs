@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using crmSeries.Core.Features.CompanyAssignedAddresses.Dtos;
 using crmSeries.Core.Features.Contacts.Dtos;
+using crmSeries.Core.Common;
 
 namespace crmSeries.Core.Features.Companies
 {
@@ -40,7 +41,7 @@ namespace crmSeries.Core.Features.Companies
 
             if (_identity.RequestingUser.CurrentUser != null)
             {
-                var companyList = (from companies in _context.Company
+                var companyTotalList = (from companies in _context.Company
                                    join assignedUser in _context.CompanyAssignedUser
                                     on companies.CompanyId equals assignedUser.CompanyId
                                    where assignedUser.UserId == _identity.RequestingUser.CurrentUser.UserId
@@ -48,14 +49,23 @@ namespace crmSeries.Core.Features.Companies
                     .OrderBy(x => x.CompanyId)
                     .Distinct();
 
-                int resultCount = companyList.Count();
+                int resultCount = companyTotalList.Count();
 
-                foreach (var company in 
-                    companyList
+                var companyList = companyTotalList
                     .Skip((request.Query.PageNumber - 1) * request.Query.PageSize)
-                    .Take(request.Query.PageSize))
+                    .Take(request.Query.PageSize)
+                    .ToList();
+
+                var favorites = _context.UserFavoriteRecord
+                .Where(x =>
+                    x.RecordType == Constants.UserFavoriteRecords.Types.Company &&
+                    x.UserId == _identity.RequestingUser.CurrentUser.UserId)
+                .Select(x => x.RecordId)
+                .ToList();
+
+                foreach (var company in companyList)
                 {
-                    resultList.Add(new CompanyFullDto
+                    var companyDto = new CompanyFullDto
                     {
                         Details = Mapper.Map<CompanyDto>(company),
                         Addresses = Mapper.Map<List<CompanyAssignedAddressDto>>(
@@ -66,7 +76,9 @@ namespace crmSeries.Core.Features.Companies
                             _context.Contact
                             .Where(x => x.CompanyId == company.CompanyId)
                             .ToList())
-                    });
+                    };
+                    companyDto.Details.Favorite = favorites.Contains(company.CompanyId);
+                    resultList.Add(companyDto);
                 }
 
                 result.Items = resultList;

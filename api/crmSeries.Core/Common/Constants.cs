@@ -41,5 +41,13 @@ namespace crmSeries.Core.Common
                 public const string DealerNameKey = "{DealerName}";
             }
         }
+
+        public static class UserFavoriteRecords
+        {
+            public static class Types
+            {
+                public const string Company = "Company";
+            }
+        }
     }
 }
