@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using crmSeries.Core.Common;
 using crmSeries.Core.Data;
 using crmSeries.Core.Domain.HeavyEquipment;
 using crmSeries.Core.Features.Companies.Dtos;
@@ -45,11 +46,19 @@ namespace crmSeries.Core.Features.Companies
                      where assignedUser.UserId == _identity.RequestingUser.CurrentUser.UserId
                      select company)
                      .OrderBy(x => x.CompanyId)
-                     .Distinct();
+                     .Distinct()
+                     .ToList();
+
+                var favorites = _context.UserFavoriteRecord
+                .Where(x =>
+                    x.RecordType == Constants.UserFavoriteRecords.Types.Company &&
+                    x.UserId == _identity.RequestingUser.CurrentUser.UserId)
+                .Select(x => x.RecordId)
+                .ToList();
 
                 foreach (var company in companies)
                 {
-                    companiesList.Add(new CompanyFullDto
+                    var companyDto = new CompanyFullDto
                     {
                         Details = Mapper.Map<CompanyDto>(company),
                         Addresses = Mapper.Map<List<CompanyAssignedAddressDto>>(
@@ -60,7 +69,9 @@ namespace crmSeries.Core.Features.Companies
                             _context.Contact
                             .Where(x => x.CompanyId == company.CompanyId)
                             .ToList())
-                    });
+                    };
+                    companyDto.Details.Favorite = favorites.Contains(company.CompanyId);
+                    companiesList.Add(companyDto);
                 }
             }
 

@@ -136,5 +136,10 @@ namespace crmSeries.Core.Features.Companies.Dtos
         /// The date that the company information was last modified.
         /// </summary>
         public DateTime? LastModified { get; set; }
+
+        /// <summary>
+        /// Flag for if this company record is set as a favorite by the user.
+        /// </summary>
+        public bool Favorite { get; set; }
     }
 }

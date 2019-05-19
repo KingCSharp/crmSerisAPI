@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using crmSeries.Core.Common;
 
 namespace crmSeries.Core.Features.Companies
 {
@@ -33,7 +34,7 @@ namespace crmSeries.Core.Features.Companies
         {
             var result = new PagedQueryResult<CompanyDto>();
 
-            var companyList = (from companies in _context.Company
+            var companyTotalList = (from companies in _context.Company
                                join assignedUser in _context.CompanyAssignedUser
                                 on companies.CompanyId equals assignedUser.CompanyId
                                where assignedUser.UserId == _identity.RequestingUser.CurrentUser.UserId
@@ -41,12 +42,27 @@ namespace crmSeries.Core.Features.Companies
                 .OrderBy(x => x.CompanyId)
                 .Distinct();
 
-            int resultCount = companyList.Count(); // Store this since we call it twice below
+            int resultCount = companyTotalList.Count();
+            var companyList = companyTotalList
+                .Skip((request.Query.PageNumber - 1) * request.Query.PageSize)
+                .Take(request.Query.PageSize)
+                .ToList();
 
-            result.Items = Mapper.Map<List<CompanyDto>>(companyList
-                    .Skip((request.Query.PageNumber - 1) * request.Query.PageSize)
-                    .Take(request.Query.PageSize)
-                    .ToList());
+            var favorites = _context.UserFavoriteRecord
+                .Where(x =>
+                    x.RecordType == Constants.UserFavoriteRecords.Types.Company &&
+                    x.UserId == _identity.RequestingUser.CurrentUser.UserId)
+                .Select(x => x.RecordId)
+                .ToList();
+
+            result.Items = Mapper.Map<List<CompanyDto>>(companyList);
+            result.Items
+                .Where(x => favorites.Contains(x.CompanyId))
+                .ToList()
+                .ForEach(x =>
+                {
+                    x.Favorite = true;
+                });
 
             result.PageCount = resultCount / request.Query.PageSize;
             result.TotalItemCount = resultCount;
