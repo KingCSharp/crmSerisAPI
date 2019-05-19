@@ -41,7 +41,7 @@ namespace crmSeries.Core.Features.Companies
                     Addresses = Mapper.Map<List<CompanyAssignedAddressDto>>(
                         _context.CompanyAssignedAddress
                         .Where(x => x.CompanyId == company.CompanyId).ToList()),
-                    Contacts = Mapper.Map<List<ContactDto>>(
+                    Contacts = Mapper.Map<List<GetContactDto>>(
                         _context.Contact
                         .Where(x => x.CompanyId == company.CompanyId).ToList())
                 })

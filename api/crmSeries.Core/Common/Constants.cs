@@ -24,6 +24,16 @@ namespace crmSeries.Core.Common
             public const string SsnMask = "x";
         }
 
+        public static class ErrorMessages
+        {
+            public const string EmailAddressInvalid = "The Email field is invalid.";
+            public const string PhoneInvalid = "The Phone field is invalid.";
+            public const string CellInvalid = "The Cell field is invalid.";
+            public const string FaxInvalid = "The Fax field is invalid.";
+            public const string CompanyPhoneInvalid = "The Company Phone field is invalid.";
+            public const string PhoneOrEmailRequired = "You must submit either phone number or E-Mail.";
+        }
+
         public static class Emails
         {
             public static class Leads

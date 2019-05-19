@@ -21,6 +21,6 @@ namespace crmSeries.Core.Features.Companies.Dtos
         /// <summary>
         /// The contacts for the company.
         /// </summary>
-        public List<ContactDto> Contacts { get; set; }
+        public List<GetContactDto> Contacts { get; set; }
     }
 }

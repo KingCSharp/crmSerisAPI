@@ -1,17 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace crmSeries.Core.Features.Contacts.Dtos
+﻿namespace crmSeries.Core.Features.Contacts.Dtos
 {
-    public class ContactDto
+    public class BaseContactDto
     {
-
-        /// <summary>
-        /// The contact identifier.
-        /// </summary>
-        public int ContactId { get; set; }
-        
         /// <summary>
         /// The company identifier.
         /// </summary>
@@ -71,6 +61,26 @@ namespace crmSeries.Core.Features.Contacts.Dtos
         /// The department the contact works in.
         /// </summary>
         public string Department { get; set; }
+    }
+
+    public class GetContactDto : BaseContactDto
+    {
+        /// <summary>
+        /// The contact identifier.
+        /// </summary>
+        public int ContactId { get; set; }
+    }
+
+    public class AddContactDto : BaseContactDto
+    {
+    }
+
+    public class EditContactDto : BaseContactDto
+    {
+        /// <summary>
+        /// The contact identifier.
+        /// </summary>
+        public int ContactId { get; set; }
 
         /// <summary>
         /// The flag for soft deletion.
@@ -81,10 +91,5 @@ namespace crmSeries.Core.Features.Contacts.Dtos
         /// The flag for whether this contact is active or not.
         /// </summary>
         public bool Active { get; set; }
-
-        /// <summary>
-        /// The date this contact was last modified.
-        /// </summary>
-        public DateTime? LastModified { get; set; }
     }
 }
