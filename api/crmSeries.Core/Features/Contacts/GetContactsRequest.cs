@@ -14,13 +14,13 @@ using crmSeries.Core.Extensions;
 namespace crmSeries.Core.Features.Contacts
 {
     [HeavyEquipmentContext]
-    public class GetContactsRequest : IRequest<PagedQueryResult<ContactDto>>
+    public class GetContactsRequest : IRequest<PagedQueryResult<GetContactDto>>
     {
         public PagedQueryRequest PageInfo { get; set; }
     }
 
     public class GetContactsRequestHandler :
-        IRequestHandler<GetContactsRequest, PagedQueryResult<ContactDto>>
+        IRequestHandler<GetContactsRequest, PagedQueryResult<GetContactDto>>
     {
         private readonly HeavyEquipmentContext _context;
         private readonly IIdentityUserContext _identity;
@@ -32,9 +32,9 @@ namespace crmSeries.Core.Features.Contacts
             _identity = identity;
         }
         
-        public Task<Response<PagedQueryResult<ContactDto>>> HandleAsync(GetContactsRequest request)
+        public Task<Response<PagedQueryResult<GetContactDto>>> HandleAsync(GetContactsRequest request)
         {
-            var result = new PagedQueryResult<ContactDto>();
+            var result = new PagedQueryResult<GetContactDto>();
 
             var contacts = (from c in _context.Contact
                     join assignedUser in _context.CompanyAssignedUser
@@ -53,12 +53,12 @@ namespace crmSeries.Core.Features.Contacts
 
             if (count > 0)
             {
-                result.Items = contacts.ProjectTo<ContactDto>().GetPagedData(request.PageInfo)
+                result.Items = contacts.ProjectTo<GetContactDto>().GetPagedData(request.PageInfo)
                     .ToList();
             }
             else
             {
-                result.Items = new List<ContactDto>();
+                result.Items = new List<GetContactDto>();
             }
 
             return result.AsResponseAsync();

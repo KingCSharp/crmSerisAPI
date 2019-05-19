@@ -17,7 +17,7 @@ namespace crmSeries.API.Controllers
         /// </summary>
         /// <param name="paginationInfo">The paging information for this request.</param>
         [HttpGet]
-        [Produces(typeof(PagedQueryResult<ContactDto>))]
+        [Produces(typeof(PagedQueryResult<GetContactDto>))]
         public Task<IActionResult> Get(PagedQueryRequest paginationInfo)
         {
             return HandleAsync(new GetContactsRequest
@@ -31,17 +31,30 @@ namespace crmSeries.API.Controllers
         /// </summary>
         /// <param name="id">The unqiue identifier of the contact.</param>
         [HttpGet("{id}")]
-        [Produces(typeof(ContactDto))]
+        [Produces(typeof(GetContactDto))]
         public Task<IActionResult> GetContactsById(int id)
         {
             return HandleAsync(new GetContactByIdRequest(id));
         }
 
-        [HttpPut]
-        [Produces(typeof(Response<ContactDto>))]
-        public ActionResult Edit(int id, [FromBody]ContactDto contact)
+        /// <summary>
+        /// Adds a contact object based on the data in the request.
+        /// </summary>
+        [HttpPost]
+        [Produces(typeof(Response<AddResponse>))]
+        public Task<IActionResult> Post([FromBody]AddContactRequest request)
         {
-            return Ok();
+            return HandleAsync(request);
+        }
+
+        /// <summary>
+        /// Updates a contact object based on the data in the request.
+        /// </summary>
+        [HttpPut]
+        [Produces(typeof(Response<EditContactDto>))]
+        public Task<IActionResult> Edit([FromBody]EditContactRequest request)
+        {
+            return HandleAsync(request);
         }
         
         /// <summary>

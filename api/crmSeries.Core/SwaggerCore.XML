@@ -224,84 +224,84 @@
             Flag for soft deletion.
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.Contacts.Dtos.ContactDto.ContactId">
-            <summary>
-            The contact identifier.
-            </summary>
-        </member>
-        <member name="P:crmSeries.Core.Features.Contacts.Dtos.ContactDto.CompanyId">
+        <member name="P:crmSeries.Core.Features.Contacts.Dtos.BaseContactDto.CompanyId">
             <summary>
             The company identifier.
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.Contacts.Dtos.ContactDto.FirstName">
+        <member name="P:crmSeries.Core.Features.Contacts.Dtos.BaseContactDto.FirstName">
             <summary>
             First name for the contact.
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.Contacts.Dtos.ContactDto.MiddleName">
+        <member name="P:crmSeries.Core.Features.Contacts.Dtos.BaseContactDto.MiddleName">
             <summary>
             Middle name for the contact.
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.Contacts.Dtos.ContactDto.LastName">
+        <member name="P:crmSeries.Core.Features.Contacts.Dtos.BaseContactDto.LastName">
             <summary>
             Last name for the contact.
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.Contacts.Dtos.ContactDto.NickName">
+        <member name="P:crmSeries.Core.Features.Contacts.Dtos.BaseContactDto.NickName">
             <summary>
             The nickname/alias for the contact.
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.Contacts.Dtos.ContactDto.Phone">
+        <member name="P:crmSeries.Core.Features.Contacts.Dtos.BaseContactDto.Phone">
             <summary>
             The contact's phone number.
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.Contacts.Dtos.ContactDto.Cell">
+        <member name="P:crmSeries.Core.Features.Contacts.Dtos.BaseContactDto.Cell">
             <summary>
             The contact's cell phone number.
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.Contacts.Dtos.ContactDto.Fax">
+        <member name="P:crmSeries.Core.Features.Contacts.Dtos.BaseContactDto.Fax">
             <summary>
             The contact's fax number.
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.Contacts.Dtos.ContactDto.Email">
+        <member name="P:crmSeries.Core.Features.Contacts.Dtos.BaseContactDto.Email">
             <summary>
             The contact's email address.
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.Contacts.Dtos.ContactDto.Title">
+        <member name="P:crmSeries.Core.Features.Contacts.Dtos.BaseContactDto.Title">
             <summary>
             The contact's title. E.g., Mr., Mrs., etc.
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.Contacts.Dtos.ContactDto.Position">
+        <member name="P:crmSeries.Core.Features.Contacts.Dtos.BaseContactDto.Position">
             <summary>
             The contact's position in their company.
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.Contacts.Dtos.ContactDto.Department">
+        <member name="P:crmSeries.Core.Features.Contacts.Dtos.BaseContactDto.Department">
             <summary>
             The department the contact works in.
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.Contacts.Dtos.ContactDto.Deleted">
+        <member name="P:crmSeries.Core.Features.Contacts.Dtos.GetContactDto.ContactId">
+            <summary>
+            The contact identifier.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Contacts.Dtos.EditContactDto.ContactId">
+            <summary>
+            The contact identifier.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Contacts.Dtos.EditContactDto.Deleted">
             <summary>
             The flag for soft deletion.
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.Contacts.Dtos.ContactDto.Active">
+        <member name="P:crmSeries.Core.Features.Contacts.Dtos.EditContactDto.Active">
             <summary>
             The flag for whether this contact is active or not.
-            </summary>
-        </member>
-        <member name="P:crmSeries.Core.Features.Contacts.Dtos.ContactDto.LastModified">
-            <summary>
-            The date this contact was last modified.
             </summary>
         </member>
         <member name="T:crmSeries.Core.Features.Leads.Dtos.AddLeadDto">

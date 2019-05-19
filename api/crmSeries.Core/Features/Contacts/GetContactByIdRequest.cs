@@ -10,7 +10,7 @@ using FluentValidation;
 namespace crmSeries.Core.Features.Contacts
 {
     [HeavyEquipmentContext]
-    public class GetContactByIdRequest : IRequest<ContactDto>
+    public class GetContactByIdRequest : IRequest<GetContactDto>
     {
         public GetContactByIdRequest(int contactId)
         {
@@ -19,7 +19,7 @@ namespace crmSeries.Core.Features.Contacts
         public int ContactId { get; private set; }
     }
 
-    public class GetContactByIdHandler : IRequestHandler<GetContactByIdRequest, ContactDto>
+    public class GetContactByIdHandler : IRequestHandler<GetContactByIdRequest, GetContactDto>
     {
         private readonly HeavyEquipmentContext _context;
 
@@ -28,10 +28,10 @@ namespace crmSeries.Core.Features.Contacts
             _context = context;
         }
 
-        public Task<Response<ContactDto>> HandleAsync(GetContactByIdRequest request)
+        public Task<Response<GetContactDto>> HandleAsync(GetContactByIdRequest request)
         {
             return _context.Contact
-                .ProjectTo<ContactDto>()
+                .ProjectTo<GetContactDto>()
                 .SingleOrDefault(x => x.ContactId == request.ContactId)
                 .AsResponseAsync();
         }
