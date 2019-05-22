@@ -1,19 +1,19 @@
-﻿using System;
-using FluentValidation;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using SimpleInjector;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Net;
 using System.Reflection;
-using crmSeries.Core.Common;
 using crmSeries.Core.Data;
+using crmSeries.Core.Features.DocuSign;
 using crmSeries.Core.Logging;
 using crmSeries.Core.Mediator.BackgroundJobs;
 using crmSeries.Core.Mediator.Configuration;
-using crmSeries.Core.Security;
-using Microsoft.Extensions.DependencyInjection;
 using crmSeries.Core.Notifications.Email;
+using crmSeries.Core.Security;
+using DocuSign.eSign.Client;
+using FluentValidation;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using SimpleInjector;
 
 namespace crmSeries.Core.Configuration
 {
@@ -41,6 +41,7 @@ namespace crmSeries.Core.Configuration
             ConfigureLogging(container);
             ConfigureMediator(container, configAssemblies);
             ConfigureEmailNotifier(container, config);
+            ConfigureDocuSign(container, config);
         }
 
         private static void ConfigureEmailNotifier(Container container, IConfiguration config)
@@ -112,6 +113,16 @@ namespace crmSeries.Core.Configuration
             container.Register(() => new BackgroundJobContext(false));
 
             container.Register(typeof(IValidator<>), configAssemblies);
+        }
+
+        private static void ConfigureDocuSign(Container container, IConfiguration config)
+        {
+            var client = new ApiClient();
+            client.SetOAuthBasePath(config["DocuSign:AuthServer"]);
+
+            container.Register<IDocuSignClient, DocuSignClient>();
+            container.RegisterInstance(new DocuSignContext());
+            container.RegisterInstance(new DocuSignClientAccessor() { Client = client });
         }
     }
 }

@@ -474,6 +474,88 @@
             The last name of the contact for this lead.  Maximum length: 50
             </summary>
         </member>
+        <member name="T:crmSeries.Core.Features.DocuSign.TemplateDto">
+            <summary>
+            Contains the necessary information to identify a DocuSign template.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.DocuSign.TemplateDto.TemplateId">
+            <summary>
+            The template's DocuSign identifier (UUID)
+            </summary>
+        </member>
+        <member name="T:crmSeries.Core.Features.DocuSign.TemplateRecipientDto">
+            <summary>
+            Contains the necessary information to identify a recipient of a DocuSign template.
+            </summary>
+        </member>
+        <member name="T:crmSeries.Core.Features.DocuSign.TemplateGetDto">
+            <summary>
+            Contains information about a DocuSign template.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.DocuSign.DocuSignTemplate.TemplateId">
+            <summary>
+            The template's DocuSign identifier (UUID)
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.DocuSign.DocuSignTemplate.Name">
+            <summary>
+            The template's display name
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.DocuSign.DocuSignTemplate.Description">
+            <summary>
+            The template's Message
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.DocuSign.DocuSignTemplate.FolderId">
+            <summary>
+            The template's DocuSign folder identifier (UUID)
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.DocuSign.DocuSignTemplate.FolderName">
+            <summary>
+            The template's folder name
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.DocuSign.DocuSignTemplate.CreatedDate">
+            <summary>
+            The date and time the template was created
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.DocuSign.DocuSignTemplate.LastModifiedDate">
+            <summary>
+            The date and time the template was last modified
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.DocuSign.DocuSignTemplateRecipient.Role">
+            <summary>
+            The recipient's Template Role
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.DocuSign.DocuSignTemplateRecipient.Name">
+            <summary>
+            The recipient's name
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.DocuSign.DocuSignTemplateRecipient.Email">
+            <summary>
+            The recipient's email address
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.DocuSign.SendTemplateRequest.Template">
+            <summary>
+            The DocuSign template that will be sent to the recipients.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.DocuSign.SendTemplateRequest.Recipients">
+            <summary>
+            A list of recipients to whom the DocuSign template will be sent.
+            Each recipient will be sent an email requesting his or her signature after the previous 
+            signatory has completed his or her template role.
+            </summary>
+        </member>
         <member name="P:crmSeries.Core.Features.Workflows.ExecuteWorkflowRuleRequest.Module">
             <summary>
             The type of module we are executing the workflow against.

@@ -79,5 +79,17 @@
             <remarks>Along with name, this API requires that either phone number or E-Mail be passed into the
             request.</remarks>
         </member>
+        <member name="M:crmSeries.API.Controllers.TemplatesController.ListTemplates">
+            <summary>
+            Retrieves a list of available DocuSign templates
+            </summary>
+            <returns>List of available templates</returns>
+        </member>
+        <member name="M:crmSeries.API.Controllers.TemplatesController.SendTemplate(crmSeries.Core.Features.DocuSign.SendTemplateRequest)">
+            <summary>
+            Emails a DocuSign template to a chain of signatories
+            </summary>
+            <param name="request">The SendTemplateRequest request object</param>
+        </member>
     </members>
 </doc>
