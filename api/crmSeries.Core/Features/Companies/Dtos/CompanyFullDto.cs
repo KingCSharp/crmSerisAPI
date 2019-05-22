@@ -11,7 +11,7 @@ namespace crmSeries.Core.Features.Companies.Dtos
         /// <summary>
         /// The company details.
         /// </summary>
-        public CompanyDto Details { get; set; }
+        public GetCompanyDto Details { get; set; }
 
         /// <summary>
         /// The addresses for the company.

@@ -7,7 +7,7 @@ using crmSeries.Core.Security;
 using NUnit.Framework;
 
 
-namespace crmSeries.Core.Tests.Companies
+namespace crmSeries.Core.Tests.Features.Companies
 {
     [TestFixture]
     public class GetAllCompaniesPagedRequestHandlerTests : BaseUnitTest

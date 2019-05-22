@@ -5,7 +5,7 @@ using crmSeries.Core.Features.Companies.Utility;
 using NUnit.Framework;
 
 
-namespace crmSeries.Core.Tests.Companies
+namespace crmSeries.Core.Tests.Features.Companies
 {
     [TestFixture]
     public class GetCompanyFullRequestHandlerTests : BaseUnitTest
@@ -20,7 +20,7 @@ namespace crmSeries.Core.Tests.Companies
             {
                 context.Company.Add(new Company { CompanyId = 1 });
                 context.CompanyAssignedAddress.Add(new CompanyAssignedAddress { AddressId = 1, CompanyId = 1 });
-                context.Contact.Add(new Contact { ContactId = 1, CompanyId = 1 });
+                context.Contact.Add(new Contact { ContactId = 1, CompanyId = 1, Active = true, Deleted = false });
                 context.SaveChanges();
 
                 var handler = new GetCompanyFullRequestHandler(context);
@@ -54,7 +54,7 @@ namespace crmSeries.Core.Tests.Companies
                 Assert.AreEqual(response.Result.HasErrors, true);
                 Assert.IsNull(response.Result.Data);
                 Assert.AreEqual(response.Result.Errors[0].ErrorMessage, 
-                    CompaniesConstants.ErrorMessages.CompanyIdNotValid);
+                    CompaniesConstants.ErrorMessages.CompanyNotFound);
             }
         }
     }

@@ -43,6 +43,22 @@
             </summary>
             <param name="id">The id of the company.</param>
         </member>
+        <member name="M:crmSeries.API.Controllers.CompaniesController.Post(crmSeries.Core.Features.Companies.AddCompanyRequest)">
+            <summary>
+            Adds a company object based on the data in the request.
+            </summary>
+        </member>
+        <member name="M:crmSeries.API.Controllers.CompaniesController.Edit(crmSeries.Core.Features.Companies.EditCompanyRequest)">
+            <summary>
+            Updates a company object based on the data in the request.
+            </summary>
+        </member>
+        <member name="M:crmSeries.API.Controllers.CompaniesController.Delete(System.Int32)">
+            <summary>
+            Sets the company to deleted.
+            </summary>
+            <param name="id">The unique identifier of the contact</param>
+        </member>
         <member name="M:crmSeries.API.Controllers.ContactsController.Get(crmSeries.Core.Logic.Queries.PagedQueryRequest)">
             <summary>
             Gets a list of all contacts assigned to the current user.

@@ -10,16 +10,17 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using crmSeries.Core.Common;
+using AutoMapper.QueryableExtensions;
 
 namespace crmSeries.Core.Features.Companies
 {
     [HeavyEquipmentContext]
-    public class GetCompaniesPagedRequest : IRequest<PagedQueryResult<CompanyDto>>
+    public class GetCompaniesPagedRequest : IRequest<PagedQueryResult<GetCompanyDto>>
     {
         public PagedQueryRequest Query { get; set; }
     }
 
-    public class GetCompaniesPagedRequestHandler : IRequestHandler<GetCompaniesPagedRequest, PagedQueryResult<CompanyDto>>
+    public class GetCompaniesPagedRequestHandler : IRequestHandler<GetCompaniesPagedRequest, PagedQueryResult<GetCompanyDto>>
     {
         private readonly HeavyEquipmentContext _context;
         private readonly IIdentityUserContext _identity;
@@ -30,15 +31,17 @@ namespace crmSeries.Core.Features.Companies
             _identity = identity;
         }
 
-        public Task<Response<PagedQueryResult<CompanyDto>>> HandleAsync(GetCompaniesPagedRequest request)
+        public Task<Response<PagedQueryResult<GetCompanyDto>>> HandleAsync(GetCompaniesPagedRequest request)
         {
-            var result = new PagedQueryResult<CompanyDto>();
+            var result = new PagedQueryResult<GetCompanyDto>();
 
             var companyTotalList = (from companies in _context.Company
                                join assignedUser in _context.CompanyAssignedUser
                                 on companies.CompanyId equals assignedUser.CompanyId
                                where assignedUser.UserId == _identity.RequestingUser.CurrentUser.UserId
+                               && !companies.Deleted
                                select companies)
+                .ProjectTo<GetCompanyDto>()
                 .OrderBy(x => x.CompanyId)
                 .Distinct();
 
@@ -55,7 +58,7 @@ namespace crmSeries.Core.Features.Companies
                 .Select(x => x.RecordId)
                 .ToList();
 
-            result.Items = Mapper.Map<List<CompanyDto>>(companyList);
+            result.Items = companyList;
             result.Items
                 .Where(x => favorites.Contains(x.CompanyId))
                 .ToList()

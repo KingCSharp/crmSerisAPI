@@ -38,7 +38,7 @@ namespace crmSeries.Core.Features.Contacts
             var exists = _context.Set<Company>().Any(x => x.CompanyId == request.CompanyId);
             if (!exists)
             {
-                return Response.ErrorAsync(CompaniesConstants.ErrorMessages.CompanyIdNotValid);
+                return Response.ErrorAsync(CompaniesConstants.ErrorMessages.CompanyNotFound);
             }
             
             var contactEntity = request.MapTo<Contact>();

@@ -4,7 +4,7 @@ using crmSeries.Core.Features.Companies;
 using NUnit.Framework;
 using System.Linq;
 
-namespace crmSeries.Core.Tests.Companies
+namespace crmSeries.Core.Tests.Features.Companies
 {
     [TestFixture]
     public class GetCompaniesFullRequestHandlerTests : BaseUnitTest

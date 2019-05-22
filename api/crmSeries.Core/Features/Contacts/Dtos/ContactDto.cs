@@ -78,6 +78,11 @@ namespace crmSeries.Core.Features.Contacts.Dtos
         public string CompanyName { get; set; }
 
         /// <summary>
+        /// The account number for the company associated with this contact.
+        /// </summary>
+        public string AccountNo { get; set; }
+
+        /// <summary>
         /// The flag for soft deletion.
         /// </summary>
         public bool Deleted { get; set; }

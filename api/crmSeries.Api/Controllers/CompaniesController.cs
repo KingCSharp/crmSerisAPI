@@ -4,6 +4,7 @@ using crmSeries.Api.Controllers;
 using crmSeries.Core.Features.Companies;
 using crmSeries.Core.Features.Companies.Dtos;
 using crmSeries.Core.Logic.Queries;
+using crmSeries.Core.Mediator;
 using Microsoft.AspNetCore.Mvc;
 
 namespace crmSeries.API.Controllers
@@ -18,7 +19,7 @@ namespace crmSeries.API.Controllers
         /// <param name="pagedQuery">Contains information for the current page and page count.</param>
         // GET: api/companies/paged
         [HttpGet]
-        [Produces(typeof(PagedQueryResult<CompanyDto>))]
+        [Produces(typeof(PagedQueryResult<GetCompanyDto>))]
         [Route("paged")]
         public Task<IActionResult> GetPagedCompanies(PagedQueryRequest pagedQuery)
         {
@@ -92,7 +93,7 @@ namespace crmSeries.API.Controllers
         /// <param name="id">The id of the company.</param>
         // GET: api/companies/id
         [HttpGet]
-        [Produces(typeof(CompanyDto))]
+        [Produces(typeof(GetCompanyDto))]
         [Route("{id:int}")]
         public Task<IActionResult> GetCompany(int id)
         {
@@ -116,6 +117,37 @@ namespace crmSeries.API.Controllers
             {
                 CompanyId = id
             });
+        }
+
+        /// <summary>
+        /// Adds a company object based on the data in the request.
+        /// </summary>
+        [HttpPost]
+        [Produces(typeof(Response<AddResponse>))]
+        public Task<IActionResult> Post([FromBody]AddCompanyRequest request)
+        {
+            return HandleAsync(request);
+        }
+
+        /// <summary>
+        /// Updates a company object based on the data in the request.
+        /// </summary>
+        [HttpPut]
+        [Produces(typeof(Response<EditCompanyDto>))]
+        public Task<IActionResult> Edit([FromBody]EditCompanyRequest request)
+        {
+            return HandleAsync(request);
+        }
+
+        /// <summary>
+        /// Sets the company to deleted.
+        /// </summary>
+        /// <param name="id">The unique identifier of the contact</param>
+        [HttpDelete]
+        [Produces(typeof(Response))]
+        public Task<IActionResult> Delete(int id)
+        {
+            return HandleAsync(new DeleteCompanyRequest(id));
         }
     }
 }

@@ -13,6 +13,7 @@ using AutoMapper;
 using crmSeries.Core.Features.CompanyAssignedAddresses.Dtos;
 using crmSeries.Core.Features.Contacts.Dtos;
 using crmSeries.Core.Common;
+using AutoMapper.QueryableExtensions;
 
 namespace crmSeries.Core.Features.Companies
 {
@@ -45,6 +46,7 @@ namespace crmSeries.Core.Features.Companies
                                    join assignedUser in _context.CompanyAssignedUser
                                     on companies.CompanyId equals assignedUser.CompanyId
                                    where assignedUser.UserId == _identity.RequestingUser.CurrentUser.UserId
+                                   && !companies.Deleted
                                    select companies)
                     .OrderBy(x => x.CompanyId)
                     .Distinct();
@@ -52,6 +54,7 @@ namespace crmSeries.Core.Features.Companies
                 int resultCount = companyTotalList.Count();
 
                 var companyList = companyTotalList
+                    .ProjectTo<GetCompanyDto>()
                     .Skip((request.Query.PageNumber - 1) * request.Query.PageSize)
                     .Take(request.Query.PageSize)
                     .ToList();
@@ -67,15 +70,34 @@ namespace crmSeries.Core.Features.Companies
                 {
                     var companyDto = new CompanyFullDto
                     {
-                        Details = Mapper.Map<CompanyDto>(company),
-                        Addresses = Mapper.Map<List<CompanyAssignedAddressDto>>(
-                            _context.CompanyAssignedAddress
-                            .Where(x => x.CompanyId == company.CompanyId)
-                            .ToList()),
-                        Contacts = Mapper.Map<List<GetContactDto>>(
-                            _context.Contact
-                            .Where(x => x.CompanyId == company.CompanyId)
-                            .ToList())
+                        Details = company,
+                        Addresses = _context.CompanyAssignedAddress
+                            .ProjectTo<CompanyAssignedAddressDto>()
+                            .Where(x => x.CompanyId == company.CompanyId && !x.Deleted)
+                            .ToList(),
+                        Contacts = _context.Contact
+                            .Where(x => x.CompanyId == company.CompanyId && !x.Deleted && x.Active)
+                            .Select(x => new
+                            {
+                                x.ContactId,
+                                x.CompanyId,
+                                x.FirstName,
+                                x.MiddleName,
+                                x.LastName,
+                                x.NickName,
+                                x.Phone,
+                                x.Cell,
+                                x.Fax,
+                                x.Email,
+                                x.Title,
+                                x.Position,
+                                x.Department,
+                                x.LastModified,
+                                company.CompanyName,
+                                company.AccountNo
+                            })
+                            .ProjectTo<GetContactDto>()
+                            .ToList()
                     };
                     companyDto.Details.Favorite = favorites.Contains(company.CompanyId);
                     resultList.Add(companyDto);

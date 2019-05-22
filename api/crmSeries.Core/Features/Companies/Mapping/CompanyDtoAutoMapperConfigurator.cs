@@ -8,8 +8,16 @@ namespace crmSeries.Core.Features.Companies.Mapping
     {
         public CompanyDtoAutoMapperConfigurator()
         {
-            CreateMap<Company, CompanyDto>();
-            CreateMap<CompanyDto, Company>();
+            CreateMap<Company, GetCompanyDto>();
+            CreateMap<GetCompanyDto, Company>();
+
+            CreateMap<AddCompanyRequest, Company>()
+                .ForMember(x => x.CompanyId, options => options.Ignore())
+                .ForMember(x => x.Deleted, options => options.Ignore())
+                .ForMember(x => x.LastModified, options => options.Ignore());
+
+            CreateMap<EditCompanyRequest, Company>()
+                .ForMember(x => x.LastModified, options => options.Ignore());
         }
     }
 }

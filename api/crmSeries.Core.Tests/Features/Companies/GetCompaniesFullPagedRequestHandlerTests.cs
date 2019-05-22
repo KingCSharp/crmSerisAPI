@@ -4,7 +4,7 @@ using crmSeries.Core.Features.Companies;
 using crmSeries.Core.Logic.Queries;
 using NUnit.Framework;
 
-namespace crmSeries.Core.Tests.Companies
+namespace crmSeries.Core.Tests.Features.Companies
 {
     [TestFixture]
     public class GetCompaniesFullPagedRequestHandlerTests : BaseUnitTest
@@ -26,7 +26,7 @@ namespace crmSeries.Core.Tests.Companies
                     context.Company.Add(new Company { CompanyId = i });
                     context.CompanyAssignedAddress.Add(
                         new CompanyAssignedAddress { AddressId = i, CompanyId = i });
-                    context.Contact.Add(new Contact { ContactId = i, CompanyId = i });
+                    context.Contact.Add(new Contact { ContactId = i, CompanyId = i, Active = true });
                     context.CompanyAssignedUser.Add(new CompanyAssignedUser
                     {
                         CompanyId = i,

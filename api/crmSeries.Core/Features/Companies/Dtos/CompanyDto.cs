@@ -4,14 +4,8 @@ using System.Text;
 
 namespace crmSeries.Core.Features.Companies.Dtos
 {
-    public class CompanyDto
+    public class BaseCompanyDto
     {
-
-        /// <summary>
-        /// The company identifier.
-        /// </summary>
-        public int CompanyId { get; set; }
-
         /// <summary>
         /// The parent node identifier.
         /// </summary>
@@ -118,11 +112,6 @@ namespace crmSeries.Core.Features.Companies.Dtos
         public bool Linked { get; set; }
 
         /// <summary>
-        /// Flag for soft deletion.
-        /// </summary>
-        public bool Deleted { get; set; }
-
-        /// <summary>
         /// The source of the company. E.g., Cold Call, Website, Email Marketing, etc.
         /// </summary>
         public int SourceId { get; set; }
@@ -131,6 +120,19 @@ namespace crmSeries.Core.Features.Companies.Dtos
         /// The status of the company. E.g., Account, Prospect, etc.
         /// </summary>
         public string Status { get; set; }
+    }
+
+    public class GetCompanyDto : BaseCompanyDto
+    {
+        /// <summary>
+        /// The company identifier.
+        /// </summary>
+        public int CompanyId { get; set; }        
+
+        /// <summary>
+        /// Flag for soft deletion.
+        /// </summary>
+        public bool Deleted { get; set; }        
 
         /// <summary>
         /// The date that the company information was last modified.
@@ -141,5 +143,23 @@ namespace crmSeries.Core.Features.Companies.Dtos
         /// Flag for if this company record is set as a favorite by the user.
         /// </summary>
         public bool Favorite { get; set; }
+    }
+
+    public class EditCompanyDto : BaseCompanyDto
+    {
+        /// <summary>
+        /// The company identifier.
+        /// </summary>
+        public int CompanyId { get; set; }
+
+        /// <summary>
+        /// Flag for soft deletion.
+        /// </summary>
+        public bool Deleted { get; set; }
+    }
+
+    public class AddCompanyDto : BaseCompanyDto
+    {
+
     }
 }

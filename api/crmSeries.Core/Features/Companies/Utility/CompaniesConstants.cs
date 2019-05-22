@@ -9,7 +9,7 @@ namespace crmSeries.Core.Features.Companies.Utility
         public static class ErrorMessages
         {
             public const string UserNotFoundWithEmail = "No user was found with the provided email.";
-            public const string CompanyIdNotValid = "No company was found with the specified ID.";
+            public const string CompanyNotFound = "No company with this id found.";
         }
     }
 }

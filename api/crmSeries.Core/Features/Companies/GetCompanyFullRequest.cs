@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using crmSeries.Core.Data;
 using crmSeries.Core.Domain.HeavyEquipment;
 using crmSeries.Core.Features.Companies.Dtos;
@@ -32,25 +33,45 @@ namespace crmSeries.Core.Features.Companies
         public Task<Response<CompanyFullDto>> HandleAsync(GetCompanyFullRequest request)
         {
             var company = _context.Company
-                .SingleOrDefault(x => x.CompanyId == request.CompanyId);
+                .ProjectTo<GetCompanyDto>()
+                .SingleOrDefault(x => x.CompanyId == request.CompanyId && !x.Deleted);
 
             if (company == null)
                 return Response<CompanyFullDto>.ErrorAsync(new Error
                 {
-                    ErrorMessage = CompaniesConstants.ErrorMessages.CompanyIdNotValid
+                    ErrorMessage = CompaniesConstants.ErrorMessages.CompanyNotFound
                 });
             
             return new CompanyFullDto
             {
-                Details = Mapper.Map<CompanyDto>(company),
-                Addresses = Mapper.Map<List<CompanyAssignedAddressDto>>(
-                    _context.CompanyAssignedAddress
-                    .Where(x => x.CompanyId == company.CompanyId)
-                    .ToList()),
-                Contacts = Mapper.Map<List<GetContactDto>>(
-                    _context.Contact
-                    .Where(x => x.CompanyId == company.CompanyId)
-                    .ToList())
+                Details = company,
+                Addresses = _context.CompanyAssignedAddress
+                    .ProjectTo<CompanyAssignedAddressDto>()
+                    .Where(x => x.CompanyId == company.CompanyId && !x.Deleted)
+                    .ToList(),
+                Contacts = _context.Contact
+                    .Where(x => x.CompanyId == company.CompanyId && !x.Deleted && x.Active)
+                    .Select(x => new
+                    {
+                        x.ContactId,
+                        x.CompanyId,
+                        x.FirstName,
+                        x.MiddleName,
+                        x.LastName,
+                        x.NickName,
+                        x.Phone,
+                        x.Cell,
+                        x.Fax,
+                        x.Email,
+                        x.Title,
+                        x.Position,
+                        x.Department,
+                        x.LastModified,
+                        company.CompanyName,
+                        company.AccountNo
+                    })
+                    .ProjectTo<GetContactDto>()                    
+                    .ToList()
             }.AsResponseAsync();
         }
     }

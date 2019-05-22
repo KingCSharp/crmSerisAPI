@@ -4,7 +4,7 @@ using crmSeries.Core.Features.Contacts;
 using crmSeries.Core.Logic.Queries;
 using NUnit.Framework;
 
-namespace crmSeries.Core.Tests.Contacts
+namespace crmSeries.Core.Tests.Features.Contacts
 {
     [TestFixture]
     public class GetContactsRequestHandlerTests : BaseUnitTest

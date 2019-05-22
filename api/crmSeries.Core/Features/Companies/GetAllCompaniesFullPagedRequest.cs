@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using crmSeries.Core.Features.CompanyAssignedAddresses.Dtos;
 using crmSeries.Core.Features.Contacts.Dtos;
+using AutoMapper.QueryableExtensions;
 
 namespace crmSeries.Core.Features.Companies
 {
@@ -30,26 +31,56 @@ namespace crmSeries.Core.Features.Companies
 
         public Task<Response<PagedQueryResult<CompanyFullDto>>> HandleAsync(GetAllCompaniesFullPagedRequest request)
         {
-            var companyList = _context.Company.AsQueryable();
-            int resultCount = companyList.Count();
+            var companiesList = new List<CompanyFullDto>();
+            var companies = _context.Company.AsQueryable();
+            int resultCount = companies.Count();
 
-            var resultList = companyList.Skip((request.Query.PageNumber - 1) * request.Query.PageSize)
+            var resultList = companies
+                .ProjectTo<GetCompanyDto>()
+                .Where(x => !x.Deleted)
+                .Skip((request.Query.PageNumber - 1) * request.Query.PageSize)
                 .Take(request.Query.PageSize)
-                .Select(company => new CompanyFullDto
-                {
-                    Details = Mapper.Map<CompanyDto>(company),
-                    Addresses = Mapper.Map<List<CompanyAssignedAddressDto>>(
-                        _context.CompanyAssignedAddress
-                        .Where(x => x.CompanyId == company.CompanyId).ToList()),
-                    Contacts = Mapper.Map<List<GetContactDto>>(
-                        _context.Contact
-                        .Where(x => x.CompanyId == company.CompanyId).ToList())
-                })
                 .ToList();
+
+            foreach (var company in resultList)
+            {
+                var companyDto = new CompanyFullDto
+                {
+                    Details = company,
+                    Addresses = _context.CompanyAssignedAddress
+                        .ProjectTo<CompanyAssignedAddressDto>()
+                        .Where(x => x.CompanyId == company.CompanyId && !x.Deleted)
+                        .ToList(),
+                    Contacts = _context.Contact
+                        .Where(x => x.CompanyId == company.CompanyId && !x.Deleted && x.Active)
+                        .Select(x => new
+                        {
+                            x.ContactId,
+                            x.CompanyId,
+                            x.FirstName,
+                            x.MiddleName,
+                            x.LastName,
+                            x.NickName,
+                            x.Phone,
+                            x.Cell,
+                            x.Fax,
+                            x.Email,
+                            x.Title,
+                            x.Position,
+                            x.Department,
+                            x.LastModified,
+                            company.CompanyName,
+                            company.AccountNo
+                        })
+                        .ProjectTo<GetContactDto>()
+                        .ToList()
+                };
+                companiesList.Add(companyDto);
+            }                
 
             return new PagedQueryResult<CompanyFullDto>
             {
-                Items = resultList,
+                Items = companiesList,
                 PageCount = resultCount / request.Query.PageSize,
                 TotalItemCount = resultCount,
                 PageNumber = request.Query.PageNumber,

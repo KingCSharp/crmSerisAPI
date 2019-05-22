@@ -6,16 +6,17 @@ using FluentValidation;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 
 namespace crmSeries.Core.Features.Companies
 {
     [HeavyEquipmentContext]
-    public class GetCompanyRequest : IRequest<CompanyDto>
+    public class GetCompanyRequest : IRequest<GetCompanyDto>
     {
         public int CompanyId { get; set; }
     }
 
-    public class GetCompanyRequestHandler : IRequestHandler<GetCompanyRequest, CompanyDto>
+    public class GetCompanyRequestHandler : IRequestHandler<GetCompanyRequest, GetCompanyDto>
     {
         private readonly HeavyEquipmentContext _context;
         public GetCompanyRequestHandler(HeavyEquipmentContext context)
@@ -23,10 +24,11 @@ namespace crmSeries.Core.Features.Companies
             _context = context;
         }
 
-        public Task<Response<CompanyDto>> HandleAsync(GetCompanyRequest request)
+        public Task<Response<GetCompanyDto>> HandleAsync(GetCompanyRequest request)
         {
-            return Mapper.Map<CompanyDto>(_context.Company
-                .SingleOrDefault(x => x.CompanyId == request.CompanyId))
+            return _context.Company
+                .ProjectTo<GetCompanyDto>()
+                .SingleOrDefault(x => x.CompanyId == request.CompanyId && !x.Deleted)
                 .AsResponseAsync();
         }
     }

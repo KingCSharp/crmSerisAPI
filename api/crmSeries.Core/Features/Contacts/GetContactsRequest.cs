@@ -61,7 +61,8 @@ namespace crmSeries.Core.Features.Contacts
                         c.Position,
                         c.Department,
                         c.LastModified,
-                        company.CompanyName
+                        company.CompanyName,
+                        company.AccountNo
                     })
                 .AsQueryable();
 

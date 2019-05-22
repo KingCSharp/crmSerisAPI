@@ -34,7 +34,7 @@ namespace crmSeries.Core.Features.Contacts
 
             if (!exists)
             {
-                var errorMessage = CompaniesConstants.ErrorMessages.CompanyIdNotValid;
+                var errorMessage = CompaniesConstants.ErrorMessages.CompanyNotFound;
                 return Response<AddResponse>.ErrorAsync(errorMessage);
             }
 

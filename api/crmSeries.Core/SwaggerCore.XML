@@ -4,139 +4,149 @@
         <name>crmSeries.Core</name>
     </assembly>
     <members>
-        <member name="P:crmSeries.Core.Features.Companies.Dtos.CompanyDto.CompanyId">
-            <summary>
-            The company identifier.
-            </summary>
-        </member>
-        <member name="P:crmSeries.Core.Features.Companies.Dtos.CompanyDto.ParentId">
+        <member name="P:crmSeries.Core.Features.Companies.Dtos.BaseCompanyDto.ParentId">
             <summary>
             The parent node identifier.
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.Companies.Dtos.CompanyDto.RecordTypeId">
+        <member name="P:crmSeries.Core.Features.Companies.Dtos.BaseCompanyDto.RecordTypeId">
             <summary>
             The record type identifier.
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.Companies.Dtos.CompanyDto.BranchId">
+        <member name="P:crmSeries.Core.Features.Companies.Dtos.BaseCompanyDto.BranchId">
             <summary>
             The company branch identifier.
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.Companies.Dtos.CompanyDto.CompanyName">
+        <member name="P:crmSeries.Core.Features.Companies.Dtos.BaseCompanyDto.CompanyName">
             <summary>
             The company name.
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.Companies.Dtos.CompanyDto.LegalName">
+        <member name="P:crmSeries.Core.Features.Companies.Dtos.BaseCompanyDto.LegalName">
             <summary>
             The company's legal name.
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.Companies.Dtos.CompanyDto.AccountNo">
+        <member name="P:crmSeries.Core.Features.Companies.Dtos.BaseCompanyDto.AccountNo">
             <summary>
             The account number for the company.
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.Companies.Dtos.CompanyDto.Address1">
+        <member name="P:crmSeries.Core.Features.Companies.Dtos.BaseCompanyDto.Address1">
             <summary>
             The company's address line 1.
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.Companies.Dtos.CompanyDto.Address2">
+        <member name="P:crmSeries.Core.Features.Companies.Dtos.BaseCompanyDto.Address2">
             <summary>
             The company's address line 2.
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.Companies.Dtos.CompanyDto.Address3">
+        <member name="P:crmSeries.Core.Features.Companies.Dtos.BaseCompanyDto.Address3">
             <summary>
             The company's address line 3.
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.Companies.Dtos.CompanyDto.City">
+        <member name="P:crmSeries.Core.Features.Companies.Dtos.BaseCompanyDto.City">
             <summary>
             The city the company is in.
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.Companies.Dtos.CompanyDto.State">
+        <member name="P:crmSeries.Core.Features.Companies.Dtos.BaseCompanyDto.State">
             <summary>
             The city the state is in.
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.Companies.Dtos.CompanyDto.Zip">
+        <member name="P:crmSeries.Core.Features.Companies.Dtos.BaseCompanyDto.Zip">
             <summary>
             The zip code the company's address is in.
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.Companies.Dtos.CompanyDto.County">
+        <member name="P:crmSeries.Core.Features.Companies.Dtos.BaseCompanyDto.County">
             <summary>
             The county/parish the company is in.
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.Companies.Dtos.CompanyDto.Country">
+        <member name="P:crmSeries.Core.Features.Companies.Dtos.BaseCompanyDto.Country">
             <summary>
             The country the company is in.
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.Companies.Dtos.CompanyDto.Mailing">
+        <member name="P:crmSeries.Core.Features.Companies.Dtos.BaseCompanyDto.Mailing">
             <summary>
             Whether the company accepts mail.
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.Companies.Dtos.CompanyDto.Latitude">
+        <member name="P:crmSeries.Core.Features.Companies.Dtos.BaseCompanyDto.Latitude">
             <summary>
             The latitude of the company's location.
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.Companies.Dtos.CompanyDto.Longitude">
+        <member name="P:crmSeries.Core.Features.Companies.Dtos.BaseCompanyDto.Longitude">
             <summary>
             The longitude of the company's location.
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.Companies.Dtos.CompanyDto.Phone">
+        <member name="P:crmSeries.Core.Features.Companies.Dtos.BaseCompanyDto.Phone">
             <summary>
             The company's phone number.
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.Companies.Dtos.CompanyDto.Fax">
+        <member name="P:crmSeries.Core.Features.Companies.Dtos.BaseCompanyDto.Fax">
             <summary>
             The company's fax number.
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.Companies.Dtos.CompanyDto.Web">
+        <member name="P:crmSeries.Core.Features.Companies.Dtos.BaseCompanyDto.Web">
             <summary>
             The company's website domain.
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.Companies.Dtos.CompanyDto.Linked">
+        <member name="P:crmSeries.Core.Features.Companies.Dtos.BaseCompanyDto.Linked">
             <summary>
             Whether the company is linked or not.
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.Companies.Dtos.CompanyDto.Deleted">
-            <summary>
-            Flag for soft deletion.
-            </summary>
-        </member>
-        <member name="P:crmSeries.Core.Features.Companies.Dtos.CompanyDto.SourceId">
+        <member name="P:crmSeries.Core.Features.Companies.Dtos.BaseCompanyDto.SourceId">
             <summary>
             The source of the company. E.g., Cold Call, Website, Email Marketing, etc.
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.Companies.Dtos.CompanyDto.Status">
+        <member name="P:crmSeries.Core.Features.Companies.Dtos.BaseCompanyDto.Status">
             <summary>
             The status of the company. E.g., Account, Prospect, etc.
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.Companies.Dtos.CompanyDto.LastModified">
+        <member name="P:crmSeries.Core.Features.Companies.Dtos.GetCompanyDto.CompanyId">
+            <summary>
+            The company identifier.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Companies.Dtos.GetCompanyDto.Deleted">
+            <summary>
+            Flag for soft deletion.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Companies.Dtos.GetCompanyDto.LastModified">
             <summary>
             The date that the company information was last modified.
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.Companies.Dtos.CompanyDto.Favorite">
+        <member name="P:crmSeries.Core.Features.Companies.Dtos.GetCompanyDto.Favorite">
             <summary>
             Flag for if this company record is set as a favorite by the user.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Companies.Dtos.EditCompanyDto.CompanyId">
+            <summary>
+            The company identifier.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Companies.Dtos.EditCompanyDto.Deleted">
+            <summary>
+            Flag for soft deletion.
             </summary>
         </member>
         <member name="P:crmSeries.Core.Features.Companies.Dtos.CompanyFullDto.Details">
@@ -152,6 +162,111 @@
         <member name="P:crmSeries.Core.Features.Companies.Dtos.CompanyFullDto.Contacts">
             <summary>
             The contacts for the company.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Contacts.Dtos.BaseContactDto.CompanyId">
+            <summary>
+            The company identifier.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Contacts.Dtos.BaseContactDto.FirstName">
+            <summary>
+            First name for the contact.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Contacts.Dtos.BaseContactDto.MiddleName">
+            <summary>
+            Middle name for the contact.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Contacts.Dtos.BaseContactDto.LastName">
+            <summary>
+            Last name for the contact.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Contacts.Dtos.BaseContactDto.NickName">
+            <summary>
+            The nickname/alias for the contact.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Contacts.Dtos.BaseContactDto.Phone">
+            <summary>
+            The contact's phone number.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Contacts.Dtos.BaseContactDto.Cell">
+            <summary>
+            The contact's cell phone number.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Contacts.Dtos.BaseContactDto.Fax">
+            <summary>
+            The contact's fax number.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Contacts.Dtos.BaseContactDto.Email">
+            <summary>
+            The contact's email address.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Contacts.Dtos.BaseContactDto.Title">
+            <summary>
+            The contact's title. E.g., Mr., Mrs., etc.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Contacts.Dtos.BaseContactDto.Position">
+            <summary>
+            The contact's position in their company.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Contacts.Dtos.BaseContactDto.Department">
+            <summary>
+            The department the contact works in.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Contacts.Dtos.GetContactDto.ContactId">
+            <summary>
+            The contact identifier.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Contacts.Dtos.GetContactDto.CompanyName">
+            <summary>
+            The company name associated with this contact.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Contacts.Dtos.GetContactDto.AccountNo">
+            <summary>
+            The account number for the company associated with this contact.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Contacts.Dtos.GetContactDto.Deleted">
+            <summary>
+            The flag for soft deletion.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Contacts.Dtos.GetContactDto.Active">
+            <summary>
+            The flag for whether this contact is active or not.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Contacts.Dtos.GetContactDto.LastModified">
+            <summary>
+            The date, if any, that the entity was modified.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Contacts.Dtos.EditContactDto.ContactId">
+            <summary>
+            The contact identifier.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Contacts.Dtos.EditContactDto.Deleted">
+            <summary>
+            The flag for soft deletion.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Contacts.Dtos.EditContactDto.Active">
+            <summary>
+            The flag for whether this contact is active or not.
             </summary>
         </member>
         <member name="P:crmSeries.Core.Features.CompanyAssignedAddresses.Dtos.CompanyAssignedAddressDto.AddressId">
@@ -227,106 +342,6 @@
         <member name="P:crmSeries.Core.Features.CompanyAssignedAddresses.Dtos.CompanyAssignedAddressDto.Deleted">
             <summary>
             Flag for soft deletion.
-            </summary>
-        </member>
-        <member name="P:crmSeries.Core.Features.Contacts.Dtos.BaseContactDto.CompanyId">
-            <summary>
-            The company identifier.
-            </summary>
-        </member>
-        <member name="P:crmSeries.Core.Features.Contacts.Dtos.BaseContactDto.FirstName">
-            <summary>
-            First name for the contact.
-            </summary>
-        </member>
-        <member name="P:crmSeries.Core.Features.Contacts.Dtos.BaseContactDto.MiddleName">
-            <summary>
-            Middle name for the contact.
-            </summary>
-        </member>
-        <member name="P:crmSeries.Core.Features.Contacts.Dtos.BaseContactDto.LastName">
-            <summary>
-            Last name for the contact.
-            </summary>
-        </member>
-        <member name="P:crmSeries.Core.Features.Contacts.Dtos.BaseContactDto.NickName">
-            <summary>
-            The nickname/alias for the contact.
-            </summary>
-        </member>
-        <member name="P:crmSeries.Core.Features.Contacts.Dtos.BaseContactDto.Phone">
-            <summary>
-            The contact's phone number.
-            </summary>
-        </member>
-        <member name="P:crmSeries.Core.Features.Contacts.Dtos.BaseContactDto.Cell">
-            <summary>
-            The contact's cell phone number.
-            </summary>
-        </member>
-        <member name="P:crmSeries.Core.Features.Contacts.Dtos.BaseContactDto.Fax">
-            <summary>
-            The contact's fax number.
-            </summary>
-        </member>
-        <member name="P:crmSeries.Core.Features.Contacts.Dtos.BaseContactDto.Email">
-            <summary>
-            The contact's email address.
-            </summary>
-        </member>
-        <member name="P:crmSeries.Core.Features.Contacts.Dtos.BaseContactDto.Title">
-            <summary>
-            The contact's title. E.g., Mr., Mrs., etc.
-            </summary>
-        </member>
-        <member name="P:crmSeries.Core.Features.Contacts.Dtos.BaseContactDto.Position">
-            <summary>
-            The contact's position in their company.
-            </summary>
-        </member>
-        <member name="P:crmSeries.Core.Features.Contacts.Dtos.BaseContactDto.Department">
-            <summary>
-            The department the contact works in.
-            </summary>
-        </member>
-        <member name="P:crmSeries.Core.Features.Contacts.Dtos.GetContactDto.ContactId">
-            <summary>
-            The contact identifier.
-            </summary>
-        </member>
-        <member name="P:crmSeries.Core.Features.Contacts.Dtos.GetContactDto.CompanyName">
-            <summary>
-            The company name associated with this contact.
-            </summary>
-        </member>
-        <member name="P:crmSeries.Core.Features.Contacts.Dtos.GetContactDto.Deleted">
-            <summary>
-            The flag for soft deletion.
-            </summary>
-        </member>
-        <member name="P:crmSeries.Core.Features.Contacts.Dtos.GetContactDto.Active">
-            <summary>
-            The flag for whether this contact is active or not.
-            </summary>
-        </member>
-        <member name="P:crmSeries.Core.Features.Contacts.Dtos.GetContactDto.LastModified">
-            <summary>
-            The date, if any, that the entity was modified.
-            </summary>
-        </member>
-        <member name="P:crmSeries.Core.Features.Contacts.Dtos.EditContactDto.ContactId">
-            <summary>
-            The contact identifier.
-            </summary>
-        </member>
-        <member name="P:crmSeries.Core.Features.Contacts.Dtos.EditContactDto.Deleted">
-            <summary>
-            The flag for soft deletion.
-            </summary>
-        </member>
-        <member name="P:crmSeries.Core.Features.Contacts.Dtos.EditContactDto.Active">
-            <summary>
-            The flag for whether this contact is active or not.
             </summary>
         </member>
         <member name="T:crmSeries.Core.Features.Leads.Dtos.AddLeadDto">
