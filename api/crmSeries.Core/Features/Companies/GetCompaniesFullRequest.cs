@@ -1,11 +1,7 @@
-﻿using AutoMapper;
-using AutoMapper.QueryableExtensions;
+﻿using AutoMapper.QueryableExtensions;
 using crmSeries.Core.Common;
 using crmSeries.Core.Data;
-using crmSeries.Core.Domain.HeavyEquipment;
 using crmSeries.Core.Features.Companies.Dtos;
-using crmSeries.Core.Features.CompanyAssignedAddresses.Dtos;
-using crmSeries.Core.Features.Contacts.Dtos;
 using crmSeries.Core.Mediator;
 using crmSeries.Core.Mediator.Attributes;
 using crmSeries.Core.Mediator.Decorators;
@@ -36,21 +32,42 @@ namespace crmSeries.Core.Features.Companies
 
         public Task<Response<IEnumerable<CompanyFullDto>>> HandleAsync(GetCompaniesFullRequest request)
         {
-            var companiesList = new List<CompanyFullDto>();
+            var companies = new List<CompanyFullDto>();
 
             if (_identity.RequestingUser.CurrentUser != null)
             {
-                var companies =
+                companies =
                     (from company in _context.Company
                      join assignedUser in _context.CompanyAssignedUser
                      on company.CompanyId equals assignedUser.CompanyId
-                     where assignedUser.UserId == _identity.RequestingUser.CurrentUser.UserId
+                     where
+                     assignedUser.UserId == _identity.RequestingUser.CurrentUser.UserId
                      && !company.Deleted
                      select company)
-                     .ProjectTo<GetCompanyDto>()
-                     .OrderBy(x => x.CompanyId)
-                     .Distinct()
-                     .ToList();
+                    .OrderBy(x => x.CompanyId)
+                    .GroupJoin(
+                        _context.CompanyAssignedAddress,
+                        company => company.CompanyId,
+                        address => address.CompanyId,
+                        (x, y) => new
+                        {
+                            Details = x,
+                            Addresses = y.Where(a => !a.Deleted)
+                        }
+                    )
+                    .GroupJoin(
+                        _context.Contact,
+                        company => company.Details.CompanyId,
+                        contact => contact.CompanyId,
+                        (x, y) => new
+                        {
+                            x.Details,
+                            x.Addresses,
+                            Contacts = y.Where(c => c.Active && !c.Deleted)
+                        }
+                    )
+                    .ProjectTo<CompanyFullDto>()
+                    .ToList();
 
                 var favorites = _context.UserFavoriteRecord
                 .Where(x =>
@@ -59,45 +76,13 @@ namespace crmSeries.Core.Features.Companies
                 .Select(x => x.RecordId)
                 .ToList();
 
-                foreach (var company in companies)
+                companies.ForEach(x =>
                 {
-                    var companyDto = new CompanyFullDto
-                    {
-                        Details = company,
-                        Addresses = _context.CompanyAssignedAddress
-                            .ProjectTo<CompanyAssignedAddressDto>()
-                            .Where(x => x.CompanyId == company.CompanyId && !x.Deleted)
-                            .ToList(),
-                        Contacts = _context.Contact
-                            .Where(x => x.CompanyId == company.CompanyId && !x.Deleted && x.Active)
-                            .Select(x => new
-                            {
-                                x.ContactId,
-                                x.CompanyId,
-                                x.FirstName,
-                                x.MiddleName,
-                                x.LastName,
-                                x.NickName,
-                                x.Phone,
-                                x.Cell,
-                                x.Fax,
-                                x.Email,
-                                x.Title,
-                                x.Position,
-                                x.Department,
-                                x.LastModified,
-                                company.CompanyName,
-                                company.AccountNo
-                            })
-                            .ProjectTo<GetContactDto>()
-                            .ToList()
-                    };
-                    companyDto.Details.Favorite = favorites.Contains(company.CompanyId);
-                    companiesList.Add(companyDto);
-                }
+                    x.Details.Favorite = favorites.Contains(x.Details.CompanyId);
+                });
             }
 
-            return companiesList.AsEnumerable().AsResponseAsync();
+            return companies.AsEnumerable().AsResponseAsync();
         }
     }
 }

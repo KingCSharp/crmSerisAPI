@@ -1,5 +1,4 @@
 ﻿using crmSeries.Core.Data;
-using crmSeries.Core.Domain.HeavyEquipment;
 using crmSeries.Core.Features.Companies.Dtos;
 using crmSeries.Core.Logic.Queries;
 using crmSeries.Core.Mediator;
@@ -9,9 +8,6 @@ using FluentValidation;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AutoMapper;
-using crmSeries.Core.Features.CompanyAssignedAddresses.Dtos;
-using crmSeries.Core.Features.Contacts.Dtos;
 using crmSeries.Core.Common;
 using AutoMapper.QueryableExtensions;
 
@@ -23,7 +19,7 @@ namespace crmSeries.Core.Features.Companies
         public PagedQueryRequest Query { get; set; }
     }
 
-    public class GetCompaniesFullPagedRequestHandler : 
+    public class GetCompaniesFullPagedRequestHandler :
         IRequestHandler<GetCompaniesFullPagedRequest, PagedQueryResult<CompanyFullDto>>
     {
         private readonly HeavyEquipmentContext _context;
@@ -37,26 +33,48 @@ namespace crmSeries.Core.Features.Companies
 
         public Task<Response<PagedQueryResult<CompanyFullDto>>> HandleAsync(GetCompaniesFullPagedRequest request)
         {
-            var resultList = new List<CompanyFullDto>();
+            var companies = new List<CompanyFullDto>();
             var result = new PagedQueryResult<CompanyFullDto>();
 
             if (_identity.RequestingUser.CurrentUser != null)
             {
-                var companyTotalList = (from companies in _context.Company
-                                   join assignedUser in _context.CompanyAssignedUser
-                                    on companies.CompanyId equals assignedUser.CompanyId
-                                   where assignedUser.UserId == _identity.RequestingUser.CurrentUser.UserId
-                                   && !companies.Deleted
-                                   select companies)
-                    .OrderBy(x => x.CompanyId)
-                    .Distinct();
+                var companyTotalList =
+                    (from company in _context.Company
+                     join assignedUser in _context.CompanyAssignedUser
+                     on company.CompanyId equals assignedUser.CompanyId
+                     where
+                     assignedUser.UserId == _identity.RequestingUser.CurrentUser.UserId
+                     && !company.Deleted
+                     select company)
+                    .OrderBy(x => x.CompanyId);
 
                 int resultCount = companyTotalList.Count();
 
-                var companyList = companyTotalList
-                    .ProjectTo<GetCompanyDto>()
+                companies = companyTotalList
                     .Skip((request.Query.PageNumber - 1) * request.Query.PageSize)
                     .Take(request.Query.PageSize)
+                    .GroupJoin(
+                        _context.CompanyAssignedAddress,
+                        company => company.CompanyId,
+                        address => address.CompanyId,
+                        (x, y) => new
+                        {
+                            Details = x,
+                            Addresses = y.Where(a => !a.Deleted)
+                        }
+                    )
+                    .GroupJoin(
+                        _context.Contact,
+                        company => company.Details.CompanyId,
+                        contact => contact.CompanyId,
+                        (x, y) => new
+                        {
+                            x.Details,
+                            x.Addresses,
+                            Contacts = y.Where(c => c.Active && !c.Deleted)
+                        }
+                    )
+                    .ProjectTo<CompanyFullDto>()
                     .ToList();
 
                 var favorites = _context.UserFavoriteRecord
@@ -66,44 +84,12 @@ namespace crmSeries.Core.Features.Companies
                 .Select(x => x.RecordId)
                 .ToList();
 
-                foreach (var company in companyList)
+                companies.ForEach(x =>
                 {
-                    var companyDto = new CompanyFullDto
-                    {
-                        Details = company,
-                        Addresses = _context.CompanyAssignedAddress
-                            .ProjectTo<CompanyAssignedAddressDto>()
-                            .Where(x => x.CompanyId == company.CompanyId && !x.Deleted)
-                            .ToList(),
-                        Contacts = _context.Contact
-                            .Where(x => x.CompanyId == company.CompanyId && !x.Deleted && x.Active)
-                            .Select(x => new
-                            {
-                                x.ContactId,
-                                x.CompanyId,
-                                x.FirstName,
-                                x.MiddleName,
-                                x.LastName,
-                                x.NickName,
-                                x.Phone,
-                                x.Cell,
-                                x.Fax,
-                                x.Email,
-                                x.Title,
-                                x.Position,
-                                x.Department,
-                                x.LastModified,
-                                company.CompanyName,
-                                company.AccountNo
-                            })
-                            .ProjectTo<GetContactDto>()
-                            .ToList()
-                    };
-                    companyDto.Details.Favorite = favorites.Contains(company.CompanyId);
-                    resultList.Add(companyDto);
-                }
+                    x.Details.Favorite = favorites.Contains(x.Details.CompanyId);
+                });
 
-                result.Items = resultList;
+                result.Items = companies;
                 result.PageCount = resultCount / request.Query.PageSize;
                 result.TotalItemCount = resultCount;
                 result.PageNumber = request.Query.PageNumber;
