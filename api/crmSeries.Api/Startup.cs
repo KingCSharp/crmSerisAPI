@@ -25,11 +25,12 @@ namespace crmSeries.Api
         {
             SimpleInjectorConfig.ConfigureServices(services, _configuration);
             CorsConfig.ConfigureServices(services);
-            AuthConfig.ConfigureServices(services);
+            AuthorizationConfig.ConfigureServices(services);
+            AuthenticationConfig.ConfigureServices(services, _configuration);
             DatabaseConfig.ConfigureServices(services, _configuration);
+            IdentityServerConfig.ConfigureServices(services, _configuration);
             MvcConfig.ConfigureServices(services);
             SwaggerConfig.ConfigureServices(services);
-            IdentityServerConfig.ConfigureServices(services);
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -38,12 +39,13 @@ namespace crmSeries.Api
             SimpleInjectorConfig.Configure(app);
             RewriteConfig.Configure(app, env);
             CorsConfig.Configure(app, _configuration, env);
+            AuthenticationConfig.Configure(app);
             MvcConfig.Configure(app, env);
             SwaggerConfig.Configure(app, env);
             FluentValidationConfig.Configure();
+            IdentityServerConfig.Configure(app);
+
             app.UseExceptionless(_configuration["Common:Exceptionless:Key"]);
-            app.UseIdentityServer();
-            app.UseAuthentication();
         }
     }
 }

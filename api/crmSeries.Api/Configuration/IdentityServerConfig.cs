@@ -1,98 +1,81 @@
-﻿using IdentityModel;
-using IdentityServer4.Models;
-using IdentityServer4.Test;
-using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
+using IdentityServer4.Models;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace crmSeries.Api.Configuration
 {
     public static class IdentityServerConfig
     {
-        public static void ConfigureServices(IServiceCollection services)
+        public const string RoleIdentityResource = "role";
+        public const string ApiResourceName = "crmSeriesAPI";
+        
+        public static void ConfigureServices(IServiceCollection services, IConfiguration config)
         {
             services
                 .AddIdentityServer()
-                .AddInMemoryClients(GetClients())
+                .AddInMemoryClients(GetClients(config))
                 .AddInMemoryIdentityResources(GetIdentityResources())
-                .AddInMemoryApiResources(GetApiResources())
+                .AddInMemoryApiResources(GetApiResources(config))
                 .AddDeveloperSigningCredential();
         }
 
-        public static IEnumerable<Client> GetClients()
+        public static void Configure(IApplicationBuilder app)
         {
-            return new List<Client>
+            app.UseIdentityServer();
+        }
+
+        private static IEnumerable<Client> GetClients(IConfiguration config)
+        {
+            var clients = config
+                .GetSection("Identity:Clients")
+                .Get<List<Client>>();
+
+            var clientSecret = new Secret(config["Identity:ClientSecret"].Sha256());
+            
+            clients.ForEach(x =>
             {
-                new Client
-                {
-                    ClientId = "crmSeries.Mobile",
-                    ClientName = "crmSeries Mobile Client",
-                    AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
-                    ClientSecrets =
-                    {
-                        new Secret("secret".Sha256())
-                    },
-                    AllowedScopes = new List<string>
-                    {
-                        "crmSeriesAPI.read"
-                    }
-                }
+                x.AllowedGrantTypes = GrantTypes.ResourceOwnerPassword;
+                x.ClientSecrets = new List<Secret> { clientSecret };
+            });
+
+            return clients;
+        }
+
+        private static IEnumerable<IdentityResource> GetIdentityResources()
+        {
+            yield return new IdentityResources.OpenId();
+            yield return new IdentityResources.Profile();
+            yield return new IdentityResources.Email();
+
+            yield return new IdentityResource
+            {
+                Name = RoleIdentityResource,
+                DisplayName = RoleIdentityResource,
+                UserClaims = { RoleIdentityResource }
             };
         }
 
-        public static IEnumerable<ApiResource> GetApiResources()
+        private static IEnumerable<ApiResource> GetApiResources(IConfiguration config)
         {
-            return new List<ApiResource>
-            {
-                new ApiResource
-                {
-                    Name = "crmSeriesAPI",
-                    DisplayName = "crmSeries API",
-                    Description = "crmSeries API Access",
-                    UserClaims = new List<string> {"role"},
-                    ApiSecrets = new List<Secret> {new Secret("scopeSecret".Sha256())},
-                    Scopes = new List<Scope>
-                    {
-                        new Scope("crmSeriesAPI.read"),
-                        new Scope("crmSeriesAPI.write")
-                    }
-                }
-            };
-        }
+            var scopes = config
+                .GetSection("Identity:Scopes")
+                .Get<IEnumerable<string>>()
+                .Select(x => new Scope(x))
+                .ToArray();
 
-        public static IEnumerable<IdentityResource> GetIdentityResources()
-        {
-            return new List<IdentityResource>
-            {
-                new IdentityResources.OpenId(),
-                new IdentityResources.Profile(),
-                new IdentityResources.Email(),
-                new IdentityResource
-                {
-                    Name = "role",
-                    UserClaims = new List<string> {"role"}
-                }
-            };
-        }
+            var secret = config["Identity:ApiSecret"];
 
-        public static List<TestUser> GetTestUsers()
-        {
-            return new List<TestUser>
+            yield return new ApiResource
             {
-                new TestUser
-                {
-                    SubjectId = "65d47462-6508-4874-9a90-39c14f965102",
-                    Username = "james.alt@alterityllc.com",
-                    Password = "password",
-                    Claims = new List<Claim>
-                    {
-                        new Claim(JwtClaimTypes.Email, "james.alt@alterityllc.com"),
-                        new Claim(JwtClaimTypes.Role, "admin")
-                    }
-                }
+                Name = ApiResourceName,
+                DisplayName = ApiResourceName,
+                Description = $"{ApiResourceName} Access",
+                UserClaims = { RoleIdentityResource },
+                ApiSecrets = { new Secret(config["Identity:ApiSecret"].Sha256()) },
+                Scopes = scopes
             };
         }
     }

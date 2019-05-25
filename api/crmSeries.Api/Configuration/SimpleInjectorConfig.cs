@@ -1,4 +1,10 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System;
+using crmSeries.Api.Controllers;
+using crmSeries.Core.Configuration;
+using crmSeries.Core.Logging;
+using crmSeries.Core.Mediator;
+using crmSeries.Core.Security;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.Extensions.Configuration;
@@ -6,11 +12,6 @@ using Microsoft.Extensions.DependencyInjection;
 using SimpleInjector;
 using SimpleInjector.Integration.AspNetCore.Mvc;
 using SimpleInjector.Lifestyles;
-using System;
-using crmSeries.Api.Controllers;
-using crmSeries.Core.Configuration;
-using crmSeries.Core.Mediator;
-using crmSeries.Core.Security;
 
 namespace crmSeries.Api.Configuration
 {
@@ -59,6 +60,8 @@ namespace crmSeries.Api.Configuration
             services.AddSingleton<IControllerActivator>(new SimpleInjectorControllerActivator(_container));
             services.UseSimpleInjectorAspNetRequestScoping(_container);
             services.EnableSimpleInjectorCrossWiring(_container);
+
+            services.AddTransient(provider => _container.GetInstance<ILogger>());
         }
 
         public static void Configure(IApplicationBuilder app)

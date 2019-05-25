@@ -11,6 +11,7 @@
   <PropertyGroup>
     <PublishWithAspNetCoreTargetManifest>false</PublishWithAspNetCoreTargetManifest>
     <LangVersion>7.2</LangVersion>
+    <UserSecretsId>4bbaba2e-8b4c-45d3-83e3-538f89bbb687</UserSecretsId>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
