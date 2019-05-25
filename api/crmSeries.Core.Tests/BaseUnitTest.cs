@@ -1,10 +1,10 @@
-﻿using crmSeries.Core.Configuration;
+﻿using System;
+using crmSeries.Core.Configuration;
 using crmSeries.Core.Data;
 using crmSeries.Core.Domain.HeavyEquipment;
 using crmSeries.Core.Security;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
-using System;
 
 namespace crmSeries.Core.Tests
 {
@@ -21,6 +21,14 @@ namespace crmSeries.Core.Tests
                 AutoMapperConfig.Configure();
                 Initialized = true;
             }
+        }
+
+        public DbContextOptions<AdminContext> GetAdminContextOptions()
+        {
+            string dbName = Guid.NewGuid().ToString();
+            return new DbContextOptionsBuilder<AdminContext>()
+                .UseInMemoryDatabase(dbName)
+                .Options;
         }
 
         public DbContextOptions<HeavyEquipmentContext> GetHeavyEquipmentContextOptions()
