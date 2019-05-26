@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using crmSeries.Core.Domain.HeavyEquipment;
 
 namespace crmSeries.Core.Common
 {
@@ -32,6 +34,7 @@ namespace crmSeries.Core.Common
             public const string FaxInvalid = "The Fax field is invalid.";
             public const string CompanyPhoneInvalid = "The Company Phone field is invalid.";
             public const string PhoneOrEmailRequired = "You must submit either phone number or E-Mail.";
+            public const string InvalidDate = "The date is not valid.";
         }
 
         public static class Emails
@@ -42,11 +45,30 @@ namespace crmSeries.Core.Common
             }
         }
 
-        public static class UserFavoriteRecords
+        public static class RelatedRecord
         {
             public static class Types
             {
                 public const string Company = "Company";
+                public const string Contact = "Contact";
+                public const string Equipment = "Equipment";
+                public const string Lead = "Lead";
+                public const string Note = "Note";
+                public const string Opportunity = "Opportunity";
+                public const string Task = "Task";
+                public const string User = "User";
+
+                public static readonly IReadOnlyCollection<string> ValidTypes = new List<string>
+                {
+                    Company,
+                    Contact,
+                    Equipment,
+                    Lead,
+                    Note,
+                    Opportunity,
+                    Task,
+                    User
+                };
             }
         }
     }

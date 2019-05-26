@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using crmSeries.Core.Data;
+﻿using crmSeries.Core.Data;
 using crmSeries.Core.Logic.Queries;
 using crmSeries.Core.Mediator.Decorators;
 using crmSeries.Core.Security;
@@ -43,7 +42,7 @@ namespace crmSeries.Core.Features.Contacts
                         on c.CompanyId equals assignedUser .CompanyId
                     join company in _context.Set<Company>() 
                         on c.CompanyId equals company.CompanyId
-                    where assignedUser.UserId == _identity.RequestingUser.CurrentUser.UserId &&
+                    where assignedUser.UserId == _identity.RequestingUser.UserId &&
                           c.Active && !c.Deleted
                     select new
                     {

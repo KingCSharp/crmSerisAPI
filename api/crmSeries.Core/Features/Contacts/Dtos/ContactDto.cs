@@ -118,6 +118,5 @@ namespace crmSeries.Core.Features.Contacts.Dtos
         /// The flag for whether this contact is active or not.
         /// </summary>
         public bool Active { get; set; }
-
     }
 }

@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using crmSeries.Core.Mediator;
 using crmSeries.Core.Mediator.Attributes;
+using crmSeries.Core.Notifications.Email;
 
 namespace crmSeries.Core.Features.Notifications
 {
@@ -21,8 +22,7 @@ namespace crmSeries.Core.Features.Notifications
             var codeBase = Path.GetDirectoryName(
                 Assembly.GetExecutingAssembly().Location);
 
-            // TODO - Get rid of the magic string.
-            var emailTemplatePath = $@"{codeBase}\Data\Templates\standard-email-template.html";
+            var emailTemplatePath = $@"{codeBase}{EmailTemplateConstants.Utility.TemplateDirectoryPath}";
 
             var emailTemplate = File.ReadAllText(emailTemplatePath);
 

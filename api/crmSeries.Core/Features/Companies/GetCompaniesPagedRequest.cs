@@ -8,7 +8,6 @@ using FluentValidation;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AutoMapper;
 using crmSeries.Core.Common;
 using AutoMapper.QueryableExtensions;
 
@@ -36,11 +35,11 @@ namespace crmSeries.Core.Features.Companies
             var result = new PagedQueryResult<GetCompanyDto>();
 
             var companyTotalList = (from companies in _context.Company
-                               join assignedUser in _context.CompanyAssignedUser
-                                on companies.CompanyId equals assignedUser.CompanyId
-                               where assignedUser.UserId == _identity.RequestingUser.CurrentUser.UserId
-                               && !companies.Deleted
-                               select companies)
+                    join assignedUser in _context.CompanyAssignedUser
+                        on companies.CompanyId equals assignedUser.CompanyId
+                    where assignedUser.UserId == _identity.RequestingUser.UserId
+                          && !companies.Deleted
+                    select companies)
                 .ProjectTo<GetCompanyDto>()
                 .OrderBy(x => x.CompanyId)
                 .Distinct();
@@ -53,8 +52,8 @@ namespace crmSeries.Core.Features.Companies
 
             var favorites = _context.UserFavoriteRecord
                 .Where(x =>
-                    x.RecordType == Constants.UserFavoriteRecords.Types.Company &&
-                    x.UserId == _identity.RequestingUser.CurrentUser.UserId)
+                    x.RecordType == Constants.RelatedRecord.Types.Company &&
+                    x.UserId == _identity.RequestingUser.UserId)
                 .Select(x => x.RecordId)
                 .ToList();
 
@@ -62,10 +61,7 @@ namespace crmSeries.Core.Features.Companies
             result.Items
                 .Where(x => favorites.Contains(x.CompanyId))
                 .ToList()
-                .ForEach(x =>
-                {
-                    x.Favorite = true;
-                });
+                .ForEach(x => { x.Favorite = true; });
 
             result.PageCount = resultCount / request.Query.PageSize;
             result.TotalItemCount = resultCount;

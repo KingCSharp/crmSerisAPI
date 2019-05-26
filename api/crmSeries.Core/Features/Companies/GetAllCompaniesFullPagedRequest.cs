@@ -7,7 +7,6 @@ using FluentValidation;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AutoMapper;
 using crmSeries.Core.Features.CompanyAssignedAddresses.Dtos;
 using crmSeries.Core.Features.Contacts.Dtos;
 using AutoMapper.QueryableExtensions;
@@ -24,6 +23,7 @@ namespace crmSeries.Core.Features.Companies
         IRequestHandler<GetAllCompaniesFullPagedRequest, PagedQueryResult<CompanyFullDto>>
     {
         private readonly HeavyEquipmentContext _context;
+
         public GetAllCompaniesFullPagedRequestHandler(HeavyEquipmentContext context)
         {
             _context = context;
@@ -76,7 +76,7 @@ namespace crmSeries.Core.Features.Companies
                         .ToList()
                 };
                 companiesList.Add(companyDto);
-            }                
+            }
 
             return new PagedQueryResult<CompanyFullDto>
             {

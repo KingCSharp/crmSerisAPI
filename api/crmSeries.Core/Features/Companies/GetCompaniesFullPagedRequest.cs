@@ -24,6 +24,7 @@ namespace crmSeries.Core.Features.Companies
     {
         private readonly HeavyEquipmentContext _context;
         private readonly IIdentityUserContext _identity;
+
         public GetCompaniesFullPagedRequestHandler(HeavyEquipmentContext context,
             IIdentityUserContext identity)
         {
@@ -36,16 +37,16 @@ namespace crmSeries.Core.Features.Companies
             var companies = new List<CompanyFullDto>();
             var result = new PagedQueryResult<CompanyFullDto>();
 
-            if (_identity.RequestingUser.CurrentUser != null)
+            if (_identity.RequestingUser.UserId != 0)
             {
                 var companyTotalList =
                     (from company in _context.Company
-                     join assignedUser in _context.CompanyAssignedUser
-                     on company.CompanyId equals assignedUser.CompanyId
-                     where
-                     assignedUser.UserId == _identity.RequestingUser.CurrentUser.UserId
-                     && !company.Deleted
-                     select company)
+                        join assignedUser in _context.CompanyAssignedUser
+                            on company.CompanyId equals assignedUser.CompanyId
+                        where
+                            assignedUser.UserId == _identity.RequestingUser.UserId
+                            && !company.Deleted
+                        select company)
                     .OrderBy(x => x.CompanyId);
 
                 int resultCount = companyTotalList.Count();
@@ -78,16 +79,13 @@ namespace crmSeries.Core.Features.Companies
                     .ToList();
 
                 var favorites = _context.UserFavoriteRecord
-                .Where(x =>
-                    x.RecordType == Constants.UserFavoriteRecords.Types.Company &&
-                    x.UserId == _identity.RequestingUser.CurrentUser.UserId)
-                .Select(x => x.RecordId)
-                .ToList();
+                    .Where(x =>
+                        x.RecordType == Constants.RelatedRecord.Types.Company &&
+                        x.UserId == _identity.RequestingUser.UserId)
+                    .Select(x => x.RecordId)
+                    .ToList();
 
-                companies.ForEach(x =>
-                {
-                    x.Details.Favorite = favorites.Contains(x.Details.CompanyId);
-                });
+                companies.ForEach(x => { x.Details.Favorite = favorites.Contains(x.Details.CompanyId); });
 
                 result.Items = companies;
                 result.PageCount = resultCount / request.Query.PageSize;
