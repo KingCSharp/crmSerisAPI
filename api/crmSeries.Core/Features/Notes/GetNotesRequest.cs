@@ -37,21 +37,21 @@ namespace crmSeries.Core.Features.Notes
             var result = new PagedQueryResult<GetNoteDto>();
 
             var notes =
-                (from t in _context.Set<Note>()
+                (from n in _context.Set<Note>()
                     join u in _context.Set<User>()
-                        on t.UserId equals u.UserId
+                        on n.UserId equals u.UserId
                     where u.UserId == _identity.RequestingUser.UserId
                     select new
                     {
-                        t.NoteId,
-                        t.UserId,
-                        t.Comments,
-                        t.Deleted,
-                        t.RecordId,
-                        t.RecordType,
-                        t.NoteDate,
-                        t.Latitude,
-                        t.Longitude
+                        n.NoteId,
+                        n.UserId,
+                        n.Comments,
+                        n.Deleted,
+                        n.RecordId,
+                        n.RecordType,
+                        n.NoteDate,
+                        n.Latitude,
+                        n.Longitude,
                     })
                 .AsQueryable();
 

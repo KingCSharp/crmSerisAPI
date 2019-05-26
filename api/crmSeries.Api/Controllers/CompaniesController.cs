@@ -133,7 +133,7 @@ namespace crmSeries.API.Controllers
         /// Updates a company object based on the data in the request.
         /// </summary>
         [HttpPut]
-        [Produces(typeof(Response<EditCompanyDto>))]
+        [Produces(typeof(Response))]
         public Task<IActionResult> Edit([FromBody]EditCompanyRequest request)
         {
             return HandleAsync(request);

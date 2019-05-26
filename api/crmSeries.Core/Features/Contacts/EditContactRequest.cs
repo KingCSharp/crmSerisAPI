@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using crmSeries.Core.Data;
 using crmSeries.Core.Domain.HeavyEquipment;
 using crmSeries.Core.Extensions;

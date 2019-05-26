@@ -51,7 +51,7 @@ namespace crmSeries.API.Controllers
         /// Updates a task object based on the data in the request.
         /// </summary>
         [HttpPut]
-        [Produces(typeof(Response<EditTaskDto>))]
+        [Produces(typeof(Response))]
         public Task<IActionResult> Edit([FromBody]EditTaskRequest request)
         {
             return HandleAsync(request);

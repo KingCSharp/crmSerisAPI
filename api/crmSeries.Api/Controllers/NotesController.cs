@@ -76,7 +76,7 @@ namespace crmSeries.API.Controllers
         /// Updates a Note object based on the data in the request.
         /// </summary>
         [HttpPut]
-        [Produces(typeof(Response<EditNoteDto>))]
+        [Produces(typeof(Response))]
         public Task<IActionResult> Edit([FromBody]EditNoteRequest request)
         {
             return HandleAsync(request);

@@ -51,7 +51,7 @@ namespace crmSeries.API.Controllers
         /// Updates a contact object based on the data in the request.
         /// </summary>
         [HttpPut]
-        [Produces(typeof(Response<EditContactDto>))]
+        [Produces(typeof(Response))]
         public Task<IActionResult> Edit([FromBody]EditContactRequest request)
         {
             return HandleAsync(request);

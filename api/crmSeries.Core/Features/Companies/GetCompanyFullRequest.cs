@@ -25,6 +25,7 @@ namespace crmSeries.Core.Features.Companies
     public class GetCompanyFullRequestHandler : IRequestHandler<GetCompanyFullRequest, CompanyFullDto>
     {
         private readonly HeavyEquipmentContext _context;
+
         public GetCompanyFullRequestHandler(HeavyEquipmentContext context)
         {
             _context = context;
@@ -41,7 +42,7 @@ namespace crmSeries.Core.Features.Companies
                 {
                     ErrorMessage = CompaniesConstants.ErrorMessages.CompanyNotFound
                 });
-            
+
             return new CompanyFullDto
             {
                 Details = company,
@@ -66,11 +67,12 @@ namespace crmSeries.Core.Features.Companies
                         x.Title,
                         x.Position,
                         x.Department,
+                        x.Active,
                         x.LastModified,
                         company.CompanyName,
                         company.AccountNo
                     })
-                    .ProjectTo<GetContactDto>()                    
+                    .ProjectTo<GetContactDto>()
                     .ToList()
             }.AsResponseAsync();
         }

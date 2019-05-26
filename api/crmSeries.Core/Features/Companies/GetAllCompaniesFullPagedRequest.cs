@@ -68,6 +68,7 @@ namespace crmSeries.Core.Features.Companies
                             x.Title,
                             x.Position,
                             x.Department,
+                            x.Active,
                             x.LastModified,
                             company.CompanyName,
                             company.AccountNo

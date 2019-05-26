@@ -59,6 +59,7 @@ namespace crmSeries.Core.Features.Contacts
                         c.Title,
                         c.Position,
                         c.Department,
+                        c.Active,
                         c.LastModified,
                         company.CompanyName,
                         company.AccountNo
