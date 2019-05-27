@@ -13,6 +13,7 @@ namespace crmSeries.Api.Security
     public class ProfileService : IProfileService
     {
         public const string DealerClaim = "dealer";
+        public const string ApiKeyClaim = "api_key";
 
         private readonly ILoginService _loginService;
         private readonly ILogger _logger;
@@ -33,8 +34,9 @@ namespace crmSeries.Api.Security
                 var claims = new List<Claim>
                 {
                     new Claim(JwtClaimTypes.Subject, login.LoginId.ToString()),
-                    new Claim(JwtClaimTypes.Email, login.Email),
-                    new Claim(DealerClaim, login.DealerId.ToString())
+                    new Claim(JwtClaimTypes.Email, login.Email ?? string.Empty),
+                    new Claim(DealerClaim, login.DealerId.ToString()),
+                    new Claim(ApiKeyClaim, login.ApiKey ?? string.Empty)
                 };
 
                 context.IssuedClaims = claims;

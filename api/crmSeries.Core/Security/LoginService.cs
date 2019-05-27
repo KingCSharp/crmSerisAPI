@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using crmSeries.Core.Data;
 using crmSeries.Core.Domain.Admin;
@@ -23,6 +24,8 @@ namespace crmSeries.Core.Security
 
         public int DealerId { get; set; }
 
+        public string ApiKey { get; set; }
+
         public string Email { get; set; }
     }
 
@@ -37,13 +40,15 @@ namespace crmSeries.Core.Security
             _passwordService = passwordService;
         }
 
-        public Task<LoginDto> GetLoginByEmail(string email)
+        public async Task<LoginDto> GetLoginByEmail(string email)
         {
-            return _context
+            var login = await _context
                 .Set<Login>()
                 .Where(x => x.Active == true && x.Email == email)
                 .ProjectTo<LoginDto>()
                 .FirstOrDefaultAsync();
+            
+            return await MapDealer(login);
         }
 
         public async Task<LoginDto> GetLoginByEmail(string email, string password)
@@ -57,17 +62,35 @@ namespace crmSeries.Core.Security
 
             if (login == null || login.HashPassword != _passwordService.CreateHash(password, login.Salt))
                 return null;
-
-            return login.MapTo<LoginDto>();
+            
+            return await MapDealer(login.MapTo<LoginDto>());
         }
 
-        public Task<LoginDto> GetLoginById(int id)
+        public async Task<LoginDto> GetLoginById(int id)
         {
-            return _context
+            var login = await _context
                 .Set<Login>()
                 .Where(x => x.Active == true && x.LoginId == id)
                 .ProjectTo<LoginDto>()
                 .FirstOrDefaultAsync();
+
+            return await MapDealer(login);
+        }
+
+        private async Task<LoginDto> MapDealer(LoginDto login)
+        {
+            if (login != null)
+            {
+                var dealer = await _context
+                    .Set<Dealer>()
+                    .Where(x => x.DealerId == login.DealerId)
+                    .ProjectTo<LoginDealerDto>()
+                    .SingleOrDefaultAsync() ?? new LoginDealerDto();
+
+                return Mapper.Map(dealer, login);
+            }
+
+            return login;
         }
         
         private class LoginValidationDto
@@ -81,6 +104,27 @@ namespace crmSeries.Core.Security
             public string HashPassword { get; set; }
 
             public string Salt { get; set; }
+        }
+
+        private class LoginDealerDto
+        {
+            public string ApiKey { get; set; }
+        }
+
+        public class LoginServiceProfile : Profile
+        {
+            public LoginServiceProfile()
+            {
+                CreateMap<Login, LoginDto>()
+                    .Ignore(x => x.ApiKey);
+
+                CreateMap<LoginValidationDto, LoginDto>()
+                    .Ignore(x => x.ApiKey);
+
+                CreateMap<LoginDealerDto, LoginDto>()
+                    .MapMember(x => x.ApiKey)
+                    .IgnoreRest();
+            }
         }
     }
 }

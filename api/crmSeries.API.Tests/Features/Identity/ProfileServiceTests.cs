@@ -87,6 +87,7 @@ namespace crmSeries.API.Tests.Features.Identity
             Assert.IsTrue(context.IssuedClaims.Any(x => x.Type == JwtClaimTypes.Subject && x.Value == "1"));
             Assert.IsTrue(context.IssuedClaims.Any(x => x.Type == JwtClaimTypes.Email && x.Value == "test@user"));
             Assert.IsTrue(context.IssuedClaims.Any(x => x.Type == ProfileService.DealerClaim && x.Value == "2"));
+            Assert.IsTrue(context.IssuedClaims.Any(x => x.Type == ProfileService.ApiKeyClaim && x.Value == "TestKey"));
         }
 
         [Test]

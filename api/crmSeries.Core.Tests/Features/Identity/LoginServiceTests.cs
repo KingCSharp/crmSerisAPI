@@ -31,6 +31,12 @@ namespace crmSeries.Core.Tests.Features.Identity
                     Active = true
                 });
 
+                context.Set<Dealer>().Add(new Dealer
+                {
+                    DealerId = 2,
+                    Apikey = "api-key"
+                });
+                
                 context.SaveChanges();
 
                 // Act
@@ -39,6 +45,7 @@ namespace crmSeries.Core.Tests.Features.Identity
                 // Assert
                 Assert.NotNull(result);
                 Assert.AreEqual(101, result.LoginId);
+                Assert.AreEqual("api-key", result.ApiKey);
             }
         }
 
@@ -110,6 +117,12 @@ namespace crmSeries.Core.Tests.Features.Identity
                     Active = true
                 });
 
+                context.Set<Dealer>().Add(new Dealer
+                {
+                    DealerId = 2,
+                    Apikey = "api-key"
+                });
+
                 context.SaveChanges();
 
                 // Act
@@ -118,6 +131,7 @@ namespace crmSeries.Core.Tests.Features.Identity
                 // Assert
                 Assert.NotNull(result);
                 Assert.AreEqual(101, result.LoginId);
+                Assert.AreEqual("api-key", result.ApiKey);
             }
         }
 
@@ -171,6 +185,12 @@ namespace crmSeries.Core.Tests.Features.Identity
                     Active = true
                 });
 
+                context.Set<Dealer>().Add(new Dealer
+                {
+                    DealerId = 2,
+                    Apikey = "api-key"
+                });
+
                 context.SaveChanges();
 
                 // Act
@@ -179,6 +199,7 @@ namespace crmSeries.Core.Tests.Features.Identity
                 // Assert
                 Assert.NotNull(result);
                 Assert.AreEqual(101, result.LoginId);
+                Assert.AreEqual("api-key", result.ApiKey);
             }
         }
 

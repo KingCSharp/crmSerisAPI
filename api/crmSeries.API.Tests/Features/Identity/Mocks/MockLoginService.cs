@@ -6,7 +6,7 @@ namespace crmSeries.API.Tests.Features.Identity.Mocks
     public class MockLoginService : ILoginService
     {
         private static readonly LoginDto SuccessResult 
-            = new LoginDto { LoginId = 1, DealerId = 2, Email = "test@user" };
+            = new LoginDto { LoginId = 1, DealerId = 2, Email = "test@user", ApiKey = "TestKey" };
 
         public MockLoginService(bool shouldSucceed = true)
         {
