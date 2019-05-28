@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using crmSeries.Core.Data;
 using crmSeries.Core.Domain.HeavyEquipment;
+using crmSeries.Core.Extensions;
 using crmSeries.Core.Features.Workflows;
 using crmSeries.Core.Mediator;
 using crmSeries.Core.Mediator.Attributes;
@@ -70,19 +73,27 @@ namespace crmSeries.Core.Features.Leads
             return Response.SuccessAsync();
         }
 
-        private RecordLog GetAndUpdate(AddLeadAuditRequest request, DateTime auditStamp, Func<AddLeadAuditRequest, object> accessor)
+        private RecordLog GetAndUpdate(AddLeadAuditRequest request, DateTime auditStamp, Expression<Func<AddLeadAuditRequest, object>> accessor)
         {
             var log = GetRecordLog(request, auditStamp);
-            log.NewValue = accessor(request).ToString();
+            
+            var newValue = accessor.Compile()(request);
+            if (newValue == null)
+                return null;
+            
+            log.NewValue = newValue.ToString();
+            log.PropertyName = accessor.GetPropertyInfo().Name;
+
             return log;
         }
 
         private IEnumerable<RecordLog> GetAndUpdate(AddLeadAuditRequest request,
             DateTime auditStamp,
-            params Func<AddLeadAuditRequest, object>[] accessors)
+            params Expression<Func<AddLeadAuditRequest, object>>[] accessors)
         {
-            foreach (var accessor in accessors)
-                yield return GetAndUpdate(request, auditStamp, accessor);
+            return accessors
+                .Select(x => GetAndUpdate(request, auditStamp, x))
+                .Where(x => x != null && !string.IsNullOrEmpty(x.NewValue));
         }
 
         private static RecordLog GetRecordLog(AddLeadAuditRequest request, DateTime stamp)
