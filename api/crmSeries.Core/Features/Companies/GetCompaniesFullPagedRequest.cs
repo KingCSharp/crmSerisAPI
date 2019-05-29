@@ -85,10 +85,10 @@ namespace crmSeries.Core.Features.Companies
                          company.CompanyId,
                          company.Deleted,
                          company.LastModified,
-                         Branch = branch.BranchName ?? string.Empty,
-                         Source = source.Source ?? string.Empty,
-                         RecordType = recordType.RecordType ?? string.Empty,
-                         ParentName = parentCompany.CompanyName ?? string.Empty
+                         Branch = branch.BranchName,
+                         source.Source,
+                         recordType.RecordType,
+                         ParentName = parentCompany.CompanyName
                      })
                     .OrderBy(x => x.CompanyId);
 
