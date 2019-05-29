@@ -134,6 +134,9 @@ namespace crmSeries.Core.Features.Workflows
                     Dictionary<string, string> emailContent =
                         GetEmailBody(email.TemplateId);
 
+                    emailContent["subject"] = 
+                        ReplaceModuleFields(request.Module, request.EntityId, emailContent["subject"]);
+
                     emailTemplate = ReplaceEmailFields(emailTemplate, emailContent, request);
 
                     var msg = new EmailMessage
