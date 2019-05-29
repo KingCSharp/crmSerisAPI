@@ -112,7 +112,7 @@ namespace crmSeries.Core.Features.Companies.Dtos
         public bool Linked { get; set; }
 
         /// <summary>
-        /// The source of the company. E.g., Cold Call, Website, Email Marketing, etc.
+        /// The source id of the company. E.g., Cold Call, Website, Email Marketing, etc.
         /// </summary>
         public int SourceId { get; set; }
 
@@ -143,6 +143,29 @@ namespace crmSeries.Core.Features.Companies.Dtos
         /// Flag for if this company record is set as a favorite by the user.
         /// </summary>
         public bool Favorite { get; set; }
+
+        /// <summary>
+        /// The name of the branch associated with this company.
+        /// </summary>
+        public string Branch { get; set; }
+
+        /// <summary>
+        /// The source of the company. E.g., Cold Call, Website, Email Marketing, etc.
+        /// </summary>
+        public string Source { get; set; }
+
+        //TODO: Figure out what this is and how to calculate it
+        public string Rank { get; set; }
+
+        /// <summary>
+        /// The type of company. E.g., Corporate, Mine, Quarry, etc.
+        /// </summary>
+        public string RecordType { get; set; }
+
+        /// <summary>
+        /// The name of the parent company that this company belongs to.
+        /// </summary>
+        public string ParentName { get; set; }
     }
 
     public class EditCompanyDto : BaseCompanyDto
