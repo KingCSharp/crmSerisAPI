@@ -33,7 +33,52 @@ namespace crmSeries.Core.Features.Companies
 
         public Task<Response<CompanyFullDto>> HandleAsync(GetCompanyFullRequest request)
         {
-            var company = _context.Company
+            var company = 
+                (from cmp in _context.Company
+                join joinedBranch in _context.Branch
+                    on cmp.BranchId equals joinedBranch.BranchId into branchLeft
+                from branch in branchLeft.DefaultIfEmpty()
+                join joinedSource in _context.CompanySource
+                    on cmp.SourceId equals joinedSource.SourceId into sourceLeft
+                from source in sourceLeft.DefaultIfEmpty()
+                join joinedRecordType in _context.CompanyRecordType
+                    on cmp.RecordTypeId equals joinedRecordType.TypeId into recordTypeLeft
+                from recordType in recordTypeLeft.DefaultIfEmpty()
+                join joinedCompany in _context.Company
+                    on cmp.ParentId equals joinedCompany.CompanyId into companyLeft
+                from parentCompany in companyLeft.DefaultIfEmpty()
+                select new
+                {
+                    cmp.ParentId,
+                    cmp.RecordTypeId,
+                    cmp.BranchId,
+                    cmp.CompanyName,
+                    cmp.LegalName,
+                    cmp.AccountNo,
+                    cmp.Address1,
+                    cmp.Address2,
+                    cmp.Address3,
+                    cmp.City,
+                    cmp.State,
+                    cmp.Zip,
+                    cmp.County,
+                    cmp.Mailing,
+                    cmp.Latitude,
+                    cmp.Longitude,
+                    cmp.Phone,
+                    cmp.Fax,
+                    cmp.Web,
+                    cmp.Linked,
+                    cmp.SourceId,
+                    cmp.Status,
+                    cmp.CompanyId,
+                    cmp.Deleted,
+                    cmp.LastModified,
+                    Branch = branch.BranchName ?? string.Empty,
+                    Source = source.Source ?? string.Empty,
+                    RecordType = recordType.RecordType ?? string.Empty,
+                    ParentName = parentCompany.CompanyName ?? string.Empty
+                })
                 .ProjectTo<GetCompanyDto>()
                 .SingleOrDefault(x => x.CompanyId == request.CompanyId && !x.Deleted);
 

@@ -111,7 +111,7 @@
         </member>
         <member name="P:crmSeries.Core.Features.Companies.Dtos.BaseCompanyDto.SourceId">
             <summary>
-            The source of the company. E.g., Cold Call, Website, Email Marketing, etc.
+            The source id of the company. E.g., Cold Call, Website, Email Marketing, etc.
             </summary>
         </member>
         <member name="P:crmSeries.Core.Features.Companies.Dtos.BaseCompanyDto.Status">
@@ -137,6 +137,26 @@
         <member name="P:crmSeries.Core.Features.Companies.Dtos.GetCompanyDto.Favorite">
             <summary>
             Flag for if this company record is set as a favorite by the user.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Companies.Dtos.GetCompanyDto.Branch">
+            <summary>
+            The name of the branch associated with this company.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Companies.Dtos.GetCompanyDto.Source">
+            <summary>
+            The source of the company. E.g., Cold Call, Website, Email Marketing, etc.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Companies.Dtos.GetCompanyDto.RecordType">
+            <summary>
+            The type of company. E.g., Corporate, Mine, Quarry, etc.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Companies.Dtos.GetCompanyDto.ParentName">
+            <summary>
+            The name of the parent company that this company belongs to.
             </summary>
         </member>
         <member name="P:crmSeries.Core.Features.Companies.Dtos.EditCompanyDto.CompanyId">
