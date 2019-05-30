@@ -55,20 +55,20 @@ namespace crmSeries.Core.Configuration
         {
             var settings = new CommonSettings();
 
-            settings.Smtp.Host = config["Common:Smtp:Host"];
-            settings.Smtp.Port = config.GetValue<int>("Common:Smtp:Port");
-            settings.Smtp.UseSsl = config.GetValue<bool>("Common:Smtp:UseSsl");
-            settings.Smtp.SenderName = config["Common:Smtp:SenderName"];
-            settings.Smtp.FromAddress = config["Common:Smtp:FromAddress"];
+            settings.Smtp.Host = config["CommonSettings:Smtp:Host"];
+            settings.Smtp.Port = config.GetValue<int>("CommonSettings:Smtp:Port");
+            settings.Smtp.UseSsl = config.GetValue<bool>("CommonSettings:Smtp:UseSsl");
+            settings.Smtp.SenderName = config["CommonSettings:Smtp:SenderName"];
+            settings.Smtp.FromAddress = config["CommonSettings:Smtp:FromAddress"];
             settings.Smtp.Credentials = new NetworkCredential
             (
-                config["Common:Smtp:Username"],
-                config["Common:Smtp:Password"]
+                config["CommonSettings:Smtp:Username"],
+                config["CommonSettings:Smtp:Password"]
             );
 
-            settings.Exceptionless.UseExceptionless = config.GetValue<bool>("Common:Exceptionless:Use");
+            settings.Exceptionless.UseExceptionless = config.GetValue<bool>("CommonSettings:Exceptionless:Use");
 
-            settings.BaseURL = config.GetValue<string>("Common:Server:BaseURL");
+            settings.BaseURL = config.GetValue<string>("CommonSettings:Server:BaseURL");
 
             return settings;
         }
