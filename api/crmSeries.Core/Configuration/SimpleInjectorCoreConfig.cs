@@ -68,8 +68,8 @@ namespace crmSeries.Core.Configuration
 
             settings.Exceptionless.UseExceptionless = config.GetValue<bool>("Common:Exceptionless:Use");
 
-            settings.BaseURL = config["Common:Server:BaseURL"];
-            
+            settings.BaseURL = config.GetValue<string>("Common:Server:BaseURL");
+
             return settings;
         }
 
