@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using crmSeries.Core.Configuration;
 using crmSeries.Core.Data;
 using crmSeries.Core.Domain.HeavyEquipment;
 using crmSeries.Core.Features.Notifications;
@@ -47,7 +48,7 @@ namespace crmSeries.Core.Features.Workflows
         private readonly IRequestHandler<LeadEmailTemplateReplacementRequest, string> _leadEmailTemplateReplacementRequestHandler;
         private readonly IRequestHandler<AddAndAssignTaskRequest, List<int>> _addAndAssignTaskRequestHandler;
         private readonly IEmailNotifier _emailNotifier;
-        private readonly IConfiguration _config;
+        private readonly CommonSettings _commonSettings;
 
         public ExecuteWorkflowRuleHandler(
             HeavyEquipmentContext dataContext,
@@ -55,14 +56,14 @@ namespace crmSeries.Core.Features.Workflows
             IRequestHandler<LeadEmailTemplateReplacementRequest, string> leadEmailTemplateReplacementRequestHandler,
             IRequestHandler<AddAndAssignTaskRequest, List<int>> addAndAssignTaskRequestHandler,
             IEmailNotifier emailNotifier,
-            IConfiguration config)
+            CommonSettings commonSettings)
         {
             _dataContext = dataContext;
             _getEmailTemplateHandler = getEmailTemplateHandler;
             _leadEmailTemplateReplacementRequestHandler = leadEmailTemplateReplacementRequestHandler;
             _addAndAssignTaskRequestHandler = addAndAssignTaskRequestHandler;
             _emailNotifier = emailNotifier;
-            _config = config;
+            _commonSettings = commonSettings;
         }
 
         public Task<Response<ExecuteWorkflowResponse>> HandleAsync(
@@ -159,8 +160,7 @@ namespace crmSeries.Core.Features.Workflows
             Dictionary<string, string> emailContent,
             ExecuteWorkflowRuleRequest request)
         {
-            var baseUrl = _config[WorkflowConstants.Server.BasePathKey];
-            string actionURL = $"{baseUrl}/{request.Module}/Details/{request.EntityId}";
+            string actionURL = $"{_commonSettings.BaseURL}/{request.Module}/Details/{request.EntityId}";
 
             emailTemplate = emailTemplate.Replace("{{Title}}", emailContent["subject"]);
             emailTemplate = emailTemplate.Replace("{{Body}}", emailContent["body"]);
