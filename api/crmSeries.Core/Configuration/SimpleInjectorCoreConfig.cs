@@ -34,6 +34,8 @@ namespace crmSeries.Core.Configuration
 
             container.Register(() => config);
 
+            container.Register<IEmailNotifier, EmailNotifier>();
+
             var settings = ConfigureCommonSettings(container, config);
             container.RegisterInstance(settings);
             
@@ -53,7 +55,6 @@ namespace crmSeries.Core.Configuration
         {
             var settings = new CommonSettings();
 
-            container.Register<IEmailNotifier, EmailNotifier>();
             settings.Smtp.Host = config["Common:Smtp:Host"];
             settings.Smtp.Port = config.GetValue<int>("Common:Smtp:Port");
             settings.Smtp.UseSsl = config.GetValue<bool>("Common:Smtp:UseSsl");
