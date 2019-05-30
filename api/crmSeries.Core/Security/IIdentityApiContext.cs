@@ -4,7 +4,6 @@ using crmSeries.Core.Common;
 using crmSeries.Core.Data;
 using crmSeries.Core.Domain.Admin;
 using crmSeries.Core.Exceptions;
-using Exceptionless;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 
@@ -38,14 +37,6 @@ namespace crmSeries.Core.Security
                 }
 
                 var apiKey = _httpContextAccessor.HttpContext.Request.Headers[Constants.Auth.ApiKey];
-
-                new ExceptionlessClient("2BCuzUkowXDTR6907Bvsjjnkabthx0rDHoi0KA73")
-                    .CreateLog($"API KEY is {apiKey}")
-                    .Submit();
-
-                new ExceptionlessClient("2BCuzUkowXDTR6907Bvsjjnkabthx0rDHoi0KA73")
-                    .CreateLog($"Connection String is {_context.Database.GetDbConnection().ConnectionString}")
-                    .Submit();
 
                 var dealer = _context
                     .Set<Dealer>()
