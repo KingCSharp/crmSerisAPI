@@ -7,6 +7,8 @@ namespace crmSeries.Core.Configuration
         public SmtpSettings Smtp { get; } = new SmtpSettings();
 
         public ExceptionlessSettings Exceptionless { get; } = new ExceptionlessSettings();
+
+        public string BaseURL { get; set; }
     }
 
     public class ExceptionlessSettings
@@ -23,6 +25,10 @@ namespace crmSeries.Core.Configuration
         public int Port { get; set; }
 
         public bool UseSsl { get; set; }
+
+        public string FromAddress { get; set; }
+
+        public string SenderName { get; set; }
 
         public NetworkCredential Credentials { get; set; }
     }

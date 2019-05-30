@@ -34,29 +34,13 @@ namespace crmSeries.Core.Configuration
 
             container.Register(() => config);
 
-            var settings = ConfigureCommonSettings(config);
+            var settings = ConfigureCommonSettings(container, config);
             container.RegisterInstance(settings);
             
             ConfigureDatabase(container, config);
             ConfigureLogging(container);
             ConfigureMediator(container, configAssemblies);
-            ConfigureEmailNotifier(container, config);
             ConfigureDocuSign(container, config);
-        }
-
-        private static void ConfigureEmailNotifier(Container container, IConfiguration config)
-        {
-            container.Register<IEmailNotifier, EmailNotifier>();
-            container.Register(() => new EmailConfig
-            {
-                SenderName = config["Common:Smtp:SenderName"],
-                FromAddress = config["Common:Smtp:FromAddress"],
-                Host = config["Common:Smtp:Host"],
-                Port = config.GetValue<int>("Common:Smtp:Port"),
-                Username = config["Common:Smtp:Username"],
-                Password = config["Common:Smtp:Password"],
-                UseSsl = config.GetValue<bool>("Common:Smtp:UseSsl")
-            });
         }
 
         private static void ConfigureLogging(Container container)
@@ -65,13 +49,16 @@ namespace crmSeries.Core.Configuration
             container.Collection.Register<ILogger>(typeof(ExceptionlessLogger));
         }
    
-        private static CommonSettings ConfigureCommonSettings(IConfiguration config)
+        private static CommonSettings ConfigureCommonSettings(Container container, IConfiguration config)
         {
             var settings = new CommonSettings();
 
+            container.Register<IEmailNotifier, EmailNotifier>();
             settings.Smtp.Host = config["Common:Smtp:Host"];
             settings.Smtp.Port = config.GetValue<int>("Common:Smtp:Port");
             settings.Smtp.UseSsl = config.GetValue<bool>("Common:Smtp:UseSsl");
+            settings.Smtp.SenderName = config["Common:Smtp:SenderName"];
+            settings.Smtp.FromAddress = config["Common:Smtp:FromAddress"];
             settings.Smtp.Credentials = new NetworkCredential
             (
                 config["Common:Smtp:Username"],
@@ -79,6 +66,8 @@ namespace crmSeries.Core.Configuration
             );
 
             settings.Exceptionless.UseExceptionless = config.GetValue<bool>("Common:Exceptionless:Use");
+
+            settings.BaseURL = config["Common:Server:BaseURL"];
             
             return settings;
         }
