@@ -9,7 +9,9 @@ using crmSeries.Core.Mediator;
 using crmSeries.Core.Mediator.Decorators;
 using crmSeries.Core.Notifications.Email;
 using crmSeries.Core.Validation;
+using Exceptionless;
 using FluentValidation;
+using IdentityModel;
 using Microsoft.Extensions.Configuration;
 
 namespace crmSeries.Core.Features.Workflows
@@ -135,7 +137,7 @@ namespace crmSeries.Core.Features.Workflows
                     Dictionary<string, string> emailContent =
                         GetEmailBody(email.TemplateId);
 
-                    emailContent["subject"] = 
+                    emailContent["subject"] =
                         ReplaceModuleFields(request.Module, request.EntityId, emailContent["subject"]);
 
                     emailTemplate = ReplaceEmailFields(emailTemplate, emailContent, request);
@@ -161,6 +163,10 @@ namespace crmSeries.Core.Features.Workflows
             ExecuteWorkflowRuleRequest request)
         {
             string actionURL = $"{_commonSettings.BaseURL}/{request.Module}/Details/{request.EntityId}";
+
+            new ExceptionlessClient("2BCuzUkowXDTR6907Bvsjjnkabthx0rDHoi0KA73")
+                .CreateLog($"BaseURL is {_commonSettings.BaseURL}")
+                .Submit();
 
             emailTemplate = emailTemplate.Replace("{{Title}}", emailContent["subject"]);
             emailTemplate = emailTemplate.Replace("{{Body}}", emailContent["body"]);
