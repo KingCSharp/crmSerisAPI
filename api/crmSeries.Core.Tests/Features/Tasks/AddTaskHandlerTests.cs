@@ -1,13 +1,10 @@
-﻿using crmSeries.Core.Common;
-using crmSeries.Core.Data;
+﻿using crmSeries.Core.Data;
 using crmSeries.Core.Features.Contacts.Utility;
-using crmSeries.Core.Features.Notes;
 using crmSeries.Core.Features.Notes.Utility;
 using crmSeries.Core.Features.RelatedRecords;
 using crmSeries.Core.Features.Tasks;
 using crmSeries.Core.Features.Users.Utility;
 using NUnit.Framework;
-using System;
 using System.Linq;
 
 namespace crmSeries.Core.Tests.Features.Tasks

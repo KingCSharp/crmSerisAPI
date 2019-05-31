@@ -48,7 +48,7 @@ namespace crmSeries.API.Controllers
         [Route("purposes")]
         public Task<IActionResult> GetNotePurposes()
         {
-            return HandleAsync(new GetNoteTypesRequest());
+            return HandleAsync(new GetNotePurposesRequest());
         }
 
         /// <summary>

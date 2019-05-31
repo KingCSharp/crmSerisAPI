@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using crmSeries.Core.Common;
 using crmSeries.Core.Data;
 using crmSeries.Core.Domain.HeavyEquipment;
 using crmSeries.Core.Extensions;

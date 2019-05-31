@@ -1,9 +1,5 @@
-﻿using crmSeries.Core.Common;
-using crmSeries.Core.Features.RelatedRecords;
+﻿using crmSeries.Core.Features.RelatedRecords;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using static crmSeries.Core.Features.RelatedRecords.VerifyRelatedRecordHandler;
 
 namespace crmSeries.Core.Tests.Features.RelatedRecords

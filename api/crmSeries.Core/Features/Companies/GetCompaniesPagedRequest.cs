@@ -8,7 +8,7 @@ using FluentValidation;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using crmSeries.Core.Common;
+using crmSeries.Core.Features.RelatedRecords;
 using AutoMapper.QueryableExtensions;
 
 namespace crmSeries.Core.Features.Companies

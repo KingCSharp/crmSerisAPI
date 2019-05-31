@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using crmSeries.Core.Common;
 using crmSeries.Core.Data;
-using crmSeries.Core.Domain.HeavyEquipment;
 using crmSeries.Core.Extensions;
-using crmSeries.Core.Features.Contacts.Utility;
 using crmSeries.Core.Features.RelatedRecords;
 using crmSeries.Core.Features.Tasks.Dtos;
 using crmSeries.Core.Features.Tasks.Validator;
-using crmSeries.Core.Features.Users.Utility;
 using crmSeries.Core.Mediator;
 using crmSeries.Core.Mediator.Decorators;
 using FluentValidation;
@@ -52,19 +48,19 @@ namespace crmSeries.Core.Features.Tasks
 
         private bool IsValid(BaseTaskDto request, out Task<Response<AddResponse>> errorAsync)
         {
-            var relatedEntities = new Dictionary<string, int>
+            var relatedEntities = new List<(string, int)>
             {
-                { request.RelatedRecordType, request.RelatedRecordId },
-                { Constants.RelatedRecord.Types.Contact, request.ContactId },
-                { Constants.RelatedRecord.Types.User, request.UserId }
+                (request.RelatedRecordType, request.RelatedRecordId),
+                (Constants.RelatedRecord.Types.Contact, request.ContactId),
+                (Constants.RelatedRecord.Types.User, request.UserId)
             };
 
-            foreach(var entity in relatedEntities)
+            foreach(var (relatedRecordType, relatedRecordTypeId) in relatedEntities)
             {
                 var verifyRelatedRecordRequest = new VerifyRelatedRecordRequest
                 {
-                    RecordType = entity.Key,
-                    RecordTypeId = entity.Value                    
+                    RecordType = relatedRecordType,
+                    RecordTypeId = relatedRecordTypeId                  
                 };
 
                 var result = _verifyRelatedRecordsHandler.HandleAsync(verifyRelatedRecordRequest).Result;

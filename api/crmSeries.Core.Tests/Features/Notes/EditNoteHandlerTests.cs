@@ -8,6 +8,7 @@ using crmSeries.Core.Features.Users.Utility;
 using NUnit.Framework;
 using System.Linq;
 using static crmSeries.Core.Common.Constants;
+using static crmSeries.Core.Features.RelatedRecords.Constants;
 
 namespace crmSeries.Core.Tests.Features.Notes
 {

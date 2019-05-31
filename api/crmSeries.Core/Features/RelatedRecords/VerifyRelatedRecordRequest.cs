@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
-using crmSeries.Core.Common;
 using crmSeries.Core.Data;
 using crmSeries.Core.Domain.HeavyEquipment;
 using crmSeries.Core.Extensions;
@@ -17,8 +14,9 @@ using crmSeries.Core.Features.Users.Utility;
 using crmSeries.Core.Mediator;
 using crmSeries.Core.Mediator.Decorators;
 using FluentValidation;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
-using static crmSeries.Core.Common.Constants;
+using static crmSeries.Core.Features.RelatedRecords.Constants;
 
 namespace crmSeries.Core.Features.RelatedRecords
 {
@@ -46,7 +44,9 @@ namespace crmSeries.Core.Features.RelatedRecords
 
             if (request.RecordType == RelatedRecord.Types.Company)
             {
-                if (!_context.Set<Company>().RelatedEntityExists(x => x.CompanyId == request.RecordTypeId))
+                if (!_context.Set<Company>()
+                    .AsNoTracking()
+                    .RelatedEntityExists(x => x.CompanyId == request.RecordTypeId))
                 {
                     return Response.ErrorAsync(CompaniesConstants.ErrorMessages.CompanyNotFound);
                 }
@@ -54,7 +54,9 @@ namespace crmSeries.Core.Features.RelatedRecords
 
             if (request.RecordType == RelatedRecord.Types.Contact)
             {
-                if (!_context.Set<Contact>().RelatedEntityExists(x => x.ContactId == request.RecordTypeId))
+                if (!_context.Set<Contact>()
+                    .AsNoTracking()
+                    .RelatedEntityExists(x => x.ContactId == request.RecordTypeId))
                 {
                     return Response.ErrorAsync(ContactsConstants.ErrorMessages.ContactNotFound);
                 }
@@ -62,7 +64,9 @@ namespace crmSeries.Core.Features.RelatedRecords
 
             if (request.RecordType == RelatedRecord.Types.Equipment)
             {
-                if (!_context.Set<Domain.HeavyEquipment.Equipment> ().RelatedEntityExists(x => x.EquipmentId == request.RecordTypeId))
+                if (!_context.Set<Domain.HeavyEquipment.Equipment>()
+                    .AsNoTracking()
+                    .RelatedEntityExists(x => x.EquipmentId == request.RecordTypeId))
                 {
                     return Response.ErrorAsync(EquipmentConstants.ErrorMessages.EquipmentNotFound);
                 }
@@ -70,7 +74,9 @@ namespace crmSeries.Core.Features.RelatedRecords
 
             if (request.RecordType == RelatedRecord.Types.Lead)
             {
-                if (!_context.Set<Lead>().RelatedEntityExists(x => x.LeadId == request.RecordTypeId))
+                if (!_context.Set<Lead>()
+                    .AsNoTracking()
+                    .RelatedEntityExists(x => x.LeadId == request.RecordTypeId))
                 {
                     return Response.ErrorAsync(LeadsConstants.ErrorMessages.InvalidLead);
                 }
@@ -78,7 +84,9 @@ namespace crmSeries.Core.Features.RelatedRecords
 
             if (request.RecordType == RelatedRecord.Types.Opportunity)
             {
-                if (!_context.Set<Opportunity>().RelatedEntityExists(x => x.OpportunityId == request.RecordTypeId))
+                if (!_context.Set<Opportunity>()
+                    .AsNoTracking()
+                    .RelatedEntityExists(x => x.OpportunityId == request.RecordTypeId))
                 {
                     return Response.ErrorAsync(OpportunitiesConstants.ErrorMessages.OpportunityNotFound);
                 }
@@ -86,7 +94,9 @@ namespace crmSeries.Core.Features.RelatedRecords
 
             if (request.RecordType == RelatedRecord.Types.User)
             {
-                if (!_context.Set<User>().RelatedEntityExists(x => x.UserId == request.RecordTypeId))
+                if (!_context.Set<User>()
+                    .AsNoTracking()
+                    .RelatedEntityExists(x => x.UserId == request.RecordTypeId))
                 {
                     return Response.ErrorAsync(UsersConstants.ErrorMessages.UserNotFound);
                 }
@@ -94,7 +104,9 @@ namespace crmSeries.Core.Features.RelatedRecords
 
             if (request.RecordType == RelatedRecord.Types.Note)
             {
-                if (!_context.Set<Note>().RelatedEntityExists(x => x.NoteId == request.RecordTypeId))
+                if (!_context.Set<Note>()
+                    .AsNoTracking()
+                    .RelatedEntityExists(x => x.NoteId == request.RecordTypeId))
                 {
                     return Response.ErrorAsync(NotesConstants.ErrorMessages.NoteNotFound);
                 }
@@ -102,7 +114,9 @@ namespace crmSeries.Core.Features.RelatedRecords
 
             if (request.RecordType == RelatedRecord.Types.Task)
             {
-                if (!_context.Set<Domain.HeavyEquipment.Task>().RelatedEntityExists(x => x.TaskId == request.RecordTypeId))
+                if (!_context.Set<Domain.HeavyEquipment.Task>()
+                    .AsNoTracking()
+                    .RelatedEntityExists(x => x.TaskId == request.RecordTypeId))
                 {
                     return Response.ErrorAsync(TasksConstants.ErrorMessages.TaskNotFound);
                 }

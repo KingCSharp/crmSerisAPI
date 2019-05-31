@@ -4,7 +4,6 @@ using crmSeries.Core.Features.Companies.Utility;
 using crmSeries.Core.Features.Contacts.Utility;
 using crmSeries.Core.Features.Equipment.Utility;
 using crmSeries.Core.Features.Leads.Utility;
-using crmSeries.Core.Features.Notes;
 using crmSeries.Core.Features.Notes.Utility;
 using crmSeries.Core.Features.Opportunities.Utility;
 using crmSeries.Core.Features.RelatedRecords;
@@ -13,7 +12,7 @@ using crmSeries.Core.Features.Users.Utility;
 using NUnit.Framework;
 using System;
 using System.Linq;
-using static crmSeries.Core.Common.Constants;
+using static crmSeries.Core.Features.RelatedRecords.Constants;
 
 namespace crmSeries.Core.Tests.Features.RelatedRecords
 {

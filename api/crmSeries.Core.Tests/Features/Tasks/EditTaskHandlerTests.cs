@@ -1,5 +1,4 @@
-﻿using crmSeries.Core.Common;
-using crmSeries.Core.Data;
+﻿using crmSeries.Core.Data;
 using crmSeries.Core.Domain.HeavyEquipment;
 using crmSeries.Core.Features.Contacts.Utility;
 using crmSeries.Core.Features.Notes.Utility;

@@ -1,7 +1,7 @@
 ﻿using AutoMapper.QueryableExtensions;
-using crmSeries.Core.Common;
 using crmSeries.Core.Data;
 using crmSeries.Core.Features.Companies.Dtos;
+using crmSeries.Core.Features.RelatedRecords;
 using crmSeries.Core.Mediator;
 using crmSeries.Core.Mediator.Attributes;
 using crmSeries.Core.Mediator.Decorators;

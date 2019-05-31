@@ -8,8 +8,8 @@ using FluentValidation;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using crmSeries.Core.Common;
 using AutoMapper.QueryableExtensions;
+using crmSeries.Core.Features.RelatedRecords;
 
 namespace crmSeries.Core.Features.Companies
 {

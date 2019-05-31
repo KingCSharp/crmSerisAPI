@@ -1,6 +1,5 @@
 ﻿using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using crmSeries.Core.Common;
+using crmSeries.Core.Features.RelatedRecords;
 using crmSeries.Core.Features.Tasks.Dtos;
 using crmSeries.Core.Features.Tasks.Utility;
 using crmSeries.Core.Validation;
@@ -13,16 +12,24 @@ namespace crmSeries.Core.Features.Tasks.Validator
         public BaseTaskDtoValidator()
         {
             RuleFor(x => x.UserId).GreaterThan(0);
-            RuleFor(x => x.ContactId).GreaterThan(0);
-            RuleFor(x => x.RelatedRecordId).GreaterThan(0);
-            RuleFor(x => x.RelatedRecordType).NotEmpty();
+            RuleFor(x => x.ContactId).GreaterThan(-1);
+            RuleFor(x => x.RelatedRecordId).GreaterThan(-1);
+
+            RuleFor(x => x.RelatedRecordType)
+                .Must(BeAValidRelatedRecordType)
+                .WithMessage(Constants.ErrorMessages.InvalidRecordType)
+                .When(x => x.RelatedRecordId > 0);
+
+            RuleFor(x => x.RelatedRecordType)
+                .Empty()
+                .When(x => x.RelatedRecordId == 0);
 
             RuleFor(x => x.Subject).NotEmpty();
 
             RuleFor(x => x.DueDate)
                 .SetValidator(new DateTimeDefaultValidator())
                 .Unless(x => x.DueDate == null)
-                .WithMessage(Constants.ErrorMessages.InvalidDate);
+                .WithMessage(Common.Constants.ErrorMessages.InvalidDate);
 
             RuleFor(x => x.Status).Must(BeAValidStatus)
                 .When(x => !string.IsNullOrEmpty(x.Status))
@@ -32,13 +39,17 @@ namespace crmSeries.Core.Features.Tasks.Validator
                 .When(x => !string.IsNullOrEmpty(x.Priority))
                 .WithMessage(TasksConstants.ErrorMessages.InvalidPriority);
 
-            RuleFor(x => x.RelatedRecordType).MaximumLength(TasksConstants.MaxRelatedRecordTypeLength);
             RuleFor(x => x.Subject).MaximumLength(TasksConstants.MaxSubjectLength);
             RuleFor(x => x.Status).MaximumLength(TasksConstants.MaxStatusLength);
             RuleFor(x => x.Priority).MaximumLength(TasksConstants.MaxPriorityLength);
             RuleFor(x => x.ReminderRepeatSchedule).MaximumLength(TasksConstants.MaxReminderRepeatScheduleLength);
             RuleFor(x => x.EventId).MaximumLength(TasksConstants.MaxEventIdLength);
             RuleFor(x => x.CalendarId).MaximumLength(TasksConstants.MaxCalendarIdLength);
+        }
+
+        private bool BeAValidRelatedRecordType(string recordType)
+        {
+            return Constants.RelatedRecord.Types.ValidTypes.Any(x => x == recordType);
         }
 
         private bool BeAValidPriority(string priority)

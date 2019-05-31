@@ -1,4 +1,4 @@
-﻿using crmSeries.Core.Common;
+﻿using crmSeries.Core.Features.RelatedRecords;
 using crmSeries.Core.Features.Tasks.Dtos;
 using crmSeries.Core.Features.Tasks.Utility;
 using crmSeries.Core.Features.Tasks.Validator;
@@ -67,8 +67,8 @@ namespace crmSeries.Core.Tests.Features.Tasks
         }
 
         [TestCase(1, 0, true)]
+        [TestCase(0, 0, true)]
         [TestCase(-1, 1, false)]
-        [TestCase(0, 1, false)]
         public void Validate_ContactId_ReturnsAppropriate(int contactId,
             int numberOfErrors,
             bool isValid)
@@ -85,19 +85,39 @@ namespace crmSeries.Core.Tests.Features.Tasks
 
             if (!result.IsValid)
             {
-                Assert.AreEqual("'Contact Id' must be greater than '0'.", result.Errors[0].ErrorMessage);
+                Assert.AreEqual("'Contact Id' must be greater than '-1'.", result.Errors[0].ErrorMessage);
             }
         }
 
-        [TestCase(1, 0, true)]
-        [TestCase(-1, 1, false)]
-        [TestCase(0, 1, false)]
-        public void Validate_RelatedRecordId_ReturnsAppropriate(int relatedRecordId,
+        [TestCase("")]
+        [TestCase(" ")]
+        [TestCase("foo")]
+        public void Validate_RelatedRecordIdWhenIdIs1_ReturnsValidationFailureIfTypeIsEmpty(string recordType)
+        {
+            //Arrange
+            _baseTaskDto.RelatedRecordId = 1;
+            _baseTaskDto.RelatedRecordType = recordType;
+
+            // Act
+            var result = _baseTaskDtoValidator.Validate(_baseTaskDto);
+
+            //Assert 
+            Assert.AreEqual(false, result.IsValid);
+            Assert.AreEqual(1, result.Errors.Count);
+            Assert.AreEqual(Constants.ErrorMessages.InvalidRecordType, result.Errors[0].ErrorMessage);
+        }
+
+        [TestCase(0, "", 0, true)]
+        [TestCase(0, "foo", 1, false)]
+        public void Validate_RelatedRecordsWhenIdIs0_ReturnsAppropriate(
+            int relatedRecordId,
+            string relatedRecordType,
             int numberOfErrors,
             bool isValid)
         {
             //Arrange
             _baseTaskDto.RelatedRecordId = relatedRecordId;
+            _baseTaskDto.RelatedRecordType = relatedRecordType;
 
             // Act
             var result = _baseTaskDtoValidator.Validate(_baseTaskDto);
@@ -108,7 +128,38 @@ namespace crmSeries.Core.Tests.Features.Tasks
 
             if (!result.IsValid)
             {
-                Assert.AreEqual("'Related Record Id' must be greater than '0'.", result.Errors[0].ErrorMessage);
+                Assert.AreEqual("'Related Record Type' must be empty.", result.Errors[0].ErrorMessage);
+            }
+        }
+
+        [TestCase(Constants.RelatedRecord.Types.Company, 0, true)]
+        [TestCase(Constants.RelatedRecord.Types.Contact, 0, true)]
+        [TestCase(Constants.RelatedRecord.Types.Equipment, 0, true)]
+        [TestCase(Constants.RelatedRecord.Types.Lead, 0, true)]
+        [TestCase(Constants.RelatedRecord.Types.Note, 0, true)]
+        [TestCase(Constants.RelatedRecord.Types.Opportunity, 0, true)]
+        [TestCase(Constants.RelatedRecord.Types.Task, 0, true)]
+        [TestCase(Constants.RelatedRecord.Types.User, 0, true)]
+        [TestCase("invalid type", 1, false)]
+        public void Validate_RelatedRecordType_ReturnsAppropriateValidation(
+            string relatedRecordType,
+            int numberOfErrors,
+            bool isValid)
+        {
+            //Arrange
+            _baseTaskDto.RelatedRecordId = 1;
+            _baseTaskDto.RelatedRecordType = relatedRecordType;
+
+            // Act
+            var result = _baseTaskDtoValidator.Validate(_baseTaskDto);
+
+            //Assert 
+            Assert.AreEqual(isValid, result.IsValid);
+            Assert.AreEqual(numberOfErrors, result.Errors.Count);
+
+            if (!result.IsValid)
+            {
+                Assert.AreEqual(Constants.ErrorMessages.InvalidRecordType, result.Errors[0].ErrorMessage);
             }
         }
 
@@ -191,29 +242,7 @@ namespace crmSeries.Core.Tests.Features.Tasks
             Assert.AreEqual(isValid, result.IsValid);
             if (!result.IsValid)
             {
-                Assert.AreEqual(Constants.ErrorMessages.InvalidDate, result.Errors[0].ErrorMessage);
-            }
-        }
-
-        [TestCase(TasksConstants.MaxRelatedRecordTypeLength, true)]
-        [TestCase(TasksConstants.MaxRelatedRecordTypeLength + 1, false)]
-        public void Validate_RelatedRecordTypeLength_ReturnsAppropriateValidation(
-            int length,
-            bool isValid)
-        {
-            //Arrange
-            _baseTaskDto.RelatedRecordType = TestUtility.GenerateStringOfLength(length);
-
-            // Act
-            var result = _baseTaskDtoValidator.Validate(_baseTaskDto);
-
-            //Assert 
-            Assert.AreEqual(isValid, result.IsValid);
-            if (!result.IsValid)
-            {
-                Assert.IsTrue(result.Errors[0].ErrorMessage.Contains(
-                    TestUtility.MaxLengthError(
-                        "Related Record Type", TasksConstants.MaxRelatedRecordTypeLength)));
+                Assert.AreEqual(Common.Constants.ErrorMessages.InvalidDate, result.Errors[0].ErrorMessage);
             }
         }
 

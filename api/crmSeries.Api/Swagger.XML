@@ -135,6 +135,11 @@
             </summary>
             <param name="id">The unique identifier of the Note</param>
         </member>
+        <member name="M:crmSeries.API.Controllers.RelatedRecordsController.Get">
+            <summary>
+            Gets the different related records.
+            </summary>
+        </member>
         <member name="M:crmSeries.API.Controllers.TasksController.GetTasks(crmSeries.Core.Logic.Queries.PagedQueryRequest)">
             <summary>
             Gets a list of all tasks assigned to ?????????????????.
