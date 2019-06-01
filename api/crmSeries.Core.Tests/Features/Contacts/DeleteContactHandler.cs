@@ -1,9 +1,9 @@
-﻿using crmSeries.Core.Data;
+﻿using System.Linq;
+using crmSeries.Core.Data;
 using crmSeries.Core.Domain.HeavyEquipment;
 using crmSeries.Core.Features.Contacts;
-using crmSeries.Core.Features.Leads.Utility;
+using crmSeries.Core.Features.Contacts.Utility;
 using NUnit.Framework;
-using System.Linq;
 
 namespace crmSeries.Core.Tests.Features.Contacts
 {

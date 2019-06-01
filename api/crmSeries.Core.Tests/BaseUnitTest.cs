@@ -39,30 +39,24 @@ namespace crmSeries.Core.Tests
                 .Options;
         }
 
-        public IIdentityUserContext GetUserContextStub(int userId, string email)
+        public IIdentityUserContext GetUserContextStub(int userId)
         {
-            return new StubbedIdentityUserContext(userId, email);
+            return new StubbedIdentityUserContext(userId);
         }
     }
 
     public class StubbedIdentityUserContext : IIdentityUserContext
     {
         private int userId;
-        private string userEmail;
 
-        public StubbedIdentityUserContext(int id, string email)
+        public StubbedIdentityUserContext(int id)
         {
             userId = id;
-            userEmail = email;
         }
 
         public IdentityUser RequestingUser => new IdentityUser
         {
-            CurrentUser = new User
-            {
-                UserId = userId,
-                Email = userEmail
-            }
+            UserId = userId
         };
     }
 }

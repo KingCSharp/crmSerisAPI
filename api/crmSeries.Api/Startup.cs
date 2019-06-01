@@ -44,8 +44,7 @@ namespace crmSeries.Api
             SwaggerConfig.Configure(app, env);
             FluentValidationConfig.Configure();
             IdentityServerConfig.Configure(app);
-
-            app.UseExceptionless(_configuration["Common:Exceptionless:Key"]);
+            app.UseExceptionless(_configuration["CommonSettings:Exceptionless:Key"]);
         }
     }
 }

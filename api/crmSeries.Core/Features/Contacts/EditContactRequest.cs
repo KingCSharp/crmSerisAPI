@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using crmSeries.Core.Data;
 using crmSeries.Core.Domain.HeavyEquipment;
 using crmSeries.Core.Extensions;
 using crmSeries.Core.Features.Companies.Utility;
 using crmSeries.Core.Features.Contacts.Dtos;
+using crmSeries.Core.Features.Contacts.Utility;
 using crmSeries.Core.Features.Contacts.Validator;
-using crmSeries.Core.Features.Leads.Utility;
 using crmSeries.Core.Mediator;
 using crmSeries.Core.Mediator.Decorators;
 using FluentValidation;

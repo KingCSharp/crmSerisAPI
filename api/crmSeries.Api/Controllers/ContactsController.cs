@@ -18,7 +18,7 @@ namespace crmSeries.API.Controllers
         /// <param name="paginationInfo">The paging information for this request.</param>
         [HttpGet]
         [Produces(typeof(PagedQueryResult<GetContactDto>))]
-        public Task<IActionResult> Get(PagedQueryRequest paginationInfo)
+        public Task<IActionResult> GetContacts(PagedQueryRequest paginationInfo)
         {
             return HandleAsync(new GetContactsRequest
             {
@@ -29,10 +29,10 @@ namespace crmSeries.API.Controllers
         /// <summary>
         /// Gets a contact entity based on the contact entity's contact id.
         /// </summary>
-        /// <param name="id">The unqiue identifier of the contact.</param>
+        /// <param name="id">The unique identifier of the contact.</param>
         [HttpGet("{id}")]
         [Produces(typeof(GetContactDto))]
-        public Task<IActionResult> GetContactsById(int id)
+        public Task<IActionResult> GetContactById(int id)
         {
             return HandleAsync(new GetContactByIdRequest(id));
         }
@@ -51,7 +51,7 @@ namespace crmSeries.API.Controllers
         /// Updates a contact object based on the data in the request.
         /// </summary>
         [HttpPut]
-        [Produces(typeof(Response<EditContactDto>))]
+        [Produces(typeof(Response))]
         public Task<IActionResult> Edit([FromBody]EditContactRequest request)
         {
             return HandleAsync(request);
@@ -60,7 +60,7 @@ namespace crmSeries.API.Controllers
         /// <summary>
         /// Sets the contact to deleted.
         /// </summary>
-        /// <param name="id">The unique identifer of the contact</param>
+        /// <param name="id">The unique identifier of the contact</param>
         [HttpDelete]
         [Produces(typeof(Response))]
         public Task<IActionResult> Delete(int id)

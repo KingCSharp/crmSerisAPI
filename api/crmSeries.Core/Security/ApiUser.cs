@@ -13,6 +13,6 @@ namespace crmSeries.Core.Security
 
     public class IdentityUser
     {
-        public User CurrentUser { get; set; }
+        public int UserId { get; set; }
     }
 }

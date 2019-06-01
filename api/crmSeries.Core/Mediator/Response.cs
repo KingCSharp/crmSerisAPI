@@ -47,5 +47,10 @@ namespace crmSeries.Core.Mediator
 
         public static new Task<Response<TResult>> ErrorAsync(Error error) =>
             Task.FromResult(FromErrors(new List<Error> { error }));
+
+        internal static Task<Response<AddResponse>> ErrorAsync(object userConstants)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

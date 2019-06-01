@@ -59,17 +59,17 @@
             </summary>
             <param name="id">The unique identifier of the contact</param>
         </member>
-        <member name="M:crmSeries.API.Controllers.ContactsController.Get(crmSeries.Core.Logic.Queries.PagedQueryRequest)">
+        <member name="M:crmSeries.API.Controllers.ContactsController.GetContacts(crmSeries.Core.Logic.Queries.PagedQueryRequest)">
             <summary>
             Gets a list of all contacts assigned to the current user.
             </summary>
             <param name="paginationInfo">The paging information for this request.</param>
         </member>
-        <member name="M:crmSeries.API.Controllers.ContactsController.GetContactsById(System.Int32)">
+        <member name="M:crmSeries.API.Controllers.ContactsController.GetContactById(System.Int32)">
             <summary>
             Gets a contact entity based on the contact entity's contact id.
             </summary>
-            <param name="id">The unqiue identifier of the contact.</param>
+            <param name="id">The unique identifier of the contact.</param>
         </member>
         <member name="M:crmSeries.API.Controllers.ContactsController.Post(crmSeries.Core.Features.Contacts.AddContactRequest)">
             <summary>
@@ -85,7 +85,7 @@
             <summary>
             Sets the contact to deleted.
             </summary>
-            <param name="id">The unique identifer of the contact</param>
+            <param name="id">The unique identifier of the contact</param>
         </member>
         <member name="M:crmSeries.API.Controllers.LeadsController.Post(crmSeries.Core.Features.Leads.AddLeadRequest)">
             <summary>
@@ -94,6 +94,89 @@
             <param name="addLeadRequest">The AddLeadRequest object.</param>
             <remarks>Along with name, this API requires that either phone number or E-Mail be passed into the
             request.</remarks>
+        </member>
+        <member name="M:crmSeries.API.Controllers.NotesController.GetNotes(crmSeries.Core.Logic.Queries.PagedQueryRequest)">
+            <summary>
+            Gets a list of all notes assigned to current user (????????)
+            </summary>
+            <param name="paginationInfo">The paging information for this request.</param>
+        </member>
+        <member name="M:crmSeries.API.Controllers.NotesController.GetNoteTypes">
+            <summary>
+            Gets the different types of notes.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:crmSeries.API.Controllers.NotesController.GetNotePurposes">
+            <summary>
+            Gets the different purposes of notes.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:crmSeries.API.Controllers.NotesController.GetNoteById(System.Int32)">
+            <summary>
+            Gets a Notes entity based on the Note entity's Note id.
+            </summary>
+            <param name="id">The unique identifier of the note.</param>
+        </member>
+        <member name="M:crmSeries.API.Controllers.NotesController.Post(crmSeries.Core.Features.Notes.AddNoteRequest)">
+            <summary>
+            Adds a Note object based on the data in the request.
+            </summary>
+        </member>
+        <member name="M:crmSeries.API.Controllers.NotesController.Edit(crmSeries.Core.Features.Notes.EditNoteRequest)">
+            <summary>
+            Updates a Note object based on the data in the request.
+            </summary>
+        </member>
+        <member name="M:crmSeries.API.Controllers.NotesController.Delete(System.Int32)">
+            <summary>
+            Sets the Note to deleted.
+            </summary>
+            <param name="id">The unique identifier of the Note</param>
+        </member>
+        <member name="M:crmSeries.API.Controllers.RelatedRecordsController.Get">
+            <summary>
+            Gets the different related records.
+            </summary>
+        </member>
+        <member name="M:crmSeries.API.Controllers.TasksController.GetTasks(crmSeries.Core.Logic.Queries.PagedQueryRequest)">
+            <summary>
+            Gets a list of all tasks assigned to ?????????????????.
+            </summary>
+            <param name="paginationInfo">The paging information for this request.</param>
+        </member>
+        <member name="M:crmSeries.API.Controllers.TasksController.GetTaskById(System.Int32)">
+            <summary>
+            Gets a tasks entity based on the task entity's task id.
+            </summary>
+            <param name="id">The unique identifier of the task.</param>
+        </member>
+        <member name="M:crmSeries.API.Controllers.TasksController.GetTaskStatuses">
+            <summary>
+            Gets all valid task statuses.
+            </summary>
+        </member>
+        <member name="M:crmSeries.API.Controllers.TasksController.GetTaskPriorities">
+            <summary>
+            Gets all valid task priorities.
+            </summary>
+        </member>
+        <member name="M:crmSeries.API.Controllers.TasksController.Post(crmSeries.Core.Features.Tasks.AddTaskRequest)">
+            <summary>
+            Adds a task object based on the data in the request.
+            </summary>
+        </member>
+        <member name="M:crmSeries.API.Controllers.TasksController.Edit(crmSeries.Core.Features.Tasks.EditTaskRequest)">
+            <summary>
+            Updates a task object based on the data in the request.
+            </summary>
+        </member>
+        <member name="M:crmSeries.API.Controllers.TasksController.Delete(System.Int32)">
+            <summary>
+            Sets the task to deleted.
+            </summary>
+            <param name="id">The unique identifier of the task</param>
         </member>
         <member name="M:crmSeries.API.Controllers.TemplatesController.ListTemplates">
             <summary>

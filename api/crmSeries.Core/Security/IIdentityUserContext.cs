@@ -70,7 +70,7 @@ namespace crmSeries.Core.Security
 
                 var apiUser = new IdentityUser
                 {
-                    CurrentUser = currentUser
+                    UserId = currentUser.UserId
                 };
 
                 return _cachedUser = apiUser;
@@ -94,7 +94,7 @@ namespace crmSeries.Core.Security
     {
         public IdentityUser RequestingUser => new IdentityUser
         {
-            CurrentUser = null
+            UserId = 0
         };
     }
 }

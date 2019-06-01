@@ -32,6 +32,7 @@ namespace crmSeries.Core.Common
             public const string FaxInvalid = "The Fax field is invalid.";
             public const string CompanyPhoneInvalid = "The Company Phone field is invalid.";
             public const string PhoneOrEmailRequired = "You must submit either phone number or E-Mail.";
+            public const string InvalidDate = "The date is not valid.";
         }
 
         public static class Emails
@@ -39,14 +40,6 @@ namespace crmSeries.Core.Common
             public static class Leads
             {
                 public const string DealerNameKey = "{DealerName}";
-            }
-        }
-
-        public static class UserFavoriteRecords
-        {
-            public static class Types
-            {
-                public const string Company = "Company";
             }
         }
     }

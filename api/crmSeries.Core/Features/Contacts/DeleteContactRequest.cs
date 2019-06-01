@@ -4,7 +4,7 @@ using crmSeries.Core.Mediator;
 using crmSeries.Core.Mediator.Decorators;
 using FluentValidation;
 using System.Linq;
-using crmSeries.Core.Features.Leads.Utility;
+using crmSeries.Core.Features.Contacts.Utility;
 
 namespace crmSeries.Core.Features.Contacts
 {

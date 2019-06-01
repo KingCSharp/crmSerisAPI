@@ -17,7 +17,7 @@ namespace crmSeries.Core.Tests.Features.Companies
 
             using (var context = new HeavyEquipmentContext(options))
             {
-                var user = new User { UserId = 1, Email = "test@email.com" };
+                var user = new User { UserId = 1 };
                 context.User.Add(user);
 
                 int itemCount = 10;
@@ -37,7 +37,7 @@ namespace crmSeries.Core.Tests.Features.Companies
 
                 var handler = new GetCompaniesFullPagedRequestHandler(
                     context,
-                    GetUserContextStub(user.UserId, user.Email));
+                    GetUserContextStub(user.UserId));
                 var query = new PagedQueryRequest { PageNumber = 1, PageSize = 5 };
 
                 // Act
@@ -68,13 +68,13 @@ namespace crmSeries.Core.Tests.Features.Companies
 
             using (var context = new HeavyEquipmentContext(options))
             {
-                var user = new User { UserId = 1, Email = "test@email.com" };
+                var user = new User { UserId = 1 };
                 context.User.Add(user);
                 context.SaveChanges();
 
                 var handler = new GetCompaniesFullPagedRequestHandler(
                     context,
-                    GetUserContextStub(user.UserId, user.Email));
+                    GetUserContextStub(user.UserId));
                 var query = new PagedQueryRequest { PageNumber = 1, PageSize = 5 };
 
                 // Act

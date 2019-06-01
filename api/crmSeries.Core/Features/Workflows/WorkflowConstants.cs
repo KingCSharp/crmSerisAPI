@@ -46,11 +46,6 @@ namespace crmSeries.Core.Features.Workflows
             public const string Entered = "Entered";
         }
 
-        public static class Server
-        {
-            public const string BasePathKey = "Common:Server:BaseURL";
-        }
-
         public static class Triggers
         {
             public const string Plus = "plus";

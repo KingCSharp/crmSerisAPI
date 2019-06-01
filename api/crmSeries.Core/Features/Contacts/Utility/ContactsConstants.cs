@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace crmSeries.Core.Features.Leads.Utility
+namespace crmSeries.Core.Features.Contacts.Utility
 {
     public static class ContactsConstants
     {

@@ -1,8 +1,5 @@
-﻿using crmSeries.Core.Common;
-using crmSeries.Core.Security;
+﻿using crmSeries.Core.Configuration;
 using MailKit.Net.Smtp;
-using MailKit.Security;
-using Microsoft.Extensions.Options;
 using MimeKit;
 using System;
 using System.Threading.Tasks;
@@ -11,11 +8,11 @@ namespace crmSeries.Core.Notifications.Email
 {
     public class EmailNotifier : IEmailNotifier
     {
-        private readonly EmailConfig _emailConfig;
+        private readonly CommonSettings _commonSettings;
 
-        public EmailNotifier(EmailConfig emailConfig)
+        public EmailNotifier(CommonSettings commonSettings)
         {
-            _emailConfig = emailConfig;
+            _commonSettings = commonSettings;
         }
 
         public async Task SendEmailAsync(EmailMessage message)
@@ -23,7 +20,9 @@ namespace crmSeries.Core.Notifications.Email
             try
             {
                 var mimeMessage = new MimeMessage();
-                mimeMessage.From.Add(new MailboxAddress(_emailConfig.SenderName, _emailConfig.FromAddress));
+                mimeMessage.From.Add(new MailboxAddress(
+                    _commonSettings.Smtp.SenderName, 
+                    _commonSettings.Smtp.FromAddress));
                 message.ToAddresses.ForEach(a => { mimeMessage.To.Add(new MailboxAddress(a.Name, a.Address)); });
                 mimeMessage.Subject = message.Subject;
                 mimeMessage.Body = new TextPart("html") { Text = message.Body };
@@ -33,8 +32,13 @@ namespace crmSeries.Core.Notifications.Email
                     // Accept all SSL certificates (in case the server supports STARTTLS)
                     client.ServerCertificateValidationCallback = (s, c, h, e) => true;
 
-                    await client.ConnectAsync(_emailConfig.Host, _emailConfig.Port, _emailConfig.UseSsl);
-                    await client.AuthenticateAsync(_emailConfig.Username, _emailConfig.Password);
+                    await client.ConnectAsync(
+                        _commonSettings.Smtp.Host, 
+                        _commonSettings.Smtp.Port, 
+                        _commonSettings.Smtp.UseSsl);
+                    await client.AuthenticateAsync(
+                        _commonSettings.Smtp.Credentials.UserName, 
+                        _commonSettings.Smtp.Credentials.Password);
                     await client.SendAsync(mimeMessage);
                     await client.DisconnectAsync(true);
                 }

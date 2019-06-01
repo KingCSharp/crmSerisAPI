@@ -19,7 +19,6 @@ namespace crmSeries.Core.Security
         private readonly AdminContext _context;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private ApiUser _cachedUser;
-        private HeavyEquipmentContext _userContext;
 
         public HttpIdentityApiContext(AdminContext dataContext,
             IHttpContextAccessor httpContextAccessor)

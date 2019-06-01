@@ -21,6 +21,7 @@ namespace crmSeries.Core.Features.Companies
     public class DeleteCompanyHandler : IRequestHandler<DeleteCompanyRequest>
     {
         private readonly HeavyEquipmentContext _context;
+
         public DeleteCompanyHandler(HeavyEquipmentContext context)
         {
             _context = context;
@@ -39,7 +40,6 @@ namespace crmSeries.Core.Features.Companies
             return Response.SuccessAsync();
         }
     }
-
 
     public class DeleteCompanyValidator : AbstractValidator<DeleteCompanyRequest>
     {

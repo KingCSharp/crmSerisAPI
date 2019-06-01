@@ -8,6 +8,7 @@ namespace crmSeries.Core.Features.Leads.Utility
     {
         public static class ErrorMessages
         {
+            public const string InvalidLead = "The lead with this identifier doesn't exist.";
         }
     }
 }

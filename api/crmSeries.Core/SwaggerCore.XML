@@ -111,7 +111,7 @@
         </member>
         <member name="P:crmSeries.Core.Features.Companies.Dtos.BaseCompanyDto.SourceId">
             <summary>
-            The source of the company. E.g., Cold Call, Website, Email Marketing, etc.
+            The source id of the company. E.g., Cold Call, Website, Email Marketing, etc.
             </summary>
         </member>
         <member name="P:crmSeries.Core.Features.Companies.Dtos.BaseCompanyDto.Status">
@@ -137,6 +137,26 @@
         <member name="P:crmSeries.Core.Features.Companies.Dtos.GetCompanyDto.Favorite">
             <summary>
             Flag for if this company record is set as a favorite by the user.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Companies.Dtos.GetCompanyDto.Branch">
+            <summary>
+            The name of the branch associated with this company.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Companies.Dtos.GetCompanyDto.Source">
+            <summary>
+            The source of the company. E.g., Cold Call, Website, Email Marketing, etc.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Companies.Dtos.GetCompanyDto.RecordType">
+            <summary>
+            The type of company. E.g., Corporate, Mine, Quarry, etc.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Companies.Dtos.GetCompanyDto.ParentName">
+            <summary>
+            The name of the parent company that this company belongs to.
             </summary>
         </member>
         <member name="P:crmSeries.Core.Features.Companies.Dtos.EditCompanyDto.CompanyId">
@@ -344,6 +364,88 @@
             Flag for soft deletion.
             </summary>
         </member>
+        <member name="T:crmSeries.Core.Features.DocuSign.TemplateDto">
+            <summary>
+            Contains the necessary information to identify a DocuSign template.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.DocuSign.TemplateDto.TemplateId">
+            <summary>
+            The template's DocuSign identifier (UUID)
+            </summary>
+        </member>
+        <member name="T:crmSeries.Core.Features.DocuSign.TemplateRecipientDto">
+            <summary>
+            Contains the necessary information to identify a recipient of a DocuSign template.
+            </summary>
+        </member>
+        <member name="T:crmSeries.Core.Features.DocuSign.TemplateGetDto">
+            <summary>
+            Contains information about a DocuSign template.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.DocuSign.DocuSignTemplate.TemplateId">
+            <summary>
+            The template's DocuSign identifier (UUID)
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.DocuSign.DocuSignTemplate.Name">
+            <summary>
+            The template's display name
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.DocuSign.DocuSignTemplate.Description">
+            <summary>
+            The template's Message
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.DocuSign.DocuSignTemplate.FolderId">
+            <summary>
+            The template's DocuSign folder identifier (UUID)
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.DocuSign.DocuSignTemplate.FolderName">
+            <summary>
+            The template's folder name
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.DocuSign.DocuSignTemplate.CreatedDate">
+            <summary>
+            The date and time the template was created
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.DocuSign.DocuSignTemplate.LastModifiedDate">
+            <summary>
+            The date and time the template was last modified
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.DocuSign.DocuSignTemplateRecipient.Role">
+            <summary>
+            The recipient's Template Role
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.DocuSign.DocuSignTemplateRecipient.Name">
+            <summary>
+            The recipient's name
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.DocuSign.DocuSignTemplateRecipient.Email">
+            <summary>
+            The recipient's email address
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.DocuSign.SendTemplateRequest.Template">
+            <summary>
+            The DocuSign template that will be sent to the recipients.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.DocuSign.SendTemplateRequest.Recipients">
+            <summary>
+            A list of recipients to whom the DocuSign template will be sent.
+            Each recipient will be sent an email requesting his or her signature after the previous 
+            signatory has completed his or her template role.
+            </summary>
+        </member>
         <member name="T:crmSeries.Core.Features.Leads.Dtos.AddLeadDto">
             <summary>
             The DTO object representing the data to add a lead.
@@ -489,86 +591,114 @@
             The last name of the contact for this lead.  Maximum length: 50
             </summary>
         </member>
-        <member name="T:crmSeries.Core.Features.DocuSign.TemplateDto">
+        <member name="P:crmSeries.Core.Features.Notes.Dtos.BaseNoteDto.RecordId">
             <summary>
-            Contains the necessary information to identify a DocuSign template.
+            The Id of the related record.
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.DocuSign.TemplateDto.TemplateId">
+        <member name="P:crmSeries.Core.Features.Notes.Dtos.BaseNoteDto.RecordType">
             <summary>
-            The template's DocuSign identifier (UUID)
+            The record type of the note.
             </summary>
         </member>
-        <member name="T:crmSeries.Core.Features.DocuSign.TemplateRecipientDto">
+        <member name="P:crmSeries.Core.Features.Notes.Dtos.BaseNoteDto.UserId">
             <summary>
-            Contains the necessary information to identify a recipient of a DocuSign template.
+            The user Id of the note.
             </summary>
         </member>
-        <member name="T:crmSeries.Core.Features.DocuSign.TemplateGetDto">
+        <member name="P:crmSeries.Core.Features.Notes.Dtos.BaseNoteDto.RecordTypeId">
             <summary>
-            Contains information about a DocuSign template.
+            The type Id of the note.
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.DocuSign.DocuSignTemplate.TemplateId">
+        <member name="P:crmSeries.Core.Features.Notes.Dtos.BaseNoteDto.NoteDate">
             <summary>
-            The template's DocuSign identifier (UUID)
+            The date the note was created
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.DocuSign.DocuSignTemplate.Name">
+        <member name="P:crmSeries.Core.Features.Notes.Dtos.BaseNoteDto.Comments">
             <summary>
-            The template's display name
+            The comments associated with the note.
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.DocuSign.DocuSignTemplate.Description">
+        <member name="P:crmSeries.Core.Features.Notes.Dtos.BaseNoteDto.Latitude">
             <summary>
-            The template's Message
+            The latitude of user when the note was modified.
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.DocuSign.DocuSignTemplate.FolderId">
+        <member name="P:crmSeries.Core.Features.Notes.Dtos.BaseNoteDto.Longitude">
             <summary>
-            The template's DocuSign folder identifier (UUID)
+            The longitude of user when the note was modified.
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.DocuSign.DocuSignTemplate.FolderName">
+        <member name="P:crmSeries.Core.Features.Notes.Dtos.GetNoteDto.NoteId">
             <summary>
-            The template's folder name
+            The note identifier.
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.DocuSign.DocuSignTemplate.CreatedDate">
+        <member name="P:crmSeries.Core.Features.Notes.Dtos.GetNoteDto.Deleted">
             <summary>
-            The date and time the template was created
+            The flag for soft deletion.
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.DocuSign.DocuSignTemplate.LastModifiedDate">
+        <member name="P:crmSeries.Core.Features.Notes.Dtos.GetNoteDto.Active">
             <summary>
-            The date and time the template was last modified
+            The flag for whether this contact is active or not.
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.DocuSign.DocuSignTemplateRecipient.Role">
+        <member name="P:crmSeries.Core.Features.Notes.Dtos.GetNoteDto.LastModified">
             <summary>
-            The recipient's Template Role
+            The date, if any, that the entity was modified.
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.DocuSign.DocuSignTemplateRecipient.Name">
+        <member name="P:crmSeries.Core.Features.Notes.Dtos.EditNoteDto.NoteId">
             <summary>
-            The recipient's name
+            The note identifier
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.DocuSign.DocuSignTemplateRecipient.Email">
+        <member name="P:crmSeries.Core.Features.Notes.Dtos.EditNoteDto.Deleted">
             <summary>
-            The recipient's email address
+            The flag for soft deletion.
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.DocuSign.SendTemplateRequest.Template">
+        <member name="P:crmSeries.Core.Features.Notes.Dtos.EditNoteDto.Active">
             <summary>
-            The DocuSign template that will be sent to the recipients.
+            The flag for whether this contact is active or not.
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.DocuSign.SendTemplateRequest.Recipients">
+        <member name="P:crmSeries.Core.Features.Tasks.Dtos.GetTaskDto.TaskId">
             <summary>
-            A list of recipients to whom the DocuSign template will be sent.
-            Each recipient will be sent an email requesting his or her signature after the previous 
-            signatory has completed his or her template role.
+            The contact identifier.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Tasks.Dtos.GetTaskDto.Deleted">
+            <summary>
+            The flag for soft deletion.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Tasks.Dtos.GetTaskDto.Active">
+            <summary>
+            The flag for whether this contact is active or not.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Tasks.Dtos.GetTaskDto.LastModified">
+            <summary>
+            The date, if any, that the entity was modified.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Tasks.Dtos.EditTaskDto.TaskId">
+            <summary>
+            The task identifier
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Tasks.Dtos.EditTaskDto.Deleted">
+            <summary>
+            The flag for soft deletion.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Tasks.Dtos.EditTaskDto.Active">
+            <summary>
+            The flag for whether this contact is active or not.
             </summary>
         </member>
         <member name="P:crmSeries.Core.Features.Workflows.ExecuteWorkflowRuleRequest.Module">
