@@ -73,7 +73,7 @@ namespace crmSeries.Core.Features.DocuSign
         private bool Authenticate()
         {
             if (_docuSignContext.AccessToken != null &&
-                DateTime.Now < _docuSignContext.AccessToken.Expiration.AddSeconds(-EarlyRefreshSeconds))
+                DateTime.UtcNow < _docuSignContext.AccessToken.Expiration.AddSeconds(-EarlyRefreshSeconds))
                 return true;
 
             OAuth.OAuthToken authToken = null;
@@ -90,8 +90,8 @@ namespace crmSeries.Core.Features.DocuSign
             {
                 Token = authToken.access_token,
                 Expiration = authToken.expires_in.HasValue
-                    ? DateTime.Now.AddSeconds(authToken.expires_in.Value)
-                    : DateTime.Now.AddSeconds(EarlyRefreshSeconds)
+                    ? DateTime.UtcNow.AddSeconds(authToken.expires_in.Value)
+                    : DateTime.UtcNow.AddSeconds(EarlyRefreshSeconds)
             };
             
             if (!GetAccountInfo())
