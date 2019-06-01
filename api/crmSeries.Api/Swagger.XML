@@ -152,6 +152,16 @@
             </summary>
             <param name="id">The unique identifier of the task.</param>
         </member>
+        <member name="M:crmSeries.API.Controllers.TasksController.GetTaskStatuses">
+            <summary>
+            Gets all valid task statuses.
+            </summary>
+        </member>
+        <member name="M:crmSeries.API.Controllers.TasksController.GetTaskPriorities">
+            <summary>
+            Gets all valid task priorities.
+            </summary>
+        </member>
         <member name="M:crmSeries.API.Controllers.TasksController.Post(crmSeries.Core.Features.Tasks.AddTaskRequest)">
             <summary>
             Adds a task object based on the data in the request.

@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using crmSeries.Api.Controllers;
 using crmSeries.Core.Features.Tasks;
 using crmSeries.Core.Features.Tasks.Dtos;
@@ -35,6 +36,28 @@ namespace crmSeries.API.Controllers
         public Task<IActionResult> GetTaskById(int id)
         {
             return HandleAsync(new GetTaskByIdRequest(id));
+        }
+
+        /// <summary>
+        /// Gets all valid task statuses.
+        /// </summary>
+        [HttpGet]
+        [Produces(typeof(Response<IEnumerable<string>>))]
+        [Route("statuses")]
+        public Task<IActionResult> GetTaskStatuses()
+        {
+            return HandleAsync(new GetTaskStatusesRequest());
+        }
+
+        /// <summary>
+        /// Gets all valid task priorities.
+        /// </summary>
+        [HttpGet]
+        [Produces(typeof(Response<IEnumerable<string>>))]
+        [Route("priorities")]
+        public Task<IActionResult> GetTaskPriorities()
+        {
+            return HandleAsync(new GetTaskPrioritiesRequest());
         }
 
         /// <summary>
