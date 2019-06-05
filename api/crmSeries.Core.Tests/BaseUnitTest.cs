@@ -13,8 +13,8 @@ namespace crmSeries.Core.Tests
     {
         private static bool Initialized = false;
 
-        [SetUp]
-        public void Setup()
+        [OneTimeSetUp]
+        public void OneTimeSetup()
         {
             if (!Initialized)
             {
