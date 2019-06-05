@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using crmSeries.Core.Data;
 using crmSeries.Core.Domain.HeavyEquipment;
@@ -64,9 +66,22 @@ namespace crmSeries.Core.Features.Leads
         {
             var lead = Mapper.Map<Lead>(request);
 
+            if (!string.IsNullOrWhiteSpace(request.Email))
+            {
+                AssignOwnerToLead(lead, request.OwnerEmail);
+            }
+
             _context.Set<Lead>().Add(lead);
             _context.SaveChanges();
             return lead;
+        }
+
+        private void AssignOwnerToLead(Lead lead, string ownerEmail)
+        {
+            var user = _context.Set<User>().SingleOrDefault(x => x.Email == ownerEmail);
+
+            if (user != null)
+                lead.OwnerId = user.UserId;
         }
 
         private void AddLeadToAudit(Lead lead)

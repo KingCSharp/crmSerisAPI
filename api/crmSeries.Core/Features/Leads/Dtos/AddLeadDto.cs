@@ -141,6 +141,11 @@ namespace crmSeries.Core.Features.Leads.Dtos
         public string Department { get; set; }
 
         /// <summary>
+        /// The E-Mail address of the person who will own this lead.
+        /// </summary>
+        public string OwnerEmail { get; set; }
+        
+        /// <summary>
         /// The first name of the contact for this lead.  Maximum length: 50
         /// </summary>
         [JsonIgnore]

@@ -21,6 +21,11 @@ namespace crmSeries.Core.Features.Leads.Validators
                 .Unless(x => string.IsNullOrEmpty(x.Email))
                 .WithMessage(Constants.ErrorMessages.EmailAddressInvalid);
 
+            RuleFor(x => x.OwnerEmail)
+                .EmailAddress()
+                .Unless(x => string.IsNullOrEmpty(x.Email))
+                .WithMessage(Constants.ErrorMessages.EmailAddressInvalid);
+
             RuleFor(x => x.Phone)
                 .SetValidator(new PhoneNumberValidator())
                 .Unless(x => string.IsNullOrEmpty(x.Phone))
