@@ -66,7 +66,7 @@ namespace crmSeries.Core.Features.Leads
         {
             var lead = Mapper.Map<Lead>(request);
 
-            if (!string.IsNullOrWhiteSpace(request.Email))
+            if (!string.IsNullOrWhiteSpace(request.OwnerEmail))
             {
                 AssignOwnerToLead(lead, request.OwnerEmail);
             }
