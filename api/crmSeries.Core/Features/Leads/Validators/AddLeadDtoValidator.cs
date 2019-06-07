@@ -17,13 +17,12 @@ namespace crmSeries.Core.Features.Leads.Validators
                 .NotEmpty();
 
             RuleFor(x => x.Email)
-                .EmailAddress()
                 .Unless(x => string.IsNullOrEmpty(x.Email))
                 .WithMessage(Constants.ErrorMessages.EmailAddressInvalid);
 
             RuleFor(x => x.OwnerEmail)
                 .EmailAddress()
-                .Unless(x => string.IsNullOrEmpty(x.Email))
+                .Unless(x => string.IsNullOrEmpty(x.OwnerEmail))
                 .WithMessage(Constants.ErrorMessages.EmailAddressInvalid);
 
             RuleFor(x => x.Phone)
