@@ -17,7 +17,6 @@ namespace crmSeries.Core.Features.Leads.Validators
                 .NotEmpty();
 
             RuleFor(x => x.Email)
-                .EmailAddrOwner
                 .Unless(x => string.IsNullOrEmpty(x.Email))
                 .WithMessage(Constants.ErrorMessages.EmailAddressInvalid);
 
