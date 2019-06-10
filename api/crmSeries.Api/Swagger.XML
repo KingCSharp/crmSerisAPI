@@ -4,6 +4,61 @@
         <name>crmSeries.API</name>
     </assembly>
     <members>
+        <member name="M:crmSeries.Api.Controllers.BranchesController.GetBranches">
+            <summary>
+            Gets a list of all branches.
+            </summary>
+        </member>
+        <member name="M:crmSeries.Api.Controllers.BranchesController.GetBranchById(System.Int32)">
+            <summary>
+            Gets a branch entity based on the given id.
+            </summary>
+            <param name="id">The unique identifier of the branch.</param>
+        </member>
+        <member name="M:crmSeries.Api.Controllers.CompanyCategoriesController.GetCompanyCategories">
+            <summary>
+            Gets a list of all company categories.
+            </summary>
+        </member>
+        <member name="M:crmSeries.Api.Controllers.CompanyCategoriesController.GetCompanyCategoryById(System.Int32)">
+            <summary>
+            Gets a company category entity based on the given id.
+            </summary>
+            <param name="id">The unique identifier of the company category.</param>
+        </member>
+        <member name="M:crmSeries.Api.Controllers.CompanyRanksController.GetCompanyRanks">
+            <summary>
+            Gets a list of all company ranks.
+            </summary>
+        </member>
+        <member name="M:crmSeries.Api.Controllers.CompanyRanksController.GetCompanyRankById(System.Int32)">
+            <summary>
+            Gets a company rank entity based on the given id.
+            </summary>
+            <param name="id">The unique identifier of the company rank.</param>
+        </member>
+        <member name="M:crmSeries.Api.Controllers.CompanyRecordTypesController.GetCompanyRecordTypes">
+            <summary>
+            Gets a list of all company record types.
+            </summary>
+        </member>
+        <member name="M:crmSeries.Api.Controllers.CompanyRecordTypesController.GetCompanyRecordTypeById(System.Int32)">
+            <summary>
+            Gets a company record type entity based on the given id.
+            </summary>
+            <param name="id">The unique identifier of the company record type.</param>
+        </member>
+        <member name="M:crmSeries.Api.Controllers.CompanySourcesController.GetCompanySources">
+            <summary>
+            Gets a list of all company sources.
+            </summary>
+        </member>
+        <member name="M:crmSeries.Api.Controllers.CompanySourcesController.GetCompanySourceById(System.Int32)">
+            <summary>
+            Gets a company source entity based on the given id.
+            </summary>
+            <param name="id">The unique identifier of the company source.</param>
+        </member>
         <member name="M:crmSeries.API.Controllers.CompaniesController.GetPagedCompanies(crmSeries.Core.Logic.Queries.PagedQueryRequest)">
             <summary>
             Gets a paged list of companies assigned to the current user.

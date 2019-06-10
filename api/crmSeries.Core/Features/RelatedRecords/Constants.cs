@@ -15,24 +15,32 @@ namespace crmSeries.Core.Features.RelatedRecords
             public static class Types
             {
                 public const string Company = "Company";
+                public const string CompanyCategory = "CompanyCategory";
+                public const string CompanyRank = "CompanyRank";
                 public const string Contact = "Contact";
                 public const string Equipment = "Equipment";
                 public const string Lead = "Lead";
                 public const string Note = "Note";
                 public const string Opportunity = "Opportunity";
+                public const string Rank = "Rank";
                 public const string Task = "Task";
                 public const string User = "User";
+                public const string UserRole = "UserRole";
 
                 public static readonly IReadOnlyCollection<string> ValidTypes = new List<string>
                 {
                     Company,
+                    CompanyCategory,
+                    CompanyRank,                    
                     Contact,
                     Equipment,
                     Lead,
                     Note,
                     Opportunity,
+                    Rank,
                     Task,
-                    User
+                    User,
+                    UserRole
                 };
             }
         }

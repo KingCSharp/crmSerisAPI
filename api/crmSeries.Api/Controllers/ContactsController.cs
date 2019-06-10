@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace crmSeries.API.Controllers
 {
-    [Produces("applicaiton/json")]
+    [Produces("application/json")]
     [Route("api/contacts")]
     public class ContactsController : BaseApiController
     {

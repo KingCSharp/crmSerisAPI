@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace crmSeries.API.Controllers
 {
-    [Produces("applicaiton/json")]
+    [Produces("application/json")]
     [Route("api/tasks")]
     public class TasksController : BaseApiController
     {

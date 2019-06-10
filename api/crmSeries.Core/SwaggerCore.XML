@@ -4,6 +4,26 @@
         <name>crmSeries.Core</name>
     </assembly>
     <members>
+        <member name="P:crmSeries.Core.Features.Branches.Dtos.GetBranchDto.BranchId">
+            <summary>
+            The unnique identifier of the branch.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Branches.Dtos.GetBranchDto.Deleted">
+            <summary>
+            Soft delete flag for the company rank.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Branches.Dtos.GetBranchDto.TimeStamp">
+            <summary>
+            The timestamp that this branch was created.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Branches.Dtos.EditBranchDto.BranchId">
+            <summary>
+            The unnique identifier of the branch.
+            </summary>
+        </member>
         <member name="P:crmSeries.Core.Features.Companies.Dtos.BaseCompanyDto.ParentId">
             <summary>
             The parent node identifier.
@@ -149,6 +169,16 @@
             The source of the company. E.g., Cold Call, Website, Email Marketing, etc.
             </summary>
         </member>
+        <member name="P:crmSeries.Core.Features.Companies.Dtos.GetCompanyDto.Ranks">
+            <summary>
+            List of ranks for the company.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Companies.Dtos.GetCompanyDto.Categories">
+            <summary>
+            List of categories for the company.
+            </summary>
+        </member>
         <member name="P:crmSeries.Core.Features.Companies.Dtos.GetCompanyDto.RecordType">
             <summary>
             The type of company. E.g., Corporate, Mine, Quarry, etc.
@@ -167,6 +197,26 @@
         <member name="P:crmSeries.Core.Features.Companies.Dtos.EditCompanyDto.Deleted">
             <summary>
             Flag for soft deletion.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Companies.Dtos.EditCompanyDto.Categories">
+            <summary>
+            List of IDs for CompanyCategories associated with this company
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Companies.Dtos.EditCompanyDto.Ranks">
+            <summary>
+            List of IDs for CompanyRanks and UserRoles associated with this company
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Companies.Dtos.AddCompanyDto.Categories">
+            <summary>
+            List of IDs for CompanyCategories associated with this company
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Companies.Dtos.AddCompanyDto.Ranks">
+            <summary>
+            List of IDs for CompanyRanks and UserRoles associated with this company
             </summary>
         </member>
         <member name="P:crmSeries.Core.Features.Companies.Dtos.CompanyFullDto.Details">
@@ -362,6 +412,86 @@
         <member name="P:crmSeries.Core.Features.CompanyAssignedAddresses.Dtos.CompanyAssignedAddressDto.Deleted">
             <summary>
             Flag for soft deletion.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.CompanyCategories.Dtos.BaseCompanyCategoryDto.Category">
+            <summary>
+            The company category's name.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.CompanyCategories.Dtos.GetCompanyCategoryDto.CategoryId">
+            <summary>
+            The unnique identifier of the company category.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.CompanyCategories.Dtos.GetCompanyCategoryDto.Deleted">
+            <summary>
+            Soft delete flag for the company category.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.CompanyCategories.Dtos.EditCompanyCategoryDto.CategoryId">
+            <summary>
+            The unnique identifier of the company category.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.CompanyRanks.Dtos.BaseCompanyRankDto.Rank">
+            <summary>
+            The name of the company rank.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.CompanyRanks.Dtos.GetCompanyRankDto.RankId">
+            <summary>
+            The unnique identifier of the company rank.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.CompanyRanks.Dtos.GetCompanyRankDto.Deleted">
+            <summary>
+            Soft delete flag for the company rank.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.CompanyRanks.Dtos.GetCompanyRankDto.DefaultProspect">
+            <summary>
+            Flagged true if this company rank is the default prospect.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.CompanyRanks.Dtos.EditCompanyRankDto.RankId">
+            <summary>
+            The unnique identifier of the company rank.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.CompanyRecordTypes.Dtos.BaseCompanyRecordTypeDto.RecordType">
+            <summary>
+            The name of the company type.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.CompanyRecordTypes.Dtos.GetCompanyRecordTypeDto.TypeId">
+            <summary>
+            The unnique identifier of the company type.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.CompanyRecordTypes.Dtos.GetCompanyRecordTypeDto.Deleted">
+            <summary>
+            Soft delete flag for the company type.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.CompanyRecordTypes.Dtos.EditCompanyRecordTypeDto.TypeId">
+            <summary>
+            The unnique identifier of the company type.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.CompanySources.Dtos.BaseCompanySourceDto.Source">
+            <summary>
+            The name of the company source.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.CompanySources.Dtos.GetCompanySourceDto.SourceId">
+            <summary>
+            The unnique identifier of the company source.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.CompanySources.Dtos.EditCompanySourceDto.SourceId">
+            <summary>
+            The unnique identifier of the company source.
             </summary>
         </member>
         <member name="T:crmSeries.Core.Features.DocuSign.TemplateDto">

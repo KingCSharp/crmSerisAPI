@@ -2,6 +2,9 @@
 using crmSeries.Core.Domain.HeavyEquipment;
 using crmSeries.Core.Features.Companies;
 using crmSeries.Core.Features.Companies.Utility;
+using crmSeries.Core.Features.CompanyAssignedCategories;
+using crmSeries.Core.Features.CompanyAssignedRanks;
+using crmSeries.Core.Features.RelatedRecords;
 using NUnit.Framework;
 using System.Linq;
 
@@ -30,7 +33,19 @@ namespace crmSeries.Core.Tests.Features.Companies
 
             using (var context = new HeavyEquipmentContext(options))
             {
-                var handler = new EditCompanyHandler(context);
+                var verificationHandler = new VerifyRelatedRecordHandler(context);
+                var addCategoryHandler = new AddCompanyAssignedCategoryHandler(context, verificationHandler);
+                var deleteCategoryHandler = new DeleteCompanyAssignedCategoryHandler(context);
+                var addRankHandler = new AddCompanyAssignedRankHandler(context, verificationHandler);
+                var deleteRankHandler = new DeleteCompanyAssignedRankHandler(context);
+
+                var handler = new EditCompanyHandler(
+                    context,
+                    verificationHandler,
+                    addCategoryHandler,
+                    deleteCategoryHandler,
+                    addRankHandler,
+                    deleteRankHandler);
 
                 // Act
                 var response = handler.HandleAsync(new EditCompanyRequest
@@ -61,7 +76,19 @@ namespace crmSeries.Core.Tests.Features.Companies
 
             using (var context = new HeavyEquipmentContext(options))
             {
-                var handler = new EditCompanyHandler(context);
+                var verificationHandler = new VerifyRelatedRecordHandler(context);
+                var addCategoryHandler = new AddCompanyAssignedCategoryHandler(context, verificationHandler);
+                var deleteCategoryHandler = new DeleteCompanyAssignedCategoryHandler(context);
+                var addRankHandler = new AddCompanyAssignedRankHandler(context, verificationHandler);
+                var deleteRankHandler = new DeleteCompanyAssignedRankHandler(context);
+
+                var handler = new EditCompanyHandler(
+                    context,
+                    verificationHandler,
+                    addCategoryHandler,
+                    deleteCategoryHandler,
+                    addRankHandler,
+                    deleteRankHandler);
 
                 // Act
                 var response = handler.HandleAsync(new EditCompanyRequest

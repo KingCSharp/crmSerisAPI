@@ -1,4 +1,6 @@
-﻿using System;
+﻿using crmSeries.Core.Features.CompanyAssignedCategories.Dtos;
+using crmSeries.Core.Features.CompanyAssignedRanks.Dtos;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -154,8 +156,15 @@ namespace crmSeries.Core.Features.Companies.Dtos
         /// </summary>
         public string Source { get; set; }
 
-        //TODO: Figure out what this is and how to calculate it
-        public string Rank { get; set; }
+        /// <summary>
+        /// List of ranks for the company.
+        /// </summary>
+        public List<GetCompanyAssignedRankDto> Ranks { get; set; }
+
+        /// <summary>
+        /// List of categories for the company.
+        /// </summary>
+        public List<GetCompanyAssignedCategoryDto> Categories { get; set; }
 
         /// <summary>
         /// The type of company. E.g., Corporate, Mine, Quarry, etc.
@@ -179,10 +188,28 @@ namespace crmSeries.Core.Features.Companies.Dtos
         /// Flag for soft deletion.
         /// </summary>
         public bool Deleted { get; set; }
+
+        /// <summary>
+        /// List of IDs for CompanyCategories associated with this company
+        /// </summary>
+        public List<int> Categories { get; set; }
+
+        /// <summary>
+        /// List of IDs for CompanyRanks and UserRoles associated with this company
+        /// </summary>
+        public List<AddCompanyAssignedRankDto> Ranks { get; set; }
     }
 
     public class AddCompanyDto : BaseCompanyDto
     {
+        /// <summary>
+        /// List of IDs for CompanyCategories associated with this company
+        /// </summary>
+        public List<int> Categories { get; set; }
 
+        /// <summary>
+        /// List of IDs for CompanyRanks and UserRoles associated with this company
+        /// </summary>
+        public List<AddCompanyAssignedRankDto> Ranks { get; set; }
     }
 }

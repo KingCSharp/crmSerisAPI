@@ -4,12 +4,15 @@ using crmSeries.Core.Data;
 using crmSeries.Core.Domain.HeavyEquipment;
 using crmSeries.Core.Extensions;
 using crmSeries.Core.Features.Companies.Utility;
+using crmSeries.Core.Features.CompanyCategories.Utility;
+using crmSeries.Core.Features.CompanyRanks.Utility;
 using crmSeries.Core.Features.Contacts.Utility;
 using crmSeries.Core.Features.Equipment.Utility;
 using crmSeries.Core.Features.Leads.Utility;
 using crmSeries.Core.Features.Notes.Utility;
 using crmSeries.Core.Features.Opportunities.Utility;
 using crmSeries.Core.Features.Tasks.Utility;
+using crmSeries.Core.Features.UserRoles.Utility;
 using crmSeries.Core.Features.Users.Utility;
 using crmSeries.Core.Mediator;
 using crmSeries.Core.Mediator.Decorators;
@@ -119,6 +122,36 @@ namespace crmSeries.Core.Features.RelatedRecords
                     .RelatedEntityExists(x => x.TaskId == request.RecordTypeId))
                 {
                     return Response.ErrorAsync(TasksConstants.ErrorMessages.TaskNotFound);
+                }
+            }
+
+            if (request.RecordType == RelatedRecord.Types.CompanyCategory)
+            {
+                if (!_context.Set<CompanyCategory>()
+                    .AsNoTracking()
+                    .RelatedEntityExists(x => x.CategoryId == request.RecordTypeId))
+                {
+                    return Response.ErrorAsync(CompanyCategoriesConstants.ErrorMessages.CompanyCategoryNotFound);
+                }
+            }
+
+            if (request.RecordType == RelatedRecord.Types.CompanyRank)
+            {
+                if (!_context.Set<CompanyRank>()
+                    .AsNoTracking()
+                    .RelatedEntityExists(x => x.RankId == request.RecordTypeId))
+                {
+                    return Response.ErrorAsync(CompanyRanksConstants.ErrorMessages.CompanyRankNotFound);
+                }
+            }
+
+            if (request.RecordType == RelatedRecord.Types.UserRole)
+            {
+                if (!_context.Set<UserRole>()
+                    .AsNoTracking()
+                    .RelatedEntityExists(x => x.RoleId == request.RecordTypeId))
+                {
+                    return Response.ErrorAsync(UserRolesConstants.ErrorMessages.UserRoleNotFound);
                 }
             }
 
