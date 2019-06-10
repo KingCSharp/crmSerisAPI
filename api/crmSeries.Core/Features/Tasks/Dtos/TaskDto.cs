@@ -51,6 +51,12 @@ namespace crmSeries.Core.Features.Tasks.Dtos
         public bool Deleted { get; set; }
 
         /// <summary>
+        /// The name of the related record.  This value will be different depending
+        /// on what type of related record type is associated with the task.
+        /// </summary>
+        public string RelatedRecordName { get; set; }
+
+        /// <summary>
         /// The flag for whether this contact is active or not.
         /// </summary>
         public bool Active { get; set; }

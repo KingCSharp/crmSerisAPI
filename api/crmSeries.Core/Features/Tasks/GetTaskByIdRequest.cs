@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using AutoMapper.QueryableExtensions;
 using crmSeries.Core.Data;
+using crmSeries.Core.Features.RelatedRecords;
 using crmSeries.Core.Features.Tasks.Dtos;
 using crmSeries.Core.Features.Tasks.Utility;
 using crmSeries.Core.Mediator;
@@ -23,10 +24,13 @@ namespace crmSeries.Core.Features.Tasks
     public class GetTaskByIdHandler : IRequestHandler<GetTaskByIdRequest, GetTaskDto>
     {
         private readonly HeavyEquipmentContext _context;
+        private readonly IRequestHandler<GetRelatedRecordNameRequest, string> _getRelatedRecordNameHandler;
 
-        public GetTaskByIdHandler(HeavyEquipmentContext context)
+        public GetTaskByIdHandler(HeavyEquipmentContext context,
+            IRequestHandler<GetRelatedRecordNameRequest, string> getRelatedRecordNameHandler)
         {
             _context = context;
+            _getRelatedRecordNameHandler = getRelatedRecordNameHandler;
         }
 
         public Task<Response<GetTaskDto>> HandleAsync(GetTaskByIdRequest request)
@@ -55,8 +59,23 @@ namespace crmSeries.Core.Features.Tasks
 
                 if (task == null)
                     return Response<GetTaskDto>.ErrorAsync(TasksConstants.ErrorMessages.TaskNotFound);
-                
+
+                SetRelatedRecordNameOn(task);
+
                 return task.AsResponseAsync();
+        }
+
+        private void SetRelatedRecordNameOn(GetTaskDto task)
+        {
+            var getRelatedRecordNameRequest = new GetRelatedRecordNameRequest(
+                task.RelatedRecordId,
+                task.RelatedRecordType);
+
+            var response = _getRelatedRecordNameHandler.HandleAsync(getRelatedRecordNameRequest);
+
+            // TODO - Discuss what happens here.
+            if (!response.Result.HasErrors)
+                task.RelatedRecordName = response.Result.Data;
         }
     }
 

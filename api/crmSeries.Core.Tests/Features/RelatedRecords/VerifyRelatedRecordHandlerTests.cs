@@ -10,8 +10,6 @@ using crmSeries.Core.Features.RelatedRecords;
 using crmSeries.Core.Features.Tasks.Utility;
 using crmSeries.Core.Features.Users.Utility;
 using NUnit.Framework;
-using System;
-using System.Linq;
 using static crmSeries.Core.Features.RelatedRecords.Constants;
 
 namespace crmSeries.Core.Tests.Features.RelatedRecords
@@ -56,7 +54,7 @@ namespace crmSeries.Core.Tests.Features.RelatedRecords
         [TestCase(RelatedRecord.Types.Company, CompaniesConstants.ErrorMessages.CompanyNotFound)]
         [TestCase(RelatedRecord.Types.Contact, ContactsConstants.ErrorMessages.ContactNotFound)]
         [TestCase(RelatedRecord.Types.Equipment, EquipmentConstants.ErrorMessages.EquipmentNotFound)]
-        [TestCase(RelatedRecord.Types.Lead, LeadsConstants.ErrorMessages.InvalidLead)]
+        [TestCase(RelatedRecord.Types.Lead, LeadsConstants.ErrorMessages.LeadNotFound)]
         [TestCase(RelatedRecord.Types.Note, NotesConstants.ErrorMessages.NoteNotFound)]
         [TestCase(RelatedRecord.Types.Opportunity, OpportunitiesConstants.ErrorMessages.OpportunityNotFound)]
         [TestCase(RelatedRecord.Types.Task, TasksConstants.ErrorMessages.TaskNotFound)]

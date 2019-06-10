@@ -13,7 +13,7 @@ namespace crmSeries.Core.Tests.Features.Tasks
     public class AddTaskHandlerTests : BaseUnitTest
     {
         [Test]
-        public void NormalRequest_NoIssues_TaskAddedSuccessfully()
+        public void HandleAsync_NoIssues_TaskAddedSuccessfully()
         {
             // Arrange 
             var options = GetHeavyEquipmentContextOptions();
@@ -44,7 +44,7 @@ namespace crmSeries.Core.Tests.Features.Tasks
         }
 
         [Test]
-        public void NormalRequest_NoRelatedRecord_ReturnsAppropriateError()
+        public void HandleAsync_NoRelatedRecord_ReturnsAppropriateError()
         {
             // Arrange 
             var options = GetHeavyEquipmentContextOptions();
@@ -70,7 +70,7 @@ namespace crmSeries.Core.Tests.Features.Tasks
         }
 
         [Test]
-        public void NormalRequest_NoRelatedUser_ReturnsAppropriateError()
+        public void HandleAsync_NoRelatedUser_ReturnsAppropriateError()
         {
             // Arrange 
             var options = GetHeavyEquipmentContextOptions();
@@ -96,7 +96,7 @@ namespace crmSeries.Core.Tests.Features.Tasks
         }
 
         [Test]
-        public void NormalRequest_NoRelatedContact_ReturnsAppropriateError()
+        public void HandleAsync_NoRelatedContact_ReturnsAppropriateError()
         {
             // Arrange 
             var options = GetHeavyEquipmentContextOptions();

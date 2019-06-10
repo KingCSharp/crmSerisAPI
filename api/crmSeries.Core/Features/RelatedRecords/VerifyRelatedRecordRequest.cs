@@ -81,7 +81,7 @@ namespace crmSeries.Core.Features.RelatedRecords
                     .AsNoTracking()
                     .RelatedEntityExists(x => x.LeadId == request.RecordTypeId))
                 {
-                    return Response.ErrorAsync(LeadsConstants.ErrorMessages.InvalidLead);
+                    return Response.ErrorAsync(LeadsConstants.ErrorMessages.LeadNotFound);
                 }
             }
 

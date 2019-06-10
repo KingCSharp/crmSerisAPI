@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using crmSeries.Core.Data;
 using crmSeries.Core.Logic.Queries;
 using crmSeries.Core.Mediator.Decorators;
@@ -11,6 +13,7 @@ using crmSeries.Core.Domain.HeavyEquipment;
 using crmSeries.Core.Extensions;
 using crmSeries.Core.Features.Tasks.Dtos;
 using Task = crmSeries.Core.Domain.HeavyEquipment.Task;
+using static crmSeries.Core.Features.RelatedRecords.Constants;
 
 namespace crmSeries.Core.Features.Tasks
 {
@@ -25,6 +28,7 @@ namespace crmSeries.Core.Features.Tasks
     {
         private readonly HeavyEquipmentContext _context;
         private readonly IIdentityUserContext _identity;
+        private Dictionary<string, List<Tuple<int, string>>> _relatedRecordsDictionary;
 
         public GetTasksRequestHandler(HeavyEquipmentContext context,
             IIdentityUserContext identity)
@@ -35,6 +39,8 @@ namespace crmSeries.Core.Features.Tasks
 
         public Task<Response<PagedQueryResult<GetTaskDto>>> HandleAsync(GetTasksRequest request)
         {
+            SetRelatedRecordsDictionary();
+
             var result = new PagedQueryResult<GetTaskDto>();
 
             var contacts =
@@ -73,7 +79,80 @@ namespace crmSeries.Core.Features.Tasks
                 .GetPagedData(request.PageInfo)
                 .ToList();
 
+            SetRelatedRecordName(result);
+
             return result.AsResponseAsync();
+        }
+
+        private void SetRelatedRecordsDictionary()
+        {
+            _relatedRecordsDictionary = new Dictionary<string, List<Tuple<int, string>>>
+            {
+                ["Company"] = GetCompanyNameDictionary(),
+                ["Contact"] = GetContactNameDictionary(),
+                ["Lead"] = GetLeadNameDictionary()
+            };
+        }
+
+        private List<Tuple<int, string>> GetCompanyNameDictionary()
+        {
+            return _context.Set<Company>()
+                .Skip(0)
+                .Take(500)
+                .Where(x =>!x.Deleted)
+                .Select(x => new Tuple<int, string>(x.CompanyId, x.CompanyName))
+                .ToList();
+        }
+
+        private List<Tuple<int, string>> GetContactNameDictionary()
+        {
+            return _context.Set<Contact>()
+                .Skip(0)
+                .Take(500)
+                .Where(x => x.Active && !x.Deleted)
+                .Select(x => new {x.ContactId, x.FirstName, x.LastName})
+                .ToList()
+                .Select(x => new Tuple<int, string>(x.ContactId, $"{x.FirstName} {x.LastName}"))
+                .ToList();
+        }
+
+        private List<Tuple<int, string>> GetLeadNameDictionary()
+        {
+            return _context.Set<Lead>()
+                .Skip(0)
+                .Take(500)
+                .Where(x => !x.Deleted)
+                .Select(x => new { x.LeadId, x.FirstName, x.LastName })
+                .ToList()
+                .Select(x => new Tuple<int, string>(x.LeadId, $"{x.FirstName} {x.LastName}"))
+                .ToList();
+        }
+
+        private void SetRelatedRecordName(PagedQueryResult<GetTaskDto> result)
+        {
+            foreach (var item in result.Items)
+            {
+                item.RelatedRecordName = GetRelatedRecordName(item.RelatedRecordId,
+                    item.RelatedRecordType);
+            }
+        }
+        
+        private string GetRelatedRecordName(int relatedRecordId, string relatedRecordType)
+        {
+            var validRelatedRecordTypes = new[]
+            {
+                RelatedRecord.Types.Company,
+                RelatedRecord.Types.Contact,
+                RelatedRecord.Types.Lead
+            };
+
+            if (!validRelatedRecordTypes.Contains(relatedRecordType))
+                return null;
+
+            return _relatedRecordsDictionary[relatedRecordType]
+                .Where(x => x.Item1 == relatedRecordId)
+                .Select(x => x.Item2)
+                .SingleOrDefault();
         }
     }
 
@@ -89,3 +168,4 @@ namespace crmSeries.Core.Features.Tasks
         }
     }
 }
+ 

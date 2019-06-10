@@ -3,7 +3,9 @@
 namespace crmSeries.Core.Common
 {
     public static class Constants
-	{
+    {
+        public const int MaxPageSize = 100;
+
         public static class Auth
         {
             public const string ApiKey = "api-key";

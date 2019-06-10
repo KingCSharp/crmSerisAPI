@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using crmSeries.Core.Common;
+using System;
 
 namespace crmSeries.Core.Logic.Queries
 {
@@ -9,8 +8,6 @@ namespace crmSeries.Core.Logic.Queries
     /// </summary>
     public class PagedQueryRequest
     {
-        private const int _maxPageSize = 100;
-
         /// <summary>
         /// The page number for the paginated results.
         /// Setting a number beyond the last page will just return the last page of data.
@@ -24,7 +21,7 @@ namespace crmSeries.Core.Logic.Queries
         public int PageSize
         {
             get { return _pageSize; }
-            set { _pageSize = Math.Min(value, _maxPageSize); }
+            set { _pageSize = Math.Min(value, Constants.MaxPageSize); }
         }
     }
 }

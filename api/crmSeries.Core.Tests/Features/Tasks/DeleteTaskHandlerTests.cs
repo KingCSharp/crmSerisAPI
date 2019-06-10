@@ -1,15 +1,8 @@
-﻿using crmSeries.Core.Common;
-using crmSeries.Core.Data;
+﻿using crmSeries.Core.Data;
 using crmSeries.Core.Domain.HeavyEquipment;
-using crmSeries.Core.Features.Contacts.Utility;
-using crmSeries.Core.Features.Notes;
-using crmSeries.Core.Features.Notes.Utility;
-using crmSeries.Core.Features.RelatedRecords;
 using crmSeries.Core.Features.Tasks;
 using crmSeries.Core.Features.Tasks.Utility;
-using crmSeries.Core.Features.Users.Utility;
 using NUnit.Framework;
-using System;
 using System.Linq;
 
 namespace crmSeries.Core.Tests.Features.Tasks
@@ -18,7 +11,7 @@ namespace crmSeries.Core.Tests.Features.Tasks
     public class DeleteTaskHandlerTests : BaseUnitTest
     {
         [Test]
-        public void NormalRequest_NoIssues_TaskDeletedSuccessfully()
+        public void HandleAsync_NoIssues_TaskDeletedSuccessfully()
         {
             // Arrange 
             var options = GetHeavyEquipmentContextOptions();
@@ -50,7 +43,7 @@ namespace crmSeries.Core.Tests.Features.Tasks
         }
 
         [Test]
-        public void NormalRequest_TaskNotFound_ReturnsAppropriateError()
+        public void HandleAsync_TaskNotFound_ReturnsAppropriateError()
         {
             // Arrange 
             var options = GetHeavyEquipmentContextOptions();

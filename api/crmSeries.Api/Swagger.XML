@@ -195,6 +195,14 @@
             Gets the different related records.
             </summary>
         </member>
+        <member name="M:crmSeries.API.Controllers.RelatedRecordsController.GetName(System.Int32,System.String)">
+            <summary>
+            Gets the name of the related record.  This will vary depending on the type of the related
+            record type.
+            </summary>
+            <param name="relatedRecordTypeId">The identifier of the related record type.</param>
+            <param name="relatedRecordType">The type of the related record.</param>
+        </member>
         <member name="M:crmSeries.API.Controllers.TasksController.GetTasks(crmSeries.Core.Logic.Queries.PagedQueryRequest)">
             <summary>
             Gets a list of all tasks assigned to ?????????????????.
