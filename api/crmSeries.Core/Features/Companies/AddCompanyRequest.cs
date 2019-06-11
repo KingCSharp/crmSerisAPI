@@ -64,12 +64,12 @@ namespace crmSeries.Core.Features.Companies
         {
             var relatedEntities = new List<(string, int)>();
 
-            request.Categories.ForEach(x => 
+            request.Categories?.ForEach(x => 
             {
                 relatedEntities.Add((Constants.RelatedRecord.Types.CompanyCategory, x));
             });
 
-            request.Ranks.ForEach(x =>
+            request.Ranks?.ForEach(x =>
             {
                 relatedEntities.Add((Constants.RelatedRecord.Types.Rank, x.RankId));
                 relatedEntities.Add((Constants.RelatedRecord.Types.UserRole, x.RoleId));
