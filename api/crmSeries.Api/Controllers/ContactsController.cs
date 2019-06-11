@@ -38,6 +38,17 @@ namespace crmSeries.API.Controllers
         }
 
         /// <summary>
+        /// Gets a contact entity based on the contact entity's contact id.
+        /// </summary>
+        /// <param name="id">The unique identifier of the contact.</param>
+        [HttpGet("{id}/full")]
+        [Produces(typeof(GetContactDto))]
+        public Task<IActionResult> GetFullContactById(int id)
+        {
+            return HandleAsync(new GetFullContactByIdRequest(id));
+        }
+        
+        /// <summary>
         /// Adds a contact object based on the data in the request.
         /// </summary>
         [HttpPost]

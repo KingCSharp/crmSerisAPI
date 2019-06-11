@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using crmSeries.Core.Features.Notes.Dtos;
+using crmSeries.Core.Features.Tasks.Dtos;
 
 namespace crmSeries.Core.Features.Contacts.Dtos
 {
@@ -98,6 +101,24 @@ namespace crmSeries.Core.Features.Contacts.Dtos
         public DateTime? LastModified { get; set; }
     }
 
+    public class GetFullContactDto 
+    {
+        /// <summary>
+        /// The details of the task.
+        /// </summary>
+        public GetContactDto Details { get; set; }
+
+        /// <summary>
+        /// The tasks, if any, associated with this contact.
+        /// </summary>
+        public IEnumerable<GetTaskDto> Tasks { get; set; }
+
+        /// <summary>
+        /// The notes, if any, associated with this contact.
+        /// </summary>
+        public IEnumerable<GetNoteDto> Notes { get; set; }
+    }
+    
     public class AddContactDto : BaseContactDto
     {
     }

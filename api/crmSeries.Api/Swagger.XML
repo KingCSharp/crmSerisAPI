@@ -126,6 +126,12 @@
             </summary>
             <param name="id">The unique identifier of the contact.</param>
         </member>
+        <member name="M:crmSeries.API.Controllers.ContactsController.GetFullContactById(System.Int32)">
+            <summary>
+            Gets a contact entity based on the contact entity's contact id.
+            </summary>
+            <param name="id">The unique identifier of the contact.</param>
+        </member>
         <member name="M:crmSeries.API.Controllers.ContactsController.Post(crmSeries.Core.Features.Contacts.AddContactRequest)">
             <summary>
             Adds a contact object based on the data in the request.
