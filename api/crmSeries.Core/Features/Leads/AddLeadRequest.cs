@@ -93,7 +93,7 @@ namespace crmSeries.Core.Features.Leads
             if (user != null)
             {
                 lead.OwnerId = user.UserId;
-                lead.DateAssigned = DateTime.UtcNow;
+                lead.DateAssigned = DateTimeOffset.UtcNow;
             }
         }
 
