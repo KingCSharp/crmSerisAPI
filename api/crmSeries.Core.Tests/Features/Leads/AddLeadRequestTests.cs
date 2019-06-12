@@ -110,7 +110,7 @@ namespace crmSeries.Core.Tests.Features.Leads
         }
 
         [Test]
-        public void Handle_OwnerEmailIsIncluded_LeadIsAddedWithAppropriateOwnerId()
+        public void Handle_OwnerEmailIsIncluded_LeadIsAddedWithAppropriateOwnerIdAndAssignedDate()
         {
             // Arrange 
             var options = GetHeavyEquipmentContextOptions();
@@ -152,6 +152,7 @@ namespace crmSeries.Core.Tests.Features.Leads
                 //Assert 
                 Assert.IsNotNull(lead);
                 Assert.AreEqual(lead.OwnerId, userId);
+                Assert.IsNotNull(lead.DateAssigned);
             }
         }
 
@@ -198,6 +199,165 @@ namespace crmSeries.Core.Tests.Features.Leads
                 //Assert 
                 Assert.IsNotNull(lead);
                 Assert.AreEqual(lead.OwnerId, 0);
+            }
+        }
+
+        [Test]
+        public void HandleAsync_DefaultLeadStatusExists_StatusIdIsSetToDefaultId()
+        {
+            // Arrange 
+            var options = GetHeavyEquipmentContextOptions();
+
+            var leadId = 0;
+            var userId = 33;
+            var userEmail = "john@smith-industries.com";
+
+            using (var context = new HeavyEquipmentContext(options))
+            {
+                context.User.Add(new User
+                {
+                    UserId = userId,
+                    Email = userEmail,
+                    Active = true,
+                    Deleted = false
+                });
+
+                context.LeadStatus.Add(new LeadStatus
+                {
+                    StatusId = 1,
+                    Status = "The Status",
+                    InternalStatus = "The Internal Status",
+                    Deleted = false,
+                    DefaultNew = true
+                });
+
+                context.SaveChanges();
+
+                var executeWorkflowHandler =
+                    Substitute.For<IRequestHandler<ExecuteWorkflowRuleRequest, ExecuteWorkflowResponse>>();
+
+                executeWorkflowHandler.HandleAsync(Arg.Any<ExecuteWorkflowRuleRequest>())
+                    .Returns(new ExecuteWorkflowResponse().AsResponseAsync());
+
+                var addLeadAuditHandler =
+                    Substitute.For<IRequestHandler<AddLeadAuditRequest>>();
+
+                var handler = new AddLeadRequestHandler(context, executeWorkflowHandler, addLeadAuditHandler);
+
+                addLeadRequest.OwnerEmail = userEmail;
+
+                // Act
+                var response = handler.HandleAsync(addLeadRequest);
+                leadId = response.Result.Data.Id;
+
+                var lead = context.Lead.SingleOrDefault(x => x.LeadId == leadId);
+
+                //Assert 
+                Assert.IsNotNull(lead);
+                Assert.AreEqual(1, lead.StatusId);
+            }
+        }
+
+        [Test]
+        public void HandleAsync_DefaultLeadStatusDoesNotExist_StatusIdSetToZero()
+        {
+            // Arrange 
+            var options = GetHeavyEquipmentContextOptions();
+
+            var leadId = 0;
+            var userId = 33;
+            var userEmail = "john@smith-industries.com";
+
+            using (var context = new HeavyEquipmentContext(options))
+            {
+                context.User.Add(new User
+                {
+                    UserId = userId,
+                    Email = userEmail,
+                    Active = true,
+                    Deleted = false
+                });
+
+                context.SaveChanges();
+
+                var executeWorkflowHandler =
+                    Substitute.For<IRequestHandler<ExecuteWorkflowRuleRequest, ExecuteWorkflowResponse>>();
+
+                executeWorkflowHandler.HandleAsync(Arg.Any<ExecuteWorkflowRuleRequest>())
+                    .Returns(new ExecuteWorkflowResponse().AsResponseAsync());
+
+                var addLeadAuditHandler =
+                    Substitute.For<IRequestHandler<AddLeadAuditRequest>>();
+
+                var handler = new AddLeadRequestHandler(context, executeWorkflowHandler, addLeadAuditHandler);
+
+                addLeadRequest.OwnerEmail = userEmail;
+
+                // Act
+                var response = handler.HandleAsync(addLeadRequest);
+                leadId = response.Result.Data.Id;
+
+                var lead = context.Lead.SingleOrDefault(x => x.LeadId == leadId);
+
+                //Assert 
+                Assert.IsNotNull(lead);
+                Assert.AreEqual(0, lead.StatusId);
+            }
+        }
+
+        [Test]
+        public void HandleAsync_DefaultLeadStatusExistsButIsDeleted_StatusIdSetToZero()
+        {
+            // Arrange 
+            var options = GetHeavyEquipmentContextOptions();
+
+            var leadId = 0;
+            var userId = 33;
+            var userEmail = "john@smith-industries.com";
+
+            using (var context = new HeavyEquipmentContext(options))
+            {
+                context.User.Add(new User
+                {
+                    UserId = userId,
+                    Email = userEmail,
+                    Active = true,
+                    Deleted = false
+                });
+
+                context.LeadStatus.Add(new LeadStatus
+                {
+                    StatusId = 1,
+                    Status = "The Status",
+                    InternalStatus = "The Internal Status",
+                    Deleted = true,
+                    DefaultNew = true
+                });
+
+                context.SaveChanges();
+
+                var executeWorkflowHandler =
+                    Substitute.For<IRequestHandler<ExecuteWorkflowRuleRequest, ExecuteWorkflowResponse>>();
+
+                executeWorkflowHandler.HandleAsync(Arg.Any<ExecuteWorkflowRuleRequest>())
+                    .Returns(new ExecuteWorkflowResponse().AsResponseAsync());
+
+                var addLeadAuditHandler =
+                    Substitute.For<IRequestHandler<AddLeadAuditRequest>>();
+
+                var handler = new AddLeadRequestHandler(context, executeWorkflowHandler, addLeadAuditHandler);
+
+                addLeadRequest.OwnerEmail = userEmail;
+
+                // Act
+                var response = handler.HandleAsync(addLeadRequest);
+                leadId = response.Result.Data.Id;
+
+                var lead = context.Lead.SingleOrDefault(x => x.LeadId == leadId);
+
+                //Assert 
+                Assert.IsNotNull(lead);
+                Assert.AreEqual(0, lead.StatusId);
             }
         }
     }

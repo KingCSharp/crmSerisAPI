@@ -71,9 +71,19 @@ namespace crmSeries.Core.Features.Leads
                 AssignOwnerToLead(lead, request.OwnerEmail);
             }
 
+            AssignDefaultLeadStatus(lead);
+
             _context.Set<Lead>().Add(lead);
             _context.SaveChanges();
             return lead;
+        }
+
+        private void AssignDefaultLeadStatus(Lead lead)
+        {
+            var defaultLeadStatus = _context.LeadStatus.SingleOrDefault(x => x.DefaultNew && !x.Deleted);
+
+            if (defaultLeadStatus != null)
+                lead.StatusId = defaultLeadStatus.StatusId;
         }
 
         private void AssignOwnerToLead(Lead lead, string ownerEmail)
@@ -81,7 +91,10 @@ namespace crmSeries.Core.Features.Leads
             var user = _context.Set<User>().SingleOrDefault(x => x.Email == ownerEmail);
 
             if (user != null)
+            {
                 lead.OwnerId = user.UserId;
+                lead.DateAssigned = DateTime.UtcNow;
+            }
         }
 
         private void AddLeadToAudit(Lead lead)
