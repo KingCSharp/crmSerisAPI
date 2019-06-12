@@ -120,6 +120,12 @@
             </summary>
             <param name="paginationInfo">The paging information for this request.</param>
         </member>
+        <member name="M:crmSeries.API.Controllers.ContactsController.GetFullContacts(crmSeries.Core.Logic.Queries.PagedQueryRequest)">
+            <summary>
+            Gets a list of all contacts assigned to the current user with all properties set.
+            </summary>
+            <param name="paginationInfo">The paging information for this request.</param>
+        </member>
         <member name="M:crmSeries.API.Controllers.ContactsController.GetContactById(System.Int32)">
             <summary>
             Gets a contact entity based on the contact entity's contact id.
@@ -128,7 +134,7 @@
         </member>
         <member name="M:crmSeries.API.Controllers.ContactsController.GetFullContactById(System.Int32)">
             <summary>
-            Gets a contact entity based on the contact entity's contact id.
+            Gets a contact entity based on the contact entity's contact id with all properties set.
             </summary>
             <param name="id">The unique identifier of the contact.</param>
         </member>

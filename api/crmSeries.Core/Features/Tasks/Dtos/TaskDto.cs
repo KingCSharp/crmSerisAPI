@@ -57,11 +57,6 @@ namespace crmSeries.Core.Features.Tasks.Dtos
         public string RelatedRecordName { get; set; }
 
         /// <summary>
-        /// The flag for whether this contact is active or not.
-        /// </summary>
-        public bool Active { get; set; }
-
-        /// <summary>
         /// The date, if any, that the entity was modified.
         /// </summary>
         public DateTime? LastModified { get; set; }

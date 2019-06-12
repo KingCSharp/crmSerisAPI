@@ -27,6 +27,20 @@ namespace crmSeries.API.Controllers
         }
 
         /// <summary>
+        /// Gets a list of all contacts assigned to the current user with all properties set.
+        /// </summary>
+        /// <param name="paginationInfo">The paging information for this request.</param>
+        [HttpGet("full")]
+        [Produces(typeof(PagedQueryResult<GetFullContactDto>))]
+        public Task<IActionResult> GetFullContacts(PagedQueryRequest paginationInfo)
+        {
+            return HandleAsync(new GetFullContactsRequest
+            {
+                PageInfo = paginationInfo
+            });
+        }
+
+        /// <summary>
         /// Gets a contact entity based on the contact entity's contact id.
         /// </summary>
         /// <param name="id">The unique identifier of the contact.</param>
@@ -38,11 +52,11 @@ namespace crmSeries.API.Controllers
         }
 
         /// <summary>
-        /// Gets a contact entity based on the contact entity's contact id.
+        /// Gets a contact entity based on the contact entity's contact id with all properties set.
         /// </summary>
         /// <param name="id">The unique identifier of the contact.</param>
         [HttpGet("{id}/full")]
-        [Produces(typeof(GetContactDto))]
+        [Produces(typeof(GetFullContactDto))]
         public Task<IActionResult> GetFullContactById(int id)
         {
             return HandleAsync(new GetFullContactByIdRequest(id));
