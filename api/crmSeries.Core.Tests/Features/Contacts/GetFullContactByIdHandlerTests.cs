@@ -33,7 +33,9 @@ namespace crmSeries.Core.Tests.Features.Contacts
                 var contact = new Contact
                 {
                     ContactId = 1,
-                    CompanyId = 1
+                    CompanyId = 1,
+                    Active = true,
+                    Deleted = false
                 };
 
                 context.Contact.Add(contact);
@@ -69,7 +71,9 @@ namespace crmSeries.Core.Tests.Features.Contacts
                 var contact = new Contact
                 {
                     ContactId = 1,
-                    CompanyId = 1
+                    CompanyId = 1,
+                    Active = true,
+                    Deleted = false
                 };
 
                 context.Contact.Add(contact);
@@ -107,7 +111,9 @@ namespace crmSeries.Core.Tests.Features.Contacts
                 var contact = new Contact
                 {
                     ContactId = 1,
-                    CompanyId = 1
+                    CompanyId = 1,
+                    Active = true,
+                    Deleted = false
                 };
                 context.Contact.Add(contact);
 
@@ -162,7 +168,9 @@ namespace crmSeries.Core.Tests.Features.Contacts
                 var contact = new Contact
                 {
                     ContactId = 1,
-                    CompanyId = 1
+                    CompanyId = 1,
+                    Active = true,
+                    Deleted = false
                 };
                 context.Contact.Add(contact);
 

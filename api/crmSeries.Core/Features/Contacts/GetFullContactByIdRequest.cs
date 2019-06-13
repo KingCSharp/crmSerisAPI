@@ -12,6 +12,7 @@ using crmSeries.Core.Mediator.Decorators;
 using crmSeries.Core.Features.Contacts.Utility;
 using crmSeries.Core.Features.Notes.Dtos;
 using crmSeries.Core.Features.RelatedRecords;
+using System.Diagnostics;
 
 namespace crmSeries.Core.Features.Contacts
 {
@@ -36,70 +37,59 @@ namespace crmSeries.Core.Features.Contacts
 
         public Task<Response<GetFullContactDto>> HandleAsync(GetFullContactByIdRequest request)
         {
-            var details = (from c in _context.Set<Contact>()
-                    join company in _context.Set<Company>()
-                        on c.CompanyId equals company.CompanyId
-                    where c.ContactId == request.ContactId
-                    select new
-                    {
-                        c.ContactId,
-                        c.CompanyId,
-                        c.FirstName,
-                        c.MiddleName,
-                        c.LastName,
-                        c.NickName,
-                        c.Phone,
-                        c.Cell,
-                        c.Fax,
-                        c.Email,
-                        c.Title,
-                        c.Position,
-                        c.Department,
-                        c.Active,
-                        c.LastModified,
-                        company.CompanyName,
-                        company.AccountNo
-                    })
-                .ProjectTo<GetContactDto>()
-                .SingleOrDefault();
+            var contactDto =
+            (from c in _context.Set<Contact>()
+             join company in _context.Set<Company>()
+                 on c.CompanyId equals company.CompanyId
+             where c.Active && !c.Deleted && c.ContactId == request.ContactId
+             select new
+             {
+                 c.ContactId,
+                 c.CompanyId,
+                 c.FirstName,
+                 c.MiddleName,
+                 c.LastName,
+                 c.NickName,
+                 c.Phone,
+                 c.Cell,
+                 c.Fax,
+                 c.Email,
+                 c.Title,
+                 c.Position,
+                 c.Department,
+                 c.Active,
+                 c.LastModified,
+                 company.CompanyName,
+                 company.AccountNo
+             })
+             .GroupJoin(
+                _context.Task,
+                contact => contact.ContactId,
+                task => task.ContactId,
+                (x, y) => new
+                {
+                    Details = x,
+                    Tasks = y.Where(t => !t.Deleted)
+                }
+            )
+            .GroupJoin(
+                _context.Note,
+                contact => contact.Details.ContactId,
+                notes => notes.RecordId,
+                (x, y) => new
+                {
+                    x.Details,
+                    x.Tasks,
+                    Notes = y.Where(n => !n.Deleted && n.RecordType == Constants.RelatedRecord.Types.Contact)
+                }
+            )
+            .ProjectTo<GetFullContactDto>()
+            .SingleOrDefault();
 
-            if (details == null)
+            if (contactDto == null)
                 return Response<GetFullContactDto>.ErrorAsync(ContactsConstants.ErrorMessages.ContactNotFound);
 
-            var dto = new GetFullContactDto
-            {
-                Details = details,
-                Tasks = GetRelatedTasks(request.ContactId), 
-                Notes = GetRelatedNotes(request.ContactId)
-            };
-
-            return dto.AsResponseAsync();
-        }
-
-        private List<GetNoteDto> GetRelatedNotes(int contactId)
-        {
-            var relatedNoteRecordIds = _context.Set<Note>()
-                .Where(x => x.RecordType == Constants.RelatedRecord.Types.Contact &&
-                            x.RecordId == contactId)
-                .Select(x => x.NoteId)
-                .ToList();
-
-            if (!relatedNoteRecordIds.Any())
-                return new List<GetNoteDto>();
-
-            return _context.Set<Note>()
-                .Where(x => relatedNoteRecordIds.Contains(x.NoteId))
-                .ProjectTo<GetNoteDto>()
-                .ToList();
-        }
-
-        private List<GetTaskDto> GetRelatedTasks(int contactId)
-        {
-            return _context
-                .Set<Domain.HeavyEquipment.Task>()
-                .Where(x => x.ContactId == contactId)
-                .ProjectTo<GetTaskDto>()
-                .ToList();
+            return contactDto.AsResponseAsync();
         }
     }
 
