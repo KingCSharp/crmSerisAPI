@@ -3,14 +3,13 @@ using crmSeries.Core.Domain.HeavyEquipment;
 using crmSeries.Core.Features.Contacts;
 using NUnit.Framework;
 
-
 namespace crmSeries.Core.Tests.Features.Contacts
 {
     [TestFixture]
     public class GetContactByIdHandlerTests : BaseUnitTest
     {
         [Test]
-        public void NormalRequest_NoIssues_ReturnsContact()
+        public void HandleAsync_NoIssues_ReturnsContact()
         {
             // Arrange 
             var options = GetHeavyEquipmentContextOptions();
@@ -48,7 +47,7 @@ namespace crmSeries.Core.Tests.Features.Contacts
         }
 
         [Test]
-        public void NormalRequest_NoContactFound_ReturnsEmptyData()
+        public void HandleAsync_NoContactFound_ReturnsEmptyData()
         {
             // Arrange 
             var options = GetHeavyEquipmentContextOptions();

@@ -324,6 +324,21 @@
             The date, if any, that the entity was modified.
             </summary>
         </member>
+        <member name="P:crmSeries.Core.Features.Contacts.Dtos.GetFullContactDto.Details">
+            <summary>
+            The details of the task.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Contacts.Dtos.GetFullContactDto.Tasks">
+            <summary>
+            The tasks, if any, associated with this contact.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Contacts.Dtos.GetFullContactDto.Notes">
+            <summary>
+            The notes, if any, associated with this contact.
+            </summary>
+        </member>
         <member name="P:crmSeries.Core.Features.Contacts.Dtos.EditContactDto.ContactId">
             <summary>
             The contact identifier.
@@ -776,11 +791,6 @@
             The flag for soft deletion.
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.Notes.Dtos.GetNoteDto.Active">
-            <summary>
-            The flag for whether this contact is active or not.
-            </summary>
-        </member>
         <member name="P:crmSeries.Core.Features.Notes.Dtos.GetNoteDto.LastModified">
             <summary>
             The date, if any, that the entity was modified.
@@ -815,11 +825,6 @@
             <summary>
             The name of the related record.  This value will be different depending
             on what type of related record type is associated with the task.
-            </summary>
-        </member>
-        <member name="P:crmSeries.Core.Features.Tasks.Dtos.GetTaskDto.Active">
-            <summary>
-            The flag for whether this contact is active or not.
             </summary>
         </member>
         <member name="P:crmSeries.Core.Features.Tasks.Dtos.GetTaskDto.LastModified">
