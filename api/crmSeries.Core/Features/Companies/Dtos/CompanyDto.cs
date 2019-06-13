@@ -197,7 +197,7 @@ namespace crmSeries.Core.Features.Companies.Dtos
         /// <summary>
         /// List of IDs for CompanyRanks and UserRoles associated with this company
         /// </summary>
-        public List<AddCompanyAssignedRankDto> Ranks { get; set; }
+        public List<BaseAddCompanyAssignedRankDto> Ranks { get; set; }
     }
 
     public class AddCompanyDto : BaseCompanyDto
@@ -210,6 +210,6 @@ namespace crmSeries.Core.Features.Companies.Dtos
         /// <summary>
         /// List of IDs for CompanyRanks and UserRoles associated with this company
         /// </summary>
-        public List<AddCompanyAssignedRankDto> Ranks { get; set; }
+        public List<BaseAddCompanyAssignedRankDto> Ranks { get; set; }
     }
 }

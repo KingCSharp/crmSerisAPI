@@ -140,7 +140,7 @@ namespace crmSeries.Core.Features.Companies
             });
         }
 
-        private void HandleAssignedRanks(List<AddCompanyAssignedRankDto> ranks, int companyId)
+        private void HandleAssignedRanks(List<BaseAddCompanyAssignedRankDto> ranks, int companyId)
         {
             if (ranks == null)
                 return;
