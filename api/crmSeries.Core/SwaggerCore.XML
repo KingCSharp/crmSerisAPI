@@ -726,6 +726,16 @@
             
             </summary>
         </member>
+        <member name="P:crmSeries.Core.Features.Equipment.GetEquipmentDto.EquipmentId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Equipment.GetEquipmentRequest.PageInfo">
+            <summary>
+            The paging information of the paged object.
+            </summary>
+        </member>
         <member name="P:crmSeries.Core.Features.Equipment.GetEquipmentRequest.BranchId">
             <summary>
             The identifier of the branch associated with the equipment.
@@ -736,9 +746,9 @@
             The equipment type.  Valid types are either New or Used
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.Equipment.GetEquipmentRequest.Status">
+        <member name="P:crmSeries.Core.Features.Equipment.GetEquipmentRequest.Statuses">
             <summary>
-            The status of the equipment.
+            The statuses of the equipment.
             </summary>
         </member>
         <member name="T:crmSeries.Core.Features.Leads.Dtos.AddLeadDto">

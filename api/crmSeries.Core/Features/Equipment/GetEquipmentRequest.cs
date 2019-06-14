@@ -1,4 +1,5 @@
-﻿using crmSeries.Core.Data;
+﻿using System.Collections;
+using crmSeries.Core.Data;
 using crmSeries.Core.Logic.Queries;
 using crmSeries.Core.Mediator.Decorators;
 using crmSeries.Core.Security;
@@ -8,16 +9,18 @@ using crmSeries.Core.Mediator;
 using System.Threading.Tasks;
 using AutoMapper.QueryableExtensions;
 using crmSeries.Core.Domain.HeavyEquipment;
-using crmSeries.Core.Features.Equipment;
+using System.Collections.Generic;
+using crmSeries.Core.Features.Equipment.Utility;
 
 namespace crmSeries.Core.Features.Equipment
 {
     [HeavyEquipmentContext]
     public class GetEquipmentRequest : IRequest<PagedQueryResult<GetEquipmentDto>>
     {
+        /// <summary>
+        /// The paging information of the paged object.
+        /// </summary>
         public PagedQueryRequest PageInfo { get; set; }
-
-        // Retrieve all Inventory
 
         /// <summary>
         /// The identifier of the branch associated with the equipment.
@@ -30,22 +33,19 @@ namespace crmSeries.Core.Features.Equipment
         public string EquipmentType { get; set; }
 
         /// <summary>
-        /// The status of the equipment.
+        /// The statuses of the equipment.
         /// </summary>
-        public string Status { get; set; }
+        public List<string> Statuses { get; set; }
     }
 
     public class GetEquipmentHandler :
         IRequestHandler<GetEquipmentRequest, PagedQueryResult<GetEquipmentDto>>
     {
         private readonly HeavyEquipmentContext _context;
-        private readonly IIdentityUserContext _identity;
 
-        public GetEquipmentHandler(HeavyEquipmentContext context,
-            IIdentityUserContext identity)
+        public GetEquipmentHandler(HeavyEquipmentContext context)
         {
             _context = context;
-            _identity = identity;
         }
 
         public Task<Response<PagedQueryResult<GetEquipmentDto>>> HandleAsync(GetEquipmentRequest request)
@@ -61,7 +61,7 @@ namespace crmSeries.Core.Features.Equipment
                  where !e.Deleted && e.Inventory && e.AvailableForQuote == true &&
                        (request.BranchId > 0 ? branch.BranchId == request.BranchId : true) &&
                        (!string.IsNullOrEmpty(request.EquipmentType) ? e.NewUsed == request.EquipmentType : true) &&
-                       (!string.IsNullOrEmpty(request.Status) ? e.Status == request.Status : true)
+                       (request.Statuses.Any() ? request.Statuses.Contains(e.Status) : true)
                  select new
                  {
                      e.EquipmentId,
@@ -117,6 +117,14 @@ namespace crmSeries.Core.Features.Equipment
 
             RuleFor(x => x.PageInfo.PageSize)
                 .GreaterThan(0);
+
+            RuleFor(x => x.Statuses).Must(AllBeLessThanMaxLimitAllowed)
+                .WithMessage(EquipmentConstants.ErrorMessages.ExceededStatusMaxLength);
+        }
+
+        private bool AllBeLessThanMaxLimitAllowed(List<string> statuses)
+        {
+            return statuses.All(x => x.Length <= EquipmentConstants.StatusMaxLength);
         }
     }
 }

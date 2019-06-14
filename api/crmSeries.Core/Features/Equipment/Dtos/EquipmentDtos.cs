@@ -142,6 +142,9 @@ namespace crmSeries.Core.Features.Equipment
 
     public class GetEquipmentDto : BaseEquipmentDto
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public int EquipmentId { get; set; }
     }
 }
