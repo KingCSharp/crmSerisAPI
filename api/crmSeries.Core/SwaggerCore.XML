@@ -591,6 +591,156 @@
             signatory has completed his or her template role.
             </summary>
         </member>
+        <member name="P:crmSeries.Core.Features.Equipment.BaseEquipmentDto.ParentId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Equipment.BaseEquipmentDto.ParentType">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Equipment.BaseEquipmentDto.Machine">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Equipment.BaseEquipmentDto.Make">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Equipment.BaseEquipmentDto.Model">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Equipment.BaseEquipmentDto.StockNo">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Equipment.BaseEquipmentDto.SerialNo">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Equipment.BaseEquipmentDto.Description">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Equipment.BaseEquipmentDto.EquipYear">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Equipment.BaseEquipmentDto.Fleet">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Equipment.BaseEquipmentDto.FleetType">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Equipment.BaseEquipmentDto.Status">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Equipment.BaseEquipmentDto.NewUsed">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Equipment.BaseEquipmentDto.ListPrice">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Equipment.BaseEquipmentDto.SellPrice">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Equipment.BaseEquipmentDto.AcquisitionDate">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Equipment.BaseEquipmentDto.AvailableForQuote">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Equipment.BaseEquipmentDto.InventoryNotes">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Equipment.BaseEquipmentDto.Class">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Equipment.BaseEquipmentDto.InOut">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Equipment.BaseEquipmentDto.LastSmr">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Equipment.BaseEquipmentDto.InventorySpecs">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Equipment.BaseEquipmentDto.Category">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Equipment.BaseEquipmentDto.BranchName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Equipment.BaseEquipmentDto.FullModel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Equipment.BaseEquipmentDto.MakeModelDescription">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Equipment.BaseEquipmentDto.FleetCombined">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Equipment.GetEquipmentRequest.BranchId">
+            <summary>
+            The identifier of the branch associated with the equipment.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Equipment.GetEquipmentRequest.EquipmentType">
+            <summary>
+            The equipment type.  Valid types are either New or Used
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Equipment.GetEquipmentRequest.Status">
+            <summary>
+            The status of the equipment.
+            </summary>
+        </member>
         <member name="T:crmSeries.Core.Features.Leads.Dtos.AddLeadDto">
             <summary>
             The DTO object representing the data to add a lead.

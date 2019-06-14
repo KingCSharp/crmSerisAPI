@@ -154,6 +154,11 @@
             </summary>
             <param name="id">The unique identifier of the contact</param>
         </member>
+        <member name="M:crmSeries.API.Controllers.EquipmentController.Get(crmSeries.Core.Features.Equipment.GetEquipmentRequest)">
+            <summary>
+            Gets equipment based on search criteria. 
+            </summary>
+        </member>
         <member name="M:crmSeries.API.Controllers.LeadsController.Post(crmSeries.Core.Features.Leads.AddLeadRequest)">
             <summary>
             Adds a Lead to the system.
