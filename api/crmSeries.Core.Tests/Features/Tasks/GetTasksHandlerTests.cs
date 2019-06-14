@@ -162,59 +162,6 @@ namespace crmSeries.Core.Tests.Features.Tasks
         }
 
         [Test]
-        public void HandleAsync_HasLeadAsRelatedRecord_ReturnsTasksWithRelatedRecordNameSetToLeadFirstNameAndLastNameConcatenated()
-        {
-            // Arrange 
-            var options = GetHeavyEquipmentContextOptions();
-
-            using (var context = new HeavyEquipmentContext(options))
-            {
-                var user = new User { UserId = 1 };
-                context.User.Add(user);
-
-                var lead = new Lead
-                {
-                    LeadId = 1,
-                    FirstName = "John",
-                    LastName = "Doe"
-                };
-
-                context.Lead.Add(lead);
-                context.SaveChanges();
-
-                int itemCount = 10;
-                for (int i = 1; i <= itemCount; ++i)
-                {
-                    context.Task.Add(new Task
-                    {
-                        TaskId = i,
-                        UserId = user.UserId,
-                        RelatedRecordId = lead.LeadId,
-                        RelatedRecordType = Constants.RelatedRecord.Types.Lead
-                    });
-                }
-                context.SaveChanges();
-
-                var handler = new GetTasksRequestHandler(
-                    context,
-                    GetUserContextStub(user.UserId));
-
-                var query = new PagedQueryRequest { PageNumber = 1, PageSize = 5 };
-
-                // Act
-                var response = handler.HandleAsync(new GetTasksRequest { PageInfo = query });
-
-                //Assert 
-                Assert.AreEqual(response.Result.HasErrors, false);
-                Assert.IsNotNull(response.Result.Data);
-                foreach (var task in response.Result.Data.Items)
-                {
-                    Assert.AreEqual($"{lead.FirstName} {lead.LastName}", task.RelatedRecordName);
-                }
-            }
-        }
-
-        [Test]
         public void HandleAsync_NoTasksFound_ReturnsEmptyResults()
         {
             // Arrange 

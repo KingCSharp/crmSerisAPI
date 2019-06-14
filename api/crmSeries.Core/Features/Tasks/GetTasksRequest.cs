@@ -89,16 +89,13 @@ namespace crmSeries.Core.Features.Tasks
             _relatedRecordsDictionary = new Dictionary<string, List<Tuple<int, string>>>
             {
                 ["Company"] = GetCompanyNameDictionary(),
-                ["Contact"] = GetContactNameDictionary(),
-                ["Lead"] = GetLeadNameDictionary()
+                ["Contact"] = GetContactNameDictionary()
             };
         }
 
         private List<Tuple<int, string>> GetCompanyNameDictionary()
         {
             return _context.Set<Company>()
-                .Skip(0)
-                .Take(500)
                 .Where(x =>!x.Deleted)
                 .Select(x => new Tuple<int, string>(x.CompanyId, x.CompanyName))
                 .ToList();
@@ -107,24 +104,10 @@ namespace crmSeries.Core.Features.Tasks
         private List<Tuple<int, string>> GetContactNameDictionary()
         {
             return _context.Set<Contact>()
-                .Skip(0)
-                .Take(500)
                 .Where(x => x.Active && !x.Deleted)
                 .Select(x => new {x.ContactId, x.FirstName, x.LastName})
                 .ToList()
                 .Select(x => new Tuple<int, string>(x.ContactId, $"{x.FirstName} {x.LastName}"))
-                .ToList();
-        }
-
-        private List<Tuple<int, string>> GetLeadNameDictionary()
-        {
-            return _context.Set<Lead>()
-                .Skip(0)
-                .Take(500)
-                .Where(x => !x.Deleted)
-                .Select(x => new { x.LeadId, x.FirstName, x.LastName })
-                .ToList()
-                .Select(x => new Tuple<int, string>(x.LeadId, $"{x.FirstName} {x.LastName}"))
                 .ToList();
         }
 
@@ -143,7 +126,6 @@ namespace crmSeries.Core.Features.Tasks
             {
                 RelatedRecord.Types.Company,
                 RelatedRecord.Types.Contact,
-                RelatedRecord.Types.Lead
             };
 
             if (!validRelatedRecordTypes.Contains(relatedRecordType))
