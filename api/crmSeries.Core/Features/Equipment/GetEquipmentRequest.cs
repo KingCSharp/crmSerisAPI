@@ -11,6 +11,7 @@ using AutoMapper.QueryableExtensions;
 using crmSeries.Core.Domain.HeavyEquipment;
 using System.Collections.Generic;
 using crmSeries.Core.Features.Equipment.Utility;
+using System;
 
 namespace crmSeries.Core.Features.Equipment
 {
@@ -52,12 +53,16 @@ namespace crmSeries.Core.Features.Equipment
         {
             var result = new PagedQueryResult<GetEquipmentDto>();
 
+            ResolveNulls(request);
+
             var equipment =
                 (from e in _context.Set<Domain.HeavyEquipment.Equipment>()
-                 join cat in _context.Set<EquipmentCategory>().DefaultIfEmpty()
-                     on e.CategoryId equals cat.CategoryId
-                 join branch in _context.Set<Branch>()
-                     on e.CurrentBranchId equals branch.BranchId
+                 join joinedCat in _context.Set<EquipmentCategory>()
+                     on e.CategoryId equals joinedCat.CategoryId into catLeft
+                 from cat in catLeft.DefaultIfEmpty()
+                 join joinedBranch in _context.Set<Branch>()
+                     on e.CurrentBranchId equals joinedBranch.BranchId into branchLeft
+                 from branch in branchLeft.DefaultIfEmpty()
                  where !e.Deleted && e.Inventory && e.AvailableForQuote == true &&
                        (request.BranchId > 0 ? branch.BranchId == request.BranchId : true) &&
                        (!string.IsNullOrEmpty(request.EquipmentType) ? e.NewUsed == request.EquipmentType : true) &&
@@ -90,6 +95,7 @@ namespace crmSeries.Core.Features.Equipment
                      cat.Category,
                      branch.BranchName,
                  })
+                .OrderBy(x => x.EquipmentId)
                 .AsQueryable();
 
 
@@ -97,6 +103,8 @@ namespace crmSeries.Core.Features.Equipment
 
             result.Items = equipment
                 .ProjectTo<GetEquipmentDto>()
+                .Skip((request.PageInfo.PageNumber - 1) * request.PageInfo.PageSize)
+                .Take(request.PageInfo.PageSize)
                 .ToList();
 
             result.PageCount = count / request.PageInfo.PageSize;
@@ -105,6 +113,12 @@ namespace crmSeries.Core.Features.Equipment
             result.PageSize = request.PageInfo.PageSize;
 
             return result.AsResponseAsync();
+        }
+
+        private void ResolveNulls(GetEquipmentRequest request)
+        {
+            if (request.Statuses == null)
+                request.Statuses = new List<string>();
         }
     }
 
@@ -124,7 +138,7 @@ namespace crmSeries.Core.Features.Equipment
 
         private bool AllBeLessThanMaxLimitAllowed(List<string> statuses)
         {
-            return statuses.All(x => x.Length <= EquipmentConstants.StatusMaxLength);
+            return statuses == null ? true : statuses.All(x => x.Length <= EquipmentConstants.StatusMaxLength);
         }
     }
 }
