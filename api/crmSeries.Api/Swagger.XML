@@ -59,6 +59,11 @@
             </summary>
             <param name="id">The unique identifier of the company source.</param>
         </member>
+        <member name="M:crmSeries.Api.Controllers.UserFavoriteRecordsController.Post(crmSeries.Core.Features.UserFavoriteRecords.ToggleUserFavoriteRecordRequest)">
+            <summary>
+            Toggles a record as a user favorite based on the data in the request.
+            </summary>
+        </member>
         <member name="M:crmSeries.API.Controllers.CompaniesController.GetPagedCompanies(crmSeries.Core.Logic.Queries.PagedQueryRequest)">
             <summary>
             Gets a paged list of companies assigned to the current user.
