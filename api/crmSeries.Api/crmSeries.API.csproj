@@ -22,13 +22,9 @@
 
   <ItemGroup>
     <Compile Remove="Authorization\**" />
-    <Compile Remove="wwwroot\**" />
     <Content Remove="Authorization\**" />
-    <Content Remove="wwwroot\**" />
     <EmbeddedResource Remove="Authorization\**" />
-    <EmbeddedResource Remove="wwwroot\**" />
     <None Remove="Authorization\**" />
-    <None Remove="wwwroot\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -40,6 +36,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Cors" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Rewrite" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyModel" Version="2.1.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
     <PackageReference Include="SimpleInjector.Integration.AspNetCore.Mvc.Core" Version="4.5.1" />
