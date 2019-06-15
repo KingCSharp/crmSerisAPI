@@ -7,7 +7,7 @@ using crmSeries.Core.Features.Companies.Utility;
 using crmSeries.Core.Features.CompanyCategories.Utility;
 using crmSeries.Core.Features.CompanyRanks.Utility;
 using crmSeries.Core.Features.Contacts.Utility;
-using crmSeries.Core.Features.Equipment.Utility;
+using crmSeries.Core.Features.Inventory.Utility;
 using crmSeries.Core.Features.Leads.Utility;
 using crmSeries.Core.Features.Notes.Utility;
 using crmSeries.Core.Features.Opportunities.Utility;
@@ -71,7 +71,7 @@ namespace crmSeries.Core.Features.RelatedRecords
                     .AsNoTracking()
                     .RelatedEntityExists(x => x.EquipmentId == request.RecordTypeId))
                 {
-                    return Response.ErrorAsync(EquipmentConstants.ErrorMessages.EquipmentNotFound);
+                    return Response.ErrorAsync(InventoryConstants.ErrorMessages.InventoryNotFound);
                 }
             }
 

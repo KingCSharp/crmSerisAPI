@@ -154,14 +154,14 @@
             </summary>
             <param name="id">The unique identifier of the contact</param>
         </member>
-        <member name="M:crmSeries.API.Controllers.EquipmentController.Get(crmSeries.Core.Features.Equipment.GetEquipmentRequest)">
+        <member name="M:crmSeries.API.Controllers.InventoryController.Get(crmSeries.Core.Features.Inventory.GetInventoryRequest)">
             <summary>
-            Gets equipment based on search criteria. 
+            Gets inventory equipment based on search criteria. 
             </summary>
         </member>
-        <member name="M:crmSeries.API.Controllers.EquipmentController.GetStatuses">
+        <member name="M:crmSeries.API.Controllers.InventoryController.GetStatuses">
             <summary>
-            Gets equipment statuses for this dealer. 
+            Gets inventory equipment statuses for this dealer. 
             </summary>
         </member>
         <member name="M:crmSeries.API.Controllers.LeadsController.Post(crmSeries.Core.Features.Leads.AddLeadRequest)">
