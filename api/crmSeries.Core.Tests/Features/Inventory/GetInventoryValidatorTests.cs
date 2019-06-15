@@ -1,27 +1,27 @@
-﻿using crmSeries.Core.Features.Equipment;
-using crmSeries.Core.Features.Equipment.Utility;
+﻿using crmSeries.Core.Features.Inventory;
+using crmSeries.Core.Features.Inventory.Utility;
 using crmSeries.Core.Logic.Queries;
 using NUnit.Framework;
 using System.Collections.Generic;
 
-namespace crmSeries.Core.Tests.Features.Equipment
+namespace crmSeries.Core.Tests.Features.Inventory
 {
     [TestFixture]
-    public class GetEquipmentValidatorTests
+    public class GetInventoryValidatorTests
     {
-        private GetEquipmentRequest _getEquipmentRequest;
-        private GetEquipmentValidator _getEquipmentValidator;
+        private GetInventoryRequest _getInventoryRequest;
+        private GetInventoryValidator _getInventoryValidator;
 
         [OneTimeSetUp]
         public void OneTimeSetup()
         {
-            _getEquipmentValidator = new GetEquipmentValidator();
+            _getInventoryValidator = new GetInventoryValidator();
         }
 
         [SetUp]
         public void Setup()
         {
-            _getEquipmentRequest = new GetEquipmentRequest
+            _getInventoryRequest = new GetInventoryRequest
             {
                 PageInfo = new PagedQueryRequest
                 {
@@ -40,10 +40,10 @@ namespace crmSeries.Core.Tests.Features.Equipment
             bool isValid)
         {
             //Arrange
-            _getEquipmentRequest.PageInfo.PageNumber = pageNumber;
+            _getInventoryRequest.PageInfo.PageNumber = pageNumber;
 
             // Act
-            var result = _getEquipmentValidator.Validate(_getEquipmentRequest);
+            var result = _getInventoryValidator.Validate(_getInventoryRequest);
 
             //Assert 
             Assert.AreEqual(isValid, result.IsValid);
@@ -63,10 +63,10 @@ namespace crmSeries.Core.Tests.Features.Equipment
             bool isValid)
         {
             //Arrange
-            _getEquipmentRequest.PageInfo.PageSize = pageSize;
+            _getInventoryRequest.PageInfo.PageSize = pageSize;
 
             // Act
-            var result = _getEquipmentValidator.Validate(_getEquipmentRequest);
+            var result = _getInventoryValidator.Validate(_getInventoryRequest);
 
             //Assert 
             Assert.AreEqual(isValid, result.IsValid);
@@ -77,28 +77,28 @@ namespace crmSeries.Core.Tests.Features.Equipment
             }
         }
 
-        [TestCase(EquipmentConstants.StatusMaxLength, true)]
-        [TestCase(EquipmentConstants.StatusMaxLength + 1, false)]
+        [TestCase(InventoryConstants.StatusMaxLength, true)]
+        [TestCase(InventoryConstants.StatusMaxLength + 1, false)]
         public void Validate_StatusEqualsMaxLength_ReturnsAppropriateValidation(
             int length,
             bool isValid)
         {
             //Arrange
-            _getEquipmentRequest.Statuses = new List<string>();
+            _getInventoryRequest.Statuses = new List<string>();
 
             for (int i = 0; i < 5; i++)
             {
-                _getEquipmentRequest.Statuses.Add(TestUtility.GenerateStringOfLength(length));
+                _getInventoryRequest.Statuses.Add(TestUtility.GenerateStringOfLength(length));
             }
 
             // Act
-            var result = _getEquipmentValidator.Validate(_getEquipmentRequest);
+            var result = _getInventoryValidator.Validate(_getInventoryRequest);
 
             //Assert 
             Assert.AreEqual(isValid, result.IsValid);
             if (!result.IsValid)
             {
-                Assert.AreEqual(EquipmentConstants.ErrorMessages.ExceededStatusMaxLength, result.Errors[0].ErrorMessage);
+                Assert.AreEqual(InventoryConstants.ErrorMessages.ExceededStatusMaxLength, result.Errors[0].ErrorMessage);
             }
         }
     }

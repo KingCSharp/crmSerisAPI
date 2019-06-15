@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace crmSeries.Core.Features.Equipment.Utility
+namespace crmSeries.Core.Features.Inventory.Utility
 {
-    public static class EquipmentConstants
+    public static class InventoryConstants
     {
         public static class ErrorMessages
         {
-            public const string EquipmentNotFound = "No equipment with this id found.";
+            public const string InventoryNotFound = "No inventory equipment with this id found.";
             public static readonly string ExceededStatusMaxLength = $"All statuses must be {StatusMaxLength} characters or less.";
         }
 

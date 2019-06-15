@@ -10,13 +10,13 @@ using System.Threading.Tasks;
 using AutoMapper.QueryableExtensions;
 using crmSeries.Core.Domain.HeavyEquipment;
 using System.Collections.Generic;
-using crmSeries.Core.Features.Equipment.Utility;
+using crmSeries.Core.Features.Inventory.Utility;
 using System;
 
-namespace crmSeries.Core.Features.Equipment
+namespace crmSeries.Core.Features.Inventory
 {
     [HeavyEquipmentContext]
-    public class GetEquipmentRequest : IRequest<PagedQueryResult<GetEquipmentDto>>
+    public class GetInventoryRequest : IRequest<PagedQueryResult<GetInventoryDto>>
     {
         /// <summary>
         /// The paging information of the paged object.
@@ -24,36 +24,34 @@ namespace crmSeries.Core.Features.Equipment
         public PagedQueryRequest PageInfo { get; set; }
 
         /// <summary>
-        /// The identifier of the branch associated with the equipment.
+        /// The identifier of the branch associated with the inventory equipment.
         /// </summary>
         public int BranchId { get; set; }
 
         /// <summary>
-        /// The equipment type.  Valid types are either New or Used
+        /// The inventory equipment type.  Valid types are either New or Used
         /// </summary>
         public string EquipmentType { get; set; }
 
         /// <summary>
-        /// The statuses of the equipment.
+        /// The statuses of the inventory equipment.
         /// </summary>
-        public List<string> Statuses { get; set; }
+        public List<string> Statuses { get; set; } = new List<string>();
     }
 
-    public class GetEquipmentHandler :
-        IRequestHandler<GetEquipmentRequest, PagedQueryResult<GetEquipmentDto>>
+    public class GetInventoryHandler :
+        IRequestHandler<GetInventoryRequest, PagedQueryResult<GetInventoryDto>>
     {
         private readonly HeavyEquipmentContext _context;
 
-        public GetEquipmentHandler(HeavyEquipmentContext context)
+        public GetInventoryHandler(HeavyEquipmentContext context)
         {
             _context = context;
         }
 
-        public Task<Response<PagedQueryResult<GetEquipmentDto>>> HandleAsync(GetEquipmentRequest request)
+        public Task<Response<PagedQueryResult<GetInventoryDto>>> HandleAsync(GetInventoryRequest request)
         {
-            var result = new PagedQueryResult<GetEquipmentDto>();
-
-            ResolveNulls(request);
+            var result = new PagedQueryResult<GetInventoryDto>();
 
             var equipment =
                 (from e in _context.Set<Domain.HeavyEquipment.Equipment>()
@@ -102,7 +100,7 @@ namespace crmSeries.Core.Features.Equipment
             var count = equipment.Count();
 
             result.Items = equipment
-                .ProjectTo<GetEquipmentDto>()
+                .ProjectTo<GetInventoryDto>()
                 .Skip((request.PageInfo.PageNumber - 1) * request.PageInfo.PageSize)
                 .Take(request.PageInfo.PageSize)
                 .ToList();
@@ -114,17 +112,11 @@ namespace crmSeries.Core.Features.Equipment
 
             return result.AsResponseAsync();
         }
-
-        private void ResolveNulls(GetEquipmentRequest request)
-        {
-            if (request.Statuses == null)
-                request.Statuses = new List<string>();
-        }
     }
 
-    public class GetEquipmentValidator : AbstractValidator<GetEquipmentRequest>
+    public class GetInventoryValidator : AbstractValidator<GetInventoryRequest>
     {
-        public GetEquipmentValidator()
+        public GetInventoryValidator()
         {
             RuleFor(x => x.PageInfo.PageNumber)
                 .GreaterThan(0);
@@ -133,12 +125,12 @@ namespace crmSeries.Core.Features.Equipment
                 .GreaterThan(0);
 
             RuleFor(x => x.Statuses).Must(AllBeLessThanMaxLimitAllowed)
-                .WithMessage(EquipmentConstants.ErrorMessages.ExceededStatusMaxLength);
+                .WithMessage(InventoryConstants.ErrorMessages.ExceededStatusMaxLength);
         }
 
         private bool AllBeLessThanMaxLimitAllowed(List<string> statuses)
         {
-            return statuses == null ? true : statuses.All(x => x.Length <= EquipmentConstants.StatusMaxLength);
+            return statuses == null ? true : statuses.All(x => x.Length <= InventoryConstants.StatusMaxLength);
         }
     }
 }

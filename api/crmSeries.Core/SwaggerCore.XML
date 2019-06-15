@@ -591,160 +591,160 @@
             signatory has completed his or her template role.
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.Equipment.BaseEquipmentDto.ParentId">
+        <member name="P:crmSeries.Core.Features.Inventory.BaseInventoryDto.ParentId">
             <summary>
-            The id of the parent entity for this equipment.
+            The id of the parent entity for this inventory equipment.
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.Equipment.BaseEquipmentDto.ParentType">
+        <member name="P:crmSeries.Core.Features.Inventory.BaseInventoryDto.ParentType">
             <summary>
             The table / record type that the ParentId links to.
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.Equipment.BaseEquipmentDto.Machine">
+        <member name="P:crmSeries.Core.Features.Inventory.BaseInventoryDto.Machine">
             <summary>
-            Denotes if this equipment is a machine.
+            Denotes if this inventory equipment is a machine.
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.Equipment.BaseEquipmentDto.Make">
+        <member name="P:crmSeries.Core.Features.Inventory.BaseInventoryDto.Make">
             <summary>
-            The make for this equipment.
+            The make for this inventory equipment.
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.Equipment.BaseEquipmentDto.Model">
+        <member name="P:crmSeries.Core.Features.Inventory.BaseInventoryDto.Model">
             <summary>
-            The model for this equipment.
+            The model for this inventory equipment.
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.Equipment.BaseEquipmentDto.StockNo">
+        <member name="P:crmSeries.Core.Features.Inventory.BaseInventoryDto.StockNo">
             <summary>
-            The stock number for this equipment.
+            The stock number for this inventory equipment.
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.Equipment.BaseEquipmentDto.SerialNo">
+        <member name="P:crmSeries.Core.Features.Inventory.BaseInventoryDto.SerialNo">
             <summary>
-            The serial number for this equipment.
+            The serial number for this inventory equipment.
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.Equipment.BaseEquipmentDto.Description">
+        <member name="P:crmSeries.Core.Features.Inventory.BaseInventoryDto.Description">
             <summary>
-            A description for this equipment.
+            A description for this inventory equipment.
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.Equipment.BaseEquipmentDto.EquipYear">
+        <member name="P:crmSeries.Core.Features.Inventory.BaseInventoryDto.EquipYear">
             <summary>
-            The equipment year for this equipment.
+            The equipment year for this inventory equipment.
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.Equipment.BaseEquipmentDto.Fleet">
+        <member name="P:crmSeries.Core.Features.Inventory.BaseInventoryDto.Fleet">
             <summary>
-            The fleet this equipment belongs to.
+            The fleet this inventory equipment belongs to.
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.Equipment.BaseEquipmentDto.FleetType">
+        <member name="P:crmSeries.Core.Features.Inventory.BaseInventoryDto.FleetType">
             <summary>
-            The type for the fleet this equipment belongs to.
+            The type for the fleet this inventory equipment belongs to.
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.Equipment.BaseEquipmentDto.Status">
+        <member name="P:crmSeries.Core.Features.Inventory.BaseInventoryDto.Status">
             <summary>
-            The status of this equipment. E.g., Rental, Inventory, etc.
+            The status of this inventory equipment. E.g., Rental, Inventory, etc.
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.Equipment.BaseEquipmentDto.NewUsed">
+        <member name="P:crmSeries.Core.Features.Inventory.BaseInventoryDto.NewUsed">
             <summary>
-            Denotes if this equipment is new or used.
+            Denotes if this inventory equipment is new or used.
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.Equipment.BaseEquipmentDto.ListPrice">
+        <member name="P:crmSeries.Core.Features.Inventory.BaseInventoryDto.ListPrice">
             <summary>
-            The list price of this equipment.
+            The list price of this inventory equipment.
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.Equipment.BaseEquipmentDto.SellPrice">
+        <member name="P:crmSeries.Core.Features.Inventory.BaseInventoryDto.SellPrice">
             <summary>
-            The sell price of this equipment.
+            The sell price of this inventory equipment.
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.Equipment.BaseEquipmentDto.AcquisitionDate">
+        <member name="P:crmSeries.Core.Features.Inventory.BaseInventoryDto.AcquisitionDate">
             <summary>
-            The date this equipment was acquired.
+            The date this inventory equipment was acquired.
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.Equipment.BaseEquipmentDto.AvailableForQuote">
+        <member name="P:crmSeries.Core.Features.Inventory.BaseInventoryDto.AvailableForQuote">
             <summary>
-            Denotes if this equipment is available for a quote.
+            Denotes if this inventory equipment is available for a quote.
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.Equipment.BaseEquipmentDto.InventoryNotes">
+        <member name="P:crmSeries.Core.Features.Inventory.BaseInventoryDto.InventoryNotes">
             <summary>
-            Inventory notes for this equipment.
+            Inventory notes for this inventory equipment.
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.Equipment.BaseEquipmentDto.Class">
+        <member name="P:crmSeries.Core.Features.Inventory.BaseInventoryDto.Class">
             <summary>
-            The class of this equipment.
+            The class of this inventory equipment.
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.Equipment.BaseEquipmentDto.InOut">
+        <member name="P:crmSeries.Core.Features.Inventory.BaseInventoryDto.InOut">
             <summary>
-            Denotes whether this equipment is in or out.
+            Denotes whether this inventory equipment is in or out.
             </summary>
         </member>
-        <!-- Badly formed XML comment ignored for member "P:crmSeries.Core.Features.Equipment.BaseEquipmentDto.LastSmr" -->
-        <member name="P:crmSeries.Core.Features.Equipment.BaseEquipmentDto.InventorySpecs">
+        <!-- Badly formed XML comment ignored for member "P:crmSeries.Core.Features.Inventory.BaseInventoryDto.LastSmr" -->
+        <member name="P:crmSeries.Core.Features.Inventory.BaseInventoryDto.InventorySpecs">
             <summary>
-            Html snippet containing the  inventory specs for this equipment.
+            Html snippet containing the  inventory specs for this inventory equipment.
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.Equipment.BaseEquipmentDto.Category">
+        <member name="P:crmSeries.Core.Features.Inventory.BaseInventoryDto.Category">
             <summary>
-            The category for this equipment
+            The category for this inventory equipment
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.Equipment.BaseEquipmentDto.BranchName">
+        <member name="P:crmSeries.Core.Features.Inventory.BaseInventoryDto.BranchName">
             <summary>
             The name of the branch 
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.Equipment.BaseEquipmentDto.FullModel">
+        <member name="P:crmSeries.Core.Features.Inventory.BaseInventoryDto.FullModel">
             <summary>
-            The combination of the make and model for this equipment.
+            The combination of the make and model for this inventory equipment.
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.Equipment.BaseEquipmentDto.MakeModelDescription">
+        <member name="P:crmSeries.Core.Features.Inventory.BaseInventoryDto.MakeModelDescription">
             <summary>
-            The combination of the make, model, and description for this equipment.
+            The combination of the make, model, and description for this inventory equipment.
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.Equipment.BaseEquipmentDto.FleetCombined">
+        <member name="P:crmSeries.Core.Features.Inventory.BaseInventoryDto.FleetCombined">
             <summary>
-            The combination of the fleet and fleet type for this equipment.
+            The combination of the fleet and fleet type for this inventory equipment.
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.Equipment.GetEquipmentDto.EquipmentId">
+        <member name="P:crmSeries.Core.Features.Inventory.GetInventoryDto.EquipmentId">
             <summary>
-            The unique identifier for this equipment entity.
+            The unique identifier for this inventory equipment entity.
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.Equipment.GetEquipmentRequest.PageInfo">
+        <member name="P:crmSeries.Core.Features.Inventory.GetInventoryRequest.PageInfo">
             <summary>
             The paging information of the paged object.
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.Equipment.GetEquipmentRequest.BranchId">
+        <member name="P:crmSeries.Core.Features.Inventory.GetInventoryRequest.BranchId">
             <summary>
-            The identifier of the branch associated with the equipment.
+            The identifier of the branch associated with the inventory equipment.
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.Equipment.GetEquipmentRequest.EquipmentType">
+        <member name="P:crmSeries.Core.Features.Inventory.GetInventoryRequest.EquipmentType">
             <summary>
-            The equipment type.  Valid types are either New or Used
+            The inventory equipment type.  Valid types are either New or Used
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.Equipment.GetEquipmentRequest.Statuses">
+        <member name="P:crmSeries.Core.Features.Inventory.GetInventoryRequest.Statuses">
             <summary>
-            The statuses of the equipment.
+            The statuses of the inventory equipment.
             </summary>
         </member>
         <member name="T:crmSeries.Core.Features.Leads.Dtos.AddLeadDto">

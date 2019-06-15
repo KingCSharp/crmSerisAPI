@@ -6,24 +6,24 @@ using crmSeries.Core.Mediator;
 using crmSeries.Core.Mediator.Attributes;
 using crmSeries.Core.Mediator.Decorators;
 
-namespace crmSeries.Core.Features.Equipment
+namespace crmSeries.Core.Features.Inventory
 {
     [HeavyEquipmentContext]
     [DoNotValidate]
-    public class GetEquipmentStatusesRequest : IRequest<IEnumerable<string>>
+    public class GetInventoryStatusesRequest : IRequest<IEnumerable<string>>
     {
     }
 
-    public class GetEquipmentStatusesHandler : IRequestHandler<GetEquipmentStatusesRequest, IEnumerable<string>>
+    public class GetInventoryStatusesHandler : IRequestHandler<GetInventoryStatusesRequest, IEnumerable<string>>
     {
         private readonly HeavyEquipmentContext _context;
 
-        public GetEquipmentStatusesHandler(HeavyEquipmentContext context)
+        public GetInventoryStatusesHandler(HeavyEquipmentContext context)
         {
             _context = context;
         }
 
-        public Task<Response<IEnumerable<string>>> HandleAsync(GetEquipmentStatusesRequest request)
+        public Task<Response<IEnumerable<string>>> HandleAsync(GetInventoryStatusesRequest request)
         {
             return _context.Set<Domain.HeavyEquipment.Equipment>()
                 .Select(x => x.Status)

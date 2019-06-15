@@ -1,19 +1,19 @@
 ﻿using crmSeries.Core.Common;
 using crmSeries.Core.Data;
 using crmSeries.Core.Domain.HeavyEquipment;
-using crmSeries.Core.Features.Equipment;
+using crmSeries.Core.Features.Inventory;
 using crmSeries.Core.Logic.Queries;
 using crmSeries.Core.Security;
 using NUnit.Framework;
 using System.Collections.Generic;
 
-namespace crmSeries.Core.Tests.Features.Equipment
+namespace crmSeries.Core.Tests.Features.Inventory
 {
     [TestFixture]
-    public class GetEquipmentHandlerTests : BaseUnitTest
+    public class GetInventoryHandlerTests : BaseUnitTest
     {
         [Test]
-        public void NormalRequest_NoIssues_ReturnsEquipmentPagedResults()
+        public void HandleAsync_NoIssues_ReturnsEquipmentPagedResults()
         {
             // Arrange 
             var options = GetHeavyEquipmentContextOptions();
@@ -35,12 +35,12 @@ namespace crmSeries.Core.Tests.Features.Equipment
 
                 context.SaveChanges();
 
-                var handler = new GetEquipmentHandler(context);
+                var handler = new GetInventoryHandler(context);
 
                 var pageInfo = new PagedQueryRequest { PageNumber = 1, PageSize = 5 };
 
                 // Act
-                var response = handler.HandleAsync(new GetEquipmentRequest
+                var response = handler.HandleAsync(new GetInventoryRequest
                 {
                     PageInfo = pageInfo
                 });
@@ -57,7 +57,7 @@ namespace crmSeries.Core.Tests.Features.Equipment
         }
 
         [Test]
-        public void NormalRequest_NoIssues_ReturnsEquipmentPagedResultsWithBranchAndCategory()
+        public void HandleAsync_NoIssues_ReturnsEquipmentPagedResultsWithBranchAndCategory()
         {
             // Arrange 
             var options = GetHeavyEquipmentContextOptions();
@@ -94,12 +94,12 @@ namespace crmSeries.Core.Tests.Features.Equipment
 
                 context.SaveChanges();
 
-                var handler = new GetEquipmentHandler(context);
+                var handler = new GetInventoryHandler(context);
 
                 var pageInfo = new PagedQueryRequest { PageNumber = 1, PageSize = 5 };
 
                 // Act
-                var response = handler.HandleAsync(new GetEquipmentRequest
+                var response = handler.HandleAsync(new GetInventoryRequest
                 {
                     PageInfo = pageInfo,
                     BranchId = 1
@@ -119,7 +119,7 @@ namespace crmSeries.Core.Tests.Features.Equipment
         }
 
         [Test]
-        public void NormalRequest_NoIssues_ReturnsEquipmentPagedResultsWithCorrectEquipmentType()
+        public void HandleAsync_NoIssues_ReturnsEquipmentPagedResultsWithCorrectEquipmentType()
         {
             // Arrange 
             var options = GetHeavyEquipmentContextOptions();
@@ -158,12 +158,12 @@ namespace crmSeries.Core.Tests.Features.Equipment
 
                 context.SaveChanges();
 
-                var handler = new GetEquipmentHandler(context);
+                var handler = new GetInventoryHandler(context);
 
                 var pageInfo = new PagedQueryRequest { PageNumber = 1, PageSize = 5 };
 
                 // Act
-                var response = handler.HandleAsync(new GetEquipmentRequest
+                var response = handler.HandleAsync(new GetInventoryRequest
                 {
                     PageInfo = pageInfo,
                     EquipmentType = "New"
@@ -181,7 +181,7 @@ namespace crmSeries.Core.Tests.Features.Equipment
         }
 
         [Test]
-        public void NormalRequest_NoIssues_ReturnsEquipmentPagedResultsWithCorrectStatus()
+        public void HandleAsync_NoIssues_ReturnsEquipmentPagedResultsWithCorrectStatus()
         {
             // Arrange 
             var options = GetHeavyEquipmentContextOptions();
@@ -220,12 +220,12 @@ namespace crmSeries.Core.Tests.Features.Equipment
 
                 context.SaveChanges();
 
-                var handler = new GetEquipmentHandler(context);
+                var handler = new GetInventoryHandler(context);
 
                 var pageInfo = new PagedQueryRequest { PageNumber = 1, PageSize = 5 };
 
                 // Act
-                var response = handler.HandleAsync(new GetEquipmentRequest
+                var response = handler.HandleAsync(new GetInventoryRequest
                 {
                     PageInfo = pageInfo,
                     Statuses = new List<string>
@@ -246,7 +246,7 @@ namespace crmSeries.Core.Tests.Features.Equipment
         }
 
         [Test]
-        public void NormalRequest_NoIssues_ReturnsEquipmentPagedResultsWithCorrectStatuses()
+        public void HandleAsync_NoIssues_ReturnsEquipmentPagedResultsWithCorrectStatuses()
         {
             // Arrange 
             var options = GetHeavyEquipmentContextOptions();
@@ -285,12 +285,12 @@ namespace crmSeries.Core.Tests.Features.Equipment
 
                 context.SaveChanges();
 
-                var handler = new GetEquipmentHandler(context);
+                var handler = new GetInventoryHandler(context);
 
                 var pageInfo = new PagedQueryRequest { PageNumber = 1, PageSize = 5 };
 
                 // Act
-                var response = handler.HandleAsync(new GetEquipmentRequest
+                var response = handler.HandleAsync(new GetInventoryRequest
                 {
                     PageInfo = pageInfo,
                     Statuses = new List<string>
@@ -312,19 +312,19 @@ namespace crmSeries.Core.Tests.Features.Equipment
         }
 
         [Test]
-        public void NormalRequest_NoEquipmentFound_ReturnsEmptyResult()
+        public void HandleAsync_NoEquipmentFound_ReturnsEmptyResult()
         {
             // Arrange 
             var options = GetHeavyEquipmentContextOptions();
 
             using (var context = new HeavyEquipmentContext(options))
             {                
-                var handler = new GetEquipmentHandler(context);
+                var handler = new GetInventoryHandler(context);
 
                 var pageInfo = new PagedQueryRequest { PageNumber = 1, PageSize = 5 };
 
                 // Act
-                var response = handler.HandleAsync(new GetEquipmentRequest
+                var response = handler.HandleAsync(new GetInventoryRequest
                 {
                     PageInfo = pageInfo
                 });
@@ -341,7 +341,7 @@ namespace crmSeries.Core.Tests.Features.Equipment
         }
 
         [Test]
-        public void NormalRequest_NoEquipmentWithBranch_ReturnsEmptyResult()
+        public void HandleAsync_NoEquipmentWithBranch_ReturnsEmptyResult()
         {
             // Arrange 
             var options = GetHeavyEquipmentContextOptions();
@@ -363,12 +363,12 @@ namespace crmSeries.Core.Tests.Features.Equipment
 
                 context.SaveChanges();
 
-                var handler = new GetEquipmentHandler(context);
+                var handler = new GetInventoryHandler(context);
 
                 var pageInfo = new PagedQueryRequest { PageNumber = 1, PageSize = 5 };
 
                 // Act
-                var response = handler.HandleAsync(new GetEquipmentRequest
+                var response = handler.HandleAsync(new GetInventoryRequest
                 {
                     PageInfo = pageInfo,
                     BranchId = 1
@@ -386,7 +386,7 @@ namespace crmSeries.Core.Tests.Features.Equipment
         }
 
         [Test]
-        public void NormalRequest_NoEquipmentWithEquipmentType_ReturnsEmptyResult()
+        public void HandleAsync_NoEquipmentWithEquipmentType_ReturnsEmptyResult()
         {
             // Arrange 
             var options = GetHeavyEquipmentContextOptions();
@@ -408,12 +408,12 @@ namespace crmSeries.Core.Tests.Features.Equipment
 
                 context.SaveChanges();
 
-                var handler = new GetEquipmentHandler(context);
+                var handler = new GetInventoryHandler(context);
 
                 var pageInfo = new PagedQueryRequest { PageNumber = 1, PageSize = 5 };
 
                 // Act
-                var response = handler.HandleAsync(new GetEquipmentRequest
+                var response = handler.HandleAsync(new GetInventoryRequest
                 {
                     PageInfo = pageInfo,
                     EquipmentType = "Foo"
@@ -431,7 +431,7 @@ namespace crmSeries.Core.Tests.Features.Equipment
         }
 
         [Test]
-        public void NormalRequest_NoEquipmentWithStatuses_ReturnsEmptyResult()
+        public void HandleAsync_NoEquipmentWithStatuses_ReturnsEmptyResult()
         {
             // Arrange 
             var options = GetHeavyEquipmentContextOptions();
@@ -453,12 +453,12 @@ namespace crmSeries.Core.Tests.Features.Equipment
 
                 context.SaveChanges();
 
-                var handler = new GetEquipmentHandler(context);
+                var handler = new GetInventoryHandler(context);
 
                 var pageInfo = new PagedQueryRequest { PageNumber = 1, PageSize = 5 };
 
                 // Act
-                var response = handler.HandleAsync(new GetEquipmentRequest
+                var response = handler.HandleAsync(new GetInventoryRequest
                 {
                     PageInfo = pageInfo,
                     Statuses = new List<string>

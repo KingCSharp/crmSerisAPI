@@ -2,7 +2,7 @@
 using crmSeries.Core.Domain.HeavyEquipment;
 using crmSeries.Core.Features.Companies.Utility;
 using crmSeries.Core.Features.Contacts.Utility;
-using crmSeries.Core.Features.Equipment.Utility;
+using crmSeries.Core.Features.Inventory.Utility;
 using crmSeries.Core.Features.Leads.Utility;
 using crmSeries.Core.Features.Notes.Utility;
 using crmSeries.Core.Features.Opportunities.Utility;
@@ -53,7 +53,7 @@ namespace crmSeries.Core.Tests.Features.RelatedRecords
 
         [TestCase(RelatedRecord.Types.Company, CompaniesConstants.ErrorMessages.CompanyNotFound)]
         [TestCase(RelatedRecord.Types.Contact, ContactsConstants.ErrorMessages.ContactNotFound)]
-        [TestCase(RelatedRecord.Types.Equipment, EquipmentConstants.ErrorMessages.EquipmentNotFound)]
+        [TestCase(RelatedRecord.Types.Equipment, InventoryConstants.ErrorMessages.InventoryNotFound)]
         [TestCase(RelatedRecord.Types.Lead, LeadsConstants.ErrorMessages.LeadNotFound)]
         [TestCase(RelatedRecord.Types.Note, NotesConstants.ErrorMessages.NoteNotFound)]
         [TestCase(RelatedRecord.Types.Opportunity, OpportunitiesConstants.ErrorMessages.OpportunityNotFound)]
