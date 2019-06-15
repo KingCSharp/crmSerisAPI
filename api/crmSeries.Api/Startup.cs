@@ -45,6 +45,7 @@ namespace crmSeries.Api
             FluentValidationConfig.Configure();
             IdentityServerConfig.Configure(app);
             app.UseExceptionless(_configuration["CommonSettings:Exceptionless:Key"]);
+            app.UseStaticFiles();
         }
     }
 }

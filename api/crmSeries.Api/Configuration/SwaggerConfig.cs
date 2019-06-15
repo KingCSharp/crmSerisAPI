@@ -22,7 +22,8 @@ namespace crmSeries.Api.Configuration
                     Contact = new Contact
                     {
                         Name = "crmSeries"
-                    }
+                    },
+                    Description = "<h2>Description</h2><hr/>This is the API for the crmSeries software.<br/><br/><br/><b>Usage</b><ul><li><b>email (header)</b><ul><li>Currently, this optional header is used for user-specific queries and is not necessary for any other API calls. This will soon be replaced with identity server.</li></ul></li><li><b>PageSize</b><ul><li>For paged requests, this denotes how many items are returned per page. This is capped at 100 items. Entering a number over 100 will still only return 100 max items per page.</li></ul></li></ul>"
                 });
 
                 options.IncludeXmlComments(

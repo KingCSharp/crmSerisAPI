@@ -14,7 +14,7 @@ namespace crmSeries.API.Controllers
     public class TasksController : BaseApiController
     {
         /// <summary>
-        /// Gets a list of all tasks assigned to ?????????????????.
+        /// Gets a list of all tasks assigned to the current user.
         /// </summary>
         /// <param name="paginationInfo">The paging information for this request.</param>
         [HttpGet]

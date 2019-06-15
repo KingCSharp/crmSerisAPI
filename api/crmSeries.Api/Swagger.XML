@@ -227,7 +227,7 @@
         </member>
         <member name="M:crmSeries.API.Controllers.TasksController.GetTasks(crmSeries.Core.Logic.Queries.PagedQueryRequest)">
             <summary>
-            Gets a list of all tasks assigned to ?????????????????.
+            Gets a list of all tasks assigned to the current user.
             </summary>
             <param name="paginationInfo">The paging information for this request.</param>
         </member>

@@ -16,7 +16,8 @@ namespace crmSeries.Api.Filters
                 Name = "api-key",
                 In = "header",
                 Type = "string",
-                Required = true
+                Required = true,
+                Description = "The API key used to authenticate requests. This is provided to customers by crmSeries."
             });
 
             operation.Parameters.Add(new NonBodyParameter
@@ -24,7 +25,8 @@ namespace crmSeries.Api.Filters
                 Name = "email",
                 In = "header",
                 Type = "string",
-                Required = false
+                Required = false,
+                Description = "Email address of the current user. This is used only for requests that get records for the current user. This will be replaced by identity server."
             });
         }
     }

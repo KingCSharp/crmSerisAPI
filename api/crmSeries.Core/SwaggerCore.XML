@@ -4,6 +4,86 @@
         <name>crmSeries.Core</name>
     </assembly>
     <members>
+        <member name="P:crmSeries.Core.Features.Branches.Dtos.BaseBranchDto.DivisionId">
+            <summary>
+            The id for this branch's division.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Branches.Dtos.BaseBranchDto.BranchName">
+            <summary>
+            The name of the branch.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Branches.Dtos.BaseBranchDto.Hq">
+            <summary>
+            Denotes whether this branch is the headquarters.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Branches.Dtos.BaseBranchDto.BranchNo">
+            <summary>
+            The branch number.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Branches.Dtos.BaseBranchDto.Address1">
+            <summary>
+            The first line of this branch's address.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Branches.Dtos.BaseBranchDto.Address2">
+            <summary>
+            The second line of this branch's address.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Branches.Dtos.BaseBranchDto.City">
+            <summary>
+            The city this branch is located in.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Branches.Dtos.BaseBranchDto.State">
+            <summary>
+            The state this branch is located in.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Branches.Dtos.BaseBranchDto.Zip">
+            <summary>
+            The branch's zip code.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Branches.Dtos.BaseBranchDto.County">
+            <summary>
+            The branch's county.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Branches.Dtos.BaseBranchDto.Country">
+            <summary>
+            The country this branch is located in.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Branches.Dtos.BaseBranchDto.Phone">
+            <summary>
+            The branch's phone number.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Branches.Dtos.BaseBranchDto.Fax">
+            <summary>
+            The branch's fax number.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Branches.Dtos.BaseBranchDto.Web">
+            <summary>
+            The URL of the branch's website.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Branches.Dtos.BaseBranchDto.Latitude">
+            <summary>
+            The latitude location of the branch.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Branches.Dtos.BaseBranchDto.Longitude">
+            <summary>
+            The longitude location of the branch.
+            </summary>
+        </member>
         <member name="P:crmSeries.Core.Features.Branches.Dtos.GetBranchDto.BranchId">
             <summary>
             The unnique identifier of the branch.
@@ -427,6 +507,86 @@
         <member name="P:crmSeries.Core.Features.CompanyAssignedAddresses.Dtos.CompanyAssignedAddressDto.Deleted">
             <summary>
             Flag for soft deletion.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.CompanyAssignedCategories.Dtos.BaseCompanyAssignedCategoryDto.CompanyId">
+            <summary>
+            The uninque identifier for the company this category is for.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.CompanyAssignedCategories.Dtos.BaseCompanyAssignedCategoryDto.CategoryId">
+            <summary>
+            The uninque identifier for the category.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.CompanyAssignedCategories.Dtos.GetCompanyAssignedCategoryDto.AssignedId">
+            <summary>
+            The unique identifier for this company assigned category entity.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.CompanyAssignedCategories.Dtos.GetCompanyAssignedCategoryDto.Category">
+            <summary>
+            The name of the category.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.CompanyAssignedCategories.Dtos.EditCompanyAssignedCategoryDto.AssignedId">
+            <summary>
+            The unique identifier for this company assigned category entity.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.CompanyAssignedRanks.Dtos.BaseCompanyAssignedRankDto.CompanyId">
+            <summary>
+            The uninque identifier for the company this rank is for.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.CompanyAssignedRanks.Dtos.BaseCompanyAssignedRankDto.RankId">
+            <summary>
+            The uninque identifier for the company rank.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.CompanyAssignedRanks.Dtos.BaseCompanyAssignedRankDto.RoleId">
+            <summary>
+            The uninque identifier for the user role. 
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.CompanyAssignedRanks.Dtos.GetCompanyAssignedRankDto.AssignedId">
+            <summary>
+            The unique identifier for this company assigned rank entity.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.CompanyAssignedRanks.Dtos.GetCompanyAssignedRankDto.CompanyName">
+            <summary>
+            The name of the company.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.CompanyAssignedRanks.Dtos.GetCompanyAssignedRankDto.Rank">
+            <summary>
+            The name of the company rank.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.CompanyAssignedRanks.Dtos.GetCompanyAssignedRankDto.Role">
+            <summary>
+            The name of the user role.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.CompanyAssignedRanks.Dtos.EditCompanyAssignedRankDto.AssignedId">
+            <summary>
+            The unique identifier for this company assigned rank entity.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.CompanyAssignedRanks.Dtos.BaseAddCompanyAssignedRankDto.RankId">
+            <summary>
+            The uninque identifier for the company rank.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.CompanyAssignedRanks.Dtos.BaseAddCompanyAssignedRankDto.RoleId">
+            <summary>
+            The uninque identifier for the user role. 
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.CompanyAssignedRanks.Dtos.AddCompanyAssignedRankDto.CompanyId">
+            <summary>
+            The unique identifier for this company assigned rank entity.
             </summary>
         </member>
         <member name="P:crmSeries.Core.Features.CompanyCategories.Dtos.BaseCompanyCategoryDto.Category">
@@ -967,9 +1127,89 @@
             The flag for whether this contact is active or not.
             </summary>
         </member>
+        <member name="P:crmSeries.Core.Features.Tasks.Dtos.BaseTaskDto.UserId">
+            <summary>
+            The unique identifier for the user this task is assigned to.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Tasks.Dtos.BaseTaskDto.ContactId">
+            <summary>
+            The unique identifier for the contact this task is assigned for.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Tasks.Dtos.BaseTaskDto.RelatedRecordId">
+            <summary>
+            The unique identifier for the related record this task is assigned for.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Tasks.Dtos.BaseTaskDto.RelatedRecordType">
+            <summary>
+            The type of related record. E.g., Company, Lead, etc.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Tasks.Dtos.BaseTaskDto.Subject">
+            <summary>
+            The subject for this task.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Tasks.Dtos.BaseTaskDto.Comments">
+            <summary>
+            The comments for this task.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Tasks.Dtos.BaseTaskDto.StartDate">
+            <summary>
+            The start date for this task.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Tasks.Dtos.BaseTaskDto.DueDate">
+            <summary>
+            The due date for this task.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Tasks.Dtos.BaseTaskDto.CompleteDate">
+            <summary>
+            The completion date for this task.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Tasks.Dtos.BaseTaskDto.Status">
+            <summary>
+            The current status of this task.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Tasks.Dtos.BaseTaskDto.Priority">
+            <summary>
+            The priority level of this task.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Tasks.Dtos.BaseTaskDto.Reminder">
+            <summary>
+            Denotes if this task has a reminder for it.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Tasks.Dtos.BaseTaskDto.ReminderDate">
+            <summary>
+            The reminder date for this task.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Tasks.Dtos.BaseTaskDto.ReminderRepeatSchedule">
+            <summary>
+            The reminder's repeat schedule for this task.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Tasks.Dtos.BaseTaskDto.EventId">
+            <summary>
+            The event identifier for this task.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Tasks.Dtos.BaseTaskDto.CalendarId">
+            <summary>
+            The calender identifier for this task.
+            </summary>
+        </member>
         <member name="P:crmSeries.Core.Features.Tasks.Dtos.GetTaskDto.TaskId">
             <summary>
-            The contact identifier.
+            The unique identifier for this task.
             </summary>
         </member>
         <member name="P:crmSeries.Core.Features.Tasks.Dtos.GetTaskDto.Deleted">
@@ -990,7 +1230,7 @@
         </member>
         <member name="P:crmSeries.Core.Features.Tasks.Dtos.EditTaskDto.TaskId">
             <summary>
-            The task identifier
+            The unique identifier for this task.
             </summary>
         </member>
         <member name="P:crmSeries.Core.Features.Tasks.Dtos.EditTaskDto.Deleted">
@@ -1092,6 +1332,31 @@
         <member name="F:crmSeries.Core.Logic.Queries.PagedQueryRequest._pageSize">
             <summary>
             The number of items returned for the page. Maximum size of 100.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Logic.Queries.PagedQueryResult`1.TotalItemCount">
+            <summary>
+            The total number of items for this query.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Logic.Queries.PagedQueryResult`1.PageSize">
+            <summary>
+            The number of items to return for each page. This will only return a maximum of 100 items.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Logic.Queries.PagedQueryResult`1.PageNumber">
+            <summary>
+            The current page number.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Logic.Queries.PagedQueryResult`1.PageCount">
+            <summary>
+            The total number of pages available.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Mediator.AddResponse.Id">
+            <summary>
+            The unique identifier of the entity that was added.
             </summary>
         </member>
     </members>
