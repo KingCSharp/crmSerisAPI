@@ -227,7 +227,11 @@
         });
     </script>
     <style type="text/css">
-
+        .sidenav > li.nav-header > a:hover {
+            color:black !important;
+            background-color:#56a2e7 !important;
+            border:solid 1px #4c8eca !important;
+        }
 
                /*!
         * Bootstrap v2.3.2
@@ -8523,6 +8527,25 @@
             },
             "description": "Contains the necessary information to identify a recipient of a DocuSign template."
         };
+        defs["ToggleUserFavoriteRecordRequest"] = {
+            "type": "object",
+            "properties": {
+                "recordId": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "The unique identifier of the entity being favorited."
+                },
+                "recordType": {
+                    "type": "string",
+                    "description": "The type of entity being favorited. E.g., Company, Contact, Lead, etc."
+                },
+                "userId": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "The unique identifier of the user that is favoriting this record."
+                }
+            }
+        };
     </script>
 
     <div class="container-fluid">
@@ -8533,10 +8556,10 @@
                         <!-- Logo Area -->
                         <!--<div style="width: 80%; background-color: #4c8eca; color: white; padding: 20px; text-align: center; margin-bottom: 20px; ">
 
-                          API Docs 2
+      API Docs 2
 
-                          </div>
-                        -->
+      </div>
+    -->
                         <li class="nav-fixed nav-header active" data-group="_"><a href="#api-_">API Summary</a></li>
 
                         <li class="nav-header" data-group="Branches"><a href="#api-Branches">Branches API</a></li>
@@ -8703,23 +8726,25 @@
                         <li data-group="Templates" data-name="sendTemplate" class="">
                             <a href="#api-Templates-sendTemplate">sendTemplate</a>
                         </li>
+                        <li class="nav-header" data-group="UserFavoriteRecords"><a href="#api-UserFavoriteRecords">User Favorite Records API</a></li>
+                        <li data-group="UserFavoriteRecords" data-name="post" class="">
+                            <a href="#api-UserFavoriteRecords-post">post</a>
+                        </li>
                     </ul>
                 </nav>
             </div>
             <div id="content">
-                <div id="project">
-                    <div class="pull-left">
-                        <h1>crmSeries API</h1>
-                    </div>
-                    <div class="clearfix"></div>
-                </div>
+                <div><span style="color:white;">crmSeries</span></div>
+                <img style="width:400px;margin-bottom:20px;" src="images/logo.png" />
                 <div id="header">
                     <div id="api-_">
-                        <h2 id="welcome-to-apidoc">API and SDK Documentation</h2>
+                        <h2 id="welcome-to-apidoc">API Documentation</h2>
                         <div class="app-desc">Version: v1</div>
+                        <hr />
+                        <p><b>API Base Url: </b><a href="https://crmseriesapi.azurewebsites.net/">https://crmseriesapi.azurewebsites.net/</a></p>
                         <hr>
                         <div class="description-section">
-                            <h1>Description</h1><p>This is the API for the crmSeries software.</p><br /><h3>Usage</h3><ul><li><b>api-key (header)</b><ul><li><p>The crmSeries API uses an API key to authenticate requests. This API key will be provided by crmSeries.</p><p>Your API key gives full access to all requests, so be sure to keep it secure! Do not share your key in publicly accessible areas such as GitHub, client-side code, etc.</p><p>Authentication to the API is performed by having the value in your header when sending requests. The API key’s parameter name is "api-key" without the quotes.</p></li></ul><li><b>email (header)</b><ul><li><p>Currently, this optional header is used for user-specific queries and is not necessary for any other API calls. This will soon be replaced with identity server.</p></li></ul></li><li><b>PageSize</b><ul><li><p>For paged requests, this denotes how many items are returned per page. This is capped at 100 items. Entering a number over 100 will still only return 100 max items per page.</p></li></ul></li></ul>
+                            <h1>Description</h1><p>This is the API for the crmSeries platform.</p><br /><h3>Usage</h3><ul><li><b>api-key (header)</b><ul><li><p>The crmSeries API uses an API key to authenticate requests. This API key will be provided by crmSeries.</p><p>Your API key gives full access to all requests, so be sure to keep it secure! Do not share your key in publicly accessible areas such as GitHub, client-side code, etc.</p><p>Authentication to the API is performed by having the value in your header when sending requests. The API key’s parameter name is "api-key" without the quotes.</p></li></ul><li><b>email (header)</b><ul><li><p>Currently, this optional header is used for user-specific queries and is not necessary for any other API calls. This will soon be replaced with identity server.</p></li></ul></li><li><b>PageSize</b><ul><li><p>For paged requests, this denotes how many items are returned per page. This is capped at 100 items. Entering a number over 100 will still only return 100 max items per page.</p></li></ul></li></ul>
                         </div>
                     </div>
                 </div>
@@ -8798,7 +8823,7 @@
                                                             The API key used to authenticate requests. This is provided to customers by crmSeries.
                                                         </div>
                                                     </div>
-                                                    
+
                                                     <div class="inner required">
                                                         Required
                                                     </div>
@@ -11784,7 +11809,7 @@
 
                                 <div class="tab-content" style='margin-bottom: 10px;'>
                                     <div class="tab-pane active" id="responses-delete-200-schema">
-                                        <div id='responses-delete-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                        <div id='delete-contact-response' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
                                             <script>
                                                 $(document).ready(function () {
                                                     var schemaWrapper = {
@@ -11805,14 +11830,14 @@
 
                                                     //console.log(JSON.stringify(schema));
                                                     var view = new JSONSchemaView(schema, 3);
-                                                    $('#responses-delete-200-schema-data').val(stringify(schema));
-                                                    var result = $('#responses-delete-200-schema-200');
+                                                    $('#delete-contact-response-data').val(stringify(schema));
+                                                    var result = $('#delete-contact-response');
                                                     result.empty();
                                                     result.append(view.render());
                                                 });
                                             </script>
                                         </div>
-                                        <input id='responses-delete-200-schema-data' type='hidden' value=''></input>
+                                        <input id='delete-contact-response-data' type='hidden' value=''></input>
                                     </div>
                                 </div>
 
@@ -13634,7 +13659,7 @@
 
                                 <div class="tab-content" style='margin-bottom: 10px;'>
                                     <div class="tab-pane active" id="responses-delete-200-schema">
-                                        <div id='responses-delete-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                        <div id='delete-notes-response' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
                                             <script>
                                                 $(document).ready(function () {
                                                     var schemaWrapper = {
@@ -13655,14 +13680,14 @@
 
                                                     //console.log(JSON.stringify(schema));
                                                     var view = new JSONSchemaView(schema, 3);
-                                                    $('#responses-delete-200-schema-data').val(stringify(schema));
-                                                    var result = $('#responses-delete-200-schema-200');
+                                                    $('#delete-notes-response-data').val(stringify(schema));
+                                                    var result = $('#delete-notes-response');
                                                     result.empty();
                                                     result.append(view.render());
                                                 });
                                             </script>
                                         </div>
-                                        <input id='responses-delete-200-schema-data' type='hidden' value=''></input>
+                                        <input id='delete-notes-response-data' type='hidden' value=''></input>
                                     </div>
                                 </div>
 
@@ -14959,7 +14984,7 @@
 
                                 <div class="tab-content" style='margin-bottom: 10px;'>
                                     <div class="tab-pane active" id="responses-delete-200-schema">
-                                        <div id='responses-delete-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                        <div id='delete-task-response' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
                                             <script>
                                                 $(document).ready(function () {
                                                     var schemaWrapper = {
@@ -14980,14 +15005,14 @@
 
                                                     //console.log(JSON.stringify(schema));
                                                     var view = new JSONSchemaView(schema, 3);
-                                                    $('#responses-delete-200-schema-data').val(stringify(schema));
-                                                    var result = $('#responses-delete-200-schema-200');
+                                                    $('#delete-task-response-data').val(stringify(schema));
+                                                    var result = $('#delete-task-response');
                                                     result.empty();
                                                     result.append(view.render());
                                                 });
                                             </script>
                                         </div>
-                                        <input id='responses-delete-200-schema-data' type='hidden' value=''></input>
+                                        <input id='delete-task-response-data' type='hidden' value=''></input>
                                     </div>
                                 </div>
 
@@ -16156,9 +16181,175 @@
                         </div>
                         <hr>
                     </section>
+
+                    <section id="api-UserFavoriteRecords">
+                        <h1>UserFavoriteRecords</h1>
+                        <div id="api-UserFavoriteRecords-post">
+                            <article id="api-UserFavoriteRecords-post-0" data-group="User" data-name="post" data-version="0">
+                                <div class="pull-left">
+                                    <h1>post</h1>
+                                    <p>Toggles a record as a user favorite based on the data in the request.</p>
+                                </div>
+                                <div class="pull-right"></div>
+                                <div class="clearfix"></div>
+                                <p></p>
+                                <p class="marked"></p>
+                                <p></p>
+                                <br />
+                                <pre class="prettyprint language-html prettyprinted" data-type="post"><code><span class="pln">/api/user-favorite-records/toggle-favorite</span></code></pre>
+
+                                <h2>Parameters</h2>
+
+
+                                <div class="methodsubtabletitle">Header parameters</div>
+                                <table id="methodsubtable">
+                                    <tr>
+                                        <th width="150px">Name</th>
+                                        <th>Description</th>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:150px;">api-key*</td>
+                                        <td>
+
+
+                                            <div id="d2e199_post_apiKey">
+                                                <div class="json-schema-view">
+                                                    <div class="primitive">
+                                                        <span class="type">
+                                                            String
+                                                        </span>
+
+                                                        <div class="inner description">
+                                                            The API key used to authenticate requests. This is provided to customers by crmSeries.
+                                                        </div>
+                                                    </div>
+                                                    <div class="inner required">
+                                                        Required
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td style="width:150px;">email</td>
+                                        <td>
+
+
+                                            <div id="d2e199_post_email">
+                                                <div class="json-schema-view">
+                                                    <div class="primitive">
+                                                        <span class="type">
+                                                            String
+                                                        </span>
+
+                                                        <div class="inner description">
+                                                            Email address of the current user. This is used only for requests that get records for the current user. This will be replaced by identity server.
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                </table>
+
+                                <div class="methodsubtabletitle">Body parameters</div>
+                                <table id="methodsubtable">
+                                    <tr>
+                                        <th width="150px">Name</th>
+                                        <th>Description</th>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:150px;">request </td>
+                                        <td>
+
+
+                                            <script>
+                                                $(document).ready(function () {
+                                                    var schemaWrapper = {
+                                                        "in": "body",
+                                                        "name": "request",
+                                                        "required": false,
+                                                        "schema": {
+                                                            "$ref": "#/definitions/ToggleUserFavoriteRecordRequest"
+                                                        }
+                                                    };
+                                                    var schema = schemaWrapper.schema;
+                                                    if (schema.$ref != null) {
+                                                        schema = defsParser.$refs.get(schema.$ref);
+                                                    } else {
+                                                        schemaWrapper.definitions = Object.assign({}, defs);
+                                                        $RefParser.dereference(schemaWrapper).catch(function (err) {
+                                                            console.log(err);
+                                                        });
+                                                    }
+
+                                                    var view = new JSONSchemaView(schema, 2, { isBodyParam: true });
+                                                    var result = $('#d2e199_post_request');
+                                                    result.empty();
+                                                    result.append(view.render());
+                                                });
+                                            </script>
+                                            <div id="d2e199_post_request"></div>
+                                        </td>
+                                    </tr>
+
+                                </table>
+
+
+
+                                <h2>Responses</h2>
+                                <h3> Status: 200 - Success </h3>
+
+                                <ul class="nav nav-tabs nav-tabs-examples">
+                                    <li class="active">
+                                        <a data-toggle="tab" href="#responses-post-200-schema">Schema</a>
+                                    </li>
+
+                                </ul>
+
+                                <div class="tab-content" style='margin-bottom: 10px;'>
+                                    <div class="tab-pane active" id="responses-post-200-schema">
+                                        <div id='user-favorite-records-response' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                            <script>
+                                                $(document).ready(function () {
+                                                    var schemaWrapper = {
+                                                        "description": "Success",
+                                                        "schema": {
+                                                            "$ref": "#/definitions/Response[AddResponse]"
+                                                        }
+                                                    };
+                                                    var schema = schemaWrapper.schema;
+                                                    if (schema.$ref != null) {
+                                                        schema = defsParser.$refs.get(schema.$ref);
+                                                    } else {
+                                                        schemaWrapper.definitions = defs;
+                                                        $RefParser.dereference(schemaWrapper).catch(function (err) {
+                                                            console.log(err);
+                                                        });
+                                                    }
+
+                                                    //console.log(JSON.stringify(schema));
+                                                    var view = new JSONSchemaView(schema, 3);
+                                                    $('#user-favorite-records-response-data').val(stringify(schema));
+                                                    var result = $('#user-favorite-records-response');
+                                                    result.empty();
+                                                    result.append(view.render());
+                                                });
+                                            </script>
+                                        </div>
+                                        <input id='user-favorite-records-response-data' type='hidden' value=''></input>
+                                    </div>
+                                </div>
+
+                            </article>
+                        </div>
+                        <hr>
+                    </section>
                 </div>
                 <div id="footer" style="min-height:100px;">
-                    
+
                 </div>
             </div>
         </div>

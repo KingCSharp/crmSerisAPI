@@ -1243,6 +1243,26 @@
             The flag for whether this contact is active or not.
             </summary>
         </member>
+        <member name="P:crmSeries.Core.Features.UserFavoriteRecords.Dtos.BaseUserFavoriteRecordDto.RecordId">
+            <summary>
+            The unique identifier of the entity being favorited.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.UserFavoriteRecords.Dtos.BaseUserFavoriteRecordDto.RecordType">
+            <summary>
+            The type of entity being favorited. E.g., Company, Contact, Lead, etc.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.UserFavoriteRecords.Dtos.BaseUserFavoriteRecordDto.UserId">
+            <summary>
+            The unique identifier of the user that is favoriting this record.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.UserFavoriteRecords.Dtos.GetUserFavoriteRecordDto.FavoriteId">
+            <summary>
+            The unique identifier of the user favorite record.
+            </summary>
+        </member>
         <member name="P:crmSeries.Core.Features.Workflows.ExecuteWorkflowRuleRequest.Module">
             <summary>
             The type of module we are executing the workflow against.
