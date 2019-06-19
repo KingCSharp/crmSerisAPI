@@ -13,7 +13,7 @@ namespace crmSeries.Core.Tests.Features.Notes
     public class AddNoteHandlerTests : BaseUnitTest
     {
         [Test]
-        public void NormalRequest_NoIssues_NoteAddedSuccessfully()
+        public void HandleAsync_NoIssues_NoteAddedSuccessfully()
         {
             // Arrange 
             var options = GetHeavyEquipmentContextOptions();
@@ -50,7 +50,7 @@ namespace crmSeries.Core.Tests.Features.Notes
         }
 
         [Test]
-        public void NormalRequest_NoRelatedRecord_ReturnsAppropriateError()
+        public void HandleAsync_NoRelatedRecord_ReturnsAppropriateError()
         {
             // Arrange 
             var options = GetHeavyEquipmentContextOptions();
@@ -81,7 +81,7 @@ namespace crmSeries.Core.Tests.Features.Notes
         }
 
         [Test]
-        public void NormalRequest_NoRelatedUser_ReturnsAppropriateError()
+        public void HandleAsync_NoRelatedUser_ReturnsAppropriateError()
         {
             // Arrange 
             var options = GetHeavyEquipmentContextOptions();

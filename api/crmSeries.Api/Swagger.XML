@@ -119,11 +119,11 @@
             </summary>
             <param name="id">The unique identifier of the contact</param>
         </member>
-        <member name="M:crmSeries.API.Controllers.ContactsController.GetContacts(crmSeries.Core.Logic.Queries.PagedQueryRequest)">
+        <member name="M:crmSeries.API.Controllers.ContactsController.GetContacts(crmSeries.Core.Features.Contacts.GetContactsRequest)">
             <summary>
             Gets a list of all contacts assigned to the current user.
             </summary>
-            <param name="paginationInfo">The paging information for this request.</param>
+            <param name="request">The request information for this API endpoint.</param>
         </member>
         <member name="M:crmSeries.API.Controllers.ContactsController.GetFullContacts(crmSeries.Core.Logic.Queries.PagedQueryRequest)">
             <summary>

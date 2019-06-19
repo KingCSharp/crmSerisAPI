@@ -25,7 +25,7 @@ namespace crmSeries.Core.Tests.Features.RelatedRecords
         [TestCase(RelatedRecord.Types.Opportunity)]
         [TestCase(RelatedRecord.Types.Task)]
         [TestCase(RelatedRecord.Types.User)]
-        public void NormalRequest_NoIssues_RelatedTypeFound(string type)
+        public void HandleAsync_NoIssues_RelatedTypeFound(string type)
         {
             // Arrange 
             var options = GetHeavyEquipmentContextOptions();
@@ -59,7 +59,7 @@ namespace crmSeries.Core.Tests.Features.RelatedRecords
         [TestCase(RelatedRecord.Types.Opportunity, OpportunitiesConstants.ErrorMessages.OpportunityNotFound)]
         [TestCase(RelatedRecord.Types.Task, TasksConstants.ErrorMessages.TaskNotFound)]
         [TestCase(RelatedRecord.Types.User, UsersConstants.ErrorMessages.UserNotFound)]
-        public void NormalRequest_NoRecordFound_ReturnsAppropriateMessage(string type, string errorMessage)
+        public void HandleAsync_NoRecordFound_ReturnsAppropriateMessage(string type, string errorMessage)
         {
             // Arrange 
             var options = GetHeavyEquipmentContextOptions();
@@ -82,7 +82,7 @@ namespace crmSeries.Core.Tests.Features.RelatedRecords
         }
 
         [Test]
-        public void NormalRequest_IdSetToZero_ReturnsSuccess()
+        public void HandleAsync_IdSetToZero_ReturnsSuccess()
         {
             // Arrange 
             var options = GetHeavyEquipmentContextOptions();
@@ -107,7 +107,7 @@ namespace crmSeries.Core.Tests.Features.RelatedRecords
         {
             context.Company.Add(new Company { CompanyId = 1 });
             context.Contact.Add(new Contact { ContactId = 1 });
-            context.Equipment.Add(new Domain.HeavyEquipment.Equipment { EquipmentId = 1 });
+            context.Equipment.Add(new Equipment { EquipmentId = 1 });
             context.Lead.Add(new Lead { LeadId = 1 });
             context.Note.Add(new Note { NoteId = 1 });
             context.Opportunity.Add(new Opportunity { OpportunityId = 1 });

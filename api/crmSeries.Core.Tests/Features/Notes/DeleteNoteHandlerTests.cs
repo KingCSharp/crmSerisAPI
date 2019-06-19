@@ -1,11 +1,7 @@
-﻿using crmSeries.Core.Common;
-using crmSeries.Core.Data;
+﻿using crmSeries.Core.Data;
 using crmSeries.Core.Domain.HeavyEquipment;
-using crmSeries.Core.Features.Contacts.Utility;
 using crmSeries.Core.Features.Notes;
 using crmSeries.Core.Features.Notes.Utility;
-using crmSeries.Core.Features.RelatedRecords;
-using crmSeries.Core.Features.Users.Utility;
 using NUnit.Framework;
 using System;
 using System.Linq;
@@ -16,7 +12,7 @@ namespace crmSeries.Core.Tests.Features.Notes
     public class DeleteNoteHandlerTests : BaseUnitTest
     {
         [Test]
-        public void NormalRequest_NoIssues_NoteDeletedSuccessfully()
+        public void HandleAsync_NoIssues_NoteDeletedSuccessfully()
         {
             // Arrange 
             var options = GetHeavyEquipmentContextOptions();
@@ -49,7 +45,7 @@ namespace crmSeries.Core.Tests.Features.Notes
         }
 
         [Test]
-        public void NormalRequest_NoteNotFound_ReturnsAppropriateError()
+        public void HandleAsync_NoteNotFound_ReturnsAppropriateError()
         {
             // Arrange 
             var options = GetHeavyEquipmentContextOptions();

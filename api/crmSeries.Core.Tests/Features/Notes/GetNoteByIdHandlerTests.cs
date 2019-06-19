@@ -11,7 +11,7 @@ namespace crmSeries.Core.Tests.Features.Notes
     public class GetNoteByIdHandlerTests : BaseUnitTest
     {
         [Test]
-        public void NormalRequest_NoIssues_ReturnsNoteById()
+        public void HandleAsync_NoIssues_ReturnsNoteById()
         {
             // Arrange 
             var options = GetHeavyEquipmentContextOptions();
@@ -34,7 +34,7 @@ namespace crmSeries.Core.Tests.Features.Notes
         }
 
         [Test]
-        public void NormalRequest_NoNoteFound_ReturnsEmptyResults()
+        public void HandleAsync_NoNoteFound_ReturnsEmptyResults()
         {
             // Arrange 
             var options = GetHeavyEquipmentContextOptions();

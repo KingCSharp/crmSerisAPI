@@ -2,6 +2,7 @@
 using crmSeries.Core.Domain.HeavyEquipment;
 using crmSeries.Core.Features.Notes;
 using NUnit.Framework;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace crmSeries.Core.Tests.Features.Notes
@@ -10,7 +11,7 @@ namespace crmSeries.Core.Tests.Features.Notes
     public class GetNoteTypesHandlerTests : BaseUnitTest
     {
         [Test]
-        public void NormalRequest_NoIssues_ReturnsFullNoteTypeResults()
+        public void HandleAsync_NoIssues_ReturnsFullNoteTypeResults()
         {
             // Arrange 
             var options = GetHeavyEquipmentContextOptions();
@@ -37,7 +38,27 @@ namespace crmSeries.Core.Tests.Features.Notes
         }
 
         [Test]
-        public void NormalRequest_NoNoteTypesFound_ReturnsEmptyResults()
+        public void HandleAsync_NoNoteTypesFound_ReturnsEmptyResults()
+        {
+            // Arrange 
+            var options = GetHeavyEquipmentContextOptions();
+
+            using (var context = new HeavyEquipmentContext(options))
+            {
+                var handler = new GetNoteTypesHandler(context);
+
+                // Act
+                var response = handler.HandleAsync(new GetNoteTypesRequest());
+
+                //Assert 
+                Assert.AreEqual(response.Result.HasErrors, false);
+                Assert.IsNotNull(response.Result.Data);
+                Assert.AreEqual(response.Result.Data.Count(), 0);
+            }
+        }
+
+        [Test]
+        public void HandleAsync_FromDateIsSet_ReturnsOnlyNotesGreaterThanOrEqualToTheDateSet()
         {
             // Arrange 
             var options = GetHeavyEquipmentContextOptions();
