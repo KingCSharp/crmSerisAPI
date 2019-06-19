@@ -434,6 +434,30 @@
             The flag for whether this contact is active or not.
             </summary>
         </member>
+        <member name="P:crmSeries.Core.Features.Contacts.GetContactsRequest.ActiveOptions">
+            <summary>
+            Represents options to return contacts based on their active status.  Leaving
+            this off the request has will return only active contacts.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Contacts.GetContactsRequest.FirstName">
+            <summary>
+            The contact's first name.  Any value entered here will return contacts whose
+            first name starts with the value entered in the input box.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Contacts.GetContactsRequest.LastName">
+            <summary>
+            The contact's last name.  Any value entered here will return contacts whose
+            last name starts with the value entered in the input box.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Contacts.GetContactsRequest.EMail">
+            <summary>
+            The contact's E-Mail address. Any value entered here will return contacts whose
+            E-Mail address starts with the value entered in the input box.
+            </summary>
+        </member>
         <member name="P:crmSeries.Core.Features.CompanyAssignedAddresses.Dtos.CompanyAssignedAddressDto.AddressId">
             <summary>
             The address identifier.
@@ -1349,9 +1373,9 @@
             Setting a number beyond the last page will just return the last page of data.
             </summary>
         </member>
-        <member name="F:crmSeries.Core.Logic.Queries.PagedQueryRequest._pageSize">
+        <member name="P:crmSeries.Core.Logic.Queries.PagedQueryRequest.PageSize">
             <summary>
-            The number of items returned for the page. Maximum size of 100.
+            The number of items returned for the page. A maximum size of 100 is set.
             </summary>
         </member>
         <member name="P:crmSeries.Core.Logic.Queries.PagedQueryResult`1.TotalItemCount">

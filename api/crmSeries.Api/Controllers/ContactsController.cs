@@ -15,15 +15,12 @@ namespace crmSeries.API.Controllers
         /// <summary>
         /// Gets a list of all contacts assigned to the current user.
         /// </summary>
-        /// <param name="paginationInfo">The paging information for this request.</param>
+        /// <param name="request">The request information for this API endpoint.</param>
         [HttpGet]
         [Produces(typeof(PagedQueryResult<GetContactDto>))]
-        public Task<IActionResult> GetContacts(PagedQueryRequest paginationInfo)
+        public Task<IActionResult> GetContacts(GetContactsRequest request)
         {
-            return HandleAsync(new GetContactsRequest
-            {
-                PageInfo = paginationInfo
-            });
+            return HandleAsync(request);
         }
 
         /// <summary>

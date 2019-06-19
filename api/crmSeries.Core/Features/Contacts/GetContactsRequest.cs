@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using AutoMapper.QueryableExtensions;
 using crmSeries.Core.Extensions;
 using crmSeries.Core.Domain.HeavyEquipment;
+using crmSeries.Core.Common;
 
 namespace crmSeries.Core.Features.Contacts
 {
@@ -17,6 +18,24 @@ namespace crmSeries.Core.Features.Contacts
     public class GetContactsRequest : IRequest<PagedQueryResult<GetContactDto>>
     {
         public PagedQueryRequest PageInfo { get; set; }
+
+        /// <summary>
+        /// Represents options to return contacts based on their active status.  Leaving
+        /// this off the request has will return only active contacts.
+        /// </summary>
+        public ActiveOptions ActiveOptions { get; set; } = ActiveOptions.ActiveOnly;
+
+        /// <summary>
+        /// The contact's first name.  Any value entered here will return contacts whose
+        /// first name starts with the value entered in the input box.
+        /// </summary>
+        public string FirstName { get; set; }
+
+        /// <summary>
+        /// The contact's last name.  Any value entered here will return contacts whose
+        /// last name starts with the value entered in the input box.
+        /// </summary>
+        public string LastName { get; set; }
     }
 
     public class GetContactsRequestHandler :
@@ -42,8 +61,7 @@ namespace crmSeries.Core.Features.Contacts
                         on c.CompanyId equals assignedUser .CompanyId
                     join company in _context.Set<Company>() 
                         on c.CompanyId equals company.CompanyId
-                    where assignedUser.UserId == _identity.RequestingUser.UserId &&
-                          c.Active && !c.Deleted
+                    where assignedUser.UserId == _identity.RequestingUser.UserId && !c.Deleted
                     select new
                     {
                         c.ContactId,
@@ -66,6 +84,18 @@ namespace crmSeries.Core.Features.Contacts
                     })
                 .AsQueryable();
 
+            if (request.ActiveOptions == ActiveOptions.ActiveOnly)
+                contacts = contacts.Where(x => x.Active);
+
+            if (request.ActiveOptions == ActiveOptions.DeactiveOnly)
+                contacts = contacts.Where(x => !x.Active);
+
+            if (!string.IsNullOrEmpty(request.FirstName))
+                contacts = contacts.Where(x => x.FirstName.ToLower().StartsWith(request.FirstName.ToLower()));
+
+            if (!string.IsNullOrEmpty(request.LastName))
+                contacts = contacts.Where(x => x.LastName.ToLower().StartsWith(request.LastName.ToLower()));
+            
             var count = contacts.Count();
 
             result.PageCount = count / request.PageInfo.PageSize;

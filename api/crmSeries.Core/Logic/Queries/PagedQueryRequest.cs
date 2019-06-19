@@ -14,10 +14,11 @@ namespace crmSeries.Core.Logic.Queries
         /// </summary>
         public int PageNumber { get; set; }
 
-        /// <summary>
-        /// The number of items returned for the page. Maximum size of 100.
-        /// </summary>
         private int _pageSize;
+
+        /// <summary>
+        /// The number of items returned for the page. A maximum size of 100 is set.
+        /// </summary>
         public int PageSize
         {
             get { return _pageSize; }
