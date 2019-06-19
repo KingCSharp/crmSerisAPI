@@ -35,6 +35,7 @@ namespace crmSeries.Core.Common
             public const string CompanyPhoneInvalid = "The Company Phone field is invalid.";
             public const string PhoneOrEmailRequired = "You must submit either phone number or E-Mail.";
             public const string InvalidDate = "The date is not valid.";
+            public const string FromDateLessThanDate = "The from date must be less than the to date.";
         }
 
         public static class Emails

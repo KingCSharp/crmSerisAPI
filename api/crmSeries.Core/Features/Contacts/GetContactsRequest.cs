@@ -36,6 +36,11 @@ namespace crmSeries.Core.Features.Contacts
         /// last name starts with the value entered in the input box.
         /// </summary>
         public string LastName { get; set; }
+
+        /// <summary>
+        /// The identifier of the company the contact is associated with.
+        /// </summary>
+        public int CompanyId { get; set; }
     }
 
     public class GetContactsRequestHandler :
@@ -57,32 +62,33 @@ namespace crmSeries.Core.Features.Contacts
 
             var contacts =
                 (from c in _context.Set<Contact>()
-                    join assignedUser in _context.Set<CompanyAssignedUser>() 
-                        on c.CompanyId equals assignedUser .CompanyId
-                    join company in _context.Set<Company>() 
-                        on c.CompanyId equals company.CompanyId
-                    where assignedUser.UserId == _identity.RequestingUser.UserId && !c.Deleted
-                    select new
-                    {
-                        c.ContactId,
-                        c.CompanyId,
-                        c.FirstName,
-                        c.MiddleName,
-                        c.LastName,
-                        c.NickName,
-                        c.Phone,
-                        c.Cell,
-                        c.Fax,
-                        c.Email,
-                        c.Title,
-                        c.Position,
-                        c.Department,
-                        c.Active,
-                        c.LastModified,
-                        company.CompanyName,
-                        company.AccountNo
-                    })
-                .AsQueryable();
+                 join assignedUser in _context.Set<CompanyAssignedUser>()
+                     on c.CompanyId equals assignedUser.CompanyId
+                 join company in _context.Set<Company>()
+                     on c.CompanyId equals company.CompanyId
+                 where assignedUser.UserId == _identity.RequestingUser.UserId && !c.Deleted
+                 select new
+                 {
+                     c.ContactId,
+                     c.CompanyId,
+                     c.FirstName,
+                     c.MiddleName,
+                     c.LastName,
+                     c.NickName,
+                     c.Phone,
+                     c.Cell,
+                     c.Fax,
+                     c.Email,
+                     c.Title,
+                     c.Position,
+                     c.Department,
+                     c.Active,
+                     c.LastModified,
+                     company.CompanyName,
+                     company.AccountNo
+                 })
+                 .OrderBy(x => x.ContactId)
+                 .AsQueryable();
 
             if (request.ActiveOptions == ActiveOptions.ActiveOnly)
                 contacts = contacts.Where(x => x.Active);
@@ -95,7 +101,10 @@ namespace crmSeries.Core.Features.Contacts
 
             if (!string.IsNullOrEmpty(request.LastName))
                 contacts = contacts.Where(x => x.LastName.ToLower().StartsWith(request.LastName.ToLower()));
-            
+
+            if (request.CompanyId > 0)
+                contacts = contacts.Where(x => x.CompanyId == request.CompanyId);
+
             var count = contacts.Count();
 
             result.PageCount = count / request.PageInfo.PageSize;
@@ -115,11 +124,9 @@ namespace crmSeries.Core.Features.Contacts
     {
         public GetContactsValidator()
         {
-            RuleFor(x => x.PageInfo.PageNumber)
-                .GreaterThan(0);
-
-            RuleFor(x => x.PageInfo.PageSize)
-                .GreaterThan(0);
+            RuleFor(x => x.PageInfo.PageNumber).GreaterThan(0);
+            RuleFor(x => x.PageInfo.PageSize).GreaterThan(0);
+            RuleFor(x => x.CompanyId).GreaterThan(-1);
         }
     }
 }

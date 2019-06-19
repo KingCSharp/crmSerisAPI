@@ -452,10 +452,9 @@
             last name starts with the value entered in the input box.
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.Contacts.GetContactsRequest.EMail">
+        <member name="P:crmSeries.Core.Features.Contacts.GetContactsRequest.CompanyId">
             <summary>
-            The contact's E-Mail address. Any value entered here will return contacts whose
-            E-Mail address starts with the value entered in the input box.
+            The identifier of the company the contact is associated with.
             </summary>
         </member>
         <member name="P:crmSeries.Core.Features.CompanyAssignedAddresses.Dtos.CompanyAssignedAddressDto.AddressId">
@@ -1149,6 +1148,25 @@
         <member name="P:crmSeries.Core.Features.Notes.Dtos.EditNoteDto.Active">
             <summary>
             The flag for whether this contact is active or not.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Notes.GetNotesRequest.FromDate">
+            <summary>
+            Setting this value will return all notes created with a timestamp
+            great than or equal to this date.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Notes.GetNotesRequest.ToDate">
+            <summary>
+            Setting this value will return all notes created with a timestamp
+            less than or equal to this date.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Notes.GetNotesRequest.Comments">
+            <summary>
+            Setting this value will return all notes that have comments containing your search phrase.
+            For obvious reasons, we are requiring the lenght of your search criteria to be at least
+            4 characters.
             </summary>
         </member>
         <member name="P:crmSeries.Core.Features.Tasks.Dtos.BaseTaskDto.UserId">

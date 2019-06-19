@@ -10,7 +10,7 @@ namespace crmSeries.Core.Tests.Features.Notes
     public class GetNotePurposesHandlerTests : BaseUnitTest
     {
         [Test]
-        public void NormalRequest_NoIssues_ReturnsNotePurposeResults()
+        public void HandleAsync_NoIssues_ReturnsNotePurposeResults()
         {
             // Arrange 
             var options = GetHeavyEquipmentContextOptions();
@@ -37,7 +37,7 @@ namespace crmSeries.Core.Tests.Features.Notes
         }
 
         [Test]
-        public void NormalRequest_NoNotePurposeFound_ReturnsEmptyResults()
+        public void HandleAsync_NoNotePurposeFound_ReturnsEmptyResults()
         {
             // Arrange 
             var options = GetHeavyEquipmentContextOptions();

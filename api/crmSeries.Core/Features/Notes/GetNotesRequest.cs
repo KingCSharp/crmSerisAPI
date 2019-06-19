@@ -10,6 +10,9 @@ using crmSeries.Core.Domain.HeavyEquipment;
 using crmSeries.Core.Extensions;
 using crmSeries.Core.Features.Notes.Dtos;
 using System.Threading.Tasks;
+using System;
+using crmSeries.Core.Validation;
+using crmSeries.Core.Common;
 
 namespace crmSeries.Core.Features.Notes
 {
@@ -17,6 +20,25 @@ namespace crmSeries.Core.Features.Notes
     public class GetNotesRequest : IRequest<PagedQueryResult<GetNoteDto>>
     {
         public PagedQueryRequest PageInfo { get; set; }
+
+        /// <summary>
+        /// Setting this value will return all notes created with a timestamp
+        /// great than or equal to this date.
+        /// </summary>
+        public DateTime FromDate { get; set; }
+
+        /// <summary>
+        /// Setting this value will return all notes created with a timestamp
+        /// less than or equal to this date.
+        /// </summary>
+        public DateTime ToDate { get; set; }
+
+        /// <summary>
+        /// Setting this value will return all notes that have comments containing your search phrase.
+        /// For obvious reasons, we are requiring the lenght of your search criteria to be at least
+        /// 4 characters.
+        /// </summary>
+        public string Comments { get; set; }
     }
 
     public class GetNotesRequestHandler :
@@ -55,6 +77,15 @@ namespace crmSeries.Core.Features.Notes
                     })
                 .AsQueryable();
 
+            if (request.FromDate != default)
+                notes = notes.Where(x => x.NoteDate.ToUniversalTime() >= request.FromDate.ToUniversalTime());
+
+            if (request.ToDate != default)
+                notes = notes.Where(x => x.NoteDate.ToUniversalTime() <= request.ToDate.ToUniversalTime());
+
+            if (!string.IsNullOrEmpty(request.Comments))
+                notes = notes.Where(x => x.Comments.Contains(request.Comments));
+
             var count = notes.Count();
 
             result.PageCount = count / request.PageInfo.PageSize;
@@ -79,6 +110,28 @@ namespace crmSeries.Core.Features.Notes
 
             RuleFor(x => x.PageInfo.PageSize)
                 .GreaterThan(0);
+
+            RuleFor(x => x)
+                .Must(HaveAFromDateLessThanOrEqualToTheToDate)
+                .Unless(x => x.FromDate == default || x.ToDate == default)
+                .WithMessage(Constants.ErrorMessages.FromDateLessThanDate);
+
+            RuleFor(x => x.FromDate)
+                .SetValidator(new DateTimeDefaultValidator())
+                .WithMessage(Constants.ErrorMessages.InvalidDate)
+                .Unless(x => x.FromDate == default);
+
+            RuleFor(x => x.ToDate)
+                .SetValidator(new DateTimeDefaultValidator())
+                .WithMessage(Constants.ErrorMessages.InvalidDate)
+                .Unless(x => x.ToDate == default);
+
+            RuleFor(x => x.Comments).MaximumLength(4);
+        }
+
+        private bool HaveAFromDateLessThanOrEqualToTheToDate(GetNotesRequest request)
+        {
+            return request.FromDate <= request.ToDate;
         }
     }
 }

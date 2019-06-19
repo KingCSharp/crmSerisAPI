@@ -11,7 +11,7 @@ namespace crmSeries.Core.Tests.Features.Contacts
     public class DeleteContactHandlerTests : BaseUnitTest
     {
         [Test]
-        public void NormalRequest_NoIssues_ContactInactiveAndDeleted()
+        public void HandleAsync_NoIssues_ContactInactiveAndDeleted()
         {
             // Arrange 
             var options = GetHeavyEquipmentContextOptions();
@@ -45,7 +45,7 @@ namespace crmSeries.Core.Tests.Features.Contacts
         }
 
         [Test]
-        public void NormalRequest_NoContactMatchingId_ReturnsAppropriateError()
+        public void HandleAsync_NoContactMatchingId_ReturnsAppropriateError()
         {
             // Arrange 
             var options = GetHeavyEquipmentContextOptions();

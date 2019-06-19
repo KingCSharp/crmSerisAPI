@@ -93,6 +93,7 @@ namespace crmSeries.Core.Tests.Features.Contacts
                         Active = false,
                         Deleted = false
                     });
+
                     context.CompanyAssignedUser.Add(new CompanyAssignedUser
                     {
                         CompanyId = i,
@@ -146,6 +147,7 @@ namespace crmSeries.Core.Tests.Features.Contacts
                         Active = true,
                         Deleted = true
                     });
+
                     context.CompanyAssignedUser.Add(new CompanyAssignedUser
                     {
                         CompanyId = i,
@@ -820,6 +822,82 @@ namespace crmSeries.Core.Tests.Features.Contacts
                 Assert.AreEqual(false, response.Result.HasErrors);
                 Assert.IsNotNull(response.Result.Data);
                 Assert.AreEqual(namesStartingWithRequestCount, response.Result.Data.TotalItemCount);
+            }
+        }
+
+        [Test]
+        public void HandleAsync_CompanyIdIncluded_ReturnsOnlyContactsWhoseAreAssociatedWithCompany()
+        {
+            // Arrange 
+            var options = GetHeavyEquipmentContextOptions();
+
+            using (var context = new HeavyEquipmentContext(options))
+            {
+                var user = new User { UserId = 1 };
+                context.User.Add(user);
+                context.SaveChanges();
+
+                var entityId = 1;
+                var companyId = 33;
+                
+                var company = new Company
+                {
+                    CompanyId = companyId,
+                    CompanyName = "Foo Company"
+                };
+
+                context.Company.Add(company);
+                context.CompanyAssignedUser.Add(new CompanyAssignedUser
+                {
+                    CompanyId = companyId,
+                    UserId = user.UserId
+                });
+
+                context.SaveChanges();
+
+                var contactsMatchingCompany = 5;
+                for (int i = 0; i < contactsMatchingCompany; ++i, entityId++)
+                {
+                    context.Contact.Add(new Contact
+                    {
+                        ContactId = entityId,
+                        CompanyId = companyId,
+                        Active = true,
+                        Deleted = false
+                    });
+                }
+
+                for (int i = 0; i < 7; ++i, entityId++)
+                {
+                    context.Contact.Add(new Contact
+                    {
+                        ContactId = entityId,
+                        CompanyId = companyId + 1,
+                        Active = true,
+                        Deleted = false
+                    });
+                }
+
+                context.SaveChanges();
+
+                var handler = new GetContactsRequestHandler(
+                    context,
+                    GetUserContextStub(user.UserId));
+
+                var query = new PagedQueryRequest { PageNumber = 1, PageSize = 10 };
+
+                // Act
+                var response = handler.HandleAsync(new GetContactsRequest
+                {
+                    PageInfo = query,
+                    CompanyId = companyId,
+                });
+
+                //Assert 
+                Assert.AreEqual(false, response.Result.HasErrors);
+                Assert.IsNotNull(response.Result.Data);
+                Assert.AreEqual(contactsMatchingCompany, response.Result.Data.TotalItemCount);
+                Assert.IsTrue(response.Result.Data.Items.All(x => x.CompanyId == companyId));
             }
         }
     }
