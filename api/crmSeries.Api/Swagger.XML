@@ -177,11 +177,11 @@
             <remarks>Along with name, this API requires that either phone number or E-Mail be passed into the
             request.</remarks>
         </member>
-        <member name="M:crmSeries.API.Controllers.NotesController.GetNotes(crmSeries.Core.Logic.Queries.PagedQueryRequest)">
+        <member name="M:crmSeries.API.Controllers.NotesController.GetNotes(crmSeries.Core.Features.Notes.GetNotesRequest)">
             <summary>
-            Gets a list of all notes assigned to current user (????????)
+            Gets a list of all notes assigned to current user.
             </summary>
-            <param name="paginationInfo">The paging information for this request.</param>
+            <param name="request">The request information for this API endpoint.</param>
         </member>
         <member name="M:crmSeries.API.Controllers.NotesController.GetNoteTypes">
             <summary>

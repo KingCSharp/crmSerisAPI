@@ -5,6 +5,6 @@ namespace crmSeries.Core.Common
     {
         All,
         ActiveOnly,
-        DeactiveOnly
+        InactiveOnly
     }
 }
