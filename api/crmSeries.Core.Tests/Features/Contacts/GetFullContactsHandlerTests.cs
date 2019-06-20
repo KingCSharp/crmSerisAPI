@@ -54,22 +54,19 @@ namespace crmSeries.Core.Tests.Features.Contacts
                     context,
                     GetUserContextStub(user.UserId));
 
-                var query = new PagedQueryRequest { PageNumber = 1, PageSize = 5 };
+                var request = new GetFullContactsRequest { PageNumber = 1, PageSize = 5 };
 
                 // Act
-                var response = handler.HandleAsync(new GetFullContactsRequest
-                {
-                    PageInfo = query
-                });
+                var response = handler.HandleAsync(request);
 
                 //Assert 
                 Assert.AreEqual(false, response.Result.HasErrors);
                 Assert.IsNotNull(response.Result.Data);
                 Assert.AreEqual(itemCount, response.Result.Data.TotalItemCount);
                 Assert.AreEqual(1, response.Result.Data.PageNumber);
-                Assert.AreEqual(itemCount / query.PageSize, response.Result.Data.PageCount);
-                Assert.AreEqual(query.PageNumber, response.Result.Data.PageNumber);
-                Assert.AreEqual(query.PageSize, response.Result.Data.PageSize);
+                Assert.AreEqual(itemCount / request.PageSize, response.Result.Data.PageCount);
+                Assert.AreEqual(request.PageNumber, response.Result.Data.PageNumber);
+                Assert.AreEqual(request.PageSize, response.Result.Data.PageSize);
             }
         }
 
@@ -115,22 +112,19 @@ namespace crmSeries.Core.Tests.Features.Contacts
                     context,
                     GetUserContextStub(user.UserId));
 
-                var query = new PagedQueryRequest { PageNumber = 1, PageSize = 5 };
+                var request = new GetFullContactsRequest { PageNumber = 1, PageSize = 5 };
 
                 // Act
-                var response = handler.HandleAsync(new GetFullContactsRequest
-                {
-                    PageInfo = query
-                });
+                var response = handler.HandleAsync(request);
 
                 //Assert 
                 Assert.AreEqual(false, response.Result.HasErrors);
                 Assert.IsNotNull(response.Result.Data);
                 Assert.AreEqual(itemCount, response.Result.Data.TotalItemCount);
                 Assert.AreEqual(1, response.Result.Data.PageNumber);
-                Assert.AreEqual(itemCount / query.PageSize, response.Result.Data.PageCount);
-                Assert.AreEqual(query.PageNumber, response.Result.Data.PageNumber);
-                Assert.AreEqual(query.PageSize, response.Result.Data.PageSize);
+                Assert.AreEqual(itemCount / request.PageSize, response.Result.Data.PageCount);
+                Assert.AreEqual(request.PageNumber, response.Result.Data.PageNumber);
+                Assert.AreEqual(request.PageSize, response.Result.Data.PageSize);
                 Assert.AreEqual(0, response.Result.Data.Items.Where(x => x.Notes.Count() > 0).Count());
                 Assert.AreEqual(0, response.Result.Data.Items.Where(x => x.Tasks.Count() > 0).Count());
             }
@@ -185,23 +179,19 @@ namespace crmSeries.Core.Tests.Features.Contacts
                     context,
                     GetUserContextStub(user.UserId));
 
-                var query = new PagedQueryRequest { PageNumber = 1, PageSize = 5 };
+                var request = new GetFullContactsRequest { PageNumber = 1, PageSize = 5 };
 
                 // Act
-                var response = handler.HandleAsync(new GetFullContactsRequest
-                {
-                    PageInfo = query
-                });
-
+                var response = handler.HandleAsync(request);
                 //Assert 
                 Assert.AreEqual(false, response.Result.HasErrors);
                 Assert.IsNotNull(response.Result.Data);
                 Assert.AreEqual(itemCount, response.Result.Data.TotalItemCount);
                 Assert.AreEqual(1, response.Result.Data.PageNumber);
-                Assert.AreEqual(itemCount / query.PageSize, response.Result.Data.PageCount);
-                Assert.AreEqual(query.PageNumber, response.Result.Data.PageNumber);
-                Assert.AreEqual(query.PageSize, response.Result.Data.PageSize);
-                Assert.AreEqual(query.PageSize, response.Result.Data.Items.Where(x => x.Notes.Count() > 0).Count());
+                Assert.AreEqual(itemCount / request.PageSize, response.Result.Data.PageCount);
+                Assert.AreEqual(request.PageNumber, response.Result.Data.PageNumber);
+                Assert.AreEqual(request.PageSize, response.Result.Data.PageSize);
+                Assert.AreEqual(request.PageSize, response.Result.Data.Items.Where(x => x.Notes.Count() > 0).Count());
                 Assert.AreEqual(0, response.Result.Data.Items.Where(x => x.Tasks.Count() > 0).Count());
             }
         }
@@ -254,24 +244,21 @@ namespace crmSeries.Core.Tests.Features.Contacts
                     context,
                     GetUserContextStub(user.UserId));
 
-                var query = new PagedQueryRequest { PageNumber = 1, PageSize = 5 };
+                var request = new GetFullContactsRequest { PageNumber = 1, PageSize = 5 };
 
                 // Act
-                var response = handler.HandleAsync(new GetFullContactsRequest
-                {
-                    PageInfo = query
-                });
+                var response = handler.HandleAsync(request);
 
                 //Assert 
                 Assert.AreEqual(false, response.Result.HasErrors);
                 Assert.IsNotNull(response.Result.Data);
                 Assert.AreEqual(itemCount, response.Result.Data.TotalItemCount);
                 Assert.AreEqual(1, response.Result.Data.PageNumber);
-                Assert.AreEqual(itemCount / query.PageSize, response.Result.Data.PageCount);
-                Assert.AreEqual(query.PageNumber, response.Result.Data.PageNumber);
-                Assert.AreEqual(query.PageSize, response.Result.Data.PageSize);
+                Assert.AreEqual(itemCount / request.PageSize, response.Result.Data.PageCount);
+                Assert.AreEqual(request.PageNumber, response.Result.Data.PageNumber);
+                Assert.AreEqual(request.PageSize, response.Result.Data.PageSize);
                 Assert.AreEqual(0, response.Result.Data.Items.Where(x => x.Notes.Count() > 0).Count());
-                Assert.AreEqual(query.PageSize, response.Result.Data.Items.Where(x => x.Tasks.Count() > 0).Count());
+                Assert.AreEqual(request.PageSize, response.Result.Data.Items.Where(x => x.Tasks.Count() > 0).Count());
             }
         }
 
@@ -309,13 +296,10 @@ namespace crmSeries.Core.Tests.Features.Contacts
                     context,
                     GetUserContextStub(user.UserId));
 
-                var query = new PagedQueryRequest { PageNumber = 1, PageSize = 5 };
+                var request = new GetFullContactsRequest { PageNumber = 1, PageSize = 5 };
 
                 // Act
-                var response = handler.HandleAsync(new GetFullContactsRequest
-                {
-                    PageInfo = query
-                });
+                var response = handler.HandleAsync(request);
 
                 //Assert 
                 Assert.AreEqual(false, response.Result.HasErrors);
@@ -323,8 +307,8 @@ namespace crmSeries.Core.Tests.Features.Contacts
                 Assert.AreEqual(0, response.Result.Data.TotalItemCount);
                 Assert.AreEqual(1, response.Result.Data.PageNumber);
                 Assert.AreEqual(0, response.Result.Data.PageCount);
-                Assert.AreEqual(query.PageNumber, response.Result.Data.PageNumber);
-                Assert.AreEqual(query.PageSize, response.Result.Data.PageSize);
+                Assert.AreEqual(request.PageNumber, response.Result.Data.PageNumber);
+                Assert.AreEqual(request.PageSize, response.Result.Data.PageSize);
             }
         }
 
@@ -362,13 +346,10 @@ namespace crmSeries.Core.Tests.Features.Contacts
                     context,
                     GetUserContextStub(user.UserId));
 
-                var query = new PagedQueryRequest { PageNumber = 1, PageSize = 5 };
+                var request = new GetFullContactsRequest { PageNumber = 1, PageSize = 5 };
 
                 // Act
-                var response = handler.HandleAsync(new GetFullContactsRequest
-                {
-                    PageInfo = query
-                });
+                var response = handler.HandleAsync(request);
 
                 //Assert 
                 Assert.AreEqual(false, response.Result.HasErrors);
@@ -376,8 +357,8 @@ namespace crmSeries.Core.Tests.Features.Contacts
                 Assert.AreEqual(0, response.Result.Data.TotalItemCount);
                 Assert.AreEqual(1, response.Result.Data.PageNumber);
                 Assert.AreEqual(0, response.Result.Data.PageCount);
-                Assert.AreEqual(query.PageNumber, response.Result.Data.PageNumber);
-                Assert.AreEqual(query.PageSize, response.Result.Data.PageSize);
+                Assert.AreEqual(request.PageNumber, response.Result.Data.PageNumber);
+                Assert.AreEqual(request.PageSize, response.Result.Data.PageSize);
             }
         }
 
@@ -397,13 +378,10 @@ namespace crmSeries.Core.Tests.Features.Contacts
                     context,
                     GetUserContextStub(user.UserId));
 
-                var query = new PagedQueryRequest { PageNumber = 1, PageSize = 5 };
+                var request = new GetFullContactsRequest { PageNumber = 1, PageSize = 5 };
 
                 // Act
-                var response = handler.HandleAsync(new GetFullContactsRequest
-                {
-                    PageInfo = query
-                });
+                var response = handler.HandleAsync(request);
 
                 //Assert 
                 Assert.AreEqual(false, response.Result.HasErrors);
@@ -411,8 +389,8 @@ namespace crmSeries.Core.Tests.Features.Contacts
                 Assert.AreEqual(0, response.Result.Data.TotalItemCount);
                 Assert.AreEqual(1, response.Result.Data.PageNumber);
                 Assert.AreEqual(0, response.Result.Data.PageCount);
-                Assert.AreEqual(query.PageNumber, response.Result.Data.PageNumber);
-                Assert.AreEqual(query.PageSize, response.Result.Data.PageSize);
+                Assert.AreEqual(request.PageNumber, response.Result.Data.PageNumber);
+                Assert.AreEqual(request.PageSize, response.Result.Data.PageSize);
             }
         }
     }

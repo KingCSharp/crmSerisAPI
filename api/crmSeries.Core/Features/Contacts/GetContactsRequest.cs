@@ -15,10 +15,8 @@ using crmSeries.Core.Common;
 namespace crmSeries.Core.Features.Contacts
 {
     [HeavyEquipmentContext]
-    public class GetContactsRequest : IRequest<PagedQueryResult<GetContactDto>>
+    public class GetContactsRequest : PagedQueryRequest, IRequest<PagedQueryResult<GetContactDto>>
     {
-        public PagedQueryRequest PageInfo { get; set; }
-
         /// <summary>
         /// Represents options to return contacts based on their active status.  Leaving
         /// this off the request has will return only active contacts.
@@ -107,13 +105,14 @@ namespace crmSeries.Core.Features.Contacts
 
             var count = contacts.Count();
 
-            result.PageCount = count / request.PageInfo.PageSize;
+            result.PageCount = count / request.PageSize;
             result.TotalItemCount = count;
-            result.PageNumber = request.PageInfo.PageNumber;
-            result.PageSize = request.PageInfo.PageSize;
+            result.PageNumber = request.PageNumber;
+            result.PageSize = request.PageSize;
 
-            result.Items = contacts.ProjectTo<GetContactDto>()
-                .GetPagedData(request.PageInfo)
+            result.Items = contacts
+                .ProjectTo<GetContactDto>()
+                .GetPagedData(request)
                 .ToList();
 
             return result.AsResponseAsync();
@@ -124,8 +123,8 @@ namespace crmSeries.Core.Features.Contacts
     {
         public GetContactsValidator()
         {
-            RuleFor(x => x.PageInfo.PageNumber).GreaterThan(0);
-            RuleFor(x => x.PageInfo.PageSize).GreaterThan(0);
+            RuleFor(x => x.PageNumber).GreaterThan(0);
+            RuleFor(x => x.PageSize).GreaterThan(0);
             RuleFor(x => x.CompanyId).GreaterThan(-1);
         }
     }

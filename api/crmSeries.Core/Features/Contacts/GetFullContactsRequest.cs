@@ -17,9 +17,8 @@ using crmSeries.Core.Features.RelatedRecords;
 namespace crmSeries.Core.Features.Contacts
 {
     [HeavyEquipmentContext]
-    public class GetFullContactsRequest : IRequest<PagedQueryResult<GetFullContactDto>>
+    public class GetFullContactsRequest : PagedQueryRequest, IRequest<PagedQueryResult<GetFullContactDto>>
     {
-        public PagedQueryRequest PageInfo { get; set; }
     }
 
     public class GetFullContactsHandler :
@@ -92,13 +91,13 @@ namespace crmSeries.Core.Features.Contacts
 
             var count = contacts.Count();
 
-            result.PageCount = count / request.PageInfo.PageSize;
+            result.PageCount = count / request.PageSize;
             result.TotalItemCount = count;
-            result.PageNumber = request.PageInfo.PageNumber;
-            result.PageSize = request.PageInfo.PageSize;
+            result.PageNumber = request.PageNumber;
+            result.PageSize = request.PageSize;
 
             result.Items = contacts.ProjectTo<GetFullContactDto>()
-                .GetPagedData(request.PageInfo)
+                .GetPagedData(request)
                 .ToList();
 
             return result.AsResponseAsync();
@@ -109,10 +108,10 @@ namespace crmSeries.Core.Features.Contacts
     {
         public GetFullContactsValidator()
         {
-            RuleFor(x => x.PageInfo.PageNumber)
+            RuleFor(x => x.PageNumber)
                 .GreaterThan(0);
 
-            RuleFor(x => x.PageInfo.PageSize)
+            RuleFor(x => x.PageSize)
                 .GreaterThan(0);
         }
     }

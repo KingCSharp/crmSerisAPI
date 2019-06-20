@@ -17,10 +17,8 @@ using crmSeries.Core.Common;
 namespace crmSeries.Core.Features.Notes
 {
     [HeavyEquipmentContext]
-    public class GetNotesRequest : IRequest<PagedQueryResult<GetNoteDto>>
+    public class GetNotesRequest : PagedQueryRequest, IRequest<PagedQueryResult<GetNoteDto>>
     {
-        public PagedQueryRequest PageInfo { get; set; }
-
         /// <summary>
         /// Setting this value will return all notes created with a timestamp
         /// great than or equal to this date.
@@ -88,13 +86,13 @@ namespace crmSeries.Core.Features.Notes
 
             var count = notes.Count();
 
-            result.PageCount = count / request.PageInfo.PageSize;
+            result.PageCount = count / request.PageSize;
             result.TotalItemCount = count;
-            result.PageNumber = request.PageInfo.PageNumber;
-            result.PageSize = request.PageInfo.PageSize;
+            result.PageNumber = request.PageNumber;
+            result.PageSize = request.PageSize;
 
             result.Items = notes.ProjectTo<GetNoteDto>()
-                .GetPagedData(request.PageInfo)
+                .GetPagedData(request)
                 .ToList();
 
             return result.AsResponseAsync();
@@ -105,10 +103,10 @@ namespace crmSeries.Core.Features.Notes
     {
         public GetNotesValidator()
         {
-            RuleFor(x => x.PageInfo.PageNumber)
+            RuleFor(x => x.PageNumber)
                 .GreaterThan(0);
 
-            RuleFor(x => x.PageInfo.PageSize)
+            RuleFor(x => x.PageSize)
                 .GreaterThan(0);
 
             RuleFor(x => x)

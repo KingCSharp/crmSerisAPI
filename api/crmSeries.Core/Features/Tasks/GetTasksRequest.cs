@@ -18,9 +18,8 @@ using static crmSeries.Core.Features.RelatedRecords.Constants;
 namespace crmSeries.Core.Features.Tasks
 {
     [HeavyEquipmentContext]
-    public class GetTasksRequest : IRequest<PagedQueryResult<GetTaskDto>>
+    public class GetTasksRequest : PagedQueryRequest, IRequest<PagedQueryResult<GetTaskDto>>
     {
-        public PagedQueryRequest PageInfo { get; set; }
     }
 
     public class GetTasksRequestHandler :
@@ -70,13 +69,13 @@ namespace crmSeries.Core.Features.Tasks
 
             var count = contacts.Count();
 
-            result.PageCount = count / request.PageInfo.PageSize;
+            result.PageCount = count / request.PageSize;
             result.TotalItemCount = count;
-            result.PageNumber = request.PageInfo.PageNumber;
-            result.PageSize = request.PageInfo.PageSize;
+            result.PageNumber = request.PageNumber;
+            result.PageSize = request.PageSize;
 
             result.Items = contacts.ProjectTo<GetTaskDto>()
-                .GetPagedData(request.PageInfo)
+                .GetPagedData(request)
                 .ToList();
 
             SetRelatedRecordName(result);
@@ -142,10 +141,10 @@ namespace crmSeries.Core.Features.Tasks
     {
         public GetTasksValidator()
         {
-            RuleFor(x => x.PageInfo.PageNumber)
+            RuleFor(x => x.PageNumber)
                 .GreaterThan(0);
 
-            RuleFor(x => x.PageInfo.PageSize)
+            RuleFor(x => x.PageSize)
                 .GreaterThan(0);
         }
     }

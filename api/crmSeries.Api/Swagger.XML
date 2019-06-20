@@ -125,11 +125,10 @@
             </summary>
             <param name="request">The request information for this API endpoint.</param>
         </member>
-        <member name="M:crmSeries.API.Controllers.ContactsController.GetFullContacts(crmSeries.Core.Logic.Queries.PagedQueryRequest)">
+        <member name="M:crmSeries.API.Controllers.ContactsController.GetFullContacts(crmSeries.Core.Features.Contacts.GetFullContactsRequest)">
             <summary>
             Gets a list of all contacts assigned to the current user with all properties set.
             </summary>
-            <param name="paginationInfo">The paging information for this request.</param>
         </member>
         <member name="M:crmSeries.API.Controllers.ContactsController.GetContactById(System.Int32)">
             <summary>
@@ -230,11 +229,10 @@
             <param name="relatedRecordTypeId">The identifier of the related record type.</param>
             <param name="relatedRecordType">The type of the related record.</param>
         </member>
-        <member name="M:crmSeries.API.Controllers.TasksController.GetTasks(crmSeries.Core.Logic.Queries.PagedQueryRequest)">
+        <member name="M:crmSeries.API.Controllers.TasksController.GetTasks(crmSeries.Core.Features.Tasks.GetTasksRequest)">
             <summary>
             Gets a list of all tasks assigned to the current user.
             </summary>
-            <param name="paginationInfo">The paging information for this request.</param>
         </member>
         <member name="M:crmSeries.API.Controllers.TasksController.GetTaskById(System.Int32)">
             <summary>

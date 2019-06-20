@@ -2,7 +2,6 @@
 using crmSeries.Core.Data;
 using crmSeries.Core.Domain.HeavyEquipment;
 using crmSeries.Core.Features.Contacts;
-using crmSeries.Core.Logic.Queries;
 using NUnit.Framework;
 using System.Linq;
 
@@ -53,12 +52,13 @@ namespace crmSeries.Core.Tests.Features.Contacts
                     context,
                     GetUserContextStub(user.UserId));
 
-                var query = new PagedQueryRequest { PageNumber = 1, PageSize = 5 };
+                var request = new GetContactsRequest { PageNumber = 1, PageSize = 5 };
 
                 // Act
                 var response = handler.HandleAsync(new GetContactsRequest
                 {
-                    PageInfo = query
+                    PageNumber = 1,
+                    PageSize = 5
                 });
 
                 //Assert 
@@ -66,9 +66,9 @@ namespace crmSeries.Core.Tests.Features.Contacts
                 Assert.IsNotNull(response.Result.Data);
                 Assert.AreEqual(response.Result.Data.TotalItemCount, itemCount);
                 Assert.AreEqual(response.Result.Data.PageNumber, 1);
-                Assert.AreEqual(response.Result.Data.PageCount, itemCount / query.PageSize);
-                Assert.AreEqual(response.Result.Data.PageNumber, query.PageNumber);
-                Assert.AreEqual(response.Result.Data.PageSize, query.PageSize);
+                Assert.AreEqual(response.Result.Data.PageCount, itemCount / request.PageSize);
+                Assert.AreEqual(response.Result.Data.PageNumber, request.PageNumber);
+                Assert.AreEqual(response.Result.Data.PageSize, request.PageSize);
             }
         }
 
@@ -107,13 +107,10 @@ namespace crmSeries.Core.Tests.Features.Contacts
                     context,
                     GetUserContextStub(user.UserId));
 
-                var query = new PagedQueryRequest { PageNumber = 1, PageSize = 5 };
+                var request = new GetContactsRequest { PageNumber = 1, PageSize = 5 };
 
                 // Act
-                var response = handler.HandleAsync(new GetContactsRequest
-                {
-                    PageInfo = query
-                });
+                var response = handler.HandleAsync(request);
 
                 //Assert 
                 Assert.AreEqual(response.Result.HasErrors, false);
@@ -121,8 +118,8 @@ namespace crmSeries.Core.Tests.Features.Contacts
                 Assert.AreEqual(response.Result.Data.TotalItemCount, 0);
                 Assert.AreEqual(response.Result.Data.PageNumber, 1);
                 Assert.AreEqual(response.Result.Data.PageCount, 0);
-                Assert.AreEqual(response.Result.Data.PageNumber, query.PageNumber);
-                Assert.AreEqual(response.Result.Data.PageSize, query.PageSize);
+                Assert.AreEqual(response.Result.Data.PageNumber, request.PageNumber);
+                Assert.AreEqual(response.Result.Data.PageSize, request.PageSize);
             }
         }
 
@@ -161,22 +158,18 @@ namespace crmSeries.Core.Tests.Features.Contacts
                     context,
                     GetUserContextStub(user.UserId));
 
-                var query = new PagedQueryRequest { PageNumber = 1, PageSize = 5 };
+                var request = new GetContactsRequest { PageNumber = 1, PageSize = 5 };
 
                 // Act
-                var response = handler.HandleAsync(new GetContactsRequest
-                {
-                    PageInfo = query
-                });
-
+                var response = handler.HandleAsync(request);
                 //Assert 
                 Assert.AreEqual(response.Result.HasErrors, false);
                 Assert.IsNotNull(response.Result.Data);
                 Assert.AreEqual(response.Result.Data.TotalItemCount, 0);
                 Assert.AreEqual(response.Result.Data.PageNumber, 1);
                 Assert.AreEqual(response.Result.Data.PageCount, 0);
-                Assert.AreEqual(response.Result.Data.PageNumber, query.PageNumber);
-                Assert.AreEqual(response.Result.Data.PageSize, query.PageSize);
+                Assert.AreEqual(response.Result.Data.PageNumber, request.PageNumber);
+                Assert.AreEqual(response.Result.Data.PageSize, request.PageSize);
             }
         }
 
@@ -196,22 +189,18 @@ namespace crmSeries.Core.Tests.Features.Contacts
                     context,
                     GetUserContextStub(user.UserId));
 
-                var query = new PagedQueryRequest { PageNumber = 1, PageSize = 5 };
+                var request = new GetContactsRequest { PageNumber = 1, PageSize = 5 };
 
                 // Act
-                var response = handler.HandleAsync(new GetContactsRequest
-                {
-                    PageInfo = query
-                });
-
+                var response = handler.HandleAsync(request);
                 //Assert 
                 Assert.AreEqual(response.Result.HasErrors, false);
                 Assert.IsNotNull(response.Result.Data);
                 Assert.AreEqual(response.Result.Data.TotalItemCount, 0);
                 Assert.AreEqual(response.Result.Data.PageNumber, 1);
                 Assert.AreEqual(response.Result.Data.PageCount, 0);
-                Assert.AreEqual(response.Result.Data.PageNumber, query.PageNumber);
-                Assert.AreEqual(response.Result.Data.PageSize, query.PageSize);
+                Assert.AreEqual(response.Result.Data.PageNumber, request.PageNumber);
+                Assert.AreEqual(response.Result.Data.PageSize, request.PageSize);
             }
         }
 
@@ -285,14 +274,10 @@ namespace crmSeries.Core.Tests.Features.Contacts
                     context,
                     GetUserContextStub(user.UserId));
 
-                var query = new PagedQueryRequest { PageNumber = 1, PageSize = 10 };
+                var request = new GetContactsRequest { PageNumber = 1, PageSize = 10 };
 
                 // Act
-                var response = handler.HandleAsync(new GetContactsRequest
-                {
-                    PageInfo = query,
-                    ActiveOptions = ActiveOptions.ActiveOnly
-                });
+                var response = handler.HandleAsync(request);
 
                 //Assert 
                 Assert.AreEqual(false, response.Result.HasErrors);
@@ -373,14 +358,15 @@ namespace crmSeries.Core.Tests.Features.Contacts
                     context,
                     GetUserContextStub(user.UserId));
 
-                var query = new PagedQueryRequest { PageNumber = 1, PageSize = 10 };
+                var request = new GetContactsRequest
+                {
+                    PageNumber = 1,
+                    PageSize = 10,
+                    ActiveOptions = ActiveOptions.InactiveOnly
+                };
 
                 // Act
-                var response = handler.HandleAsync(new GetContactsRequest
-                {
-                    PageInfo = query,
-                    ActiveOptions = ActiveOptions.InactiveOnly
-                });
+                var response = handler.HandleAsync(request);
 
                 //Assert 
                 Assert.AreEqual(false, response.Result.HasErrors);
@@ -461,14 +447,15 @@ namespace crmSeries.Core.Tests.Features.Contacts
                     context,
                     GetUserContextStub(user.UserId));
 
-                var query = new PagedQueryRequest { PageNumber = 1, PageSize = 10 };
+                var request = new GetContactsRequest
+                {
+                    PageNumber = 1,
+                    PageSize = 10,
+                    ActiveOptions = ActiveOptions.All
+                };
 
                 // Act
-                var response = handler.HandleAsync(new GetContactsRequest
-                {
-                    PageInfo = query,
-                    ActiveOptions = ActiveOptions.All
-                });
+                var response = handler.HandleAsync(request);
 
                 //Assert 
                 Assert.AreEqual(false, response.Result.HasErrors);
@@ -549,13 +536,14 @@ namespace crmSeries.Core.Tests.Features.Contacts
                     context,
                     GetUserContextStub(user.UserId));
 
-                var query = new PagedQueryRequest { PageNumber = 1, PageSize = 10 };
+                var request = new GetContactsRequest
+                {
+                    PageNumber = 1,
+                    PageSize = 10
+                };
 
                 // Act
-                var response = handler.HandleAsync(new GetContactsRequest
-                {
-                    PageInfo = query
-                });
+                var response = handler.HandleAsync(request);
 
                 //Assert 
                 Assert.AreEqual(false, response.Result.HasErrors);
@@ -614,14 +602,15 @@ namespace crmSeries.Core.Tests.Features.Contacts
                     context,
                     GetUserContextStub(user.UserId));
 
-                var query = new PagedQueryRequest { PageNumber = 1, PageSize = 10 };
+                var request = new GetContactsRequest
+                {
+                    PageNumber = 1,
+                    PageSize = 10,
+                    FirstName = firstNameRequest
+                };
 
                 // Act
-                var response = handler.HandleAsync(new GetContactsRequest
-                {
-                    PageInfo = query,
-                    FirstName = firstNameRequest,
-                });
+                var response = handler.HandleAsync(request);
 
                 //Assert 
                 Assert.AreEqual(false, response.Result.HasErrors);
@@ -679,14 +668,15 @@ namespace crmSeries.Core.Tests.Features.Contacts
                     context,
                     GetUserContextStub(user.UserId));
 
-                var query = new PagedQueryRequest { PageNumber = 1, PageSize = 10 };
+                var request = new GetContactsRequest
+                {
+                    PageNumber = 1,
+                    PageSize = 10,
+                    FirstName = firstNameRequest
+                };
 
                 // Act
-                var response = handler.HandleAsync(new GetContactsRequest
-                {
-                    PageInfo = query,
-                    FirstName = firstNameRequest,
-                });
+                var response = handler.HandleAsync(request);
 
                 //Assert 
                 Assert.AreEqual(false, response.Result.HasErrors);
@@ -744,14 +734,15 @@ namespace crmSeries.Core.Tests.Features.Contacts
                     context,
                     GetUserContextStub(user.UserId));
 
-                var query = new PagedQueryRequest { PageNumber = 1, PageSize = 10 };
+                var request = new GetContactsRequest
+                {
+                    PageNumber = 1,
+                    PageSize = 10,
+                    LastName = lastNameRequest
+                };
 
                 // Act
-                var response = handler.HandleAsync(new GetContactsRequest
-                {
-                    PageInfo = query,
-                    LastName = lastNameRequest,
-                });
+                var response = handler.HandleAsync(request);
 
                 //Assert 
                 Assert.AreEqual(false, response.Result.HasErrors);
@@ -809,14 +800,15 @@ namespace crmSeries.Core.Tests.Features.Contacts
                     context,
                     GetUserContextStub(user.UserId));
 
-                var query = new PagedQueryRequest { PageNumber = 1, PageSize = 10 };
+                var request = new GetContactsRequest
+                {
+                    PageNumber = 1,
+                    PageSize = 10,
+                    FirstName = lastNameRequest
+                };
 
                 // Act
-                var response = handler.HandleAsync(new GetContactsRequest
-                {
-                    PageInfo = query,
-                    FirstName = lastNameRequest,
-                });
+                var response = handler.HandleAsync(request);
 
                 //Assert 
                 Assert.AreEqual(false, response.Result.HasErrors);
@@ -884,14 +876,15 @@ namespace crmSeries.Core.Tests.Features.Contacts
                     context,
                     GetUserContextStub(user.UserId));
 
-                var query = new PagedQueryRequest { PageNumber = 1, PageSize = 10 };
+                var request = new GetContactsRequest
+                {
+                    PageNumber = 1,
+                    PageSize = 10,
+                    CompanyId = companyId
+                };
 
                 // Act
-                var response = handler.HandleAsync(new GetContactsRequest
-                {
-                    PageInfo = query,
-                    CompanyId = companyId,
-                });
+                var response = handler.HandleAsync(request);
 
                 //Assert 
                 Assert.AreEqual(false, response.Result.HasErrors);

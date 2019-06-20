@@ -22,11 +22,8 @@ namespace crmSeries.Core.Tests.Features.Notes
         {
             _getNotesRequest = new GetNotesRequest
             {
-                PageInfo = new Core.Logic.Queries.PagedQueryRequest
-                {
-                    PageNumber = 1,
-                    PageSize = 20
-                }
+                PageNumber = 1,
+                PageSize = 20
             };
         }
 

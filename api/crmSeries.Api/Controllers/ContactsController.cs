@@ -26,15 +26,11 @@ namespace crmSeries.API.Controllers
         /// <summary>
         /// Gets a list of all contacts assigned to the current user with all properties set.
         /// </summary>
-        /// <param name="paginationInfo">The paging information for this request.</param>
         [HttpGet("full")]
         [Produces(typeof(PagedQueryResult<GetFullContactDto>))]
-        public Task<IActionResult> GetFullContacts(PagedQueryRequest paginationInfo)
+        public Task<IActionResult> GetFullContacts(GetFullContactsRequest request)
         {
-            return HandleAsync(new GetFullContactsRequest
-            {
-                PageInfo = paginationInfo
-            });
+            return HandleAsync(request);
         }
 
         /// <summary>

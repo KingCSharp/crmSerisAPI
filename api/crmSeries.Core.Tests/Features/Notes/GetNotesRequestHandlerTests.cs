@@ -1,7 +1,6 @@
 ﻿using crmSeries.Core.Data;
 using crmSeries.Core.Domain.HeavyEquipment;
 using crmSeries.Core.Features.Notes;
-using crmSeries.Core.Logic.Queries;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,19 +33,19 @@ namespace crmSeries.Core.Tests.Features.Notes
                     context,
                     GetUserContextStub(user.UserId));
 
-                var query = new PagedQueryRequest { PageNumber = 1, PageSize = 5 };
+                var request = new GetNotesRequest { PageNumber = 1, PageSize = 5 };
 
                 // Act
-                var response = handler.HandleAsync(new GetNotesRequest { PageInfo = query });
+                var response = handler.HandleAsync(request);
 
                 //Assert 
                 Assert.AreEqual(response.Result.HasErrors, false);
                 Assert.IsNotNull(response.Result.Data);
                 Assert.AreEqual(response.Result.Data.TotalItemCount, itemCount);
                 Assert.AreEqual(response.Result.Data.PageNumber, 1);
-                Assert.AreEqual(response.Result.Data.PageCount, itemCount / query.PageSize);
-                Assert.AreEqual(response.Result.Data.PageNumber, query.PageNumber);
-                Assert.AreEqual(response.Result.Data.PageSize, query.PageSize);
+                Assert.AreEqual(response.Result.Data.PageCount, itemCount / request.PageSize);
+                Assert.AreEqual(response.Result.Data.PageNumber, request.PageNumber);
+                Assert.AreEqual(response.Result.Data.PageSize, request.PageSize);
             }
         }
 
@@ -66,10 +65,10 @@ namespace crmSeries.Core.Tests.Features.Notes
                     context,
                     GetUserContextStub(user.UserId));
 
-                var query = new PagedQueryRequest { PageNumber = 1, PageSize = 5 };
+                var request = new GetNotesRequest { PageNumber = 1, PageSize = 5 };
 
                 // Act
-                var response = handler.HandleAsync(new GetNotesRequest { PageInfo = query });
+                var response = handler.HandleAsync(request);
 
                 //Assert 
                 Assert.AreEqual(response.Result.HasErrors, false);
@@ -77,8 +76,8 @@ namespace crmSeries.Core.Tests.Features.Notes
                 Assert.AreEqual(response.Result.Data.TotalItemCount, 0);
                 Assert.AreEqual(response.Result.Data.PageNumber, 1);
                 Assert.AreEqual(response.Result.Data.PageCount, 0);
-                Assert.AreEqual(response.Result.Data.PageNumber, query.PageNumber);
-                Assert.AreEqual(response.Result.Data.PageSize, query.PageSize);
+                Assert.AreEqual(response.Result.Data.PageNumber, request.PageNumber);
+                Assert.AreEqual(response.Result.Data.PageSize, request.PageSize);
             }
         }
 
@@ -120,14 +119,15 @@ namespace crmSeries.Core.Tests.Features.Notes
                     context,
                     GetUserContextStub(user.UserId));
 
-                var query = new PagedQueryRequest { PageNumber = 1, PageSize = 5 };
+                var request = new GetNotesRequest
+                {
+                    PageNumber = 1,
+                    PageSize = 5,
+                    FromDate = new System.DateTime(2018, 5, 5).ToUniversalTime()
+                };
 
                 // Act
-                var response = handler.HandleAsync(new GetNotesRequest
-                {
-                    PageInfo = query,
-                    FromDate = new System.DateTime(2018, 5, 5).ToUniversalTime()
-                });
+                var response = handler.HandleAsync(request);
 
                 //Assert 
                 Assert.AreEqual(response.Result.HasErrors, false);
@@ -175,14 +175,15 @@ namespace crmSeries.Core.Tests.Features.Notes
                     context,
                     GetUserContextStub(user.UserId));
 
-                var query = new PagedQueryRequest { PageNumber = 1, PageSize = 5 };
+                var request = new GetNotesRequest
+                {
+                    PageNumber = 1,
+                    PageSize = 5,
+                    ToDate = new System.DateTime(2018, 5, 5).ToUniversalTime()
+                };
 
                 // Act
-                var response = handler.HandleAsync(new GetNotesRequest
-                {
-                    PageInfo = query,
-                    ToDate = new System.DateTime(2018, 5, 5).ToUniversalTime()
-                });
+                var response = handler.HandleAsync(request);
 
                 //Assert 
                 Assert.AreEqual(response.Result.HasErrors, false);
@@ -242,15 +243,16 @@ namespace crmSeries.Core.Tests.Features.Notes
                     context,
                     GetUserContextStub(user.UserId));
 
-                var query = new PagedQueryRequest { PageNumber = 1, PageSize = 5 };
-
-                // Act
-                var response = handler.HandleAsync(new GetNotesRequest
+                var request = new GetNotesRequest
                 {
-                    PageInfo = query,
+                    PageNumber = 1,
+                    PageSize = 5,
                     FromDate = new System.DateTime(2017, 5, 5).ToUniversalTime(),
                     ToDate = new System.DateTime(2018, 5, 5).ToUniversalTime()
-                });
+                };
+
+                // Act
+                var response = handler.HandleAsync(request);
 
                 //Assert 
                 Assert.AreEqual(response.Result.HasErrors, false);
@@ -298,15 +300,15 @@ namespace crmSeries.Core.Tests.Features.Notes
                     context,
                     GetUserContextStub(user.UserId));
 
-                var query = new PagedQueryRequest { PageNumber = 1, PageSize = 5 };
+                var request = new GetNotesRequest
+                {
+                    PageNumber = 1,
+                    PageSize = 5,
+                    Comments = "match"
+                };
 
                 // Act
-                var response = handler.HandleAsync(new GetNotesRequest
-                {
-                    PageInfo = query,
-                    Comments = "match"
-                });
-
+                var response = handler.HandleAsync(request);
                 //Assert 
                 Assert.AreEqual(response.Result.HasErrors, false);
                 Assert.IsNotNull(response.Result.Data);

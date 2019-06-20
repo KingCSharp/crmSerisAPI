@@ -1,5 +1,4 @@
 ﻿using crmSeries.Core.Features.Contacts;
-using crmSeries.Core.Logic.Queries;
 using NUnit.Framework;
 
 namespace crmSeries.Core.Tests.Features.Contacts
@@ -21,11 +20,8 @@ namespace crmSeries.Core.Tests.Features.Contacts
         {
             _getContactsRequest = new GetContactsRequest
             {
-                PageInfo = new PagedQueryRequest
-                {
-                    PageNumber = 1,
-                    PageSize = 50
-                }
+                PageNumber = 1,
+                PageSize = 50
             };
         }
 
@@ -37,12 +33,9 @@ namespace crmSeries.Core.Tests.Features.Contacts
             int pageSize)
         {
             // Arrange 
-            _getContactsRequest.PageInfo = new PagedQueryRequest
-            {
-                PageNumber = pageNumber,
-                PageSize = pageSize
-            };
-
+            _getContactsRequest.PageNumber = pageNumber;
+            _getContactsRequest.PageSize = pageSize;
+         
             // Act
             var result = _getContactsValidator.Validate(_getContactsRequest);
 
@@ -65,11 +58,8 @@ namespace crmSeries.Core.Tests.Features.Contacts
             bool isValid)
         {
             // Arrange 
-            _getContactsRequest.PageInfo = new PagedQueryRequest
-            {
-                PageNumber = pageNumber,
-                PageSize = pageSize
-            };
+            _getContactsRequest.PageNumber = pageNumber;
+            _getContactsRequest.PageSize = pageSize;
 
             // Act
             var result = _getContactsValidator.Validate(_getContactsRequest);

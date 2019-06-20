@@ -16,15 +16,11 @@ namespace crmSeries.API.Controllers
         /// <summary>
         /// Gets a list of all tasks assigned to the current user.
         /// </summary>
-        /// <param name="paginationInfo">The paging information for this request.</param>
         [HttpGet]
         [Produces(typeof(PagedQueryResult<GetTaskDto>))]
-        public Task<IActionResult> GetTasks(PagedQueryRequest paginationInfo)
+        public Task<IActionResult> GetTasks(GetTasksRequest request)
         {
-            return HandleAsync(new GetTasksRequest
-            {
-                PageInfo = paginationInfo
-            });
+            return HandleAsync(request);
         }
 
         /// <summary>
