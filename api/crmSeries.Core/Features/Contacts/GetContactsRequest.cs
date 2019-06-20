@@ -93,7 +93,7 @@ namespace crmSeries.Core.Features.Contacts
             if (request.ActiveOptions == ActiveOptions.ActiveOnly)
                 contacts = contacts.Where(x => x.Active);
 
-            if (request.ActiveOptions == ActiveOptions.DeactiveOnly)
+            if (request.ActiveOptions == ActiveOptions.InactiveOnly)
                 contacts = contacts.Where(x => !x.Active);
 
             if (!string.IsNullOrEmpty(request.FirstName))

@@ -254,8 +254,8 @@ namespace crmSeries.Core.Tests.Features.Contacts
                     });
                 }
 
-                var deactiveContactsCount = 3;
-                for (int i = 0; i < deactiveContactsCount; ++i, entityId++)
+                var inactiveContactsCount = 3;
+                for (int i = 0; i < inactiveContactsCount; ++i, entityId++)
                 {
                     context.Contact.Add(new Contact
                     {
@@ -298,12 +298,12 @@ namespace crmSeries.Core.Tests.Features.Contacts
                 Assert.AreEqual(false, response.Result.HasErrors);
                 Assert.IsNotNull(response.Result.Data);
                 Assert.AreEqual(activeContactsCount, response.Result.Data.TotalItemCount);
-                Assert.IsTrue(activeContactsCount != deactiveContactsCount);
+                Assert.IsTrue(activeContactsCount != inactiveContactsCount);
             }
         }
 
         [Test]
-        public void HandleAsync_ActiveOptionsSetToDeactiveOnly_ReturnsOnlyDeactiveContacts()
+        public void HandleAsync_ActiveOptionsSetToInactiveOnly_ReturnsOnlyInactiveContacts()
         {
             // Arrange 
             var options = GetHeavyEquipmentContextOptions();
@@ -341,9 +341,9 @@ namespace crmSeries.Core.Tests.Features.Contacts
                     });
                 }
 
-                var deactiveContactsCount = 15;
+                var inactiveContactsCount = 15;
 
-                for (int i = 0; i < deactiveContactsCount; ++i, entityId++)
+                for (int i = 0; i < inactiveContactsCount; ++i, entityId++)
                 {
                     context.Contact.Add(new Contact
                     {
@@ -379,18 +379,18 @@ namespace crmSeries.Core.Tests.Features.Contacts
                 var response = handler.HandleAsync(new GetContactsRequest
                 {
                     PageInfo = query,
-                    ActiveOptions = ActiveOptions.DeactiveOnly
+                    ActiveOptions = ActiveOptions.InactiveOnly
                 });
 
                 //Assert 
                 Assert.AreEqual(false, response.Result.HasErrors);
                 Assert.IsNotNull(response.Result.Data);
-                Assert.AreEqual(deactiveContactsCount, response.Result.Data.TotalItemCount);
+                Assert.AreEqual(inactiveContactsCount, response.Result.Data.TotalItemCount);
             }
         }
 
         [Test]
-        public void HandleAsync_ActiveOptionsSetToAll_ReturnsActiveAndDeactiveContacts()
+        public void HandleAsync_ActiveOptionsSetToAll_ReturnsActiveAndInactiveContacts()
         {
             // Arrange 
             var options = GetHeavyEquipmentContextOptions();
@@ -429,9 +429,9 @@ namespace crmSeries.Core.Tests.Features.Contacts
                     });
                 }
 
-                var deactiveContactsCount = 15;
+                var inactiveContactsCount = 15;
 
-                for (int i = 0; i < deactiveContactsCount; ++i, entityId++)
+                for (int i = 0; i < inactiveContactsCount; ++i, entityId++)
                 {
                     context.Contact.Add(new Contact
                     {
@@ -473,7 +473,7 @@ namespace crmSeries.Core.Tests.Features.Contacts
                 //Assert 
                 Assert.AreEqual(false, response.Result.HasErrors);
                 Assert.IsNotNull(response.Result.Data);
-                Assert.AreEqual(activeContactsCount + deactiveContactsCount, response.Result.Data.TotalItemCount);
+                Assert.AreEqual(activeContactsCount + inactiveContactsCount, response.Result.Data.TotalItemCount);
             }
         }
 
@@ -517,9 +517,9 @@ namespace crmSeries.Core.Tests.Features.Contacts
                     });
                 }
 
-                var deactiveContactsCount = 15;
+                var inactiveContactsCount = 15;
 
-                for (int i = 0; i < deactiveContactsCount; ++i, entityId++)
+                for (int i = 0; i < inactiveContactsCount; ++i, entityId++)
                 {
                     context.Contact.Add(new Contact
                     {
@@ -561,7 +561,7 @@ namespace crmSeries.Core.Tests.Features.Contacts
                 Assert.AreEqual(false, response.Result.HasErrors);
                 Assert.IsNotNull(response.Result.Data);
                 Assert.AreEqual(activeContactsCount, response.Result.Data.TotalItemCount);
-                Assert.IsTrue(activeContactsCount != deactiveContactsCount);
+                Assert.IsTrue(activeContactsCount != inactiveContactsCount);
             }
         }
 

@@ -14,17 +14,14 @@ namespace crmSeries.API.Controllers
     public class NotesController : BaseApiController
     {
         /// <summary>
-        /// Gets a list of all notes assigned to current user (????????)
+        /// Gets a list of all notes assigned to current user.
         /// </summary>
-        /// <param name="paginationInfo">The paging information for this request.</param>
+        /// <param name="request">The request information for this API endpoint.</param>
         [HttpGet]
         [Produces(typeof(PagedQueryResult<GetNoteDto>))]
-        public Task<IActionResult> GetNotes(PagedQueryRequest paginationInfo)
+        public Task<IActionResult> GetNotes(GetNotesRequest request)
         {
-            return HandleAsync(new GetNotesRequest
-            {
-                PageInfo = paginationInfo
-            });
+            return HandleAsync(request);
         }
 
         /// <summary>
