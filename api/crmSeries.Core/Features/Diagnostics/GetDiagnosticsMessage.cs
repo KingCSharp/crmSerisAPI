@@ -1,5 +1,6 @@
 ﻿using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
+using crmSeries.Core.Configuration;
 using crmSeries.Core.Data;
 using crmSeries.Core.Mediator;
 using crmSeries.Core.Mediator.Attributes;
@@ -15,18 +16,18 @@ namespace crmSeries.Core.Features.Diagnostics
 
     public class GetDiagnosticsMessageHandler : IRequestHandler<GetDiagnosticsMessageRequest, string>
     {
-        private readonly HeavyEquipmentContext _context;
+        private CommonSettings _settings;
 
-        public GetDiagnosticsMessageHandler(HeavyEquipmentContext contextProvider)
+        public GetDiagnosticsMessageHandler(CommonSettings settings)
         {
-            _context = contextProvider;
+            _settings = settings;
         }
 
         public Task<Response<string>> HandleAsync(GetDiagnosticsMessageRequest request)
         {
-            var lead = _context.Lead.FirstOrDefault();
+            var environment = _settings.BaseURL;
 
-            return "I'm up and running.".AsResponseAsync();
+            return $"I'm up and running on {environment}.".AsResponseAsync();
         }
     }
 
