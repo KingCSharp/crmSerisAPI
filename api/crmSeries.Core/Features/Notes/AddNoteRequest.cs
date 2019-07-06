@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using crmSeries.Core.Data;
 using crmSeries.Core.Domain.HeavyEquipment;
@@ -53,10 +54,12 @@ namespace crmSeries.Core.Features.Notes
         {
             var relatedEntities = new Dictionary<string, int>
             {
-                { request.RecordType, request.RecordTypeId },
+                { request.RecordType, request.RecordId },
                 { Constants.RelatedRecord.Types.User, request.UserId },
             };
 
+            // TODO - Refactor entire app to ensure verify related record request 
+            // does not accept 0 for indentitifer. 
             foreach (var entity in relatedEntities)
             {
                 var verifyRelatedRecordRequest = new VerifyRelatedRecordRequest

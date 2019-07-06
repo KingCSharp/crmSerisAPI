@@ -22,7 +22,7 @@ namespace crmSeries.Core.Features.Notes.Dtos
         /// <summary>
         /// The type Id of the note.
         /// </summary>
-        public int RecordTypeId { get; set; }
+        public int TypeId { get; set; }
 
         /// <summary>
         /// The date the note was created

@@ -32,7 +32,7 @@ namespace crmSeries.Core.Tests.Features.Notes
                     NoteDate = DateTime.Now,
                     RecordId = 0,
                     RecordType = Constants.RelatedRecord.Types.Contact,
-                    RecordTypeId = 0,
+                    TypeId = 0,
                     UserId = 0
                 });
 
@@ -67,9 +67,9 @@ namespace crmSeries.Core.Tests.Features.Notes
                     Latitude = 0,
                     Longitude = 0,
                     NoteDate = DateTime.Now,
-                    RecordId = 0,
+                    RecordId = 99,
                     RecordType = Constants.RelatedRecord.Types.Contact,
-                    RecordTypeId = 1,
+                    TypeId = 1,
                     UserId = 0
                 });
 
@@ -100,7 +100,7 @@ namespace crmSeries.Core.Tests.Features.Notes
                     NoteDate = DateTime.Now,
                     RecordId = 0,
                     RecordType = Constants.RelatedRecord.Types.Contact,
-                    RecordTypeId = 0,
+                    TypeId = 0,
                     UserId = 1
                 });
 

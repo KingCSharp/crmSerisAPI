@@ -26,7 +26,7 @@ namespace crmSeries.Core.Tests.Features.Notes
             {
                 RecordId = 1,
                 UserId = 1,
-                RecordTypeId = 1,
+                TypeId = 1,
                 Comments = "Test Comments",
                 NoteDate = DateTime.Now
             };
@@ -81,12 +81,12 @@ namespace crmSeries.Core.Tests.Features.Notes
         [TestCase(1, 0, true)]
         [TestCase(-1, 1, false)]
         [TestCase(0, 1, false)]
-        public void Validate_RecordTypeId_ReturnsAppropriate(int recordTypeId,
+        public void Validate_RecordTypeId_ReturnsAppropriate(int typeId,
             int numberOfErrors,
             bool isValid)
         {
             //Arrange
-            _baseNoteDto.RecordTypeId = recordTypeId;
+            _baseNoteDto.TypeId = typeId;
 
             // Act
             var result = _baseNoteDtoValidator.Validate(_baseNoteDto);
@@ -97,7 +97,7 @@ namespace crmSeries.Core.Tests.Features.Notes
 
             if (!result.IsValid)
             {
-                Assert.AreEqual("'Record Type Id' must be greater than '0'.", result.Errors[0].ErrorMessage);
+                Assert.AreEqual("'Type Id' must be greater than '0'.", result.Errors[0].ErrorMessage);
             }
         }
 

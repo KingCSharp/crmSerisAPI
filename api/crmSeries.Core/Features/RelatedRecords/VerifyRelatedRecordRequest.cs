@@ -42,7 +42,7 @@ namespace crmSeries.Core.Features.RelatedRecords
 
         public Task<Response> HandleAsync(VerifyRelatedRecordRequest request)
         {
-            if(request.RecordTypeId == 0)
+            if (request.RecordTypeId == 0)
                 return Response.SuccessAsync();
 
             if (request.RecordType == RelatedRecord.Types.Company)

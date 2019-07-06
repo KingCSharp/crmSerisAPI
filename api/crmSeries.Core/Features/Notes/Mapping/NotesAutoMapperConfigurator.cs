@@ -13,10 +13,10 @@ namespace crmSeries.Core.Features.Notes.Mapping
             CreateMap<GetNoteDto, Note>();
 
             CreateMap<Note, EditNoteRequest>()
-                .ForMember(dest => dest.RecordTypeId, options => options.MapFrom(src => src.TypeId));
+                .ForMember(dest => dest.TypeId, options => options.MapFrom(src => src.TypeId));
 
             CreateMap<EditNoteRequest, Note>()
-                .ForMember(dest => dest.TypeId, options => options.MapFrom(src => src.RecordTypeId));
+                .ForMember(dest => dest.TypeId, options => options.MapFrom(src => src.TypeId));
 
             CreateMap<AddNoteRequest, Note>()
                 .ForMember(x => x.Deleted, options => options.Ignore())

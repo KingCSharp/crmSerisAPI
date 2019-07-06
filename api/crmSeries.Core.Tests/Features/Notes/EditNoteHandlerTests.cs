@@ -74,7 +74,7 @@ namespace crmSeries.Core.Tests.Features.Notes
                     RecordType = RelatedRecord.Types.Contact
                 });
                 context.SaveChanges();
-
+            
                 var verificationHandler = new VerifyRelatedRecordHandler(context);
                 var handler = new EditNoteHandler(context, verificationHandler);
 
@@ -84,7 +84,7 @@ namespace crmSeries.Core.Tests.Features.Notes
                     NoteId = 1,
                     Comments = "Test Comments",
                     RecordType = RelatedRecord.Types.Contact,
-                    RecordTypeId = 1
+                    RecordId = 99
                 });
 
                 //Assert 
