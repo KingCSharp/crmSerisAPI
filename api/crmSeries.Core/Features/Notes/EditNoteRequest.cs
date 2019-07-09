@@ -53,7 +53,7 @@ namespace crmSeries.Core.Features.Notes
         {
             var relatedEntities = new Dictionary<string, int>
             {
-                { request.RecordType, request.RecordTypeId },
+                { request.RecordType, request.RecordId },
                 { Constants.RelatedRecord.Types.Note, request.NoteId },
                 { Constants.RelatedRecord.Types.User, request.UserId },
             };

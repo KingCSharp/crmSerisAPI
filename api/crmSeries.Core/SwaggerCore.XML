@@ -1120,7 +1120,7 @@
             The user Id of the note.
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.Notes.Dtos.BaseNoteDto.RecordTypeId">
+        <member name="P:crmSeries.Core.Features.Notes.Dtos.BaseNoteDto.TypeId">
             <summary>
             The type Id of the note.
             </summary>

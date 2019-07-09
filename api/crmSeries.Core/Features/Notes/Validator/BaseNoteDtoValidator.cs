@@ -12,7 +12,7 @@ namespace crmSeries.Core.Features.Notes.Validator
         {
             RuleFor(x => x.RecordId).GreaterThan(0);
             RuleFor(x => x.UserId).GreaterThan(0);
-            RuleFor(x => x.RecordTypeId).GreaterThan(0);
+            RuleFor(x => x.TypeId).GreaterThan(0);
             RuleFor(x => x.Comments).NotEmpty();
 
             RuleFor(x => x.Latitude).Must(BeAValidLatitude)
