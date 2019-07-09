@@ -13,7 +13,12 @@ namespace crmSeries.Core.Data
         {
         }
 
+        public HeavyEquipmentContext()
+        {
+        }
+
         public virtual DbSet<Activity> Activity { get; set; }
+        public virtual DbSet<StringValue> StringValue { get; set; }
         public virtual DbSet<Branch> Branch { get; set; }
         public virtual DbSet<BranchAssignedUser> BranchAssignedUser { get; set; }
         public virtual DbSet<Broker> Broker { get; set; }
@@ -173,6 +178,7 @@ namespace crmSeries.Core.Data
         public virtual DbSet<OpportunityTransactionType> OpportunityTransactionType { get; set; }
         public virtual DbSet<OutputTemplate> OutputTemplate { get; set; }
         public virtual DbSet<OutputTemplateCategory> OutputTemplateCategory { get; set; }
+        public virtual DbSet<OutputTemplateField> OutputTemplateField { get; set; }
         public virtual DbSet<ProspectTimeline> ProspectTimeline { get; set; }
         public virtual DbSet<RecordAssignedFile> RecordAssignedFile { get; set; }
         public virtual DbSet<RecordAssignedInspection> RecordAssignedInspection { get; set; }
@@ -258,6 +264,17 @@ namespace crmSeries.Core.Data
 
                 entity.Property(e => e.ActivityType)
                     .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasDefaultValueSql("('')");
+            });
+
+            modelBuilder.Entity<StringValue>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.Value).HasColumnName("Value");
+
+                entity.Property(e => e.Value)
                     .IsUnicode(false)
                     .HasDefaultValueSql("('')");
             });
@@ -6131,6 +6148,19 @@ namespace crmSeries.Core.Data
                     .IsUnicode(false)
                     .HasDefaultValueSql("('')");
 
+                entity.Property(e => e.Source)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasDefaultValueSql("('')");
+
+                entity.Property(e => e.SourceId)
+                    .IsRequired()
+                    .HasColumnName("SourceID")
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasDefaultValueSql("('')");
+
                 entity.Property(e => e.Template)
                     .IsRequired()
                     .HasMaxLength(50)
@@ -6164,6 +6194,34 @@ namespace crmSeries.Core.Data
                     .HasMaxLength(50)
                     .IsUnicode(false)
                     .HasDefaultValueSql("('')");
+            });
+
+            modelBuilder.Entity<OutputTemplateField>(entity =>
+            {
+                entity.HasKey(e => e.FieldId);
+
+                entity.Property(e => e.FieldId).HasColumnName("FieldID");
+
+                entity.Property(e => e.CrmSeriesField)
+                    .IsRequired()
+                    .HasColumnName("crmSeriesField")
+                    .HasMaxLength(1000)
+                    .IsUnicode(false)
+                    .HasDefaultValueSql("('')");
+
+                entity.Property(e => e.FieldType)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasDefaultValueSql("('')");
+
+                entity.Property(e => e.TemplateField)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasDefaultValueSql("('')");
+
+                entity.Property(e => e.TemplateId).HasColumnName("TemplateID");
             });
 
             modelBuilder.Entity<ProspectTimeline>(entity =>

@@ -3,6 +3,7 @@ using System.Net;
 using System.Reflection;
 using crmSeries.Core.Data;
 using crmSeries.Core.Features.DocuSign;
+using crmSeries.Core.Features.DocuSign.Utility;
 using crmSeries.Core.Logging;
 using crmSeries.Core.Mediator.BackgroundJobs;
 using crmSeries.Core.Mediator.Configuration;

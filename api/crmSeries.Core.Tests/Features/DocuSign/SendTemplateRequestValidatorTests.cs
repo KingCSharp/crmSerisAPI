@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using crmSeries.Core.Features.DocuSign;
+using crmSeries.Core.Features.DocuSign.Dtos;
 using FluentValidation;
 using NUnit.Framework;
 

@@ -692,74 +692,24 @@
             The unnique identifier of the company source.
             </summary>
         </member>
-        <member name="T:crmSeries.Core.Features.DocuSign.TemplateDto">
+        <member name="T:crmSeries.Core.Features.DocuSign.Dtos.TemplateDto">
             <summary>
             Contains the necessary information to identify a DocuSign template.
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.DocuSign.TemplateDto.TemplateId">
+        <member name="P:crmSeries.Core.Features.DocuSign.Dtos.TemplateDto.TemplateId">
             <summary>
             The template's DocuSign identifier (UUID)
             </summary>
         </member>
-        <member name="T:crmSeries.Core.Features.DocuSign.TemplateRecipientDto">
+        <member name="T:crmSeries.Core.Features.DocuSign.Dtos.TemplateRecipientDto">
             <summary>
             Contains the necessary information to identify a recipient of a DocuSign template.
             </summary>
         </member>
-        <member name="T:crmSeries.Core.Features.DocuSign.TemplateGetDto">
+        <member name="T:crmSeries.Core.Features.DocuSign.Dtos.GetTemplateDto">
             <summary>
             Contains information about a DocuSign template.
-            </summary>
-        </member>
-        <member name="P:crmSeries.Core.Features.DocuSign.DocuSignTemplate.TemplateId">
-            <summary>
-            The template's DocuSign identifier (UUID)
-            </summary>
-        </member>
-        <member name="P:crmSeries.Core.Features.DocuSign.DocuSignTemplate.Name">
-            <summary>
-            The template's display name
-            </summary>
-        </member>
-        <member name="P:crmSeries.Core.Features.DocuSign.DocuSignTemplate.Description">
-            <summary>
-            The template's Message
-            </summary>
-        </member>
-        <member name="P:crmSeries.Core.Features.DocuSign.DocuSignTemplate.FolderId">
-            <summary>
-            The template's DocuSign folder identifier (UUID)
-            </summary>
-        </member>
-        <member name="P:crmSeries.Core.Features.DocuSign.DocuSignTemplate.FolderName">
-            <summary>
-            The template's folder name
-            </summary>
-        </member>
-        <member name="P:crmSeries.Core.Features.DocuSign.DocuSignTemplate.CreatedDate">
-            <summary>
-            The date and time the template was created
-            </summary>
-        </member>
-        <member name="P:crmSeries.Core.Features.DocuSign.DocuSignTemplate.LastModifiedDate">
-            <summary>
-            The date and time the template was last modified
-            </summary>
-        </member>
-        <member name="P:crmSeries.Core.Features.DocuSign.DocuSignTemplateRecipient.Role">
-            <summary>
-            The recipient's Template Role
-            </summary>
-        </member>
-        <member name="P:crmSeries.Core.Features.DocuSign.DocuSignTemplateRecipient.Name">
-            <summary>
-            The recipient's name
-            </summary>
-        </member>
-        <member name="P:crmSeries.Core.Features.DocuSign.DocuSignTemplateRecipient.Email">
-            <summary>
-            The recipient's email address
             </summary>
         </member>
         <member name="P:crmSeries.Core.Features.DocuSign.SendTemplateRequest.Template">
@@ -772,6 +722,81 @@
             A list of recipients to whom the DocuSign template will be sent.
             Each recipient will be sent an email requesting his or her signature after the previous 
             signatory has completed his or her template role.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.DocuSign.SendTemplateRequest.RecordId">
+            <summary>
+            The unique identifier of the entity that this template's fields will be calculated from.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.DocuSign.Utility.DocuSignTemplate.TemplateId">
+            <summary>
+            The template's DocuSign identifier (UUID)
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.DocuSign.Utility.DocuSignTemplate.Name">
+            <summary>
+            The template's display name
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.DocuSign.Utility.DocuSignTemplate.Description">
+            <summary>
+            The template's Message
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.DocuSign.Utility.DocuSignTemplate.FolderId">
+            <summary>
+            The template's DocuSign folder identifier (UUID)
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.DocuSign.Utility.DocuSignTemplate.FolderName">
+            <summary>
+            The template's folder name
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.DocuSign.Utility.DocuSignTemplate.FileName">
+            <summary>
+            The name of the file for the template's document.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.DocuSign.Utility.DocuSignTemplate.AbsoluteUri">
+            <summary>
+            The Uri path to the template's document.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.DocuSign.Utility.DocuSignTemplate.ContentType">
+            <summary>
+            The MIME type for the template's document.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.DocuSign.Utility.DocuSignTemplate.TemplateType">
+            <summary>
+            The document type for the template. E.g., Word, PDF, etc.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.DocuSign.Utility.DocuSignTemplate.CreatedDate">
+            <summary>
+            The date and time the template was created
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.DocuSign.Utility.DocuSignTemplate.LastModifiedDate">
+            <summary>
+            The date and time the template was last modified
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.DocuSign.Utility.DocuSignTemplateRecipient.Role">
+            <summary>
+            The recipient's Template Role
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.DocuSign.Utility.DocuSignTemplateRecipient.Name">
+            <summary>
+            The recipient's name
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.DocuSign.Utility.DocuSignTemplateRecipient.Email">
+            <summary>
+            The recipient's email address
             </summary>
         </member>
         <member name="P:crmSeries.Core.Features.Inventory.BaseInventoryDto.ParentId">
@@ -1167,6 +1192,121 @@
             Setting this value will return all notes that have comments containing your search phrase.
             For obvious reasons, we are requiring the lenght of your search criteria to be at least
             4 characters.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.OutputTemplateCategories.Dtos.BaseOutputTemplateCategoryDto.Category">
+            <summary>
+            The output template category's name.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.OutputTemplateCategories.Dtos.BaseOutputTemplateCategoryDto.RecordType">
+            <summary>
+            The type of records this template category uses. E.g., Deal
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.OutputTemplateCategories.Dtos.GetOutputTemplateCategoryDto.CategoryId">
+            <summary>
+            The unnique identifier of the output template category.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.OutputTemplateCategories.Dtos.EditOutputTemplateCategoryDto.CategoryId">
+            <summary>
+            The unnique identifier of the output template category.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.OutputTemplateFields.Dtos.BaseOutputTemplateFieldDto.TemplateId">
+            <summary>
+            The unique identifier of the OutputTemplate record this field is for.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.OutputTemplateFields.Dtos.BaseOutputTemplateFieldDto.TemplateField">
+            <summary>
+            The name of the field on the template.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.OutputTemplateFields.Dtos.BaseOutputTemplateFieldDto.FieldType">
+            <summary>
+            The type of field. E.g., textbox, checkbox, date, etc.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.OutputTemplateFields.Dtos.BaseOutputTemplateFieldDto.CrmSeriesField">
+            <summary>
+            The entity field or fields that make the value of this field. E.g., [City] + " " + [State] + " " + [Zip]
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.OutputTemplateFields.Dtos.BaseOutputTemplateFieldDto.Calculation">
+            <summary>
+            Used to denote if the CrmSeriesField is a mathematical calculation. E.g., [NetSellPrice] + [SalesTax]
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.OutputTemplateFields.Dtos.GetOutputTemplateFieldDto.FieldId">
+            <summary>
+            The unnique identifier of the output template field.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.OutputTemplateFields.Dtos.EditOutputTemplateFieldDto.FieldId">
+            <summary>
+            The unnique identifier of the output template field.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.OutputTemplates.Dtos.BaseOutputTemplateDto.CategoryId">
+            <summary>
+            The foreign key unnique identifier for the category of this output template.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.OutputTemplates.Dtos.BaseOutputTemplateDto.Template">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.OutputTemplates.Dtos.BaseOutputTemplateDto.TemplateType">
+            <summary>
+            The document type for the template. E.g., Word, PDF, etc.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.OutputTemplates.Dtos.BaseOutputTemplateDto.Description">
+            <summary>
+            Provides information about this template.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.OutputTemplates.Dtos.BaseOutputTemplateDto.AbsoluteUri">
+            <summary>
+            The full URI path to this template file.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.OutputTemplates.Dtos.BaseOutputTemplateDto.FileName">
+            <summary>
+            The filename of the template file. E.g., MyTemplate.docx
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.OutputTemplates.Dtos.BaseOutputTemplateDto.ContentType">
+            <summary>
+            The MIME type of this template.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.OutputTemplates.Dtos.BaseOutputTemplateDto.Source">
+            <summary>
+            The external source of this template. E.g., DocuSign, RightSignature, etc.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.OutputTemplates.Dtos.BaseOutputTemplateDto.SourceId">
+            <summary>
+            The unique identifier of this template from its source.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.OutputTemplates.Dtos.GetOutputTemplateDto.TemplateId">
+            <summary>
+            The unique identifier of this output template entity.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.OutputTemplates.Dtos.EditOutputTemplateDto.TemplateId">
+            <summary>
+            The unique identifier of this output template entity.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.OutputTemplates.GetOutputTemplatesRequest.CategoryId">
+            <summary>
+            Optional filter for the unique identifier of the output template category for the returned templates.
             </summary>
         </member>
         <member name="P:crmSeries.Core.Features.Tasks.Dtos.BaseTaskDto.UserId">

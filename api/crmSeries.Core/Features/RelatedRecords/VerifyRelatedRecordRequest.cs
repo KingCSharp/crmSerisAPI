@@ -11,6 +11,9 @@ using crmSeries.Core.Features.Inventory.Utility;
 using crmSeries.Core.Features.Leads.Utility;
 using crmSeries.Core.Features.Notes.Utility;
 using crmSeries.Core.Features.Opportunities.Utility;
+using crmSeries.Core.Features.OutputTemplateCategories.Utility;
+using crmSeries.Core.Features.OutputTemplateFields.Utility;
+using crmSeries.Core.Features.OutputTemplates.Utility;
 using crmSeries.Core.Features.Tasks.Utility;
 using crmSeries.Core.Features.UserRoles.Utility;
 using crmSeries.Core.Features.Users.Utility;
@@ -152,6 +155,36 @@ namespace crmSeries.Core.Features.RelatedRecords
                     .RelatedEntityExists(x => x.RoleId == request.RecordTypeId))
                 {
                     return Response.ErrorAsync(UserRolesConstants.ErrorMessages.UserRoleNotFound);
+                }
+            }
+
+            if (request.RecordType == RelatedRecord.Types.OutputTemplateCategory)
+            {
+                if (!_context.Set<OutputTemplateCategory>()
+                    .AsNoTracking()
+                    .RelatedEntityExists(x => x.CategoryId == request.RecordTypeId))
+                {
+                    return Response.ErrorAsync(OutputTemplateCategoriesConstants.ErrorMessages.OutputTemplateCategoryNotFound);
+                }
+            }
+
+            if (request.RecordType == RelatedRecord.Types.OutputTemplate)
+            {
+                if (!_context.Set<OutputTemplate>()
+                    .AsNoTracking()
+                    .RelatedEntityExists(x => x.TemplateId == request.RecordTypeId))
+                {
+                    return Response.ErrorAsync(OutputTemplatesConstants.ErrorMessages.OutputTemplateNotFound);
+                }
+            }
+
+            if (request.RecordType == RelatedRecord.Types.OutputTemplateField)
+            {
+                if (!_context.Set<OutputTemplateField>()
+                    .AsNoTracking()
+                    .RelatedEntityExists(x => x.FieldId == request.RecordTypeId))
+                {
+                    return Response.ErrorAsync(OutputTemplateFieldsConstants.ErrorMessages.OutputTemplateFieldNotFound);
                 }
             }
 

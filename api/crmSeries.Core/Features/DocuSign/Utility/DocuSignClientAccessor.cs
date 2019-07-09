@@ -1,6 +1,6 @@
 ﻿using DocuSign.eSign.Client;
 
-namespace crmSeries.Core.Features.DocuSign
+namespace crmSeries.Core.Features.DocuSign.Utility
 {
     public class DocuSignClientAccessor
     {

@@ -3,6 +3,7 @@ using System.Net;
 using System.Threading.Tasks;
 using crmSeries.Api.Controllers;
 using crmSeries.Core.Features.DocuSign;
+using crmSeries.Core.Features.DocuSign.Dtos;
 using crmSeries.Core.Mediator;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,10 +18,34 @@ namespace crmSeries.API.Controllers
         /// </summary>
         /// <returns>List of available templates</returns>
         [HttpGet]
-        [ProducesResponseType(typeof(Response<List<TemplateGetDto>>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(Response<List<GetTemplateDto>>), (int)HttpStatusCode.OK)]
         public Task<IActionResult> ListTemplates()
         {
             return HandleAsync(new ListTemplatesRequest());
+        }
+
+        /// <summary>
+        /// Retrieves DocuSign template by id.
+        /// </summary>
+        /// <returns>a DocuSign template</returns>
+        [HttpGet]
+        [ProducesResponseType(typeof(Response<GetTemplateDto>), (int)HttpStatusCode.OK)]
+        [Route("{id}")]
+        public Task<IActionResult> GetFullTemplateById(string id)
+        {
+            return HandleAsync(new GetFullTemplateByIdRequest(id));
+        }
+
+        /// <summary>
+        /// Initializes a DocuSign template by pulling it and its fields into the OutputTemplate and OutputTemplateField tables.
+        /// </summary>
+        /// <returns>a DocuSign template</returns>
+        [HttpPost]
+        [ProducesResponseType(typeof(Response), (int)HttpStatusCode.OK)]
+        [Route("initialize")]
+        public Task<IActionResult> InitializeTemplate([FromBody] InitializeTemplateRequest request)
+        {
+            return HandleAsync(request);
         }
 
         /// <summary>

@@ -1,7 +1,8 @@
 ﻿using System;
+using crmSeries.Core.Features.DocuSign.Utility;
 using FluentValidation;
 
-namespace crmSeries.Core.Features.DocuSign
+namespace crmSeries.Core.Features.DocuSign.Dtos
 {
     /// <summary>
     /// Contains the necessary information to identify a DocuSign template.
@@ -54,7 +55,7 @@ namespace crmSeries.Core.Features.DocuSign
     /// <summary>
     /// Contains information about a DocuSign template.
     /// </summary>
-    public class TemplateGetDto : DocuSignTemplate
+    public class GetTemplateDto : DocuSignTemplate
     {
     }
 }

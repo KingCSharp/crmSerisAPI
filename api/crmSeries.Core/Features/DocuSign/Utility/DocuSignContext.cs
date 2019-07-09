@@ -1,7 +1,7 @@
 ﻿using System;
 using DocuSign.eSign.Client.Auth;
 
-namespace crmSeries.Core.Features.DocuSign
+namespace crmSeries.Core.Features.DocuSign.Utility
 {
     public class DocuSignContext
     {
