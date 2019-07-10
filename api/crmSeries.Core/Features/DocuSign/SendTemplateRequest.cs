@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using crmSeries.Core.Features.DocuSign.Dtos;
+using crmSeries.Core.Features.DocuSign.Utility;
 using crmSeries.Core.Mediator;
 using FluentValidation;
 
@@ -19,6 +21,11 @@ namespace crmSeries.Core.Features.DocuSign
         /// signatory has completed his or her template role.
         /// </summary>
         public List<TemplateRecipientDto> Recipients { get; set; }
+
+        /// <summary>
+        /// The unique identifier of the entity that this template's fields will be calculated from.
+        /// </summary>
+        public int RecordId { get; set; }
     }
 
     public class SendTemplateRequestHandler : IRequestHandler<SendTemplateRequest>
@@ -34,7 +41,7 @@ namespace crmSeries.Core.Features.DocuSign
         {
             try
             {
-                await _docuSignClient.SendTemplate(request.Template.TemplateId, request.Recipients);
+                await _docuSignClient.SendTemplate(request.Template.TemplateId, request.Recipients, request.RecordId);
             }
             catch(Exception ex)
             {

@@ -216,6 +216,96 @@
             </summary>
             <param name="id">The unique identifier of the Note</param>
         </member>
+        <member name="M:crmSeries.API.Controllers.OutputTemplateCategoriesController.GetOutputTemplateCategories(crmSeries.Core.Features.OutputTemplateCategories.GetOutputTemplateCategoriesRequest)">
+            <summary>
+            Gets a list of all output template categories.
+            </summary>
+            <param name="request">The request information for this API endpoint.</param>
+        </member>
+        <member name="M:crmSeries.API.Controllers.OutputTemplateCategoriesController.GetOutputTemplateCategoryById(System.Int32)">
+            <summary>
+            Gets an OutputTemplateCategory entity based on the unique identifier.
+            </summary>
+            <param name="id">The unique identifier of the output template category.</param>
+        </member>
+        <member name="M:crmSeries.API.Controllers.OutputTemplateCategoriesController.Post(crmSeries.Core.Features.OutputTemplateCategories.AddOutputTemplateCategoryRequest)">
+            <summary>
+            Adds an OutputTemplateCategory object based on the data in the request.
+            </summary>
+        </member>
+        <member name="M:crmSeries.API.Controllers.OutputTemplateCategoriesController.Edit(crmSeries.Core.Features.OutputTemplateCategories.EditOutputTemplateCategoryRequest)">
+            <summary>
+            Updates an OutputTemplateCategory object based on the data in the request.
+            </summary>
+        </member>
+        <member name="M:crmSeries.API.Controllers.OutputTemplateCategoriesController.Delete(System.Int32)">
+            <summary>
+            Deletes the OutputTemplateCategory entity with the unique identifier.
+            </summary>
+            <param name="id">The unique identifier of the OutputTemplateCategory</param>
+        </member>
+        <member name="M:crmSeries.API.Controllers.OutputTemplateFieldsController.GetOutputTemplateFields(crmSeries.Core.Features.OutputTemplateFields.GetOutputTemplateFieldsRequest)">
+            <summary>
+            Gets a list of all output template fields.
+            </summary>
+            <param name="request">The request information for this API endpoint.</param>
+        </member>
+        <member name="M:crmSeries.API.Controllers.OutputTemplateFieldsController.GetOutputTemplateFieldById(System.Int32)">
+            <summary>
+            Gets an OutputTemplateField entity based on the unique identifier.
+            </summary>
+            <param name="id">The unique identifier of the output template field.</param>
+        </member>
+        <member name="M:crmSeries.API.Controllers.OutputTemplateFieldsController.Post(crmSeries.Core.Features.OutputTemplateFields.AddOutputTemplateFieldRequest)">
+            <summary>
+            Adds an OutputTemplateField object based on the data in the request.
+            </summary>
+        </member>
+        <member name="M:crmSeries.API.Controllers.OutputTemplateFieldsController.Edit(crmSeries.Core.Features.OutputTemplateFields.EditOutputTemplateFieldRequest)">
+            <summary>
+            Updates an OutputTemplateField object based on the data in the request.
+            </summary>
+        </member>
+        <member name="M:crmSeries.API.Controllers.OutputTemplateFieldsController.Delete(System.Int32)">
+            <summary>
+            Deletes the OutputTemplateField entity with the unique identifier.
+            </summary>
+            <param name="id">The unique identifier of the OutputTemplateField</param>
+        </member>
+        <member name="M:crmSeries.API.Controllers.OutputTemplatesController.GetOutputTemplates(crmSeries.Core.Features.OutputTemplates.GetOutputTemplatesRequest)">
+            <summary>
+            Gets a list of all output templates.
+            </summary>
+            <param name="request">The request information for this API endpoint.</param>
+        </member>
+        <member name="M:crmSeries.API.Controllers.OutputTemplatesController.GetOutputTemplateById(System.Int32)">
+            <summary>
+            Gets an OutputTemplate entity based on the unique identifier.
+            </summary>
+            <param name="id">The unique identifier of the output template.</param>
+        </member>
+        <member name="M:crmSeries.API.Controllers.OutputTemplatesController.GetDocuSignOutputTemplateById(System.String)">
+            <summary>
+            Gets an OutputTemplate entity based on the unique identifier.
+            </summary>
+            <param name="id">The unique identifier of the output template.</param>
+        </member>
+        <member name="M:crmSeries.API.Controllers.OutputTemplatesController.Post(crmSeries.Core.Features.OutputTemplates.AddOutputTemplateRequest)">
+            <summary>
+            Adds an OutputTemplate object based on the data in the request.
+            </summary>
+        </member>
+        <member name="M:crmSeries.API.Controllers.OutputTemplatesController.Edit(crmSeries.Core.Features.OutputTemplates.EditOutputTemplateRequest)">
+            <summary>
+            Updates an OutputTemplate object based on the data in the request.
+            </summary>
+        </member>
+        <member name="M:crmSeries.API.Controllers.OutputTemplatesController.Delete(System.Int32)">
+            <summary>
+            Deletes the OutputTemplate entity with the unique identifier.
+            </summary>
+            <param name="id">The unique identifier of the OutputTemplate</param>
+        </member>
         <member name="M:crmSeries.API.Controllers.RelatedRecordsController.Get">
             <summary>
             Gets the different related records.
@@ -271,6 +361,18 @@
             Retrieves a list of available DocuSign templates
             </summary>
             <returns>List of available templates</returns>
+        </member>
+        <member name="M:crmSeries.API.Controllers.TemplatesController.GetFullTemplateById(System.String)">
+            <summary>
+            Retrieves DocuSign template by id.
+            </summary>
+            <returns>a DocuSign template</returns>
+        </member>
+        <member name="M:crmSeries.API.Controllers.TemplatesController.InitializeTemplate(crmSeries.Core.Features.DocuSign.InitializeTemplateRequest)">
+            <summary>
+            Initializes a DocuSign template by pulling it and its fields into the OutputTemplate and OutputTemplateField tables.
+            </summary>
+            <returns>a DocuSign template</returns>
         </member>
         <member name="M:crmSeries.API.Controllers.TemplatesController.SendTemplate(crmSeries.Core.Features.DocuSign.SendTemplateRequest)">
             <summary>

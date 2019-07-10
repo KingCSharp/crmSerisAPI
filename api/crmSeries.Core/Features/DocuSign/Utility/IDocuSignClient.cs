@@ -1,14 +1,19 @@
-﻿using System;
+﻿using crmSeries.Core.Features.DocuSign.Dtos;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace crmSeries.Core.Features.DocuSign
+namespace crmSeries.Core.Features.DocuSign.Utility
 {
     public interface IDocuSignClient
     {
         Task<List<DocuSignTemplate>> GetTemplates();
 
-        Task SendTemplate(string templateId, IEnumerable<DocuSignTemplateRecipient> recipients);
+        Task<GetTemplateFullDto> GetTemplateById(string templateId);
+
+        Task<List<TemplateFieldDto>> GetTemplateFields(string templateId);
+
+        Task SendTemplate(string templateId, IEnumerable<DocuSignTemplateRecipient> recipients, int recordId);
     }
 
     public class DocuSignTemplate
@@ -37,6 +42,26 @@ namespace crmSeries.Core.Features.DocuSign
         /// The template's folder name
         /// </summary>
         public string FolderName { get; set; }
+
+        /// <summary>
+        /// The name of the file for the template's document.
+        /// </summary>
+        public string FileName { get; set; }
+
+        /// <summary>
+        /// The Uri path to the template's document.
+        /// </summary>
+        public string AbsoluteUri { get; set; }
+
+        /// <summary>
+        /// The MIME type for the template's document.
+        /// </summary>
+        public string ContentType { get; set; }
+
+        /// <summary>
+        /// The document type for the template. E.g., Word, PDF, etc.
+        /// </summary>
+        public string TemplateType { get; set; }
 
         /// <summary>
         /// The date and time the template was created

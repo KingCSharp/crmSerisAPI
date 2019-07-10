@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using crmSeries.Core.Features.DocuSign;
+using crmSeries.Core.Features.DocuSign.Dtos;
 using NUnit.Framework;
 
 namespace crmSeries.Core.Tests.Features.DocuSign

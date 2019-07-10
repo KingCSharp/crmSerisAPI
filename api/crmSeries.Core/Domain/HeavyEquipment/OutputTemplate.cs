@@ -13,5 +13,7 @@ namespace crmSeries.Core.Domain.HeavyEquipment
         public string AbsoluteUri { get; set; }
         public string FileName { get; set; }
         public string ContentType { get; set; }
+        public string Source { get; set; }
+        public string SourceId { get; set; }
     }
 }
