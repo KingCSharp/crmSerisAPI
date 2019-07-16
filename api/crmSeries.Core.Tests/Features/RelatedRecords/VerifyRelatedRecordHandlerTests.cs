@@ -107,7 +107,7 @@ namespace crmSeries.Core.Tests.Features.RelatedRecords
         {
             context.Company.Add(new Company { CompanyId = 1 });
             context.Contact.Add(new Contact { ContactId = 1 });
-            context.Equipment.Add(new Equipment { EquipmentId = 1 });
+            context.Equipment.Add(new Domain.HeavyEquipment.Equipment { EquipmentId = 1 });
             context.Lead.Add(new Lead { LeadId = 1 });
             context.Note.Add(new Note { NoteId = 1 });
             context.Opportunity.Add(new Opportunity { OpportunityId = 1 });

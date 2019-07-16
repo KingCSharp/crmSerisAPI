@@ -92,7 +92,7 @@ namespace crmSeries.Core.Data
         public virtual DbSet<DealUserAccessFilter> DealUserAccessFilter { get; set; }
         public virtual DbSet<DealUserApproval> DealUserApproval { get; set; }
         public virtual DbSet<EmailTemplate> EmailTemplate { get; set; }
-        public virtual DbSet<Equipment> Equipment { get; set; }
+        public virtual DbSet<Domain.HeavyEquipment.Equipment> Equipment { get; set; }
         public virtual DbSet<EquipmentAssignedGet> EquipmentAssignedGet { get; set; }
         public virtual DbSet<EquipmentAssignedImage> EquipmentAssignedImage { get; set; }
         public virtual DbSet<EquipmentAssignedInventoryCost> EquipmentAssignedInventoryCost { get; set; }
@@ -3036,7 +3036,7 @@ namespace crmSeries.Core.Data
                     .IsUnicode(false);
             });
 
-            modelBuilder.Entity<Equipment>(entity =>
+            modelBuilder.Entity<Domain.HeavyEquipment.Equipment>(entity =>
             {
                 entity.HasIndex(e => e.Active)
                     .HasName("IX_Equipment_11");

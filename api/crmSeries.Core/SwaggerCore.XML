@@ -799,6 +799,100 @@
             The recipient's email address
             </summary>
         </member>
+        <member name="P:crmSeries.Core.Features.Equipment.Dtos.GetEquipmentDto.EquipmentId">
+            <summary>
+            The equipment identifier.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Notes.Dtos.BaseNoteDto.RecordId">
+            <summary>
+            The Id of the related record.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Notes.Dtos.BaseNoteDto.RecordType">
+            <summary>
+            The record type of the note.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Notes.Dtos.BaseNoteDto.UserId">
+            <summary>
+            The user Id of the note.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Notes.Dtos.BaseNoteDto.TypeId">
+            <summary>
+            The type Id of the note.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Notes.Dtos.BaseNoteDto.NoteDate">
+            <summary>
+            The date the note was created
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Notes.Dtos.BaseNoteDto.Comments">
+            <summary>
+            The comments associated with the note.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Notes.Dtos.BaseNoteDto.Latitude">
+            <summary>
+            The latitude of user when the note was modified.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Notes.Dtos.BaseNoteDto.Longitude">
+            <summary>
+            The longitude of user when the note was modified.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Notes.Dtos.GetNoteDto.NoteId">
+            <summary>
+            The note identifier.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Notes.Dtos.GetNoteDto.Deleted">
+            <summary>
+            The flag for soft deletion.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Notes.Dtos.GetNoteDto.LastModified">
+            <summary>
+            The date, if any, that the entity was modified.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Notes.Dtos.EditNoteDto.NoteId">
+            <summary>
+            The note identifier
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Notes.Dtos.EditNoteDto.Deleted">
+            <summary>
+            The flag for soft deletion.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Notes.Dtos.EditNoteDto.Active">
+            <summary>
+            The flag for whether this contact is active or not.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Notes.GetNotesRequest.FromDate">
+            <summary>
+            Setting this value will return all notes created with a timestamp
+            great than or equal to this date.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Notes.GetNotesRequest.ToDate">
+            <summary>
+            Setting this value will return all notes created with a timestamp
+            less than or equal to this date.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Notes.GetNotesRequest.Comments">
+            <summary>
+            Setting this value will return all notes that have comments containing your search phrase.
+            For obvious reasons, we are requiring the lenght of your search criteria to be at least
+            4 characters.
+            </summary>
+        </member>
         <member name="P:crmSeries.Core.Features.Inventory.BaseInventoryDto.ParentId">
             <summary>
             The id of the parent entity for this inventory equipment.
@@ -1103,95 +1197,6 @@
         <member name="P:crmSeries.Core.Features.Leads.Dtos.AddLeadDto.LastName">
             <summary>
             The last name of the contact for this lead.  Maximum length: 50
-            </summary>
-        </member>
-        <member name="P:crmSeries.Core.Features.Notes.Dtos.BaseNoteDto.RecordId">
-            <summary>
-            The Id of the related record.
-            </summary>
-        </member>
-        <member name="P:crmSeries.Core.Features.Notes.Dtos.BaseNoteDto.RecordType">
-            <summary>
-            The record type of the note.
-            </summary>
-        </member>
-        <member name="P:crmSeries.Core.Features.Notes.Dtos.BaseNoteDto.UserId">
-            <summary>
-            The user Id of the note.
-            </summary>
-        </member>
-        <member name="P:crmSeries.Core.Features.Notes.Dtos.BaseNoteDto.TypeId">
-            <summary>
-            The type Id of the note.
-            </summary>
-        </member>
-        <member name="P:crmSeries.Core.Features.Notes.Dtos.BaseNoteDto.NoteDate">
-            <summary>
-            The date the note was created
-            </summary>
-        </member>
-        <member name="P:crmSeries.Core.Features.Notes.Dtos.BaseNoteDto.Comments">
-            <summary>
-            The comments associated with the note.
-            </summary>
-        </member>
-        <member name="P:crmSeries.Core.Features.Notes.Dtos.BaseNoteDto.Latitude">
-            <summary>
-            The latitude of user when the note was modified.
-            </summary>
-        </member>
-        <member name="P:crmSeries.Core.Features.Notes.Dtos.BaseNoteDto.Longitude">
-            <summary>
-            The longitude of user when the note was modified.
-            </summary>
-        </member>
-        <member name="P:crmSeries.Core.Features.Notes.Dtos.GetNoteDto.NoteId">
-            <summary>
-            The note identifier.
-            </summary>
-        </member>
-        <member name="P:crmSeries.Core.Features.Notes.Dtos.GetNoteDto.Deleted">
-            <summary>
-            The flag for soft deletion.
-            </summary>
-        </member>
-        <member name="P:crmSeries.Core.Features.Notes.Dtos.GetNoteDto.LastModified">
-            <summary>
-            The date, if any, that the entity was modified.
-            </summary>
-        </member>
-        <member name="P:crmSeries.Core.Features.Notes.Dtos.EditNoteDto.NoteId">
-            <summary>
-            The note identifier
-            </summary>
-        </member>
-        <member name="P:crmSeries.Core.Features.Notes.Dtos.EditNoteDto.Deleted">
-            <summary>
-            The flag for soft deletion.
-            </summary>
-        </member>
-        <member name="P:crmSeries.Core.Features.Notes.Dtos.EditNoteDto.Active">
-            <summary>
-            The flag for whether this contact is active or not.
-            </summary>
-        </member>
-        <member name="P:crmSeries.Core.Features.Notes.GetNotesRequest.FromDate">
-            <summary>
-            Setting this value will return all notes created with a timestamp
-            great than or equal to this date.
-            </summary>
-        </member>
-        <member name="P:crmSeries.Core.Features.Notes.GetNotesRequest.ToDate">
-            <summary>
-            Setting this value will return all notes created with a timestamp
-            less than or equal to this date.
-            </summary>
-        </member>
-        <member name="P:crmSeries.Core.Features.Notes.GetNotesRequest.Comments">
-            <summary>
-            Setting this value will return all notes that have comments containing your search phrase.
-            For obvious reasons, we are requiring the lenght of your search criteria to be at least
-            4 characters.
             </summary>
         </member>
         <member name="P:crmSeries.Core.Features.OutputTemplateCategories.Dtos.BaseOutputTemplateCategoryDto.Category">

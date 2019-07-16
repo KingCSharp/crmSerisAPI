@@ -7,7 +7,7 @@ namespace crmSeries.Core.Features.Inventory.Mapping
     {
         public InventoryDtoAutoMapperConfigurator()
         {
-            CreateMap<Equipment, GetInventoryDto>();
+            CreateMap<Domain.HeavyEquipment.Equipment, GetInventoryDto>();
         }
     }
 }
