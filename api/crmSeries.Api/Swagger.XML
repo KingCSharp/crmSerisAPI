@@ -162,7 +162,11 @@
             <summary>
             Gets a list of all equipment 
             </summary>
-            <param name="request">The request information for this API endpoint.</param>
+        </member>
+        <member name="M:crmSeries.API.Controllers.EquipmentController.GetEquipmentCategories(crmSeries.Core.Features.Equipment.GetEquipmentCategoriesRequest)">
+            <summary>
+            Gets a list of all equipment categories.
+            </summary>
         </member>
         <member name="M:crmSeries.API.Controllers.InventoryController.Get(crmSeries.Core.Features.Inventory.GetInventoryRequest)">
             <summary>

@@ -799,9 +799,166 @@
             The recipient's email address
             </summary>
         </member>
+        <member name="P:crmSeries.Core.Features.Equipment.Dtos.EquipmentCategoryDto.CategoryId">
+            <summary>
+            The unique identifier of the category.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Equipment.Dtos.EquipmentCategoryDto.Category">
+            <summary>
+            The name of the category.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Equipment.Dtos.BaseEquipmentDto.CategoryId">
+            <summary>
+            The identifier of the category the equipment is classified as.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Equipment.Dtos.BaseEquipmentDto.ParentId">
+            <summary>
+            The unique identifier of the parent of this equipment.  See
+            ParentType to determine the parent type.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Equipment.Dtos.BaseEquipmentDto.ParentType">
+            <summary>
+            The type of the parent of this equipment. 
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Equipment.Dtos.BaseEquipmentDto.Model">
+            <summary>
+            The product name of the equipment.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Equipment.Dtos.BaseEquipmentDto.Make">
+            <summary>
+            The brand of the equipment.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Equipment.Dtos.BaseEquipmentDto.Description">
+            <summary>
+            A description or classification the product.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Equipment.Dtos.BaseEquipmentDto.SerialNumber">
+            <summary>
+            The serial number of the equipment.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Equipment.Dtos.BaseEquipmentDto.StockNumber">
+            <summary>
+            The stock number of the equipment, typically
+            assigned by dealer.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Equipment.Dtos.BaseEquipmentDto.EquipmentNumber">
+            <summary>
+            The equipment number of the equipment, typically
+            assigned by the owner of the equipment.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Equipment.Dtos.BaseEquipmentDto.EquipmentYear">
+            <summary>
+            The year the equipment was manufactured in.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Equipment.Dtos.BaseEquipmentDto.StartDate">
+            <summary>
+            The date the equipment started getting used in production.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Equipment.Dtos.BaseEquipmentDto.StartHours">
+            <summary>
+            The number of hours the equipment has since it began use.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Equipment.Dtos.BaseEquipmentDto.LastSmrDate">
+            <summary>
+            Represents the date of the last system meter reading.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Equipment.Dtos.BaseEquipmentDto.LastSmr">
+            <summary>
+            Represents the system meter reading.  Smr is represented
+            in either hours of miles, typically hours.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Equipment.Dtos.BaseEquipmentDto.Latitude">
+            <summary>
+            The current latitude of the equipment. 
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Equipment.Dtos.BaseEquipmentDto.Longitude">
+            <summary>
+            The current longitude of the equipment.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Equipment.Dtos.BaseEquipmentDto.HoursPerDay">
+            <summary>
+            Average hours per day over the a past interval.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Equipment.Dtos.BaseEquipmentDto.Inventory">
+            <summary>
+            Does it belong to the dealership?  True = belongs to dealer.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Equipment.Dtos.BaseEquipmentDto.Fleet">
+            <summary>
+            The fleet the equipment is part of.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Equipment.Dtos.BaseEquipmentDto.FleetType">
+            <summary>
+            The equipment's fleet type.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Equipment.Dtos.BaseEquipmentDto.Status">
+            <summary>
+            The status of the equipment.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Equipment.Dtos.BaseEquipmentDto.NewUsed">
+            <summary>
+            Is the equipment new or used.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Equipment.Dtos.BaseEquipmentDto.GroupCode">
+            <summary>
+            The equipment's group code.  
+            </summary>
+        </member>
         <member name="P:crmSeries.Core.Features.Equipment.Dtos.GetEquipmentDto.EquipmentId">
             <summary>
             The equipment identifier.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Notes.GetEquipmentRequest.ParentType">
+            <summary>
+            The type of the parent of this equipment.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Notes.GetEquipmentRequest.IsMachine">
+            <summary>
+            Represents if the equipment is a machine type or not.  Default
+            is true.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Notes.GetEquipmentRequest.CategoryId">
+            <summary>
+            The identifier of the category the equipment is classified as.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Notes.GetEquipmentRequest.StartHoursMin">
+            <summary>
+            The minimum number of hours the equipment has since it began
+            use.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Notes.GetEquipmentRequest.StartHoursMax">
+            <summary>
+            The maximum number of hours the equipment has since it began
+            use.
             </summary>
         </member>
         <member name="P:crmSeries.Core.Features.Notes.Dtos.BaseNoteDto.RecordId">
@@ -1532,13 +1689,13 @@
         </member>
         <member name="P:crmSeries.Core.Logic.Queries.PagedQueryRequest.PageNumber">
             <summary>
-            The page number for the paginated results.
+            The page number for the paginated results.  Default is 1.
             Setting a number beyond the last page will just return the last page of data.
             </summary>
         </member>
         <member name="P:crmSeries.Core.Logic.Queries.PagedQueryRequest.PageSize">
             <summary>
-            The number of items returned for the page. A maximum size of 100 is set.
+            The number of items returned for the page. A maximum size of 100 is set.  Default is 20.
             </summary>
         </member>
         <member name="P:crmSeries.Core.Logic.Queries.PagedQueryResult`1.TotalItemCount">

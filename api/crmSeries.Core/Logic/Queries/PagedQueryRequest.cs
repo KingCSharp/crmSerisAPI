@@ -9,15 +9,15 @@ namespace crmSeries.Core.Logic.Queries
     public class PagedQueryRequest
     {
         /// <summary>
-        /// The page number for the paginated results.
+        /// The page number for the paginated results.  Default is 1.
         /// Setting a number beyond the last page will just return the last page of data.
         /// </summary>
-        public int PageNumber { get; set; }
+        public int PageNumber { get; set; } = 1;
 
-        private int _pageSize;
+        private int _pageSize = 20;
 
         /// <summary>
-        /// The number of items returned for the page. A maximum size of 100 is set.
+        /// The number of items returned for the page. A maximum size of 100 is set.  Default is 20.
         /// </summary>
         public int PageSize
         {
