@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using crmSeries.Core.Configuration;
 using crmSeries.Core.Data;
-using crmSeries.Core.Domain.HeavyEquipment;
 using crmSeries.Core.Security;
+using FizzWare.NBuilder;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
 
@@ -11,7 +12,7 @@ namespace crmSeries.Core.Tests
     [TestFixture]
     public abstract class BaseUnitTest
     {
-        private static bool Initialized = false;
+        private static bool Initialized;
 
         [OneTimeSetUp]
         public void OneTimeSetup()
@@ -25,7 +26,7 @@ namespace crmSeries.Core.Tests
 
         public DbContextOptions<AdminContext> GetAdminContextOptions()
         {
-            string dbName = Guid.NewGuid().ToString();
+            var dbName = Guid.NewGuid().ToString();
             return new DbContextOptionsBuilder<AdminContext>()
                 .UseInMemoryDatabase(dbName)
                 .Options;
@@ -33,9 +34,9 @@ namespace crmSeries.Core.Tests
 
         public DbContextOptions<HeavyEquipmentContext> GetHeavyEquipmentContextOptions()
         {
-            string dbName = Guid.NewGuid().ToString();
+            var dbName = Guid.NewGuid().ToString();
             return new DbContextOptionsBuilder<HeavyEquipmentContext>()
-                .UseInMemoryDatabase(databaseName: dbName)
+                .UseInMemoryDatabase(dbName)
                 .Options;
         }
 
@@ -43,11 +44,26 @@ namespace crmSeries.Core.Tests
         {
             return new StubbedIdentityUserContext(userId);
         }
+
+        protected void CreateBuilderPersistMethods<T>(DbContext dbContext) where T : class
+        {
+            BuilderSetup.SetCreatePersistenceMethod<T>(x =>
+            {
+                dbContext.Set<T>().Add(x);
+                dbContext.SaveChanges();
+            });
+
+            BuilderSetup.SetCreatePersistenceMethod<IList<T>>(x =>
+            {
+                dbContext.Set<T>().AddRange(x);
+                dbContext.SaveChanges();
+            });
+        }
     }
 
     public class StubbedIdentityUserContext : IIdentityUserContext
     {
-        private int userId;
+        private readonly int userId;
 
         public StubbedIdentityUserContext(int id)
         {

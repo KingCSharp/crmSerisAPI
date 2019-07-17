@@ -44,7 +44,7 @@ namespace crmSeries.Core.Features.Equipment
 
             var count = equipments.Count();
 
-            result.PageCount = count / request.PageSize;
+            result.PageCount = (count + request.PageSize - 1) / request.PageSize;
             result.TotalItemCount = count;
             result.PageNumber = request.PageNumber;
             result.PageSize = request.PageSize;
