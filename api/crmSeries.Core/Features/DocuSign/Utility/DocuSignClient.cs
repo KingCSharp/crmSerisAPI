@@ -20,7 +20,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using MimeMapping;
 using org.mariuszgromada.math.mxparser;
-//using org.mariuszgromada.math.mxparser;
 
 namespace crmSeries.Core.Features.DocuSign.Utility
 {
@@ -209,20 +208,28 @@ namespace crmSeries.Core.Features.DocuSign.Utility
 
             foreach (var signer in draftRecipients.Signers)
             {
-                var signerTabs = await envelopeApi
-                    .ListTabsAsync(_docuSignContext.Account.AccountId, 
-                    result.EnvelopeId, 
-                    signer.RecipientId);
+                try
+                {
+                    var signerTabs = await envelopeApi
+                        .ListTabsAsync(_docuSignContext.Account.AccountId,
+                        result.EnvelopeId,
+                        signer.RecipientId);
 
-                SetDocumentTabValues(recordId, templateId, signerTabs);
+                    SetDocumentTabValues(recordId, templateId, signerTabs);
 
-                envelopeApi.UpdateTabs
-                (
-                    _docuSignContext.Account.AccountId,
-                    result.EnvelopeId,
-                    signer.RecipientId,
-                    signerTabs
-                );
+                    envelopeApi.UpdateTabs
+                    (
+                        _docuSignContext.Account.AccountId,
+                        result.EnvelopeId,
+                        signer.RecipientId,
+                        signerTabs
+                    );
+                }
+                catch
+                {
+                    //TODO: Find out for sure that this is true, and then just set it for the first signer
+                    // Only first signer needs values set?
+                }
             }
 
             envelopeApi.Update(_docuSignContext.Account.AccountId, result.EnvelopeId, new Envelope
