@@ -87,18 +87,18 @@ namespace crmSeries.Core.Tests.Features.Equipment
             results.AssertError(ExpectedError.ForLessThanOrEqualTo("Start Hours Min", request.StartHoursMax));
         }
 
-        //[Test]
-        //public void Validate_StartHoursMinDefault_BypassesValidation()
-        //{
-        //    var validator = CreateValidator();
-        //    var request = CreateRequest();
+        [Test]
+        public void Validate_StartHoursMinDefault_BypassesValidation()
+        {
+            var validator = CreateValidator();
+            var request = CreateRequest();
 
-        //    request.StartHoursMin = default;
+            request.StartHoursMin = default(decimal);
 
-        //    var results = validator.Validate(request);
+            var results = validator.Validate(request);
 
-        //    results.AssertIsValid();
-        //}
+            results.AssertIsValid();
+        }
 
         [Test]
         public void Validate_ValidRequest_ReturnsValidResults()
