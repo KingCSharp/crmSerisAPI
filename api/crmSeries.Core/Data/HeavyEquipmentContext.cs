@@ -1119,6 +1119,15 @@ namespace crmSeries.Core.Data
                 entity.HasKey(e => e.SourceId);
 
                 entity.Property(e => e.SourceId).HasColumnName("SourceID");
+                entity.Property(e => e.DefaultExternal).HasColumnName("DefaultExternal");
+                entity.Property(e => e.Deleted).HasColumnName("Deleted");
+
+                entity.Property(e => e.DefaultExternal)
+                    .IsRequired()
+                    .HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.Deleted)
+                    .HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.Source)
                     .IsRequired()

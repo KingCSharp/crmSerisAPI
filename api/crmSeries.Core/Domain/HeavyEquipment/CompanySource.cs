@@ -7,5 +7,7 @@ namespace crmSeries.Core.Domain.HeavyEquipment
     {
         public int SourceId { get; set; }
         public string Source { get; set; }
+        public bool DefaultExternal { get; set; }
+        public bool Deleted { get; set; }
     }
 }

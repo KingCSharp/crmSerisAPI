@@ -1346,6 +1346,12 @@
             The E-Mail address of the person who will own this lead.
             </summary>
         </member>
+        <member name="P:crmSeries.Core.Features.Leads.Dtos.AddLeadDto.Source">
+            <summary>
+            The source of the lead.  This field is not case sensitive.  If the value provided does
+            exist, the source of the lead will default to your default external lead source.
+            </summary>
+        </member>
         <member name="P:crmSeries.Core.Features.Leads.Dtos.AddLeadDto.FirstName">
             <summary>
             The first name of the contact for this lead.  Maximum length: 50

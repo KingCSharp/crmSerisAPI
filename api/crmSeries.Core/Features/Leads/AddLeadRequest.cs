@@ -67,15 +67,35 @@ namespace crmSeries.Core.Features.Leads
             var lead = Mapper.Map<Lead>(request);
 
             if (!string.IsNullOrWhiteSpace(request.OwnerEmail))
-            {
                 AssignOwnerToLead(lead, request.OwnerEmail);
-            }
-
+    
             AssignDefaultLeadStatus(lead);
+
+            if (!string.IsNullOrWhiteSpace(request.Source))
+                AssignSource(lead, request.Source.Trim());
 
             _context.Set<Lead>().Add(lead);
             _context.SaveChanges();
             return lead;
+        }
+
+        private void AssignSource(Lead lead, string leadSource)
+        {
+            var source = _context.Set<CompanySource>()
+                .FirstOrDefault(x => !x.Deleted && string.Equals(x.Source, leadSource, StringComparison.CurrentCultureIgnoreCase));
+
+            if (source != null)
+            {
+                lead.SourceId = source.SourceId;
+            }
+            else
+            {
+                var defaultExternalSource = _context.Set<CompanySource>()
+                    .FirstOrDefault(x => !x.Deleted && x.DefaultExternal);
+
+                if (defaultExternalSource != null)
+                    lead.SourceId = defaultExternalSource.SourceId;
+            }
         }
 
         private void AssignDefaultLeadStatus(Lead lead)

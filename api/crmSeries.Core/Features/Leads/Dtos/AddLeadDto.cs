@@ -146,6 +146,12 @@ namespace crmSeries.Core.Features.Leads.Dtos
         public string OwnerEmail { get; set; }
         
         /// <summary>
+        /// The source of the lead.  This field is not case sensitive.  If the value provided does
+        /// exist, the source of the lead will default to your default external lead source.
+        /// </summary>
+        public string Source { get; set; }
+
+        /// <summary>
         /// The first name of the contact for this lead.  Maximum length: 50
         /// </summary>
         [JsonIgnore]

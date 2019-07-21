@@ -37,6 +37,7 @@ namespace crmSeries.Core.Tests
             var dbName = Guid.NewGuid().ToString();
             return new DbContextOptionsBuilder<HeavyEquipmentContext>()
                 .UseInMemoryDatabase(dbName)
+                .EnableSensitiveDataLogging()
                 .Options;
         }
 

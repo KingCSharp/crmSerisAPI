@@ -360,5 +360,341 @@ namespace crmSeries.Core.Tests.Features.Leads
                 Assert.AreEqual(0, lead.StatusId);
             }
         }
+
+        [Test]
+        public void HandleAsync_SourceExistsInCompanySources_SourceIdSetToCompanySourceId()
+        {
+            // Arrange 
+            var options = GetHeavyEquipmentContextOptions();
+
+            var leadId = 0;
+            var userId = 33;
+            var userEmail = "john@smith-industries.com";
+            var leadSource = "ColdCall";
+            var leadSourceId = 27;
+
+            using (var context = new HeavyEquipmentContext(options))
+            {
+                context.User.Add(new User
+                {
+                    UserId = userId,
+                    Email = userEmail,
+                    Active = true,
+                    Deleted = false
+                });
+
+                context.CompanySource.Add(new CompanySource
+                {
+                    Source = leadSource,
+                    SourceId = leadSourceId
+                });
+
+                context.SaveChanges();
+
+                var executeWorkflowHandler =
+                    Substitute.For<IRequestHandler<ExecuteWorkflowRuleRequest, ExecuteWorkflowResponse>>();
+
+                executeWorkflowHandler.HandleAsync(Arg.Any<ExecuteWorkflowRuleRequest>())
+                    .Returns(new ExecuteWorkflowResponse().AsResponseAsync());
+
+                var addLeadAuditHandler =
+                    Substitute.For<IRequestHandler<AddLeadAuditRequest>>();
+
+                var handler = new AddLeadRequestHandler(context, executeWorkflowHandler, addLeadAuditHandler);
+
+                addLeadRequest.OwnerEmail = userEmail;
+                addLeadRequest.Source = leadSource;
+
+                // Act
+                var response = handler.HandleAsync(addLeadRequest);
+                leadId = response.Result.Data.Id;
+
+                var lead = context.Lead.SingleOrDefault(x => x.LeadId == leadId);
+
+                //Assert 
+                Assert.IsNotNull(lead);
+                Assert.AreEqual(leadSourceId, lead.SourceId);
+            }
+        }
+
+        [Test]
+        public void HandleAsync_SourceExistsInCompanySourcesAndCasingIsDifferent_SourceIdIsStillSetToCompanySourceId()
+        {
+            // Arrange 
+            var options = GetHeavyEquipmentContextOptions();
+
+            var leadId = 0;
+            var userId = 33;
+            var userEmail = "john@smith-industries.com";
+            var leadSource = "ColdCall";
+            var leadSourceId = 27;
+
+            using (var context = new HeavyEquipmentContext(options))
+            {
+                context.User.Add(new User
+                {
+                    UserId = userId,
+                    Email = userEmail,
+                    Active = true,
+                    Deleted = false
+                });
+
+                context.CompanySource.Add(new CompanySource
+                {
+                    Source = leadSource.ToUpper(),
+                    SourceId = leadSourceId
+                });
+
+                context.SaveChanges();
+
+                var executeWorkflowHandler =
+                    Substitute.For<IRequestHandler<ExecuteWorkflowRuleRequest, ExecuteWorkflowResponse>>();
+
+                executeWorkflowHandler.HandleAsync(Arg.Any<ExecuteWorkflowRuleRequest>())
+                    .Returns(new ExecuteWorkflowResponse().AsResponseAsync());
+
+                var addLeadAuditHandler =
+                    Substitute.For<IRequestHandler<AddLeadAuditRequest>>();
+
+                var handler = new AddLeadRequestHandler(context, executeWorkflowHandler, addLeadAuditHandler);
+
+                addLeadRequest.OwnerEmail = userEmail;
+                addLeadRequest.Source = leadSource;
+
+                // Act
+                var response = handler.HandleAsync(addLeadRequest);
+                leadId = response.Result.Data.Id;
+
+                var lead = context.Lead.SingleOrDefault(x => x.LeadId == leadId);
+
+                //Assert 
+                Assert.IsNotNull(lead);
+                Assert.AreEqual(leadSourceId, lead.SourceId);
+            }
+        }
+
+        [Test]
+        public void HandleAsync_SourceExistsInCompanySourcesAndSourceHasTrailingWhitespace_SourceIdIsStillSetToCompanySourceId()
+        {
+            // Arrange 
+            var options = GetHeavyEquipmentContextOptions();
+
+            var leadId = 0;
+            var userId = 33;
+            var userEmail = "john@smith-industries.com";
+            var leadSource = "ColdCall";
+            var leadSourceId = 27;
+
+            using (var context = new HeavyEquipmentContext(options))
+            {
+                context.User.Add(new User
+                {
+                    UserId = userId,
+                    Email = userEmail,
+                    Active = true,
+                    Deleted = false
+                });
+
+                context.CompanySource.Add(new CompanySource
+                {
+                    Source = leadSource,
+                    SourceId = leadSourceId
+                });
+
+                context.SaveChanges();
+
+                var executeWorkflowHandler =
+                    Substitute.For<IRequestHandler<ExecuteWorkflowRuleRequest, ExecuteWorkflowResponse>>();
+
+                executeWorkflowHandler.HandleAsync(Arg.Any<ExecuteWorkflowRuleRequest>())
+                    .Returns(new ExecuteWorkflowResponse().AsResponseAsync());
+
+                var addLeadAuditHandler =
+                    Substitute.For<IRequestHandler<AddLeadAuditRequest>>();
+
+                var handler = new AddLeadRequestHandler(context, executeWorkflowHandler, addLeadAuditHandler);
+
+                addLeadRequest.OwnerEmail = userEmail;
+                addLeadRequest.Source = $@"  {leadSource}  ";
+
+                // Act
+                var response = handler.HandleAsync(addLeadRequest);
+                leadId = response.Result.Data.Id;
+
+                var lead = context.Lead.SingleOrDefault(x => x.LeadId == leadId);
+
+                //Assert 
+                Assert.IsNotNull(lead);
+                Assert.AreEqual(leadSourceId, lead.SourceId);
+            }
+        }
+
+        [Test]
+        public void HandleAsync_SourceDoesNotExistInCompanySourcesButDefaultExternalDoes_SourceIdSetToDefaultExternal()
+        {
+            // Arrange 
+            var options = GetHeavyEquipmentContextOptions();
+
+            var leadId = 0;
+            var userId = 33;
+            var userEmail = "john@smith-industries.com";
+            var leadSource = "ColdCall";
+            var defaultExternalLeadSource = "Website";
+            var defaultExternalLeadSourceId = 33;
+
+            
+            using (var context = new HeavyEquipmentContext(options))
+            {
+                context.User.Add(new User
+                {
+                    UserId = userId,
+                    Email = userEmail,
+                    Active = true,
+                    Deleted = false
+                });
+
+                context.CompanySource.Add(new CompanySource
+                {
+                    Source = defaultExternalLeadSource,
+                    SourceId = defaultExternalLeadSourceId,
+                    DefaultExternal = true
+                });
+
+                context.SaveChanges();
+
+                var executeWorkflowHandler =
+                    Substitute.For<IRequestHandler<ExecuteWorkflowRuleRequest, ExecuteWorkflowResponse>>();
+
+                executeWorkflowHandler.HandleAsync(Arg.Any<ExecuteWorkflowRuleRequest>())
+                    .Returns(new ExecuteWorkflowResponse().AsResponseAsync());
+
+                var addLeadAuditHandler =
+                    Substitute.For<IRequestHandler<AddLeadAuditRequest>>();
+
+                var handler = new AddLeadRequestHandler(context, executeWorkflowHandler, addLeadAuditHandler);
+
+                addLeadRequest.OwnerEmail = userEmail;
+                addLeadRequest.Source = leadSource;
+
+                // Act
+                var response = handler.HandleAsync(addLeadRequest);
+                leadId = response.Result.Data.Id;
+
+                var lead = context.Lead.SingleOrDefault(x => x.LeadId == leadId);
+
+                //Assert 
+                Assert.IsNotNull(lead);
+                Assert.AreEqual(defaultExternalLeadSourceId, lead.SourceId);
+            }
+        }
+
+        [Test]
+        public void HandleAsync_SourceDoesNotExistInCompanySourcesAndNoDefaultExternalSourceIsActive_SourceIdSetToZero()
+        {
+            // Arrange 
+            var options = GetHeavyEquipmentContextOptions();
+
+            var leadId = 0;
+            var userId = 33;
+            var userEmail = "john@smith-industries.com";
+            var leadSource = "ColdCall";
+            var defaultExternalLeadSource = "Website";
+            var defaultExternalLeadSourceId = 33;
+
+            using (var context = new HeavyEquipmentContext(options))
+            {
+                context.User.Add(new User
+                {
+                    UserId = userId,
+                    Email = userEmail,
+                    Active = true,
+                    Deleted = false
+                });
+
+                context.CompanySource.Add(new CompanySource
+                {
+                    Source = defaultExternalLeadSource,
+                    SourceId = defaultExternalLeadSourceId,
+                    DefaultExternal = true,
+                    Deleted = true
+                });
+
+                context.SaveChanges();
+
+                var executeWorkflowHandler =
+                    Substitute.For<IRequestHandler<ExecuteWorkflowRuleRequest, ExecuteWorkflowResponse>>();
+
+                executeWorkflowHandler.HandleAsync(Arg.Any<ExecuteWorkflowRuleRequest>())
+                    .Returns(new ExecuteWorkflowResponse().AsResponseAsync());
+
+                var addLeadAuditHandler =
+                    Substitute.For<IRequestHandler<AddLeadAuditRequest>>();
+
+                var handler = new AddLeadRequestHandler(context, executeWorkflowHandler, addLeadAuditHandler);
+
+                addLeadRequest.OwnerEmail = userEmail;
+                addLeadRequest.Source = leadSource;
+
+                // Act
+                var response = handler.HandleAsync(addLeadRequest);
+                leadId = response.Result.Data.Id;
+
+                var lead = context.Lead.SingleOrDefault(x => x.LeadId == leadId);
+
+                //Assert 
+                Assert.IsNotNull(lead);
+                Assert.AreEqual(0, lead.SourceId);
+            }
+        }
+
+        [Test]
+        public void HandleAsync_SourceDoesNotExistInCompanySourcesAndNoDefaultExternalSourceExistsAtAll_SourceIdSetToZero()
+        {
+            // Arrange 
+            var options = GetHeavyEquipmentContextOptions();
+
+            var leadId = 0;
+            var userId = 33;
+            var userEmail = "john@smith-industries.com";
+            var leadSource = "ColdCall";
+
+            using (var context = new HeavyEquipmentContext(options))
+            {
+                context.User.Add(new User
+                {
+                    UserId = userId,
+                    Email = userEmail,
+                    Active = true,
+                    Deleted = false
+                });
+
+                context.SaveChanges();
+
+                var executeWorkflowHandler =
+                    Substitute.For<IRequestHandler<ExecuteWorkflowRuleRequest, ExecuteWorkflowResponse>>();
+
+                executeWorkflowHandler.HandleAsync(Arg.Any<ExecuteWorkflowRuleRequest>())
+                    .Returns(new ExecuteWorkflowResponse().AsResponseAsync());
+
+                var addLeadAuditHandler =
+                    Substitute.For<IRequestHandler<AddLeadAuditRequest>>();
+
+                var handler = new AddLeadRequestHandler(context, executeWorkflowHandler, addLeadAuditHandler);
+
+                addLeadRequest.OwnerEmail = userEmail;
+                addLeadRequest.Source = leadSource;
+
+                // Act
+                var response = handler.HandleAsync(addLeadRequest);
+                leadId = response.Result.Data.Id;
+
+                var lead = context.Lead.SingleOrDefault(x => x.LeadId == leadId);
+
+                //Assert 
+                Assert.IsNotNull(lead);
+                Assert.AreEqual(0, lead.SourceId);
+            }
+        }
+
     }
 }
