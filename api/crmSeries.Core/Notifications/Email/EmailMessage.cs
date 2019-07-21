@@ -18,6 +18,7 @@ namespace crmSeries.Core.Notifications.Email
 
     public class EmailMessage
     {
+        public EmailAddress FromAddress { get; set; }
         public List<EmailAddress> ToAddresses { get; set; } = new List<EmailAddress>();
         public string Subject { get; set; }
         public string Body { get; set; }

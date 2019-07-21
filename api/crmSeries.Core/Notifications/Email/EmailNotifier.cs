@@ -20,9 +20,20 @@ namespace crmSeries.Core.Notifications.Email
             try
             {
                 var mimeMessage = new MimeMessage();
-                mimeMessage.From.Add(new MailboxAddress(
-                    _commonSettings.Smtp.SenderName, 
-                    _commonSettings.Smtp.FromAddress));
+
+                if (message.FromAddress == null)
+                {
+                    mimeMessage.From.Add(new MailboxAddress(
+                        _commonSettings.Smtp.SenderName,
+                        _commonSettings.Smtp.FromAddress));
+                } 
+                else
+                {
+                    mimeMessage.From.Add(new MailboxAddress(
+                        message.FromAddress.Name,
+                        message.FromAddress.Address));
+                }
+
                 message.ToAddresses.ForEach(a => { mimeMessage.To.Add(new MailboxAddress(a.Name, a.Address)); });
                 mimeMessage.Subject = message.Subject;
                 mimeMessage.Body = new TextPart("html") { Text = message.Body };

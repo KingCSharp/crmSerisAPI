@@ -17,4 +17,15 @@ namespace crmSeries.Core.Domain.HeavyEquipment
     {
         public int UserID { get; set; }
     }
+
+    public class WorkflowRuleUser
+    {
+        public int UserID { get; set; }
+
+        public int ContactID { get; set; }
+
+        public string Email { get; set; }
+
+        public string DisplayName { get; set; }
+    }
 }

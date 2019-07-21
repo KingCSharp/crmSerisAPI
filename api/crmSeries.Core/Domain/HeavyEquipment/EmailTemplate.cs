@@ -13,5 +13,7 @@ namespace crmSeries.Core.Domain.HeavyEquipment
         public int CreatedBy { get; set; }
         public DateTimeOffset? CreatedOn { get; set; }
         public bool Deleted { get; set; }
+
+        public bool Internal { get; set; }
     }
 }

@@ -8472,6 +8472,7 @@ namespace crmSeries.Core.Data
             modelBuilder.Query<WorkflowRuleMatch>();
             modelBuilder.Query<WorkflowRuleFieldUpdateMatch>();
             modelBuilder.Query<WorkflowRuleUserAssignment>();
+            modelBuilder.Query<WorkflowRuleUser>();
         }
 
         public List<int> SP_WorkflowRuleMatch(string module, int recordId, string trigger)
@@ -8505,6 +8506,29 @@ namespace crmSeries.Core.Data
                 .Select(x => x.UserID)
                 .ToList();
         }
+
+        public List<WorkflowRuleUser> GetWorkflowRoleUsers(string recordType, int recordId, string actionType, int actionId)
+        {
+            var p_recordType = new SqlParameter("@RecordType", recordType);
+            var p_recordId = new SqlParameter("@RecordID", recordId);
+            var p_actionType = new SqlParameter("@ActionType", actionType);
+            var p_actionId = new SqlParameter("@ActionID", actionId);
+
+            return this.Query<WorkflowRuleUser>()
+                .FromSql("EXECUTE [dbo].[WorkflowRuleUsers] @RecordType, @RecordID, @ActionType, @ActionID",
+                    p_recordType,
+                    p_recordId,
+                    p_actionType,
+                    p_actionId)
+                .Select(x => new WorkflowRuleUser{
+                    UserID = x.UserID,
+                    Email = x.Email,
+                    DisplayName = x.DisplayName,
+                    ContactID = x.ContactID
+                })
+                .ToList();
+        }
+
 
         public List<int> SP_WorkflowRuleFieldUpdateMatch(string module, int recordId, string fields)
         {

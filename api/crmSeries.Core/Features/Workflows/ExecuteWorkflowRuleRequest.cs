@@ -1,18 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using crmSeries.Core.Configuration;
 using crmSeries.Core.Data;
 using crmSeries.Core.Domain.HeavyEquipment;
+using crmSeries.Core.Features.Leads.Utility;
 using crmSeries.Core.Features.Notifications;
 using crmSeries.Core.Mediator;
 using crmSeries.Core.Mediator.Decorators;
 using crmSeries.Core.Notifications.Email;
 using crmSeries.Core.Validation;
-using Exceptionless;
 using FluentValidation;
-using IdentityModel;
-using Microsoft.Extensions.Configuration;
 
 namespace crmSeries.Core.Features.Workflows
 {
@@ -82,9 +81,6 @@ namespace crmSeries.Core.Features.Workflows
             return new ExecuteWorkflowResponse().AsResponseAsync();
         }
 
-        /// <summary>
-        /// If any tasks are set to be added to a user given this module and action type, this will add them.
-        /// </summary>
         private void HandleTasks(ExecuteWorkflowRuleRequest request, List<int> conditionIds)
         {
             IEnumerable<WorkflowRuleTask> tasks = GetTasks(conditionIds);
@@ -107,66 +103,81 @@ namespace crmSeries.Core.Features.Workflows
             }
         }
 
-        /// <summary>
-        /// Sends any emails that need to be sent for this module's action.
-        /// </summary>
         private void HandleEmails(ExecuteWorkflowRuleRequest request, List<int> conditionIds)
         {
             List<WorkflowRuleEmail> emails = GetEmails(conditionIds);
 
             foreach (var email in emails)
             {
-                var userIdsForEmail = GetUserIdsForEmail(request, email.Id);
+                var usersToEmail = GetUsersToEmail(request, email.Id);
 
                 List<EmailAddress> toAddresses = new List<EmailAddress>();
 
-                if (userIdsForEmail.Any())
+                if (usersToEmail.Any(x => x.UserID != default(int)))
                 {
-                    IEnumerable<EmailAddress> emailAddresses =
-                        GetEmailAddresses(userIdsForEmail);
-
-                    toAddresses = emailAddresses.Select(x => new EmailAddress
+                    toAddresses = usersToEmail.Select(x => new EmailAddress
                     {
-                        Address = x.Address,
-                        Name = x.Name
+                        Address = x.Email,
+                        Name = x.DisplayName
                     }).ToList();
 
-                    string emailTemplate = _getEmailTemplateHandler
+                    string emailTemplateBody = _getEmailTemplateHandler
                         .HandleAsync(new GetEmailTemplateRequest()).Result.Data;
 
-                    Dictionary<string, string> emailContent =
-                        GetEmailBody(email.TemplateId);
+                    var template = _dataContext.EmailTemplate
+                        .FirstOrDefault(x => x.Id == email.TemplateId);
 
-                    emailContent["subject"] =
-                        ReplaceModuleFields(request.Module, request.EntityId, emailContent["subject"]);
-
-                    emailTemplate = ReplaceEmailFields(emailTemplate, emailContent, request);
+                    var emailContent = new Dictionary<string, string>
+                    {
+                        {"body", template?.Body ?? string.Empty},
+                        {"subject", template?.Subject ?? string.Empty}
+                    };
 
                     var msg = new EmailMessage
                     {
-                        Body = emailTemplate,
-                        Subject = emailContent["subject"],
+                        Subject = ReplaceModuleFields(request.Module, request.EntityId, template?.Subject ?? string.Empty),
                         ToAddresses = toAddresses
                     };
 
+                    if (template.Internal)
+                    {
+                        msg.Body = ReplaceEmailFields(emailTemplateBody, emailContent, request);
+                    }
+                    else 
+                    {
+                        msg.Body = ReplaceEmailFields(template.Body, emailContent, request);
+
+                        var userId = _dataContext.Set<SystemDefault>()
+                            .Where(x => x.DefaultName == LeadsConstants.LeadReplySender)
+                            .Select(x => Convert.ToInt32(x.NumericValue))
+                            .FirstOrDefault();
+
+                        if (userId > 0)
+                        {
+                            var user = _dataContext.Set<User>().Where(x => x.UserId == userId)
+                                .FirstOrDefault();
+
+                            if (!string.IsNullOrWhiteSpace(user?.Email))
+                            {
+                                msg.FromAddress = new EmailAddress
+                                {
+                                    Address = user.Email,
+                                    Name = string.Format($"{user.FirstName} {user.LastName}")
+                                };
+                            }
+                        }
+                    }
                     _emailNotifier.SendEmailAsync(msg);
                 }
             }
         }
 
-        /// <summary>
-        /// Takes an email template and replaces placeholder strings with their proper values.
-        /// </summary>
         private string ReplaceEmailFields(
             string emailTemplate,
             Dictionary<string, string> emailContent,
             ExecuteWorkflowRuleRequest request)
         {
             string actionURL = $"{_commonSettings.BaseURL}/{request.Module}/Details/{request.EntityId}";
-
-            new ExceptionlessClient("2BCuzUkowXDTR6907Bvsjjnkabthx0rDHoi0KA73")
-                .CreateLog($"BaseURL is {_commonSettings.BaseURL}")
-                .Submit();
 
             emailTemplate = emailTemplate.Replace("{{Title}}", emailContent["subject"]);
             emailTemplate = emailTemplate.Replace("{{Body}}", emailContent["body"]);
@@ -175,9 +186,6 @@ namespace crmSeries.Core.Features.Workflows
             return ReplaceModuleFields(request.Module, request.EntityId, emailTemplate);
         }
 
-        /// <summary>
-        /// Replaces placeholder strings in an email template with the entity's fields for the entity's type.
-        /// </summary>
         private string ReplaceModuleFields(string module, int entityId, string emailTemplate)
         {
             switch (module)
@@ -194,53 +202,16 @@ namespace crmSeries.Core.Features.Workflows
             return string.Empty;
         }
 
-        /// <summary>
-        /// Queries the EmailTemplate table and returns a matching html template for the module.
-        /// </summary>
-        private Dictionary<string, string> GetEmailBody(int emailTemplateId)
+        private List<WorkflowRuleUser> GetUsersToEmail(ExecuteWorkflowRuleRequest request, int emailId)
         {
-            var template = _dataContext.EmailTemplate
-                .FirstOrDefault(x => x.Id == emailTemplateId);
-
-            var emailBody = new Dictionary<string, string>
-            {
-                {"body", template?.Body ?? string.Empty},
-                {"subject", template?.Subject ?? string.Empty}
-            };
-            return emailBody;
-        }
-
-        /// <summary>
-        /// Queries the User table and returns a list of email addresses for matching users
-        /// </summary>
-        private IEnumerable<EmailAddress> GetEmailAddresses(ICollection<int> userIds)
-        {
-            return _dataContext.User
-                .Where(x => userIds.Contains(x.UserId))
-                .Select(x => new EmailAddress
-                {
-                    Address = x.Email,
-                    Name = $"{x.FirstName} {x.LastName}"
-                }).ToList();
-        }
-
-        /// <summary>
-        /// Queries the WorkflowRuleAssignment table and returns the AssignmentObjectID as the UserID
-        /// </summary>
-        private List<int> GetUserIdsForEmail(ExecuteWorkflowRuleRequest request, int emailId)
-        {
-            return _dataContext.GetWorkflowRuleUserAssignments(
+            return _dataContext.GetWorkflowRoleUsers(
                 request.Module,
                 request.EntityId,
-                WorkflowConstants.ActionTypes.Email, //ActionType
-                emailId //ActionId
+                actionType: WorkflowConstants.ActionTypes.Email, 
+                actionId: emailId 
             );
         }
 
-        /// <summary>
-        /// Queries the GetWorkflowRuleUserAssignments sproc and returns a list of User IDs
-        /// for users that have a WorkFlowRuleAssignmen for the provided task
-        /// </summary>
         private List<int> GetUserIds(int entityId, int taskId)
         {
             var assignments = _dataContext.GetWorkflowRuleUserAssignments(
@@ -253,9 +224,6 @@ namespace crmSeries.Core.Features.Workflows
             return assignments;
         }
 
-        /// <summary>
-        /// Queries the WorkflowRuleEmail table and returns email template IDs for the specified conditionIds
-        /// </summary>
         private List<WorkflowRuleEmail> GetEmails(List<int> conditionIds)
         {
             return _dataContext.WorkflowRuleEmail
@@ -263,10 +231,6 @@ namespace crmSeries.Core.Features.Workflows
                 .ToList();
         }
 
-        /// <summary>
-        /// Queries the WorkflowRuleMatch sproc and returns a list of conditionIDs that match
-        /// the given module and action type
-        /// </summary>
         private List<int> GetConditionIds(ExecuteWorkflowRuleRequest request)
         {
             List<int> conditionIds;
@@ -280,9 +244,6 @@ namespace crmSeries.Core.Features.Workflows
             return conditionIds;
         }
 
-        /// <summary>
-        /// Queries the WorkflowRuleTask table and returns WorkflowRuleTasks matching the specified conditionIds
-        /// </summary>
         private IEnumerable<WorkflowRuleTask> GetTasks(ICollection<int> conditionIds)
         {
             return _dataContext.WorkflowRuleTask
