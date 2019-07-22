@@ -38,12 +38,7 @@ namespace crmSeries.Core.Features.Leads
         {
             var lead = SaveLead(request);
             AddLeadToAudit(lead);
-            var response = ExecuteLeadWorkflow(lead);
-
-            if (response.HasErrors)
-            {
-                // Handle it.
-            }
+            ExecuteLeadWorkflow(lead);
 
             return new AddResponse
             {

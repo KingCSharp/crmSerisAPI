@@ -105,17 +105,15 @@ namespace crmSeries.Core.Features.Workflows
 
         private void HandleEmails(ExecuteWorkflowRuleRequest request, List<int> conditionIds)
         {
-            List<WorkflowRuleEmail> emails = GetEmails(conditionIds);
+            IEnumerable<WorkflowRuleEmail> emails = GetEmails(conditionIds);
 
             foreach (var email in emails)
             {
                 var usersToEmail = GetUsersToEmail(request, email.Id);
 
-                List<EmailAddress> toAddresses = new List<EmailAddress>();
-
                 if (usersToEmail.Any(x => x.UserID != default(int)))
                 {
-                    toAddresses = usersToEmail.Select(x => new EmailAddress
+                    var toAddresses = usersToEmail.Select(x => new EmailAddress
                     {
                         Address = x.Email,
                         Name = x.DisplayName
@@ -124,8 +122,7 @@ namespace crmSeries.Core.Features.Workflows
                     string emailTemplateBody = _getEmailTemplateHandler
                         .HandleAsync(new GetEmailTemplateRequest()).Result.Data;
 
-                    var template = _dataContext.EmailTemplate
-                        .FirstOrDefault(x => x.Id == email.TemplateId);
+                    var template = _dataContext.EmailTemplate.First(x => x.Id == email.TemplateId);
 
                     var emailContent = new Dictionary<string, string>
                     {
@@ -154,8 +151,8 @@ namespace crmSeries.Core.Features.Workflows
 
                         if (userId > 0)
                         {
-                            var user = _dataContext.Set<User>().Where(x => x.UserId == userId)
-                                .FirstOrDefault();
+                            var user = _dataContext.Set<User>()
+                                .FirstOrDefault(x => x.UserId == userId);
 
                             if (!string.IsNullOrWhiteSpace(user?.Email))
                             {
@@ -174,14 +171,14 @@ namespace crmSeries.Core.Features.Workflows
 
         private string ReplaceEmailFields(
             string emailTemplate,
-            Dictionary<string, string> emailContent,
+            IReadOnlyDictionary<string, string> emailContent,
             ExecuteWorkflowRuleRequest request)
         {
-            string actionURL = $"{_commonSettings.BaseURL}/{request.Module}/Details/{request.EntityId}";
+            string actionUrl = $"{_commonSettings.BaseURL}/{request.Module}/Details/{request.EntityId}";
 
             emailTemplate = emailTemplate.Replace("{{Title}}", emailContent["subject"]);
             emailTemplate = emailTemplate.Replace("{{Body}}", emailContent["body"]);
-            emailTemplate = emailTemplate.Replace("{{action_url}}", actionURL);
+            emailTemplate = emailTemplate.Replace("{{action_url}}", actionUrl);
 
             return ReplaceModuleFields(request.Module, request.EntityId, emailTemplate);
         }
@@ -224,7 +221,7 @@ namespace crmSeries.Core.Features.Workflows
             return assignments;
         }
 
-        private List<WorkflowRuleEmail> GetEmails(List<int> conditionIds)
+        private IEnumerable<WorkflowRuleEmail> GetEmails(ICollection<int> conditionIds)
         {
             return _dataContext.WorkflowRuleEmail
                 .Where(x => conditionIds.Contains(x.ConditionId))
@@ -233,13 +230,11 @@ namespace crmSeries.Core.Features.Workflows
 
         private List<int> GetConditionIds(ExecuteWorkflowRuleRequest request)
         {
-            List<int> conditionIds;
-
-            conditionIds = _dataContext
-                    .SP_WorkflowRuleMatch(
-                        request.Module,
-                        request.EntityId,
-                        request.ActionType).ToList();
+            var conditionIds = _dataContext
+                .SP_WorkflowRuleMatch(
+                    request.Module,
+                    request.EntityId,
+                    request.ActionType).ToList();
 
             return conditionIds;
         }
