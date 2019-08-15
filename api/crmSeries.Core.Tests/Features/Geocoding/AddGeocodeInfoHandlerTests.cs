@@ -19,7 +19,7 @@ namespace crmSeries.Core.Tests.Features.Geocoding
         public void SetUpMocks()
         {
             Container.Options.AllowOverridingRegistrations = true;
-            Container.RegisterInstance<IRequestHandler<GetGeocodeInfoRequest, GeocodeInfoDto>>(new MockGetGeocodeInfoHandler());
+//            Container.RegisterInstance<IRequestHandler<GetGeocodeInfoRequest, GeocodeInfoDto>>(new MockGetGeocodeInfoHandler());
             Container.Options.AllowOverridingRegistrations = true;
         }
 
