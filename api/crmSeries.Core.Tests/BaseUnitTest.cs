@@ -2,10 +2,18 @@
 using System.Collections.Generic;
 using crmSeries.Core.Configuration;
 using crmSeries.Core.Data;
+using crmSeries.Core.Mediator;
 using crmSeries.Core.Security;
 using FizzWare.NBuilder;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
+using SimpleInjector;
+using System.Reflection;
+using crmSeries.Core.Mediator.Configuration;
+using crmSeries.Core.Features.Geocoding;
+using crmSeries.Core.Mediator.Decorators;
+using crmSeries.Core.Logging;
+using crmSeries.Core.Tests.Mocks;
 
 namespace crmSeries.Core.Tests
 {
@@ -13,6 +21,9 @@ namespace crmSeries.Core.Tests
     public abstract class BaseUnitTest
     {
         private static bool Initialized;
+
+        protected Container Container { get; set; }
+        protected IMediator Mediator => Container.GetInstance<IMediator>();
 
         [OneTimeSetUp]
         public void OneTimeSetup()
@@ -22,6 +33,19 @@ namespace crmSeries.Core.Tests
                 AutoMapperConfig.Configure();
                 Initialized = true;
             }
+        }
+
+        [SetUp]
+        public void SetUp()
+        {
+            Container = new Container();
+            var assemblies = new[]
+            {
+                GetType().GetTypeInfo().Assembly,
+                typeof(IRequestHandler<GetGeocodeInfoRequest, GeocodeInfoDto>).GetTypeInfo().Assembly
+            };
+            Container.ConfigureMediator(assemblies);
+            Container.RegisterInstance<ILogger>(new MockLogger());
         }
 
         public DbContextOptions<AdminContext> GetAdminContextOptions()

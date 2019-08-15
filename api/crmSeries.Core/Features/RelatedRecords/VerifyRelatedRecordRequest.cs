@@ -3,9 +3,13 @@ using System.Threading.Tasks;
 using crmSeries.Core.Data;
 using crmSeries.Core.Domain.HeavyEquipment;
 using crmSeries.Core.Extensions;
+using crmSeries.Core.Features.Branches.Utility;
+using crmSeries.Core.Features.Brokers.Utility;
 using crmSeries.Core.Features.Companies.Utility;
+using crmSeries.Core.Features.CompanyAssignedAddresses.Utility;
 using crmSeries.Core.Features.CompanyCategories.Utility;
 using crmSeries.Core.Features.CompanyRanks.Utility;
+using crmSeries.Core.Features.ContactAssignedAddresses.Utility;
 using crmSeries.Core.Features.Contacts.Utility;
 using crmSeries.Core.Features.Inventory.Utility;
 using crmSeries.Core.Features.Leads.Utility;
@@ -185,6 +189,46 @@ namespace crmSeries.Core.Features.RelatedRecords
                     .RelatedEntityExists(x => x.FieldId == request.RecordTypeId))
                 {
                     return Response.ErrorAsync(OutputTemplateFieldsConstants.ErrorMessages.OutputTemplateFieldNotFound);
+                }
+            }
+
+            if (request.RecordType == RelatedRecord.Types.CompanyAssignedAddress)
+            {
+                if (!_context.Set<CompanyAssignedAddress>()
+                    .AsNoTracking()
+                    .RelatedEntityExists(x => x.AddressId == request.RecordTypeId))
+                {
+                    return Response.ErrorAsync(CompanyAssignedAddressesConstants.ErrorMessages.CompanyAssignedAddressNotFound);
+                }
+            }
+
+            if (request.RecordType == RelatedRecord.Types.ContactAssignedAddress)
+            {
+                if (!_context.Set<ContactAssignedAddress>()
+                    .AsNoTracking()
+                    .RelatedEntityExists(x => x.AddressId == request.RecordTypeId))
+                {
+                    return Response.ErrorAsync(ContactAssignedAddressesConstants.ErrorMessages.ContactAssignedAddressNotFound);
+                }
+            }
+
+            if (request.RecordType == RelatedRecord.Types.Branch)
+            {
+                if (!_context.Set<Branch>()
+                    .AsNoTracking()
+                    .RelatedEntityExists(x => x.BranchId == request.RecordTypeId))
+                {
+                    return Response.ErrorAsync(BranchesConstants.ErrorMessages.BranchNotFound);
+                }
+            }
+
+            if (request.RecordType == RelatedRecord.Types.Broker)
+            {
+                if (!_context.Set<Broker>()
+                    .AsNoTracking()
+                    .RelatedEntityExists(x => x.BrokerId == request.RecordTypeId))
+                {
+                    return Response.ErrorAsync(BrokersConstants.ErrorMessages.BrokerNotFound);
                 }
             }
 

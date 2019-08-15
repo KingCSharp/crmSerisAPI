@@ -68,6 +68,7 @@ namespace crmSeries.Core.Configuration
             );
 
             settings.Exceptionless.UseExceptionless = config.GetValue<bool>("CommonSettings:Exceptionless:Use");
+            settings.Geocardio.Key = config.GetValue<string>("CommonSettings:Geocardio:Key");
 
             settings.BaseURL = config.GetValue<string>("CommonSettings:Server:BaseURL");
 

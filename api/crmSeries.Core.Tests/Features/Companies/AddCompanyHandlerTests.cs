@@ -26,6 +26,7 @@ namespace crmSeries.Core.Tests.Features.Companies
                 var addRankHandler = new AddCompanyAssignedRankHandler(context, verificationHandler);
                 var handler = new AddCompanyHandler(
                     context, 
+                    Mediator,
                     verificationHandler,
                     addCategoryHandler,
                     addRankHandler);

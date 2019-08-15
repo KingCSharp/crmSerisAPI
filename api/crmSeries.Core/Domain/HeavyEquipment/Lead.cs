@@ -36,5 +36,7 @@ namespace crmSeries.Core.Domain.HeavyEquipment
         public DateTimeOffset? DateAssigned { get; set; }
         public DateTimeOffset? DateAcknowledged { get; set; }
         public DateTimeOffset? DateConverted { get; set; }
+        public decimal Latitude { get; set; }
+        public decimal Longitude { get; set; }
     }
 }

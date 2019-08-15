@@ -4,6 +4,7 @@ using crmSeries.Core.Domain.HeavyEquipment;
 using crmSeries.Core.Features.Leads;
 using crmSeries.Core.Features.Workflows;
 using crmSeries.Core.Mediator;
+using crmSeries.Core.Mediator.Mediators;
 using NSubstitute;
 using NUnit.Framework;
 
@@ -72,7 +73,7 @@ namespace crmSeries.Core.Tests.Features.Leads
                 var addLeadAuditHandler =
                     Substitute.For<IRequestHandler<AddLeadAuditRequest>>();
 
-                var handler = new AddLeadRequestHandler(context, executeWorkflowHandler, addLeadAuditHandler);
+                var handler = new AddLeadRequestHandler(context, Mediator, executeWorkflowHandler, addLeadAuditHandler);
 
                 addLeadRequest.OwnerEmail = userEmail;
 
@@ -139,7 +140,7 @@ namespace crmSeries.Core.Tests.Features.Leads
                 var addLeadAuditHandler =
                     Substitute.For<IRequestHandler<AddLeadAuditRequest>>();
 
-                var handler = new AddLeadRequestHandler(context, executeWorkflowHandler, addLeadAuditHandler);
+                var handler = new AddLeadRequestHandler(context, Mediator, executeWorkflowHandler, addLeadAuditHandler);
 
                 addLeadRequest.OwnerEmail = userEmail; 
 
@@ -186,7 +187,7 @@ namespace crmSeries.Core.Tests.Features.Leads
                 var addLeadAuditHandler =
                     Substitute.For<IRequestHandler<AddLeadAuditRequest>>();
 
-                var handler = new AddLeadRequestHandler(context, executeWorkflowHandler, addLeadAuditHandler);
+                var handler = new AddLeadRequestHandler(context, Mediator, executeWorkflowHandler, addLeadAuditHandler);
 
                 addLeadRequest.OwnerEmail = userEmail;
 
@@ -242,7 +243,7 @@ namespace crmSeries.Core.Tests.Features.Leads
                 var addLeadAuditHandler =
                     Substitute.For<IRequestHandler<AddLeadAuditRequest>>();
 
-                var handler = new AddLeadRequestHandler(context, executeWorkflowHandler, addLeadAuditHandler);
+                var handler = new AddLeadRequestHandler(context, Mediator, executeWorkflowHandler, addLeadAuditHandler);
 
                 addLeadRequest.OwnerEmail = userEmail;
 
@@ -289,7 +290,7 @@ namespace crmSeries.Core.Tests.Features.Leads
                 var addLeadAuditHandler =
                     Substitute.For<IRequestHandler<AddLeadAuditRequest>>();
 
-                var handler = new AddLeadRequestHandler(context, executeWorkflowHandler, addLeadAuditHandler);
+                var handler = new AddLeadRequestHandler(context, Mediator, executeWorkflowHandler, addLeadAuditHandler);
 
                 addLeadRequest.OwnerEmail = userEmail;
 
@@ -345,7 +346,7 @@ namespace crmSeries.Core.Tests.Features.Leads
                 var addLeadAuditHandler =
                     Substitute.For<IRequestHandler<AddLeadAuditRequest>>();
 
-                var handler = new AddLeadRequestHandler(context, executeWorkflowHandler, addLeadAuditHandler);
+                var handler = new AddLeadRequestHandler(context, Mediator, executeWorkflowHandler, addLeadAuditHandler);
 
                 addLeadRequest.OwnerEmail = userEmail;
 
@@ -400,7 +401,7 @@ namespace crmSeries.Core.Tests.Features.Leads
                 var addLeadAuditHandler =
                     Substitute.For<IRequestHandler<AddLeadAuditRequest>>();
 
-                var handler = new AddLeadRequestHandler(context, executeWorkflowHandler, addLeadAuditHandler);
+                var handler = new AddLeadRequestHandler(context, Mediator, executeWorkflowHandler, addLeadAuditHandler);
 
                 addLeadRequest.OwnerEmail = userEmail;
                 addLeadRequest.Source = leadSource;
@@ -456,7 +457,7 @@ namespace crmSeries.Core.Tests.Features.Leads
                 var addLeadAuditHandler =
                     Substitute.For<IRequestHandler<AddLeadAuditRequest>>();
 
-                var handler = new AddLeadRequestHandler(context, executeWorkflowHandler, addLeadAuditHandler);
+                var handler = new AddLeadRequestHandler(context, Mediator, executeWorkflowHandler, addLeadAuditHandler);
 
                 addLeadRequest.OwnerEmail = userEmail;
                 addLeadRequest.Source = leadSource;
@@ -512,7 +513,7 @@ namespace crmSeries.Core.Tests.Features.Leads
                 var addLeadAuditHandler =
                     Substitute.For<IRequestHandler<AddLeadAuditRequest>>();
 
-                var handler = new AddLeadRequestHandler(context, executeWorkflowHandler, addLeadAuditHandler);
+                var handler = new AddLeadRequestHandler(context, Mediator, executeWorkflowHandler, addLeadAuditHandler);
 
                 addLeadRequest.OwnerEmail = userEmail;
                 addLeadRequest.Source = $@"  {leadSource}  ";
@@ -571,7 +572,7 @@ namespace crmSeries.Core.Tests.Features.Leads
                 var addLeadAuditHandler =
                     Substitute.For<IRequestHandler<AddLeadAuditRequest>>();
 
-                var handler = new AddLeadRequestHandler(context, executeWorkflowHandler, addLeadAuditHandler);
+                var handler = new AddLeadRequestHandler(context, Mediator, executeWorkflowHandler, addLeadAuditHandler);
 
                 addLeadRequest.OwnerEmail = userEmail;
                 addLeadRequest.Source = leadSource;
@@ -630,7 +631,7 @@ namespace crmSeries.Core.Tests.Features.Leads
                 var addLeadAuditHandler =
                     Substitute.For<IRequestHandler<AddLeadAuditRequest>>();
 
-                var handler = new AddLeadRequestHandler(context, executeWorkflowHandler, addLeadAuditHandler);
+                var handler = new AddLeadRequestHandler(context, Mediator, executeWorkflowHandler, addLeadAuditHandler);
 
                 addLeadRequest.OwnerEmail = userEmail;
                 addLeadRequest.Source = leadSource;
@@ -679,7 +680,7 @@ namespace crmSeries.Core.Tests.Features.Leads
                 var addLeadAuditHandler =
                     Substitute.For<IRequestHandler<AddLeadAuditRequest>>();
 
-                var handler = new AddLeadRequestHandler(context, executeWorkflowHandler, addLeadAuditHandler);
+                var handler = new AddLeadRequestHandler(context, Mediator, executeWorkflowHandler, addLeadAuditHandler);
 
                 addLeadRequest.OwnerEmail = userEmail;
                 addLeadRequest.Source = leadSource;

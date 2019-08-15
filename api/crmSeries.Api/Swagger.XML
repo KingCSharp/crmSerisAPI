@@ -168,6 +168,12 @@
             Gets a list of all equipment categories.
             </summary>
         </member>
+        <member name="M:crmSeries.API.Controllers.GeocodeController.GetContacts(crmSeries.Core.Features.Geocoding.AddGeocodeInfoRequest)">
+            <summary>
+            Sets geocode informationt to the appropriate entity.
+            </summary>
+            <param name="request">The request information for this API endpoint.</param>
+        </member>
         <member name="M:crmSeries.API.Controllers.InventoryController.Get(crmSeries.Core.Features.Inventory.GetInventoryRequest)">
             <summary>
             Gets inventory equipment based on search criteria. 

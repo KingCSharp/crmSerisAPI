@@ -8,6 +8,8 @@ namespace crmSeries.Core.Configuration
 
         public ExceptionlessSettings Exceptionless { get; } = new ExceptionlessSettings();
 
+        public GeocardioSettings Geocardio { get; } = new GeocardioSettings();
+
         public string BaseURL { get; set; }
     }
 
@@ -15,6 +17,11 @@ namespace crmSeries.Core.Configuration
     {
         public bool UseExceptionless { get; set; }
 
+        public string Key { get; set; }
+    }
+
+    public class GeocardioSettings
+    {
         public string Key { get; set; }
     }
 

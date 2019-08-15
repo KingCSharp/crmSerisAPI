@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using crmSeries.Core.Data;
 using crmSeries.Core.Domain.HeavyEquipment;
+using crmSeries.Core.Features.Geocoding;
 using crmSeries.Core.Features.Leads.Dtos;
 using crmSeries.Core.Features.Leads.Validators;
 using crmSeries.Core.Features.Workflows;
@@ -21,15 +22,18 @@ namespace crmSeries.Core.Features.Leads
     public class AddLeadRequestHandler : IRequestHandler<AddLeadRequest, AddResponse>
     {
         private readonly HeavyEquipmentContext _context;
+        private readonly IMediator _mediator;
         private readonly IRequestHandler<ExecuteWorkflowRuleRequest, ExecuteWorkflowResponse> _executeWorkflowHandler;
         private readonly IRequestHandler<AddLeadAuditRequest> _addLeadAuditHandler;
 
         public AddLeadRequestHandler(
             HeavyEquipmentContext context,
+            IMediator mediator,
             IRequestHandler<ExecuteWorkflowRuleRequest, ExecuteWorkflowResponse> executeWorkflowHandler,
             IRequestHandler<AddLeadAuditRequest> addLeadAuditHandler)
         {
             _context = context;
+            _mediator = mediator;
             _executeWorkflowHandler = executeWorkflowHandler;
             _addLeadAuditHandler = addLeadAuditHandler;
         }
@@ -65,6 +69,7 @@ namespace crmSeries.Core.Features.Leads
                 AssignOwnerToLead(lead, request.OwnerEmail);
     
             AssignDefaultLeadStatus(lead);
+            AssignGeocodeInfo(lead);
 
             if (!string.IsNullOrWhiteSpace(request.Source))
                 AssignSource(lead, request.Source.Trim());
@@ -72,6 +77,34 @@ namespace crmSeries.Core.Features.Leads
             _context.Set<Lead>().Add(lead);
             _context.SaveChanges();
             return lead;
+        }
+
+        private void AssignGeocodeInfo(Lead lead)
+        {
+            var geocodingRequest = new GetGeocodeInfoRequest
+            {
+                Street = lead.Address1,
+                City = lead.City,
+                State = lead.State,
+                PostalCode = lead.Zip,
+                Country = lead.Country
+            };
+
+            var result = _mediator.HandleAsync(geocodingRequest).Result;
+
+            if (!result.HasErrors && result?.Data?.Results != null)
+            {
+                var geocodeInfo = result.Data
+                    .Results
+                    .OrderByDescending(x => x.Accuracy)
+                    .FirstOrDefault();
+
+                if (geocodeInfo?.Location != null)
+                {
+                    lead.Latitude = decimal.Parse(geocodeInfo.Location.Lat);
+                    lead.Longitude = decimal.Parse(geocodeInfo.Location.Lng);
+                }
+            }
         }
 
         private void AssignSource(Lead lead, string leadSource)

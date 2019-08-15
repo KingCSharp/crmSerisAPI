@@ -490,6 +490,10 @@ namespace crmSeries.Core.Data
                     .HasMaxLength(10)
                     .IsUnicode(false)
                     .HasDefaultValueSql("('')");
+
+                entity.Property(e => e.Latitude).HasColumnType("decimal(12, 7)");
+
+                entity.Property(e => e.Longitude).HasColumnType("decimal(12, 7)");
             });
 
             modelBuilder.Entity<BrokerAssignedDistribution>(entity =>
@@ -1287,6 +1291,10 @@ namespace crmSeries.Core.Data
                     .HasMaxLength(20)
                     .IsUnicode(false)
                     .HasDefaultValueSql("('')");
+
+                entity.Property(e => e.Latitude).HasColumnType("decimal(12, 7)");
+
+                entity.Property(e => e.Longitude).HasColumnType("decimal(12, 7)");
             });
 
             modelBuilder.Entity<ContactAssignedEmail>(entity =>

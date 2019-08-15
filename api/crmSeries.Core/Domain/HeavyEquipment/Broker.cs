@@ -24,5 +24,7 @@ namespace crmSeries.Core.Domain.HeavyEquipment
         public bool Preferred { get; set; }
         public bool Visible { get; set; }
         public bool Deleted { get; set; }
+        public decimal Latitude { get; set; }
+        public decimal Longitude { get; set; }
     }
 }

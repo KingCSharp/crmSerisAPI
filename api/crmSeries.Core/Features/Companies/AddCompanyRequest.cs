@@ -14,6 +14,7 @@ using crmSeries.Core.Features.CompanyAssignedCategories;
 using System.Linq;
 using crmSeries.Core.Features.CompanyAssignedRanks.Dtos;
 using crmSeries.Core.Features.CompanyAssignedRanks;
+using crmSeries.Core.Features.Geocoding;
 
 namespace crmSeries.Core.Features.Companies
 {
@@ -25,16 +26,19 @@ namespace crmSeries.Core.Features.Companies
     public class AddCompanyHandler : IRequestHandler<AddCompanyRequest, AddResponse>
     {
         private readonly HeavyEquipmentContext _context;
+        private readonly IMediator _mediator;
         private readonly IRequestHandler<AddCompanyAssignedCategoryRequest, AddResponse> _addCompanyAssignedCategoryHandler;
         private readonly IRequestHandler<AddCompanyAssignedRankRequest, AddResponse> _addCompanyAssignedRankHandler;
         private readonly IRequestHandler<VerifyRelatedRecordRequest> _verifyRelatedRecordsHandler;
 
         public AddCompanyHandler(HeavyEquipmentContext context,
+            IMediator mediator,
             IRequestHandler<VerifyRelatedRecordRequest> verifyRelatedRecordsHandler,
             IRequestHandler<AddCompanyAssignedCategoryRequest, AddResponse> addCompanyAssignedCategoryHandler,
             IRequestHandler<AddCompanyAssignedRankRequest, AddResponse> addCompanyAssignedRankHandler)
         {
             _context = context;
+            _mediator = mediator;
             _verifyRelatedRecordsHandler = verifyRelatedRecordsHandler;
             _addCompanyAssignedCategoryHandler = addCompanyAssignedCategoryHandler;
             _addCompanyAssignedRankHandler = addCompanyAssignedRankHandler;
@@ -47,6 +51,8 @@ namespace crmSeries.Core.Features.Companies
 
             var company = request.MapTo<Company>();
             company.LastModified = DateTime.UtcNow;
+
+            AssignGeocodeInfo(company);
 
             _context.Set<Company>().Add(company);
             _context.SaveChanges();
@@ -95,6 +101,34 @@ namespace crmSeries.Core.Features.Companies
 
             errorAsync = null;
             return true;
+        }
+
+        private void AssignGeocodeInfo(Company company)
+        {
+            var geocodingRequest = new GetGeocodeInfoRequest
+            {
+                Street = company.Address1,
+                City = company.City,
+                State = company.State,
+                PostalCode = company.Zip,
+                Country = company.Country
+            };
+
+            var result = _mediator.HandleAsync(geocodingRequest).Result;
+
+            if (!result.HasErrors && result?.Data?.Results != null)
+            {
+                var geocodeInfo = result.Data
+                    .Results
+                    .OrderByDescending(x => x.Accuracy)
+                    .FirstOrDefault();
+
+                if (geocodeInfo?.Location != null)
+                {
+                    company.Latitude = decimal.Parse(geocodeInfo.Location.Lat);
+                    company.Longitude = decimal.Parse(geocodeInfo.Location.Lng);
+                }
+            }
         }
 
         private void AddAssignedCategories(List<int> categories, int companyId)

@@ -17,5 +17,7 @@ namespace crmSeries.Core.Domain.HeavyEquipment
         public string County { get; set; }
         public string Country { get; set; }
         public bool Deleted { get; set; }
+        public decimal Latitude { get; set; }
+        public decimal Longitude { get; set; }
     }
 }
