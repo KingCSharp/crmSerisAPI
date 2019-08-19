@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using IdentityServer4.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
@@ -14,12 +15,29 @@ namespace crmSeries.Api.Configuration
         
         public static void ConfigureServices(IServiceCollection services, IConfiguration config)
         {
-            services
+            var identityServer = services
                 .AddIdentityServer()
                 .AddInMemoryClients(GetClients(config))
                 .AddInMemoryIdentityResources(GetIdentityResources())
-                .AddInMemoryApiResources(GetApiResources(config))
-                .AddDeveloperSigningCredential();
+                .AddInMemoryApiResources(GetApiResources(config));
+
+            var certThumbprint = config["Identity:Certificate"];
+
+            if (string.IsNullOrWhiteSpace(certThumbprint))
+            {
+                identityServer.AddDeveloperSigningCredential();
+            }
+            else
+            {
+                var certStore = new X509Store(StoreName.My, StoreLocation.CurrentUser);
+                certStore.Open(OpenFlags.ReadOnly);
+
+                var certs = certStore.Certificates.Find(X509FindType.FindByThumbprint, certThumbprint, false);
+                if (certs.Count > 0)
+                {
+                    identityServer.AddSigningCredential(certs[0]);
+                }
+            }
         }
 
         public static void Configure(IApplicationBuilder app)
