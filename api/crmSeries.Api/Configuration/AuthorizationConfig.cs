@@ -4,6 +4,7 @@ using crmSeries.Core.Common;
 using crmSeries.Core.Security;
 using IdentityServer4.Services;
 using IdentityServer4.Validation;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -23,7 +24,8 @@ namespace crmSeries.API.Configuration
             {
                 authConfig.AddPolicy(Constants.Auth.ApiKeyPolicy,
                     policyBuilder => policyBuilder
-                        .AddRequirements(new ApiKeyRequirement()));
+                        .AddRequirements(new ApiKeyRequirement())
+                        .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme));
             });
         }
     }

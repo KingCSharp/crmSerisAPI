@@ -39,6 +39,9 @@ namespace crmSeries.Api.Configuration
             {
                 x.AllowedGrantTypes = GrantTypes.ResourceOwnerPassword;
                 x.ClientSecrets = new List<Secret> { clientSecret };
+                x.AllowOfflineAccess = true;
+                x.RefreshTokenUsage = TokenUsage.OneTimeOnly;
+                x.UpdateAccessTokenClaimsOnRefresh = true;
             });
 
             return clients;

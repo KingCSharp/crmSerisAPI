@@ -2,6 +2,7 @@
 using System.Security.Claims;
 using System.Threading.Tasks;
 using crmSeries.Api.Security;
+using crmSeries.Core.Security;
 using IdentityModel;
 using IdentityServer4.Models;
 using NUnit.Framework;
@@ -86,8 +87,8 @@ namespace crmSeries.API.Tests.Features.Identity
             Assert.NotNull(context.IssuedClaims);
             Assert.IsTrue(context.IssuedClaims.Any(x => x.Type == JwtClaimTypes.Subject && x.Value == "1"));
             Assert.IsTrue(context.IssuedClaims.Any(x => x.Type == JwtClaimTypes.Email && x.Value == "test@user"));
-            Assert.IsTrue(context.IssuedClaims.Any(x => x.Type == ProfileService.DealerClaim && x.Value == "2"));
-            Assert.IsTrue(context.IssuedClaims.Any(x => x.Type == ProfileService.ApiKeyClaim && x.Value == "TestKey"));
+            Assert.IsTrue(context.IssuedClaims.Any(x => x.Type == IdentityClaims.DealerClaim && x.Value == "2"));
+            Assert.IsTrue(context.IssuedClaims.Any(x => x.Type == IdentityClaims.ApiKeyClaim && x.Value == "TestKey"));
         }
 
         [Test]

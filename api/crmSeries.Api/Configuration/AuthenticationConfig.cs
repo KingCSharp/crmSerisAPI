@@ -15,6 +15,7 @@ namespace crmSeries.Api.Configuration
                 {
                     options.Authority = config["Identity:Authority"];
                     options.Audience = IdentityServerConfig.ApiResourceName;
+                    options.RequireHttpsMetadata = config.GetValue<bool>("Identity:RequireHttps");
                 });
         }
 

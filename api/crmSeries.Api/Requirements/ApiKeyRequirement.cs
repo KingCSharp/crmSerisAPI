@@ -1,10 +1,11 @@
-﻿using crmSeries.Core.Common;
+﻿using System.Linq;
+using System.Net;
+using System.Threading.Tasks;
+using crmSeries.Core.Common;
+using crmSeries.Core.Security;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
 
 namespace crmSeries.Api.Requirements
 {
@@ -22,6 +23,14 @@ namespace crmSeries.Api.Requirements
 
         private void SucceedRequirementIfApiKeyPresentAndValid(AuthorizationHandlerContext context, ApiKeyRequirement requirement)
         {
+            var apiKeyClaim = context.User?.FindFirst(IdentityClaims.ApiKeyClaim);
+
+            if (apiKeyClaim != null && !string.IsNullOrEmpty(apiKeyClaim.Value))
+            {
+                context.Succeed(requirement);
+                return;
+            }
+
             if (context.Resource is AuthorizationFilterContext authorizationFilterContext)
             {
                 var apiKey = authorizationFilterContext.HttpContext.Request.Headers[Constants.Auth.ApiKey].FirstOrDefault();

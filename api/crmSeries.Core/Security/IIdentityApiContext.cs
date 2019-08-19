@@ -36,7 +36,11 @@ namespace crmSeries.Core.Security
                     return _cachedUser;
                 }
 
-                var apiKey = _httpContextAccessor.HttpContext.Request.Headers[Constants.Auth.ApiKey];
+                var apiKey = _httpContextAccessor.HttpContext.User?.FindFirst(IdentityClaims.ApiKeyClaim)?.Value;
+                if (string.IsNullOrEmpty(apiKey))
+                {
+                    apiKey = _httpContextAccessor.HttpContext.Request.Headers[Constants.Auth.ApiKey];
+                }
 
                 var dealer = _context
                     .Set<Dealer>()
