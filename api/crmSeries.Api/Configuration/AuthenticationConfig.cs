@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 
 namespace crmSeries.Api.Configuration
 {
@@ -16,6 +17,15 @@ namespace crmSeries.Api.Configuration
                     options.Authority = config["Identity:Authority"];
                     options.Audience = IdentityServerConfig.ApiResourceName;
                     options.RequireHttpsMetadata = config.GetValue<bool>("Identity:RequireHttps");
+ 
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        RequireSignedTokens = true,
+                        ValidateAudience = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidateLifetime = true,
+                        ValidateTokenReplay = false
+                    };
                 });
         }
 
