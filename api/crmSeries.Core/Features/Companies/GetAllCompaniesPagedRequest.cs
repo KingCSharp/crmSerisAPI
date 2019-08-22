@@ -85,7 +85,7 @@ namespace crmSeries.Core.Features.Companies
                     .Skip((request.Query.PageNumber - 1) * request.Query.PageSize)
                     .Take(request.Query.PageSize)
                     .ToList(),
-                PageCount = resultCount / request.Query.PageSize,
+                PageCount = (resultCount + request.Query.PageSize -1) / request.Query.PageSize,
                 TotalItemCount = resultCount,
                 PageNumber = request.Query.PageNumber,
                 PageSize = request.Query.PageSize
