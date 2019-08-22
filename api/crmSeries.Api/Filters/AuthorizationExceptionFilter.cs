@@ -1,10 +1,11 @@
-﻿using crmSeries.Core.Exceptions;
+﻿using crmSeries.Core.Common;
+using crmSeries.Core.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace crmSeries.API.Filters
 {
-	public class AuthorizationExceptionFilter : IExceptionFilter
+    public class AuthorizationExceptionFilter : IExceptionFilter
 	{
 		public void OnException(ExceptionContext context)
 		{
@@ -17,8 +18,8 @@ namespace crmSeries.API.Filters
 			{
 				code = 403,
 				hasErrors = true,
-				message = "Unauthorized."
-			})
+				message = Constants.Auth.UnauthorizedApiKey
+            })
 			{
 				StatusCode = 403
 			};
