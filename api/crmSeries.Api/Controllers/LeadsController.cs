@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using crmSeries.Api.Controllers;
+using crmSeries.Api.Filters;
 using crmSeries.Core.Features.Leads;
 using crmSeries.Core.Mediator;
 using Microsoft.AspNetCore.Mvc;
@@ -8,6 +9,7 @@ namespace crmSeries.API.Controllers
 {
     [Produces("application/json")]
     [Route("api/leads")]
+    [AcceptsApiKey]
     public class LeadsController : BaseApiController
     {
         /// <summary>

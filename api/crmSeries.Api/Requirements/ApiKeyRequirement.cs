@@ -1,10 +1,12 @@
 ﻿using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using crmSeries.Api.Filters;
 using crmSeries.Core.Common;
 using crmSeries.Core.Security;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace crmSeries.Api.Requirements
@@ -33,17 +35,27 @@ namespace crmSeries.Api.Requirements
 
             if (context.Resource is AuthorizationFilterContext authorizationFilterContext)
             {
-                var apiKey = authorizationFilterContext.HttpContext.Request.Headers[Constants.Auth.ApiKey].FirstOrDefault();
-                if (apiKey != null)
+                if (authorizationFilterContext.ActionDescriptor is ControllerActionDescriptor descriptor)
                 {
-                    context.Succeed(requirement);
+                    var attr = descriptor.MethodInfo.GetCustomAttributes(typeof(AcceptsApiKeyAttribute), true);
+                    if (attr == null || attr.Length == 0)
+                        attr = descriptor.ControllerTypeInfo.GetCustomAttributes(typeof(AcceptsApiKeyAttribute), true);
+
+                    if (attr != null && attr.Length > 0)
+                    {
+                        var apiKey = authorizationFilterContext.HttpContext.Request.Headers[Constants.Auth.ApiKey].FirstOrDefault();
+                        if (apiKey != null)
+                            context.Succeed(requirement);
+                    }
                 }
-                else
+
+                if (!context.HasSucceeded)
                 {
                     authorizationFilterContext.Result = new JsonResult("A required header, api-key, is missing.")
                     {
                         StatusCode = (int)HttpStatusCode.BadRequest
                     };
+
                     context.Succeed(requirement);
                 }
             }

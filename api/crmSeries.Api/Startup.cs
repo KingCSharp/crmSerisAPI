@@ -30,7 +30,7 @@ namespace crmSeries.Api
             DatabaseConfig.ConfigureServices(services, _configuration);
             IdentityServerConfig.ConfigureServices(services, _configuration);
             MvcConfig.ConfigureServices(services);
-            SwaggerConfig.ConfigureServices(services);
+            SwaggerConfig.ConfigureServices(services, _configuration);
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -41,7 +41,7 @@ namespace crmSeries.Api
             CorsConfig.Configure(app, _configuration, env);
             AuthenticationConfig.Configure(app);
             MvcConfig.Configure(app, env);
-            SwaggerConfig.Configure(app, env);
+            SwaggerConfig.Configure(app, env, _configuration);
             FluentValidationConfig.Configure();
             IdentityServerConfig.Configure(app);
             app.UseExceptionless(_configuration["CommonSettings:Exceptionless:Key"]);
