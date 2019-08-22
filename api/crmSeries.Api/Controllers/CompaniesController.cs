@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using crmSeries.Api.Controllers;
+using crmSeries.Api.Filters;
 using crmSeries.Core.Features.Companies;
 using crmSeries.Core.Features.Companies.Dtos;
 using crmSeries.Core.Logic.Queries;
