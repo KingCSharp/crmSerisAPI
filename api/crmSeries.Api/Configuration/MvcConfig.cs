@@ -1,7 +1,5 @@
-﻿using crmSeries.Api.Requirements;
-using crmSeries.API.Filters;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
+﻿using crmSeries.API.Filters;
+using crmSeries.Core.Common;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Authorization;
@@ -19,12 +17,7 @@ namespace crmSeries.API.Configuration
                 {
                     // options.Filters.Add(typeof(AuthorizationExceptionFilter));
                     options.Filters.Add(typeof(JsonExceptionFilter));
-
-                    var policy = new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme)
-                        .AddRequirements(new ApiKeyRequirement())
-                        .Build();
-
-                    options.Filters.Add(new AuthorizeFilter(policy));
+                    options.Filters.Add(new AuthorizeFilter(Constants.Auth.ApiKeyPolicy));
                 })
                 .AddJsonOptions(options =>
                 {
