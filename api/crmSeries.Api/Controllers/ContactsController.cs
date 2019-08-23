@@ -1,6 +1,7 @@
 ﻿using crmSeries.Api.Controllers;
 using crmSeries.Core.Features.Contacts;
 using crmSeries.Core.Features.Contacts.Dtos;
+using crmSeries.Api.Filters;
 using crmSeries.Core.Logic.Queries;
 using crmSeries.Core.Mediator;
 using Microsoft.AspNetCore.Mvc;
@@ -10,6 +11,7 @@ namespace crmSeries.API.Controllers
 {
     [Produces("application/json")]
     [Route("api/contacts")]
+    [AcceptsApiKey]
     public class ContactsController : BaseApiController
     {
         /// <summary>
