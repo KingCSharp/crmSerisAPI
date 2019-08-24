@@ -11,7 +11,7 @@ using crmSeries.Core.Mediator.Attributes;
 namespace crmSeries.Core.Features.Inspections
 {
     [DoNotValidate]
-    public class GetInspectionGroupsRequest : PagedQueryRequest, IRequest<PagedQueryResult<GetInspectionGroupsDto>>
+    public class GetInspectionGroupsRequest : PagedQueryRequest, IRequest<PagedQueryResult<GetInspectionGroupDto>>
     {
         public GetInspectionGroupsRequest(int inspectionId)
         {
@@ -21,7 +21,7 @@ namespace crmSeries.Core.Features.Inspections
     }
 
     public class GetInspectionGroupsHandler :
-        IRequestHandler<GetInspectionGroupsRequest, PagedQueryResult<GetInspectionGroupsDto>>
+        IRequestHandler<GetInspectionGroupsRequest, PagedQueryResult<GetInspectionGroupDto>>
     {
         private readonly HeavyEquipmentContext _context;
 
@@ -30,9 +30,9 @@ namespace crmSeries.Core.Features.Inspections
             _context = context;
         }
 
-        public Task<Response<PagedQueryResult<GetInspectionGroupsDto>>> HandleAsync(GetInspectionGroupsRequest request)
+        public Task<Response<PagedQueryResult<GetInspectionGroupDto>>> HandleAsync(GetInspectionGroupsRequest request)
         {
-            var result = new PagedQueryResult<GetInspectionGroupsDto>();
+            var result = new PagedQueryResult<GetInspectionGroupDto>();
 
             var groups =
                 (from i in _context.Set<Domain.HeavyEquipment.InspectionGroup>()
@@ -41,7 +41,7 @@ namespace crmSeries.Core.Features.Inspections
                  )
                 .AsQueryable();
 
-            result.Items = groups.ProjectTo<GetInspectionGroupsDto>()
+            result.Items = groups.ProjectTo<GetInspectionGroupDto>()
                 .GetPagedData(request)
                 .ToList();
 

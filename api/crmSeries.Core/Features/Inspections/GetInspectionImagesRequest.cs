@@ -11,7 +11,7 @@ using crmSeries.Core.Mediator.Attributes;
 namespace crmSeries.Core.Features.Inspections
 {
     [DoNotValidate]
-    public class GetInspectionImagesRequest : PagedQueryRequest, IRequest<PagedQueryResult<GetInspectionImagesDto>>
+    public class GetInspectionImagesRequest : PagedQueryRequest, IRequest<PagedQueryResult<GetInspectionImageDto>>
     {
         public GetInspectionImagesRequest(int inspectionId)
         {
@@ -21,7 +21,7 @@ namespace crmSeries.Core.Features.Inspections
     }
 
     public class GetInspectionImagesHandler :
-        IRequestHandler<GetInspectionImagesRequest, PagedQueryResult<GetInspectionImagesDto>>
+        IRequestHandler<GetInspectionImagesRequest, PagedQueryResult<GetInspectionImageDto>>
     {
         private readonly HeavyEquipmentContext _context;
 
@@ -30,9 +30,9 @@ namespace crmSeries.Core.Features.Inspections
             _context = context;
         }
 
-        public Task<Response<PagedQueryResult<GetInspectionImagesDto>>> HandleAsync(GetInspectionImagesRequest request)
+        public Task<Response<PagedQueryResult<GetInspectionImageDto>>> HandleAsync(GetInspectionImagesRequest request)
         {
-            var result = new PagedQueryResult<GetInspectionImagesDto>();
+            var result = new PagedQueryResult<GetInspectionImageDto>();
 
             var Images =
                 (from i in _context.Set<Domain.HeavyEquipment.InspectionImage>()
@@ -41,7 +41,7 @@ namespace crmSeries.Core.Features.Inspections
                  )
                 .AsQueryable();
 
-            result.Items = Images.ProjectTo<GetInspectionImagesDto>()
+            result.Items = Images.ProjectTo<GetInspectionImageDto>()
                 .GetPagedData(request)
                 .ToList();
 

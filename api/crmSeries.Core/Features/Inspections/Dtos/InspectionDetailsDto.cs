@@ -1,16 +1,9 @@
-﻿using System.Collections.Generic;
-
-namespace crmSeries.Core.Features.Inspections.Dtos
+﻿namespace crmSeries.Core.Features.Inspections.Dtos
 {
     public class InspectionGroupDto
     {
         /// <summary>
-        /// The unique identifier of the group.
-        /// </summary>
-        public int GroupId { get; set; }
-
-        /// <summary>
-        /// The unique identifier of the inspection.
+        /// The identifier of the group's Inspection.
         /// </summary>
         public int InspectionId { get; set; }
 
@@ -24,15 +17,11 @@ namespace crmSeries.Core.Features.Inspections.Dtos
         /// </summary>
         public int Sequence { get; set; }
     }
+
     public class InspectionItemDto
     {
         /// <summary>
-        /// The unique identifier of the item.
-        /// </summary>
-        public int ItemId { get; set; }
-
-        /// <summary>
-        /// The unique identifier of the group.
+        /// The identifier of the item's Group.
         /// </summary>
         public int GroupId { get; set; }
 
@@ -71,15 +60,11 @@ namespace crmSeries.Core.Features.Inspections.Dtos
         /// </summary>
         public string RequirementFilter { get; set; }
     }
+
     public class InspectionImageDto
     {
         /// <summary>
-        /// The unique identifier of the image.
-        /// </summary>
-        public int ImageId { get; set; }
-
-        /// <summary>
-        /// The unique identifier of the inspection.
+        /// The identifier of the image's Inspection
         /// </summary>
         public int InspectionId { get; set; }
 
@@ -97,12 +82,7 @@ namespace crmSeries.Core.Features.Inspections.Dtos
     public class InspectionResponseDto
     {
         /// <summary>
-        /// The unique identifier of the response.
-        /// </summary>
-        public int ResponseId { get; set; }
-
-        /// <summary>
-        /// The unique identifier of the item.
+        /// The identifier of the response's Item
         /// </summary>
         public int ItemId { get; set; }
 
@@ -121,20 +101,36 @@ namespace crmSeries.Core.Features.Inspections.Dtos
         /// </summary>
         public bool RequireImage { get; set; }
     }
-    public class GetInspectionGroupsDto : InspectionGroupDto
-    {
 
+    public class GetInspectionGroupDto : InspectionGroupDto
+    {
+        /// <summary>
+        /// The group's identifier.
+        /// </summary>
+        public int GroupId { get; set; }
     }
-    public class GetInspectionItemsDto : InspectionItemDto
-    {
 
+    public class GetInspectionItemDto : InspectionItemDto
+    {
+        /// <summary>
+        /// The item's identifier
+        /// </summary>
+        public int ItemId { get; set; }
     }
-    public class GetInspectionImagesDto : InspectionImageDto
-    {
 
+    public class GetInspectionImageDto : InspectionImageDto
+    {
+        /// <summary>
+        /// The image's identifier
+        /// </summary>
+        public int ImageId { get; set; }
     }
-    public class GetInspectionResponsesDto : InspectionResponseDto
-    {
 
+    public class GetInspectionResponseDto : InspectionResponseDto
+    {
+        /// <summary>
+        /// The response's identifier.
+        /// </summary>
+        public int ResponseId { get; set; }
     }
 }
