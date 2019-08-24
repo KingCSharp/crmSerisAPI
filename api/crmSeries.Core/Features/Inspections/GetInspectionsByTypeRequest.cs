@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using AutoMapper.QueryableExtensions;
 using crmSeries.Core.Data;
+using crmSeries.Core.Domain.HeavyEquipment;
 using crmSeries.Core.Extensions;
 using crmSeries.Core.Features.Inspections.Dtos;
 using crmSeries.Core.Logic.Queries;
@@ -13,26 +14,27 @@ namespace crmSeries.Core.Features.Inspections
 {
     [HeavyEquipmentContext]
     [DoNotValidate]
-    public class GetInspectionsRequest : PagedQueryRequest, IRequest<PagedQueryResult<GetInspectionDto>>
+    public class GetInspectionsByTypeRequest : PagedQueryRequest, IRequest<PagedQueryResult<GetInspectionDto>>
     {
-        public GetInspectionsRequest(int typeId)
+        public GetInspectionsByTypeRequest(int typeId)
         {
             TypeId = typeId;
         }
+
         public int TypeId { get; private set; }
     }
 
-    public class GetInspectionsHandler :
-        IRequestHandler<GetInspectionsRequest, PagedQueryResult<GetInspectionDto>>
+    public class GetInspectionsByTypeHandler :
+        IRequestHandler<GetInspectionsByTypeRequest, PagedQueryResult<GetInspectionDto>>
     {
         private readonly HeavyEquipmentContext _context;
 
-        public GetInspectionsHandler(HeavyEquipmentContext context)
+        public GetInspectionsByTypeHandler(HeavyEquipmentContext context)
         {
             _context = context;
         }
 
-        public Task<Response<PagedQueryResult<GetInspectionDto>>> HandleAsync(GetInspectionsRequest request)
+        public Task<Response<PagedQueryResult<GetInspectionDto>>> HandleAsync(GetInspectionsByTypeRequest request)
         {
             var result = new PagedQueryResult<GetInspectionDto>();
 

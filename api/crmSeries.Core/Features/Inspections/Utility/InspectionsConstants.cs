@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace crmSeries.Core.Features.Inspections.Utility
+﻿namespace crmSeries.Core.Features.Inspections.Utility
 {
     public class InspectionConstants
     {
