@@ -15,7 +15,7 @@ namespace crmSeries.API.Configuration
             services
                 .AddMvc(options =>
                 {
-                    // options.Filters.Add(typeof(AuthorizationExceptionFilter));
+                    options.Filters.Add(typeof(AuthorizationExceptionFilter));
                     options.Filters.Add(typeof(JsonExceptionFilter));
                     options.Filters.Add(new AuthorizeFilter(Constants.Auth.ApiKeyPolicy));
                 })
