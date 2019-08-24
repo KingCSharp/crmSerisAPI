@@ -5,14 +5,21 @@ namespace crmSeries.Core.Features.Inspections.Dtos
     public class BaseInspectionDto
     {
         /// <summary>
-        /// The identifier of the Inspection is classified as.
+        /// The Inspection identifier.
         /// </summary>
         public int InspectionId { get; set; }
-        /// <summary>S
-        /// The name of Inspection. 
+
+        /// <summary>
+        /// The name of the Inspection. 
         /// </summary>
         public string InspectionName { get; set; }
     }
+
+    public class GetInspectionDto : BaseInspectionDto
+    {
+
+    }
+
     public class SaveInspectionDto
     {
         public RecordAssignInspectionDto inspection;
@@ -20,9 +27,12 @@ namespace crmSeries.Core.Features.Inspections.Dtos
         public List<RecordAssignedInspectionImageDto> image;
         public List<RecordAssignedInspectionItemDto> inspectionItem;
         public List<RecordAssinedInspectionItemResponseDto> response;
-
     }
-
+    
+    public class AddInspectionDto : SaveInspectionDto
+    {
+    }
+    
     public class RecordAssignInspectionDto
     {
         public int InspectionId { get; set; }
@@ -39,6 +49,7 @@ namespace crmSeries.Core.Features.Inspections.Dtos
         public bool Deleted { get; set; }
 
     }
+
     public class RecordAssignedInspectionGroupDto
     {
         public int AssignedInspectionId { get; set; }
@@ -47,6 +58,7 @@ namespace crmSeries.Core.Features.Inspections.Dtos
         public int Sequence { get; set; }
         public string Comments { get; set; }
     }
+
     public class RecordAssignedInspectionImageDto
     {
         public int ImageId { get; set; }
@@ -71,8 +83,6 @@ namespace crmSeries.Core.Features.Inspections.Dtos
         public bool RequireComment { get; set; }
         public string RequirementFilter { get; set; }
         public decimal ReconditionAmount { get; set; }
-
-
     }
 
     public class RecordAssinedInspectionItemResponseDto
@@ -82,13 +92,5 @@ namespace crmSeries.Core.Features.Inspections.Dtos
         public int ItemId { get; set; }
         public string Response { get; set; }
         public int Sequence { get; set; }
-    }
-
-    public class GetInspectionDto : BaseInspectionDto
-    {
-
-    }
-    public class AddInspectionDto : SaveInspectionDto
-    {
     }
 }

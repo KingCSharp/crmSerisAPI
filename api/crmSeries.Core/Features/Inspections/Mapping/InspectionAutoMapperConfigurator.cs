@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using crmSeries.Core.Domain.HeavyEquipment;
 using crmSeries.Core.Features.Inspections.Dtos;
 
 namespace crmSeries.Core.Inspections.Mapping
@@ -7,24 +8,28 @@ namespace crmSeries.Core.Inspections.Mapping
     {
         public InspectionTypeMapperConfigurator()
         {
-            CreateMap<Domain.HeavyEquipment.InspectionType, GetInspectionTypeDto>()
+            CreateMap<InspectionType, BaseInspectionTypeDto>()
                 .ForMember(x => x.InspectionTypeId, options => options.MapFrom(s => s.TypeId))
-                .ForMember(x => x.InspectionTypeName, options => options.MapFrom(s => s.Type));
+                .ForMember(x => x.InspectionTypeName, options => options.MapFrom(s => s.Type))
+                .ForMember(x => x.Inspections, options => options.Ignore());
+
+            CreateMap<InspectionType, GetInspectionTypeDto>()
+                .IncludeBase<InspectionType, BaseInspectionTypeDto>();
         }
     }
-
+    
     public class InspectionMapperConfigurator : Profile
     {
         public InspectionMapperConfigurator()
         {
-            CreateMap<Domain.HeavyEquipment.Inspection, GetInspectionDto>()
-                .ForMember(x => x.InspectionId, options => options.MapFrom(s => s.InspectionId))
+            CreateMap<Inspection, BaseInspectionDto>()
                 .ForMember(x => x.InspectionName, options => options.MapFrom(s => s.Name));
 
-
+            CreateMap<Inspection, GetInspectionDto>()
+                .IncludeBase<Inspection, BaseInspectionDto>();
         }
     }
-
+    
     public class RecordAssignedInspectionMapperConfigurator : Profile
     {
         public RecordAssignedInspectionMapperConfigurator()

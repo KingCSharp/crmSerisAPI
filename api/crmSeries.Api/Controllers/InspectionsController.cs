@@ -9,29 +9,29 @@ using crmSeries.Core.Mediator;
 namespace crmSeries.API.Controllers
 {
     [Produces("application/json")]
-    [Route("api/inspectiontypes")]
+    [Route("api/inspections")]
     public class InspectionsController : BaseApiController
     {
         /// <summary>
-        /// Gets a list of all inspections 
+        /// Gets a list of all Inspection Types and Available Inspections
         /// </summary>
         [HttpGet]
         [Produces(typeof(PagedQueryResult<GetInspectionTypeDto>))]
-        public Task<IActionResult> GetInspectionType(GetInspectionTypeRequest request)
+        public Task<IActionResult> GetInspectionType(GetAllInspectionTypesRequest request)
         {
             return HandleAsync(request);
         }
 
         /// <summary>
-        /// Gets a list of all Inspection types.
+        /// Gets a list of all Inspections for a given Inspection Type.
         /// </summary>
-        [HttpGet("inspections/{typeId}")]
+        [HttpGet("{typeId}")]
         [Produces(typeof(PagedQueryResult<GetInspectionDto>))]
         public Task<IActionResult> GetInspection(int typeId)
         {
-            return HandleAsync(new GetInspectionsRequest(typeId));
+            return HandleAsync(new GetInspectionsByTypeRequest(typeId));
         }
-
+        
         /// <summary>
         /// Adds a new inspection
         /// </summary>
