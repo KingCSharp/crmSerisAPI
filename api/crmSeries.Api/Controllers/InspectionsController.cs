@@ -1,10 +1,10 @@
 ﻿using System.Threading.Tasks;
 using crmSeries.Api.Controllers;
-using crmSeries.Core.Features.Inspections.Dtos;
 using crmSeries.Core.Features.Inspections;
+using crmSeries.Core.Features.Inspections.Dtos;
 using crmSeries.Core.Logic.Queries;
-using Microsoft.AspNetCore.Mvc;
 using crmSeries.Core.Mediator;
+using Microsoft.AspNetCore.Mvc;
 
 namespace crmSeries.API.Controllers
 {
@@ -20,6 +20,16 @@ namespace crmSeries.API.Controllers
         public Task<IActionResult> GetInspectionType(GetAllInspectionTypesRequest request)
         {
             return HandleAsync(request);
+        }
+
+        /// <summary>
+        /// Gets an Inspection's groups, items, images, and responses
+        /// </summary>
+        [HttpGet("{inspectionId}/template")]
+        [Produces(typeof(GetInspectionTemplateDto))]
+        public Task<IActionResult> GetInspectionTemplate(int inspectionId)
+        {
+            return HandleAsync(new GetInspectionTemplateRequest(inspectionId));
         }
 
         /// <summary>
@@ -43,28 +53,28 @@ namespace crmSeries.API.Controllers
         }
 
         [HttpGet("/inspection/{inspectionId}/group")]
-        [Produces(typeof(PagedQueryResult<GetInspectionGroupsDto>))]
+        [Produces(typeof(PagedQueryResult<GetInspectionGroupDto>))]
         public Task<IActionResult> GetInspectionGroups(int inspectionId)
         {
             return HandleAsync(new GetInspectionGroupsRequest(inspectionId));
         }
 
         [HttpGet("/inspection/group/{groupid}/Item")]
-        [Produces(typeof(PagedQueryResult<GetInspectionItemsDto>))]
+        [Produces(typeof(PagedQueryResult<GetInspectionItemDto>))]
         public Task<IActionResult> GetInspectionItems(int groupid)
         {
             return HandleAsync(new GetInspectionItemsRequest(groupid));
         }
 
         [HttpGet("/inspection/image/{inspectionId}")]
-        [Produces(typeof(PagedQueryResult<GetInspectionImagesDto>))]
+        [Produces(typeof(PagedQueryResult<GetInspectionImageDto>))]
         public Task<IActionResult> GetInspectionImages(int inspectionId)
         {
             return HandleAsync(new GetInspectionImagesRequest(inspectionId));
         }
 
         [HttpGet("/inspection/item/response/{itemId}")]
-        [Produces(typeof(PagedQueryResult<GetInspectionImagesDto>))]
+        [Produces(typeof(PagedQueryResult<GetInspectionImageDto>))]
         public Task<IActionResult> GetInspectionResponses(int itemId)
         {
             return HandleAsync(new GetInspectionResponsesRequest(itemId));

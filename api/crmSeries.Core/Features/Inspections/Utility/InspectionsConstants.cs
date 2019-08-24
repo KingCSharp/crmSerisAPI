@@ -4,8 +4,8 @@
     {
         public static class ErrorMessages
         {
-            public static readonly string InvalidParentType =
-                $"Invalid InspectionType";
+            public const string InspectionNotFound = "No inspection with this id found.";
+            public const string InvalidParentType = "Invalid InspectionType";
         }
 
     }

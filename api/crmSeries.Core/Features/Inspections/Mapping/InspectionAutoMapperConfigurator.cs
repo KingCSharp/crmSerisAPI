@@ -29,6 +29,56 @@ namespace crmSeries.Core.Inspections.Mapping
                 .IncludeBase<Inspection, BaseInspectionDto>();
         }
     }
+
+    public class InspectionDetailsMapperConfigurator : Profile
+    {
+        public InspectionDetailsMapperConfigurator()
+        {
+            CreateMap<InspectionGroup, InspectionGroupDto>();
+
+            CreateMap<InspectionImage, InspectionImageDto>();
+
+            CreateMap<InspectionItem, InspectionItemDto>();
+
+            CreateMap<InspectionResponse, InspectionResponseDto>();
+
+            CreateMap<InspectionGroup, GetInspectionGroupDto>()
+                .IncludeBase<InspectionGroup, InspectionGroupDto>();
+
+            CreateMap<InspectionImage, GetInspectionImageDto>()
+                .IncludeBase<InspectionImage, InspectionImageDto>();
+
+            CreateMap<InspectionItem, GetInspectionItemDto>()
+                .IncludeBase<InspectionItem, InspectionItemDto>();
+
+            CreateMap<InspectionResponse, GetInspectionResponseDto>()
+                .IncludeBase<InspectionResponse, InspectionResponseDto>();
+        }
+    }
+
+    public class InspectionTemplateMapperConfigurator : Profile
+    {
+        public InspectionTemplateMapperConfigurator()
+        {
+            CreateMap<Inspection, GetInspectionTemplateDto>()
+                .ForMember(x => x.Groups, options => options.Ignore())
+                .ForMember(x => x.Images, options => options.Ignore());
+
+            CreateMap<InspectionGroup, GetInspectionTemplateGroupDto>()
+                .IncludeBase<InspectionGroup, GetInspectionGroupDto>()
+                .ForMember(x => x.Items, options => options.Ignore());
+
+            CreateMap<InspectionItem, GetInspectionTemplateItemDto>()
+                .IncludeBase<InspectionItem, GetInspectionItemDto>()
+                .ForMember(x => x.Responses, options => options.Ignore());
+
+            CreateMap<InspectionResponse, GetInspectionTemplateResponseDto>()
+                .IncludeBase<InspectionResponse, GetInspectionResponseDto>();
+
+            CreateMap<InspectionImage, GetInspectionTemplateImageDto>()
+                .IncludeBase<InspectionImage, GetInspectionImageDto>();
+        }
+    }
     
     public class RecordAssignedInspectionMapperConfigurator : Profile
     {

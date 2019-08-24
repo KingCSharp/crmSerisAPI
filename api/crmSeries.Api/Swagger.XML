@@ -179,6 +179,11 @@
             Gets a list of all Inspection Types and Available Inspections
             </summary>
         </member>
+        <member name="M:crmSeries.API.Controllers.InspectionsController.GetInspectionTemplate(System.Int32)">
+            <summary>
+            Gets an Inspection's groups, items, images, and responses
+            </summary>
+        </member>
         <member name="M:crmSeries.API.Controllers.InspectionsController.GetInspection(System.Int32)">
             <summary>
             Gets a list of all Inspections for a given Inspection Type.

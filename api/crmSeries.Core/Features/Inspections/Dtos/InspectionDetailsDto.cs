@@ -1,4 +1,6 @@
-﻿namespace crmSeries.Core.Features.Inspections.Dtos
+﻿using System.Collections.Generic;
+
+namespace crmSeries.Core.Features.Inspections.Dtos
 {
     public class InspectionGroupDto
     {
@@ -132,5 +134,47 @@
         /// The response's identifier.
         /// </summary>
         public int ResponseId { get; set; }
+    }
+    
+    public class GetInspectionTemplateImageDto : GetInspectionImageDto
+    {
+    }
+
+    public class GetInspectionTemplateResponseDto : GetInspectionResponseDto
+    {
+    }
+
+    public class GetInspectionTemplateItemDto : GetInspectionItemDto
+    {
+        /// <summary>
+        /// The inspection template item's responses
+        /// </summary>
+        public List<GetInspectionTemplateResponseDto> Responses { get; set; }
+    }
+
+    public class GetInspectionTemplateGroupDto : GetInspectionGroupDto
+    {
+        /// <summary>
+        /// The inspection template group's items
+        /// </summary>
+        public List<GetInspectionTemplateItemDto> Items { get; set; }
+    }
+
+    public class GetInspectionTemplateDto
+    {
+        /// <summary>
+        /// The identifier of the template's Inspection
+        /// </summary>
+        public int InspectionId { get; set; }
+
+        /// <summary>
+        /// The inspection template's groups
+        /// </summary>
+        public List<GetInspectionTemplateGroupDto> Groups { get; set; }
+
+        /// <summary>
+        /// The inspection template's images
+        /// </summary>
+        public List<GetInspectionTemplateImageDto> Images { get; set; }
     }
 }
