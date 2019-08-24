@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper.QueryableExtensions;
 using crmSeries.Core.Data;
@@ -8,7 +9,6 @@ using crmSeries.Core.Features.Inspections.Dtos;
 using crmSeries.Core.Logic.Queries;
 using crmSeries.Core.Mediator;
 using crmSeries.Core.Mediator.Decorators;
-using crmSeries.Core.Security;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 
@@ -23,13 +23,10 @@ namespace crmSeries.Core.Features.Inspections
         IRequestHandler<GetAllInspectionTypesRequest, PagedQueryResult<GetInspectionTypeDto>>
     {
         private readonly HeavyEquipmentContext _context;
-        private readonly IIdentityUserContext _identity;
 
-        public GetAllInspectionTypesRequestHandler(HeavyEquipmentContext context,
-            IIdentityUserContext identity)
+        public GetAllInspectionTypesRequestHandler(HeavyEquipmentContext context)
         {
             _context = context;
-            _identity = identity;
         }
 
         public async Task<Response<PagedQueryResult<GetInspectionTypeDto>>> HandleAsync(GetAllInspectionTypesRequest request)
@@ -47,12 +44,13 @@ namespace crmSeries.Core.Features.Inspections
             var inspections = await _context.Set<Inspection>()
                 .Where(x => !x.Deleted &&
                             x.Active != false &&
-                            typeIds.Contains(x.InspectionId))
-                .ProjectTo<BaseInspectionDto>()
-                .GroupBy(x => x.InspectionId)
-                .ToDictionaryAsync(x => x.Key, x => x.ToList());
+                            typeIds.Contains(x.TypeId))
+                .GroupBy(x => x.TypeId)
+                .ToDictionaryAsync(x => x.Key, x => x.MapTo<List<BaseInspectionDto>>());
 
-            types.ForEach(x => x.Inspections = inspections[x.InspectionTypeId]);
+            types.ForEach(x => x.Inspections = inspections.ContainsKey(x.InspectionTypeId)
+                ? inspections[x.InspectionTypeId]
+                : new List<BaseInspectionDto>());
 
             var totalCount = await _context.Set<InspectionType>().CountAsync(x => !x.Deleted);
 
