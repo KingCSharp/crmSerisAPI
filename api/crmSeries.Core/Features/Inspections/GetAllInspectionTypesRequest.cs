@@ -15,7 +15,8 @@ using Microsoft.EntityFrameworkCore;
 namespace crmSeries.Core.Features.Inspections
 {
     [HeavyEquipmentContext]
-    public class GetAllInspectionTypesRequest : PagedQueryRequest, IRequest<PagedQueryResult<GetInspectionTypeDto>>
+    public class GetAllInspectionTypesRequest 
+        : PagedQueryRequest, IRequest<PagedQueryResult<GetInspectionTypeDto>>
     {
     }
 
@@ -55,7 +56,7 @@ namespace crmSeries.Core.Features.Inspections
             var totalCount = await _context.Set<InspectionType>().CountAsync(x => !x.Deleted);
 
             result.TotalItemCount = totalCount;
-            result.PageCount = (totalCount / request.PageSize) + 1;
+            result.PageCount = (totalCount + (request.PageSize - 1)) / request.PageSize;
             result.PageNumber = request.PageNumber;
             result.PageSize = request.PageSize;
             result.Items = types;
