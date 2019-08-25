@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using crmSeries.Api.Controllers;
+using crmSeries.Api.Filters;
 using crmSeries.Core.Features.Inspections;
 using crmSeries.Core.Features.Inspections.Dtos;
 using crmSeries.Core.Logic.Queries;
@@ -10,6 +11,7 @@ namespace crmSeries.API.Controllers
 {
     [Produces("application/json")]
     [Route("api/inspections")]
+    [AcceptsApiKey]
     public class InspectionsController : BaseApiController
     {
         /// <summary>
