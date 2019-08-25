@@ -1050,6 +1050,161 @@
             4 characters.
             </summary>
         </member>
+        <member name="P:crmSeries.Core.Features.Inspections.Dtos.InspectionGroupDto.InspectionId">
+            <summary>
+            The identifier of the group's Inspection.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Inspections.Dtos.InspectionGroupDto.GroupName">
+            <summary>
+            The name of the group.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Inspections.Dtos.InspectionGroupDto.Sequence">
+            <summary>
+            The inspection group's sequence.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Inspections.Dtos.InspectionItemDto.GroupId">
+            <summary>
+            The identifier of the item's Group.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Inspections.Dtos.InspectionItemDto.Item">
+            <summary>
+            The name of the item.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Inspections.Dtos.InspectionItemDto.Sequence">
+            <summary>
+            The item's sequence.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Inspections.Dtos.InspectionItemDto.DataType">
+            <summary>
+            The data type for this item. E.g., None, Number, Single-Selection, Text, YesNo, etc.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Inspections.Dtos.InspectionItemDto.RequireResponse">
+            <summary>
+            Denotes whether a response is required.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Inspections.Dtos.InspectionItemDto.RequireImage">
+            <summary>
+            Denotes whether an image is required.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Inspections.Dtos.InspectionItemDto.RequireComment">
+            <summary>
+            Denotes whether a comment is required.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Inspections.Dtos.InspectionItemDto.RequirementFilter">
+            <summary>
+            The requirement filter.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Inspections.Dtos.InspectionImageDto.InspectionId">
+            <summary>
+            The identifier of the image's Inspection
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Inspections.Dtos.InspectionImageDto.Description">
+            <summary>
+            The image's description.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Inspections.Dtos.InspectionImageDto.Sequence">
+            <summary>
+            The image's sequence
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Inspections.Dtos.InspectionResponseDto.ItemId">
+            <summary>
+            The identifier of the response's Item
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Inspections.Dtos.InspectionResponseDto.Response">
+            <summary>
+            The response value. E.g., Good, Bad, Abnormal, Cracked, etc.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Inspections.Dtos.InspectionResponseDto.Sequence">
+            <summary>
+            The response sequence.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Inspections.Dtos.InspectionResponseDto.RequireImage">
+            <summary>
+            Denotes whether an image is required.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Inspections.Dtos.GetInspectionGroupDto.GroupId">
+            <summary>
+            The group's identifier.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Inspections.Dtos.GetInspectionItemDto.ItemId">
+            <summary>
+            The item's identifier
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Inspections.Dtos.GetInspectionImageDto.ImageId">
+            <summary>
+            The image's identifier
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Inspections.Dtos.GetInspectionResponseDto.ResponseId">
+            <summary>
+            The response's identifier.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Inspections.Dtos.GetInspectionTemplateItemDto.Responses">
+            <summary>
+            The inspection template item's responses
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Inspections.Dtos.GetInspectionTemplateGroupDto.Items">
+            <summary>
+            The inspection template group's items
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Inspections.Dtos.GetInspectionTemplateDto.InspectionId">
+            <summary>
+            The identifier of the template's Inspection
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Inspections.Dtos.GetInspectionTemplateDto.Groups">
+            <summary>
+            The inspection template's groups
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Inspections.Dtos.GetInspectionTemplateDto.Images">
+            <summary>
+            The inspection template's images
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Inspections.Dtos.BaseInspectionDto.InspectionId">
+            <summary>
+            The Inspection identifier.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Inspections.Dtos.BaseInspectionDto.InspectionName">
+            <summary>
+            The name of the Inspection. 
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Inspections.Dtos.BaseInspectionTypeDto.InspectionTypeId">
+            <summary>
+            The identifier of the InspectionType.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Inspections.Dtos.BaseInspectionTypeDto.InspectionTypeName">
+            <summary>
+            The name of the InspectionType. 
+            </summary>
+        </member>
         <member name="P:crmSeries.Core.Features.Inventory.BaseInventoryDto.ParentId">
             <summary>
             The id of the parent entity for this inventory equipment.
