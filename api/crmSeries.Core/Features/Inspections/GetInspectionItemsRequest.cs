@@ -2,22 +2,28 @@
 using System.Threading.Tasks;
 using AutoMapper.QueryableExtensions;
 using crmSeries.Core.Data;
+using crmSeries.Core.Domain.HeavyEquipment;
 using crmSeries.Core.Extensions;
 using crmSeries.Core.Features.Inspections.Dtos;
 using crmSeries.Core.Logic.Queries;
 using crmSeries.Core.Mediator;
-using crmSeries.Core.Mediator.Attributes;
+using crmSeries.Core.Mediator.Decorators;
+using FluentValidation;
+using Microsoft.EntityFrameworkCore;
 
 namespace crmSeries.Core.Features.Inspections
 {
-    [DoNotValidate]
+    [HeavyEquipmentContext]
     public class GetInspectionItemsRequest : PagedQueryRequest, IRequest<PagedQueryResult<GetInspectionItemDto>>
     {
-        public GetInspectionItemsRequest(int groupId)
+        public GetInspectionItemsRequest(int groupId, PagedQueryRequest paging)
         {
             GroupId = groupId;
+            PageNumber = paging.PageNumber;
+            PageSize = paging.PageSize;
         }
-        public int GroupId { get; private set; }
+
+        public int GroupId { get; }
     }
 
     public class GetInspectionItemsHandler :
@@ -30,22 +36,41 @@ namespace crmSeries.Core.Features.Inspections
             _context = context;
         }
 
-        public Task<Response<PagedQueryResult<GetInspectionItemDto>>> HandleAsync(GetInspectionItemsRequest request)
+        public async Task<Response<PagedQueryResult<GetInspectionItemDto>>> HandleAsync(GetInspectionItemsRequest request)
         {
             var result = new PagedQueryResult<GetInspectionItemDto>();
 
-            var Items =
-                (from i in _context.Set<Domain.HeavyEquipment.InspectionItem>()
-                 where i.GroupId == request.GroupId
-                 select i
-                 )
-                .AsQueryable();
+            var responses = _context.Set<InspectionItem>()
+                .Where(x => x.GroupId == request.GroupId);
 
-            result.Items = Items.ProjectTo<GetInspectionItemDto>()
+            var totalCount = await responses.CountAsync();
+
+            result.Items = await responses
+                .ProjectTo<GetInspectionItemDto>()
                 .GetPagedData(request)
-                .ToList();
+                .ToListAsync();
 
-            return result.AsResponseAsync();
+            result.TotalItemCount = totalCount;
+            result.PageCount = (totalCount + (request.PageSize - 1)) / request.PageSize;
+            result.PageNumber = request.PageNumber;
+            result.PageSize = request.PageSize;
+
+            return result.AsResponse();
+        }
+    }
+
+    public class GetInspectionItemsValidator : AbstractValidator<GetInspectionItemsRequest>
+    {
+        public GetInspectionItemsValidator()
+        {
+            RuleFor(x => x.GroupId)
+                .GreaterThan(0);
+
+            RuleFor(x => x.PageNumber)
+                 .GreaterThan(0);
+
+            RuleFor(x => x.PageSize)
+                .GreaterThan(0);
         }
     }
 }

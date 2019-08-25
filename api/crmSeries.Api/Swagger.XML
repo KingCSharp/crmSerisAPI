@@ -174,19 +174,39 @@
             </summary>
             <param name="request">The request information for this API endpoint.</param>
         </member>
-        <member name="M:crmSeries.API.Controllers.InspectionsController.GetInspectionType(crmSeries.Core.Features.Inspections.GetAllInspectionTypesRequest)">
+        <member name="M:crmSeries.API.Controllers.InspectionsController.GetInspectionTypes(crmSeries.Core.Features.Inspections.GetAllInspectionTypesRequest)">
             <summary>
-            Gets a list of all Inspection Types and Available Inspections
+            Gets a list of all inspection types and available inspections
+            </summary>
+        </member>
+        <member name="M:crmSeries.API.Controllers.InspectionsController.GetInspections(System.Int32,crmSeries.Core.Logic.Queries.PagedQueryRequest)">
+            <summary>
+            Gets a list of all available inspections for a given inspection type.
             </summary>
         </member>
         <member name="M:crmSeries.API.Controllers.InspectionsController.GetInspectionTemplate(System.Int32)">
             <summary>
-            Gets an Inspection's groups, items, images, and responses
+            Gets an inspection's groups, items, images, and responses
             </summary>
         </member>
-        <member name="M:crmSeries.API.Controllers.InspectionsController.GetInspection(System.Int32)">
+        <member name="M:crmSeries.API.Controllers.InspectionsController.GetInspectionImages(System.Int32,crmSeries.Core.Logic.Queries.PagedQueryRequest)">
             <summary>
-            Gets a list of all Inspections for a given Inspection Type.
+            Gets an inspection's images
+            </summary>
+        </member>
+        <member name="M:crmSeries.API.Controllers.InspectionsController.GetInspectionGroups(System.Int32,crmSeries.Core.Logic.Queries.PagedQueryRequest)">
+            <summary>
+            Gets an inspection's groups
+            </summary>
+        </member>
+        <member name="M:crmSeries.API.Controllers.InspectionsController.GetInspectionItems(System.Int32,crmSeries.Core.Logic.Queries.PagedQueryRequest)">
+            <summary>
+            Gets an inspection group's items
+            </summary>
+        </member>
+        <member name="M:crmSeries.API.Controllers.InspectionsController.GetInspectionResponses(System.Int32,crmSeries.Core.Logic.Queries.PagedQueryRequest)">
+            <summary>
+            Gets an inspection item's responses
             </summary>
         </member>
         <member name="M:crmSeries.API.Controllers.InspectionsController.Post(crmSeries.Core.Features.Inspections.AddInspectionRequest)">

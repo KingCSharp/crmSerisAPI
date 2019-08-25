@@ -7,21 +7,24 @@ using crmSeries.Core.Extensions;
 using crmSeries.Core.Features.Inspections.Dtos;
 using crmSeries.Core.Logic.Queries;
 using crmSeries.Core.Mediator;
-using crmSeries.Core.Mediator.Attributes;
 using crmSeries.Core.Mediator.Decorators;
+using FluentValidation;
+using Microsoft.EntityFrameworkCore;
 
 namespace crmSeries.Core.Features.Inspections
 {
     [HeavyEquipmentContext]
-    [DoNotValidate]
-    public class GetInspectionsByTypeRequest : PagedQueryRequest, IRequest<PagedQueryResult<GetInspectionDto>>
+    public class GetInspectionsByTypeRequest 
+        : PagedQueryRequest, IRequest<PagedQueryResult<GetInspectionDto>>
     {
-        public GetInspectionsByTypeRequest(int typeId)
+        public GetInspectionsByTypeRequest(int typeId, PagedQueryRequest paging)
         {
             TypeId = typeId;
+            PageNumber = paging.PageNumber;
+            PageSize = paging.PageSize;
         }
 
-        public int TypeId { get; private set; }
+        public int TypeId { get; }
     }
 
     public class GetInspectionsByTypeHandler :
@@ -34,25 +37,41 @@ namespace crmSeries.Core.Features.Inspections
             _context = context;
         }
 
-        public Task<Response<PagedQueryResult<GetInspectionDto>>> HandleAsync(GetInspectionsByTypeRequest request)
+        public async Task<Response<PagedQueryResult<GetInspectionDto>>> HandleAsync(GetInspectionsByTypeRequest request)
         {
             var result = new PagedQueryResult<GetInspectionDto>();
 
-            var Inspections =
-                (from i in _context.Set<Domain.HeavyEquipment.Inspection>()
-                 where i.TypeId == request.TypeId
-                 select new
-                 {
-                     InspectionId = i.TypeId,
-                     InspectionName = i.Name
-                 })
-                .AsQueryable();
+            var inspections = _context.Set<Inspection>()
+                .Where(x => !x.Deleted && x.Active != false && x.TypeId == request.TypeId);
 
-            result.Items = Inspections.ProjectTo<GetInspectionDto>()
+            var totalCount = await inspections.CountAsync();
+
+            result.Items = await inspections
+                .ProjectTo<GetInspectionDto>()
                 .GetPagedData(request)
-                .ToList();
+                .ToListAsync();
 
-            return result.AsResponseAsync();
+            result.TotalItemCount = totalCount;
+            result.PageCount = (totalCount + (request.PageSize - 1)) / request.PageSize;
+            result.PageNumber = request.PageNumber;
+            result.PageSize = request.PageSize;
+
+            return result.AsResponse();
+        }
+    }
+
+    public class GetInspectionsByTypeValidator : AbstractValidator<GetInspectionsByTypeRequest>
+    {
+        public GetInspectionsByTypeValidator()
+        {
+            RuleFor(x => x.TypeId)
+                .GreaterThan(0);
+
+            RuleFor(x => x.PageNumber)
+                 .GreaterThan(0);
+
+            RuleFor(x => x.PageSize)
+                .GreaterThan(0);
         }
     }
 }
