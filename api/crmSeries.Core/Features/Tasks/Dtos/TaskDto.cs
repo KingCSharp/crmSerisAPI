@@ -94,11 +94,6 @@ namespace crmSeries.Core.Features.Tasks.Dtos
         public int TaskId { get; set; }
 
         /// <summary>
-        /// The flag for soft deletion.
-        /// </summary>
-        public bool Deleted { get; set; }
-
-        /// <summary>
         /// The name of the related record.  This value will be different depending
         /// on what type of related record type is associated with the task.
         /// </summary>

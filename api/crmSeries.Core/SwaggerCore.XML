@@ -1006,11 +1006,6 @@
             The note identifier.
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.Notes.Dtos.GetNoteDto.Deleted">
-            <summary>
-            The flag for soft deletion.
-            </summary>
-        </member>
         <member name="P:crmSeries.Core.Features.Notes.Dtos.GetNoteDto.LastModified">
             <summary>
             The date, if any, that the entity was modified.
@@ -1046,8 +1041,18 @@
         <member name="P:crmSeries.Core.Features.Notes.GetNotesRequest.Comments">
             <summary>
             Setting this value will return all notes that have comments containing your search phrase.
-            For obvious reasons, we are requiring the lenght of your search criteria to be at least
+            For obvious reasons, we are requiring the length of your search criteria to be at least
             4 characters.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Notes.GetNotesRequest.ContactId">
+            <summary>
+            Setting this value will return all notes that belong to the specified contact.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Notes.GetNotesRequest.UserId">
+            <summary>
+            Setting this value will return all notes that belong to the specified user.
             </summary>
         </member>
         <member name="P:crmSeries.Core.Features.Inspections.Dtos.InspectionGroupDto.InspectionId">
@@ -1717,11 +1722,6 @@
             The unique identifier for this task.
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.Tasks.Dtos.GetTaskDto.Deleted">
-            <summary>
-            The flag for soft deletion.
-            </summary>
-        </member>
         <member name="P:crmSeries.Core.Features.Tasks.Dtos.GetTaskDto.RelatedRecordName">
             <summary>
             The name of the related record.  This value will be different depending
@@ -1746,6 +1746,16 @@
         <member name="P:crmSeries.Core.Features.Tasks.Dtos.EditTaskDto.Active">
             <summary>
             The flag for whether this contact is active or not.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Tasks.GetTasksRequest.ContactId">
+            <summary>
+            Setting this value will return all tasks that belong to the specified contact.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Tasks.GetTasksRequest.UserId">
+            <summary>
+            Setting this value will return all tasks that belong to the specified user.
             </summary>
         </member>
         <member name="P:crmSeries.Core.Features.UserFavoriteRecords.Dtos.BaseUserFavoriteRecordDto.RecordId">

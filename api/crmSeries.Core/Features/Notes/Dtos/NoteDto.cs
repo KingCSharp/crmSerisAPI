@@ -53,11 +53,6 @@ namespace crmSeries.Core.Features.Notes.Dtos
         public int NoteId { get; set; }
 
         /// <summary>
-        /// The flag for soft deletion.
-        /// </summary>
-        public bool Deleted { get; set; }
-
-        /// <summary>
         /// The date, if any, that the entity was modified.
         /// </summary>
         public DateTime? LastModified { get; set; }

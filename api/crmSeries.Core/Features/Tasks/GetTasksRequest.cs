@@ -20,6 +20,15 @@ namespace crmSeries.Core.Features.Tasks
     [HeavyEquipmentContext]
     public class GetTasksRequest : PagedQueryRequest, IRequest<PagedQueryResult<GetTaskDto>>
     {
+        /// <summary>
+        /// Setting this value will return all tasks that belong to the specified contact.
+        /// </summary>
+        public int ContactId { get; set; }
+
+        /// <summary>
+        /// Setting this value will return all tasks that belong to the specified user.
+        /// </summary>
+        public int UserId { get; set; }
     }
 
     public class GetTasksRequestHandler :
@@ -42,11 +51,8 @@ namespace crmSeries.Core.Features.Tasks
 
             var result = new PagedQueryResult<GetTaskDto>();
 
-            var contacts =
+            var tasks =
                 (from t in _context.Set<Task>()
-                    join u in _context.Set<User>()
-                        on t.UserId equals u.UserId
-                    where u.UserId == _identity.RequestingUser.UserId
                     select new
                     {
                         t.TaskId,
@@ -62,19 +68,24 @@ namespace crmSeries.Core.Features.Tasks
                         t.Status,
                         t.Priority,
                         t.ReminderDate,
-                        t.ReminderRepeatSchedule,
-                        t.Deleted
+                        t.ReminderRepeatSchedule
                     })
                 .AsQueryable();
 
-            var count = contacts.Count();
+            if (request.ContactId > 0)
+                tasks = tasks.Where(x => x.RelatedRecordId == request.ContactId && x.RelatedRecordType == RelatedRecord.Types.Contact);
+
+            if (request.UserId > 0)
+                tasks = tasks.Where(x => x.UserId == request.UserId);
+
+            var count = tasks.Count();
 
             result.PageCount = count / request.PageSize;
             result.TotalItemCount = count;
             result.PageNumber = request.PageNumber;
             result.PageSize = request.PageSize;
 
-            result.Items = contacts.ProjectTo<GetTaskDto>()
+            result.Items = tasks.ProjectTo<GetTaskDto>()
                 .GetPagedData(request)
                 .ToList();
 

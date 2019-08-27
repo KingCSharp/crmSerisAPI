@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using crmSeries.Api.Controllers;
+using crmSeries.Api.Filters;
 using crmSeries.Core.Features.Tasks;
 using crmSeries.Core.Features.Tasks.Dtos;
 using crmSeries.Core.Logic.Queries;
@@ -11,6 +12,7 @@ namespace crmSeries.API.Controllers
 {
     [Produces("application/json")]
     [Route("api/tasks")]
+    [AcceptsApiKey(true)]
     public class TasksController : BaseApiController
     {
         /// <summary>

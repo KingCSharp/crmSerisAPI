@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using crmSeries.Api.Controllers;
+using crmSeries.Api.Filters;
 using crmSeries.Core.Features.Notes;
 using crmSeries.Core.Features.Notes.Dtos;
 using crmSeries.Core.Logic.Queries;
@@ -11,6 +12,7 @@ namespace crmSeries.API.Controllers
 {
     [Produces("application/json")]
     [Route("api/notes")]
+    [AcceptsApiKey(true)]
     public class NotesController : BaseApiController
     {
         /// <summary>

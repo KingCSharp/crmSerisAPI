@@ -1,18 +1,17 @@
 ﻿using System.Linq;
+using FluentValidation;
+using crmSeries.Core.Mediator;
+using AutoMapper.QueryableExtensions;
+using System.Threading.Tasks;
+using System;
 using crmSeries.Core.Data;
 using crmSeries.Core.Logic.Queries;
 using crmSeries.Core.Mediator.Decorators;
 using crmSeries.Core.Security;
-using FluentValidation;
-using crmSeries.Core.Mediator;
-using AutoMapper.QueryableExtensions;
 using crmSeries.Core.Domain.HeavyEquipment;
 using crmSeries.Core.Extensions;
 using crmSeries.Core.Features.Notes.Dtos;
-using System.Threading.Tasks;
-using System;
 using crmSeries.Core.Validation;
-using crmSeries.Core.Common;
 
 namespace crmSeries.Core.Features.Notes
 {
@@ -33,10 +32,20 @@ namespace crmSeries.Core.Features.Notes
 
         /// <summary>
         /// Setting this value will return all notes that have comments containing your search phrase.
-        /// For obvious reasons, we are requiring the lenght of your search criteria to be at least
+        /// For obvious reasons, we are requiring the length of your search criteria to be at least
         /// 4 characters.
         /// </summary>
         public string Comments { get; set; }
+
+        /// <summary>
+        /// Setting this value will return all notes that belong to the specified contact.
+        /// </summary>
+        public int ContactId { get; set; }
+
+        /// <summary>
+        /// Setting this value will return all notes that belong to the specified user.
+        /// </summary>
+        public int UserId { get; set; }
     }
 
     public class GetNotesRequestHandler :
@@ -58,15 +67,11 @@ namespace crmSeries.Core.Features.Notes
 
             var notes =
                 (from n in _context.Set<Note>()
-                    join u in _context.Set<User>()
-                        on n.UserId equals u.UserId
-                    where u.UserId == _identity.RequestingUser.UserId
                     select new
                     {
                         n.NoteId,
                         n.UserId,
                         n.Comments,
-                        n.Deleted,
                         n.RecordId,
                         n.RecordType,
                         n.NoteDate,
@@ -83,6 +88,12 @@ namespace crmSeries.Core.Features.Notes
 
             if (!string.IsNullOrEmpty(request.Comments))
                 notes = notes.Where(x => x.Comments.Contains(request.Comments));
+
+            if (request.ContactId > 0)
+                notes = notes.Where(x => x.RecordId == request.ContactId && x.RecordType == RelatedRecords.Constants.RelatedRecord.Types.Contact);
+
+            if (request.UserId > 0)
+                notes = notes.Where(x => x.UserId == request.UserId);
 
             var count = notes.Count();
 
@@ -112,16 +123,16 @@ namespace crmSeries.Core.Features.Notes
             RuleFor(x => x)
                 .Must(HaveAFromDateLessThanOrEqualToTheToDate)
                 .Unless(x => x.FromDate == default || x.ToDate == default)
-                .WithMessage(Constants.ErrorMessages.FromDateLessThanDate);
+                .WithMessage(Common.Constants.ErrorMessages.FromDateLessThanDate);
 
             RuleFor(x => x.FromDate)
                 .SetValidator(new DateTimeDefaultValidator())
-                .WithMessage(Constants.ErrorMessages.InvalidDate)
+                .WithMessage(Common.Constants.ErrorMessages.InvalidDate)
                 .Unless(x => x.FromDate == default);
 
             RuleFor(x => x.ToDate)
                 .SetValidator(new DateTimeDefaultValidator())
-                .WithMessage(Constants.ErrorMessages.InvalidDate)
+                .WithMessage(Common.Constants.ErrorMessages.InvalidDate)
                 .Unless(x => x.ToDate == default);
 
             RuleFor(x => x.Comments).MaximumLength(4);
