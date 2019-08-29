@@ -69,6 +69,16 @@ namespace crmSeries.API.Controllers
         }
 
         /// <summary>
+        /// Updates a task status based on the status in the request.
+        /// </summary>
+        [HttpPut("status")]
+        [Produces(typeof(Response))]
+        public Task<IActionResult> EditTaskStatus([FromBody]UpdateTaskStatusRequest request)
+        {
+            return HandleAsync(request);
+        }
+
+        /// <summary>
         /// Updates a task object based on the data in the request.
         /// </summary>
         [HttpPut]

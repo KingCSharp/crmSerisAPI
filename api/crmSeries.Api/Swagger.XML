@@ -401,6 +401,11 @@
             Adds a task object based on the data in the request.
             </summary>
         </member>
+        <member name="M:crmSeries.API.Controllers.TasksController.EditTaskStatus(crmSeries.Core.Features.Tasks.UpdateTaskStatusRequest)">
+            <summary>
+            Updates a task status based on the status in the request.
+            </summary>
+        </member>
         <member name="M:crmSeries.API.Controllers.TasksController.Edit(crmSeries.Core.Features.Tasks.EditTaskRequest)">
             <summary>
             Updates a task object based on the data in the request.

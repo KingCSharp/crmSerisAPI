@@ -16,6 +16,9 @@ namespace crmSeries.Core.Features.Tasks.Utility
 
             public static readonly string InvalidPriority =
                 $"Invalid Task priority.  Valid priorities are {Priorities.ValidPrioritiesFlattened}";
+
+            public static readonly string CantUpdateStatus =
+                "You cannot update a task status on a completed task";
         }
 
         public static class Statuses
