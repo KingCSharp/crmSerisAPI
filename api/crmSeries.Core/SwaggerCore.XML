@@ -1758,6 +1758,11 @@
             Setting this value will return all tasks that belong to the specified user.
             </summary>
         </member>
+        <member name="P:crmSeries.Core.Features.Tasks.GetTasksRequest.Search">
+            <summary>
+            Setting this value will return all tasks whose subject contains the search field.
+            </summary>
+        </member>
         <member name="P:crmSeries.Core.Features.UserFavoriteRecords.Dtos.BaseUserFavoriteRecordDto.RecordId">
             <summary>
             The unique identifier of the entity being favorited.

@@ -29,6 +29,11 @@ namespace crmSeries.Core.Features.Tasks
         /// Setting this value will return all tasks that belong to the specified user.
         /// </summary>
         public int UserId { get; set; }
+
+        /// <summary>
+        /// Setting this value will return all tasks whose subject contains the search field.
+        /// </summary>
+        public string Search { get; set; }
     }
 
     public class GetTasksRequestHandler :
@@ -77,6 +82,9 @@ namespace crmSeries.Core.Features.Tasks
 
             if (request.UserId > 0)
                 tasks = tasks.Where(x => x.UserId == request.UserId);
+
+            if (!string.IsNullOrEmpty(request.Search))
+                tasks = tasks.Where(x => x.Subject.Contains(request.Search) || x.Comments.Contains(request.Search));
 
             var count = tasks.Count();
 
@@ -157,6 +165,10 @@ namespace crmSeries.Core.Features.Tasks
 
             RuleFor(x => x.PageSize)
                 .GreaterThan(0);
+
+            RuleFor(x => x.Search)
+                .MinimumLength(3)
+                .MaximumLength(25);
         }
     }
 }
