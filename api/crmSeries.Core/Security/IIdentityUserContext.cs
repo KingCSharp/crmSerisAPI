@@ -41,12 +41,14 @@ namespace crmSeries.Core.Security
 
                 if (string.IsNullOrEmpty(_apiIdentity.RequestingUser?.UserEmail))
                     throw new AuthorizationFailedException(Constants.Auth.NoUser);
-                
+
                 var currentUser = _userContext
                     .Set<User>()
                     .AsNoTracking()
-                    .SingleOrDefault(x => x.Email.ToLower() == _apiIdentity.RequestingUser.UserEmail.ToLower())
-                    ?? throw new AuthorizationFailedException(Constants.Auth.NoUser);
+                    .SingleOrDefault(x => x.Email.ToLower() == _apiIdentity.RequestingUser.UserEmail.ToLower());
+
+                if (currentUser == null)
+                    throw new AuthorizationFailedException(Constants.Auth.NoUser);
 
                 var apiUser = new IdentityUser
                 {
