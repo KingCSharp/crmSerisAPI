@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Security.Claims;
 using crmSeries.Core.Common;
 using crmSeries.Core.Data;
 using crmSeries.Core.Domain.Admin;
@@ -36,10 +37,16 @@ namespace crmSeries.Core.Security
                     return _cachedUser;
                 }
 
-                var apiKey = _httpContextAccessor.HttpContext.User?.FindFirst(IdentityClaims.ApiKeyClaim)?.Value;
+                var apiKey = _httpContextAccessor.HttpContext.User?.FindFirstValue(IdentityClaims.ApiKeyClaim);
                 if (string.IsNullOrEmpty(apiKey))
                 {
                     apiKey = _httpContextAccessor.HttpContext.Request.Headers[Constants.Auth.ApiKey];
+                }
+
+                var userEmail = _httpContextAccessor.HttpContext.User?.FindFirstValue(ClaimTypes.Email);
+                if (string.IsNullOrEmpty(userEmail))
+                {
+                    userEmail = _httpContextAccessor.HttpContext.Request.Headers[Constants.Auth.Email];
                 }
 
                 var dealer = _context
@@ -51,12 +58,13 @@ namespace crmSeries.Core.Security
                 {
                     throw new AuthorizationFailedException(Constants.Auth.UnauthorizedApiKey);
                 }
-
+                
                 var apiUser = new ApiUser
                 {
                     DealerName = dealer.DealerName,
                     DatabaseConnectionString = dealer.Dbstring,
                     DealerId = dealer.DealerId,
+                    UserEmail = userEmail
                 };
 
                 return _cachedUser = apiUser;

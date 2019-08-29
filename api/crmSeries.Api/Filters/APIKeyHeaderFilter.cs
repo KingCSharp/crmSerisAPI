@@ -23,15 +23,6 @@ namespace crmSeries.Api.Filters
             if (operation.Parameters == null)
                 operation.Parameters = new List<IParameter>();
 
-            operation.Parameters.Add(new NonBodyParameter
-            {
-                Name = "email",
-                In = "header",
-                Type = "string",
-                Required = false,
-                Description = "Email address of the current user. This is used only for requests that get records for the current user. This will be replaced by identity server."
-            });
-
             var attr = context.MethodInfo?.GetCustomAttributes(typeof(AcceptsApiKeyAttribute), true);
             if (attr == null || attr.Length == 0)
                 attr = context.MethodInfo?.DeclaringType?.GetCustomAttributes(typeof(AcceptsApiKeyAttribute), true);
@@ -47,6 +38,15 @@ namespace crmSeries.Api.Filters
                     Type = "string",
                     Required = isRequired,
                     Description = $"The API key used to authenticate requests. This is provided to customers by crmSeries.{(!isRequired ? "This is required if a valid Bearer token is not included with the request." : "")}"
+                });
+
+                operation.Parameters.Add(new NonBodyParameter
+                {
+                    Name = "email",
+                    In = "header",
+                    Type = "string",
+                    Required = isRequired,
+                    Description = "Email address of the requesting user."
                 });
 
                 if (isRequired)
