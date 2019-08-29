@@ -1,10 +1,12 @@
 ﻿using System;
 using crmSeries.Api.Controllers;
 using crmSeries.Core.Configuration;
+using crmSeries.Core.Features.FileStorage;
 using crmSeries.Core.Logging;
 using crmSeries.Core.Mediator;
 using crmSeries.Core.Security;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.Extensions.Configuration;
@@ -64,11 +66,31 @@ namespace crmSeries.Api.Configuration
             services.AddTransient(provider => _container.GetInstance<ILogger>());
         }
 
-        public static void Configure(IApplicationBuilder app)
+        public static void Configure(IApplicationBuilder app, IHostingEnvironment env, IConfiguration config)
         {
+            ConfigureFileStorage(config, env);
+
             _container.CrossWire<IHttpContextAccessor>(app);
             _container.RegisterMvcControllers(app);
             _container.Verify();
+        }
+
+        private static void ConfigureFileStorage(IConfiguration config, IHostingEnvironment env)
+        {
+            switch (config["FileStorage:Provider"]?.ToUpper())
+            {
+                case "LOCAL":
+                    _container.Register<IFileStorageProvider>(() =>
+                        new LocalFileStorageProvider(env.WebRootPath, config["FileStorage:PublicUrl"]));
+                    break;
+
+                case "AZURE":
+                    _container.Register<IFileStorageProvider>(() =>
+                        new AzureBlobFileStorageProvider());
+                    break;
+
+                default: break;
+            }
         }
 
         private static Func<T> GetAspNetServiceProvider<T>(IApplicationBuilder app)
