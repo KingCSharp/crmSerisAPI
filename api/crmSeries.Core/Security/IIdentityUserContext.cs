@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using AutoMapper.QueryableExtensions;
 using crmSeries.Core.Common;
 using crmSeries.Core.Data;
 using crmSeries.Core.Domain.HeavyEquipment;
@@ -45,17 +46,13 @@ namespace crmSeries.Core.Security
                 var currentUser = _userContext
                     .Set<User>()
                     .AsNoTracking()
+                    .ProjectTo<IdentityUser>()
                     .SingleOrDefault(x => x.Email.ToLower() == _apiIdentity.RequestingUser.UserEmail.ToLower());
 
                 if (currentUser == null)
                     throw new AuthorizationFailedException(Constants.Auth.NoUser);
-
-                var apiUser = new IdentityUser
-                {
-                    UserId = currentUser.UserId
-                };
-
-                return _cachedUser = apiUser;
+                
+                return _cachedUser = currentUser;
             }
         }
     }
