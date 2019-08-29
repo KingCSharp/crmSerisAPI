@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Security.Claims;
 using crmSeries.Core.Common;
 using crmSeries.Core.Data;
 using crmSeries.Core.Domain.Admin;
@@ -41,7 +40,7 @@ namespace crmSeries.Core.Security
 
                 var apiKey = _httpContextAccessor.HttpContext.Request.Headers[Constants.Auth.ApiKey];
                 var currentUserEmail = _httpContextAccessor.HttpContext.Request.Headers[Constants.Auth.Email].ToString();
-
+                
                 var dealer = _context
                     .Set<Dealer>()
                     .AsNoTracking()

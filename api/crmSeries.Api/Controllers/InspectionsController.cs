@@ -87,11 +87,21 @@ namespace crmSeries.API.Controllers
         /// <summary>
         /// Adds a new inspection
         /// </summary>
-        [HttpPost("create")]
+        [HttpPost]
         [Produces(typeof(Response<AddResponse>))]
-        public Task<IActionResult> Post([FromBody]AddInspectionRequest request)
+        public Task<IActionResult> Post([FromBody] RecordAssignedInspectionDto inspection)
         {
-            return HandleAsync(request);
+            return HandleAsync(new SaveInspectionRequest(inspection));
+        }
+
+        /// <summary>
+        /// Updates an existing inspection
+        /// </summary>
+        [HttpPut("{assignedInspectionId}")]
+        [Produces(typeof(Response<AddResponse>))]
+        public Task<IActionResult> Edit([FromRoute] int assignedInspectionId, [FromBody] RecordAssignedInspectionDto inspection)
+        {
+            return HandleAsync(new SaveInspectionRequest(assignedInspectionId, inspection));
         }
     }
 }
