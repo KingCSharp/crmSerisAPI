@@ -6,26 +6,6 @@ namespace crmSeries.Core.Features.Tasks.Dtos
     public class BaseTaskDto
     {
         /// <summary>
-        /// The unique identifier for the user this task is assigned to.
-        /// </summary>
-        public int UserId { get; set; }
-
-        /// <summary>
-        /// The unique identifier for the contact this task is assigned for.
-        /// </summary>
-        public int ContactId { get; set; }
-
-        /// <summary>
-        /// The unique identifier for the related record this task is assigned for.
-        /// </summary>
-        public int RelatedRecordId { get; set; }
-
-        /// <summary>
-        /// The type of related record. E.g., Company, Lead, etc.
-        /// </summary>
-        public string RelatedRecordType { get; set; }
-
-        /// <summary>
         /// The subject for this task.
         /// </summary>
         public string Subject { get; set; }
@@ -34,11 +14,6 @@ namespace crmSeries.Core.Features.Tasks.Dtos
         /// The comments for this task.
         /// </summary>
         public string Comments { get; set; }
-
-        /// <summary>
-        /// The start date for this task.
-        /// </summary>
-        public DateTimeOffset? StartDate { get; set; }
 
         /// <summary>
         /// The due date for this task.
@@ -89,6 +64,26 @@ namespace crmSeries.Core.Features.Tasks.Dtos
     public class GetTaskDto : BaseTaskDto
     {
         /// <summary>
+        /// The unique identifier for the user this task is assigned to.
+        /// </summary>
+        public int UserId { get; set; }
+
+        /// <summary>
+        /// The unique identifier for the contact this task is assigned for.
+        /// </summary>
+        public int ContactId { get; set; }
+
+        /// <summary>
+        /// The unique identifier for the related record this task is assigned for.
+        /// </summary>
+        public int RelatedRecordId { get; set; }
+
+        /// <summary>
+        /// The type of related record. E.g., Company, Lead, etc.
+        /// </summary>
+        public string RelatedRecordType { get; set; }
+
+        /// <summary>
         /// The unique identifier for this task.
         /// </summary>
         public int TaskId { get; set; }
@@ -98,6 +93,11 @@ namespace crmSeries.Core.Features.Tasks.Dtos
         /// on what type of related record type is associated with the task.
         /// </summary>
         public string RelatedRecordName { get; set; }
+        
+        /// <summary>
+        /// The start date for this task.
+        /// </summary>
+        public DateTimeOffset? StartDate { get; set; }
 
         /// <summary>
         /// The date, if any, that the entity was modified.
@@ -107,6 +107,30 @@ namespace crmSeries.Core.Features.Tasks.Dtos
 
     public class AddTaskDto : BaseTaskDto
     {
+        /// <summary>
+        /// The unique identifier for the user this task is assigned to.
+        /// </summary>
+        public int UserId { get; set; }
+
+        /// <summary>
+        /// The unique identifier for the contact this task is assigned for.
+        /// </summary>
+        public int ContactId { get; set; }
+
+        /// <summary>
+        /// The unique identifier for the related record this task is assigned for.
+        /// </summary>
+        public int RelatedRecordId { get; set; }
+
+        /// <summary>
+        /// The type of related record. E.g., Company, Lead, etc.
+        /// </summary>
+        public string RelatedRecordType { get; set; }
+
+        /// <summary>
+        /// The start date for this task.
+        /// </summary>
+        public DateTimeOffset? StartDate { get; set; }
     }
 
     public class EditTaskDto : BaseTaskDto
@@ -115,11 +139,6 @@ namespace crmSeries.Core.Features.Tasks.Dtos
         /// The unique identifier for this task.
         /// </summary>
         public int TaskId { get; set; }
-
-        /// <summary>
-        /// The flag for soft deletion.
-        /// </summary>
-        public bool Deleted { get; set; }
 
         /// <summary>
         /// The flag for whether this contact is active or not.

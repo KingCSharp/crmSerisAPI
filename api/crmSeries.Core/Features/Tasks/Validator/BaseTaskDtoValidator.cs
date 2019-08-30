@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿
+using System.Linq;
 using crmSeries.Core.Features.RelatedRecords;
 using crmSeries.Core.Features.Tasks.Dtos;
 using crmSeries.Core.Features.Tasks.Utility;
@@ -11,18 +12,6 @@ namespace crmSeries.Core.Features.Tasks.Validator
     {
         public BaseTaskDtoValidator()
         {
-            RuleFor(x => x.ContactId).GreaterThan(-1);
-            RuleFor(x => x.RelatedRecordId).GreaterThan(-1);
-
-            RuleFor(x => x.RelatedRecordType)
-                .Must(BeAValidRelatedRecordType)
-                .WithMessage(Constants.ErrorMessages.InvalidRecordType)
-                .When(x => x.RelatedRecordId > 0);
-
-            RuleFor(x => x.RelatedRecordType)
-                .Empty()
-                .When(x => x.RelatedRecordId == 0);
-
             RuleFor(x => x.Subject).NotEmpty();
 
             RuleFor(x => x.DueDate)
@@ -44,11 +33,6 @@ namespace crmSeries.Core.Features.Tasks.Validator
             RuleFor(x => x.ReminderRepeatSchedule).MaximumLength(TasksConstants.MaxReminderRepeatScheduleLength);
             RuleFor(x => x.EventId).MaximumLength(TasksConstants.MaxEventIdLength);
             RuleFor(x => x.CalendarId).MaximumLength(TasksConstants.MaxCalendarIdLength);
-        }
-
-        private bool BeAValidRelatedRecordType(string recordType)
-        {
-            return Constants.RelatedRecord.Types.ValidTypes.Any(x => x == recordType);
         }
 
         private bool BeAValidPriority(string priority)
