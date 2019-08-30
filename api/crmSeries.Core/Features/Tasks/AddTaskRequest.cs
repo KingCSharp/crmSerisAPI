@@ -8,6 +8,7 @@ using crmSeries.Core.Features.Tasks.Dtos;
 using crmSeries.Core.Features.Tasks.Validator;
 using crmSeries.Core.Mediator;
 using crmSeries.Core.Mediator.Decorators;
+using crmSeries.Core.Security;
 using FluentValidation;
 
 namespace crmSeries.Core.Features.Tasks
@@ -21,12 +22,15 @@ namespace crmSeries.Core.Features.Tasks
     {
         private readonly HeavyEquipmentContext _context;
         private readonly IRequestHandler<VerifyRelatedRecordRequest> _verifyRelatedRecordsHandler;
+        private readonly IIdentityUserContext _identityContext;
 
         public AddTaskHandler(HeavyEquipmentContext context,
-            IRequestHandler<VerifyRelatedRecordRequest> verifyRelatedRecordsHandler)
+            IRequestHandler<VerifyRelatedRecordRequest> verifyRelatedRecordsHandler,
+            IIdentityUserContext identityContext)
         {
             _context = context;
             _verifyRelatedRecordsHandler = verifyRelatedRecordsHandler;
+            _identityContext = identityContext;
         }
 
         public Task<Response<AddResponse>> HandleAsync(AddTaskRequest request)
@@ -35,6 +39,7 @@ namespace crmSeries.Core.Features.Tasks
                 return errorAsync;
 
             var task = request.MapTo<Domain.HeavyEquipment.Task>();
+            task.UserId = GetUserId(request.UserId);
             task.LastModified = DateTime.UtcNow;
 
             _context.Set<Domain.HeavyEquipment.Task>().Add(task);
@@ -44,6 +49,14 @@ namespace crmSeries.Core.Features.Tasks
             {
                 Id = task.TaskId
             }.AsResponseAsync();
+        }
+
+        private int GetUserId(int userId)
+        {
+            if (userId != default(int))
+                return _identityContext.RequestingUser.UserId;
+            else
+                return userId;
         }
 
         private bool IsValid(BaseTaskDto request, out Task<Response<AddResponse>> errorAsync)

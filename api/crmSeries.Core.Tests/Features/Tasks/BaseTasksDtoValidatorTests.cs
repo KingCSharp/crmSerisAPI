@@ -45,7 +45,7 @@ namespace crmSeries.Core.Tests.Features.Tasks
 
         [TestCase(1, 0, true)]
         [TestCase(-1, 1, false)]
-        [TestCase(0, 1, false)]
+        [TestCase(0, 0, true)]
         public void Validate_UserId_ReturnsAppropriate(int userId,
             int numberOfErrors,
             bool isValid)
@@ -62,7 +62,7 @@ namespace crmSeries.Core.Tests.Features.Tasks
 
             if (!result.IsValid)
             {
-                Assert.AreEqual("'User Id' must be greater than '0'.", result.Errors[0].ErrorMessage);
+                Assert.AreEqual("'User Id' must be greater than '-1'.", result.Errors[0].ErrorMessage);
             }
         }
 
