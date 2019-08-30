@@ -95,6 +95,7 @@ namespace crmSeries.Core.Features.Tasks
         public AddTaskValidator()
         {
             Include(new BaseTaskDtoValidator());
+            RuleFor(x => x.UserId).GreaterThan(-1);
         }
     }
 }

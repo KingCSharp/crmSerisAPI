@@ -11,7 +11,6 @@ namespace crmSeries.Core.Features.Tasks.Validator
     {
         public BaseTaskDtoValidator()
         {
-            RuleFor(x => x.UserId).GreaterThan(-1);
             RuleFor(x => x.ContactId).GreaterThan(-1);
             RuleFor(x => x.RelatedRecordId).GreaterThan(-1);
 

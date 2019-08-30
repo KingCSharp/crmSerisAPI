@@ -44,29 +44,6 @@ namespace crmSeries.Core.Tests.Features.Tasks
         }
 
         [TestCase(1, 0, true)]
-        [TestCase(-1, 1, false)]
-        [TestCase(0, 0, true)]
-        public void Validate_UserId_ReturnsAppropriate(int userId,
-            int numberOfErrors,
-            bool isValid)
-        {
-            //Arrange
-            _baseTaskDto.UserId = userId;
-
-            // Act
-            var result = _baseTaskDtoValidator.Validate(_baseTaskDto);
-
-            //Assert 
-            Assert.AreEqual(isValid, result.IsValid);
-            Assert.AreEqual(numberOfErrors, result.Errors.Count);
-
-            if (!result.IsValid)
-            {
-                Assert.AreEqual("'User Id' must be greater than '-1'.", result.Errors[0].ErrorMessage);
-            }
-        }
-
-        [TestCase(1, 0, true)]
         [TestCase(0, 0, true)]
         [TestCase(-1, 1, false)]
         public void Validate_ContactId_ReturnsAppropriate(int contactId,
