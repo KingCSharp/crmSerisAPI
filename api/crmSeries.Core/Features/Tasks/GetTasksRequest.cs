@@ -82,6 +82,8 @@ namespace crmSeries.Core.Features.Tasks
 
             if (request.UserId > 0)
                 tasks = tasks.Where(x => x.UserId == request.UserId);
+            else
+                tasks = tasks.Where(x => x.UserId == _identity.RequestingUser.UserId);
 
             if (!string.IsNullOrEmpty(request.Search))
                 tasks = tasks.Where(x => x.Subject.Contains(request.Search) || x.Comments.Contains(request.Search));

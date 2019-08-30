@@ -208,13 +208,13 @@ namespace crmSeries.Core.Tests.Features.Tasks
 
                 var tasks = new List<Domain.HeavyEquipment.Task>
                 {
-                    new Task { TaskId = 1, Comments = "NA", Subject = "Foobar" },
-                    new Task { TaskId = 2, Comments = "NA", Subject = "Barfoo" },
-                    new Task { TaskId = 3, Comments = "NA", Subject = "Barfo" },
-                    new Task { TaskId = 4, Comments = "NA", Subject = "Fooba" },
-                    new Task { TaskId = 5, Comments = "NA", Subject = "Not related" },
-                    new Task { TaskId = 6, Comments = "NA", Subject = "Foobar is you" },
-                    new Task { TaskId = 7, Comments = "NA", Subject = "I am Foobar" },
+                    new Task { UserId = user.UserId, TaskId = 1, Comments = "NA", Subject = "Foobar" },
+                    new Task { UserId = user.UserId, TaskId = 2, Comments = "NA", Subject = "Barfoo" },
+                    new Task { UserId = user.UserId, TaskId = 3, Comments = "NA", Subject = "Barfo" },
+                    new Task { UserId = user.UserId, TaskId = 4, Comments = "NA", Subject = "Fooba" },
+                    new Task { UserId = user.UserId, TaskId = 5, Comments = "NA", Subject = "Not related" },
+                    new Task { UserId = user.UserId, TaskId = 6, Comments = "NA", Subject = "Foobar is you" },
+                    new Task { UserId = user.UserId, TaskId = 7, Comments = "NA", Subject = "I am Foobar" },
                 };
 
                 context.Task.AddRange(tasks);
