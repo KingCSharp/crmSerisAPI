@@ -441,5 +441,11 @@
             </summary>
             <param name="request">The SendTemplateRequest request object</param>
         </member>
+        <member name="M:crmSeries.API.Controllers.UsersController.GetContacts(crmSeries.Core.Features.Contacts.GetUsersRequest)">
+            <summary>
+            Gets a list of all contacts assigned to the current user.
+            </summary>
+            <param name="request">The request information for this API endpoint.</param>
+        </member>
     </members>
 </doc>
