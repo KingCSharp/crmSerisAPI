@@ -457,16 +457,10 @@
             The identifier of the company the contact is associated with.
             </summary>
         </member>
-        <member name="P:crmSeries.Core.Features.Contacts.GetUsersRequest.FirstName">
+        <member name="P:crmSeries.Core.Features.Contacts.GetUsersRequest.Search">
             <summary>
-            The user's first name.  Any value entered here will return users whose
-            first name starts with the value entered in the input box.
-            </summary>
-        </member>
-        <member name="P:crmSeries.Core.Features.Contacts.GetUsersRequest.LastName">
-            <summary>
-            The user's last name.  Any value entered here will return users whose
-            last name starts with the value entered in the input box.
+            Any value entered here will return users whose
+            first name OR last name starts with the value entered in the input box.
             </summary>
         </member>
         <member name="P:crmSeries.Core.Features.CompanyAssignedAddresses.Dtos.CompanyAssignedAddressDto.AddressId">
