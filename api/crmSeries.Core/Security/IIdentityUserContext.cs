@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Linq;
-using System.Security.Claims;
+using AutoMapper.QueryableExtensions;
 using crmSeries.Core.Common;
 using crmSeries.Core.Data;
-using crmSeries.Core.Domain.Admin;
 using crmSeries.Core.Domain.HeavyEquipment;
 using crmSeries.Core.Exceptions;
 using Microsoft.AspNetCore.Http;
@@ -18,16 +17,18 @@ namespace crmSeries.Core.Security
 
     public class HttpIdentityUserContext : IIdentityUserContext
     {
-        private readonly AdminContext _context;
+        private readonly IIdentityApiContext _apiIdentity;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly HeavyEquipmentContext _userContext;
         private IdentityUser _cachedUser;
-        private HeavyEquipmentContext _userContext;
 
-        public HttpIdentityUserContext(AdminContext dataContext,
-            IHttpContextAccessor httpContextAccessor)
+        public HttpIdentityUserContext(IIdentityApiContext apiIdentity,
+            IHttpContextAccessor httpContextAccessor,
+            HeavyEquipmentContext userContext)
         {
-            _context = dataContext;
+            _apiIdentity = apiIdentity;
             _httpContextAccessor = httpContextAccessor;
+            _userContext = userContext;
         }
 
         public IdentityUser RequestingUser
@@ -39,41 +40,19 @@ namespace crmSeries.Core.Security
                     return _cachedUser;
                 }
 
-                var apiKey = _httpContextAccessor.HttpContext.Request.Headers[Constants.Auth.ApiKey];
-                var currentUserEmail = _httpContextAccessor.HttpContext.Request.Headers[Constants.Auth.Email].ToString();
+                if (string.IsNullOrEmpty(_apiIdentity.RequestingUser?.UserEmail))
+                    throw new AuthorizationFailedException(Constants.Auth.NoUser);
 
-                var dealer = _context
-                    .Set<Dealer>()
+                var currentUser = _userContext
+                    .Set<User>()
                     .AsNoTracking()
-                    .SingleOrDefault(x => x.Apikey == apiKey);
-
-                if (dealer == null || string.IsNullOrEmpty(dealer.Dbstring))
-                {
-                    throw new AuthorizationFailedException(Constants.Auth.UnauthorizedApiKey);
-                }
-
-                _userContext = new HeavyEquipmentContext(
-                    new DbContextOptionsBuilder()
-                        .UseSqlServer(dealer.Dbstring)
-                        .Options
-                );
-
-                User currentUser = string.IsNullOrEmpty(currentUserEmail)
-                    ? null
-                    : _userContext
-                        .Set<User>()
-                        .AsNoTracking()
-                        .SingleOrDefault(x => x.Email.ToLower() == currentUserEmail.ToLower());
+                    .ProjectTo<IdentityUser>()
+                    .SingleOrDefault(x => x.Email.ToLower() == _apiIdentity.RequestingUser.UserEmail.ToLower());
 
                 if (currentUser == null)
-                    throw new Exception(Constants.Auth.NoUser);
-
-                var apiUser = new IdentityUser
-                {
-                    UserId = currentUser.UserId
-                };
-
-                return _cachedUser = apiUser;
+                    throw new AuthorizationFailedException(Constants.Auth.NoUser);
+                
+                return _cachedUser = currentUser;
             }
         }
     }
