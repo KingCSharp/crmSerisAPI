@@ -8,7 +8,7 @@ namespace crmSeries.API.Controllers
 {
     [Produces("application/json")]
     [Route("api/users")]
-    public class UserController : BaseApiController
+    public class UsersController : BaseApiController
     {
         /// <summary>
         /// Gets a list of all contacts assigned to the current user.
