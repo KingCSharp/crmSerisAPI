@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
+using crmSeries.Core.Security;
 using Microsoft.Azure.Storage;
 using Microsoft.Azure.Storage.Blob;
 
@@ -8,18 +9,40 @@ namespace crmSeries.Core.Features.FileStorage
 {
     public class AzureBlobFileStorageProvider : IFileStorageProvider
     {
-        private readonly CloudStorageAccount _cloudStorageAccount;
+        private readonly IIdentityApiContext _apiIdentity;
 
-        public AzureBlobFileStorageProvider(string connectionString)
+        private string _connString = string.Empty;
+        private CloudStorageAccount _cloudStorageAccount;
+
+        public AzureBlobFileStorageProvider(IIdentityApiContext apiIdentity)
         {
-            if (!CloudStorageAccount.TryParse(connectionString, out _cloudStorageAccount))
-                throw new Exception("Failed to connect to Azure Blob account.");
+            _apiIdentity = apiIdentity;
         }
 
-        public string Root => _cloudStorageAccount.BlobEndpoint.ToString();
+        public string Root
+        {
+            get
+            {
+                var user = _apiIdentity.RequestingUser;
+                if (user == null)
+                    return string.Empty;
 
+                var connString = CreateConnectionString(user.StorageAccount, user.StorageAccountKey);
+                if (connString != _connString && CloudStorageAccount.TryParse(connString, out _cloudStorageAccount))
+                {
+                    _connString = connString;
+                }
+
+                return _cloudStorageAccount?.BlobEndpoint.ToString();
+            }
+        }
+        
         public async Task<string> StoreFileAsync(string container, string fileName, Stream stream, string mimeType)
         {
+            var root = Root;
+            if (_cloudStorageAccount == null || string.IsNullOrEmpty(root))
+                throw new InvalidOperationException("Could not connect to user storage account.");
+            
             var blobClient = _cloudStorageAccount.CreateCloudBlobClient();
 
             var containerReference = blobClient.GetContainerReference(container);
@@ -40,7 +63,10 @@ namespace crmSeries.Core.Features.FileStorage
 
             await blob.UploadFromStreamAsync(stream);
 
-            return $"{Root}{container}/{fileName}";
+            return $"{root}{container}/{fileName}";
         }
+
+        private static string CreateConnectionString(string storageAccount, string key)
+            => $"DefaultEndpointsProtocol=https;AccountName={storageAccount};AccountKey={key};EndpointSuffix=core.windows.net";
     }
 }

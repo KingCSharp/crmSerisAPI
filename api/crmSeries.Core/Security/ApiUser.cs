@@ -6,6 +6,10 @@
 
         public string DatabaseConnectionString { get; set; }
 
+        public string StorageAccount { get; set; }
+
+        public string StorageAccountKey { get; set; }
+
         public int DealerId { get; set; }
 
         public string UserEmail { get; set; }

@@ -32,7 +32,7 @@ namespace crmSeries.Core.Features.FileStorage
                 stream.CopyTo(fileStream);
             }
 
-            return Task.FromResult($"{Root}/{container}/{fileName}");
+            return Task.FromResult($"{Root}{container}/{fileName}");
         }
     }
 }
