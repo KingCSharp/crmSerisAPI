@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using crmSeries.Api.Controllers;
+using crmSeries.Api.Filters;
 using crmSeries.Core.Features.Diagnostics;
 using crmSeries.Core.Features.Notifications;
 using crmSeries.Core.Mediator;
@@ -23,6 +24,13 @@ namespace crmSeries.API.Controllers
         public Task<IActionResult> GetEmailTemplate()
         {
             return HandleAsync(new GetEmailTemplateRequest());
+        }
+
+        [HttpGet("/identity")]
+        [AcceptsApiKey]
+        public Task<IActionResult> GetIdentity()
+        {
+            return HandleAsync(new GetDiagnosticsIdentityRequest());
         }
     }
 }

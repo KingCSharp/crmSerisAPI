@@ -50,10 +50,7 @@ namespace crmSeries.Core.Features.Tasks
         {
             var relatedEntities = new List<(string, int)>
             {
-                (request.RelatedRecordType, request.RelatedRecordId),
                 (Constants.RelatedRecord.Types.Task, request.TaskId),
-                (Constants.RelatedRecord.Types.Contact, request.ContactId),
-                (Constants.RelatedRecord.Types.User, request.UserId)
             };
 
             foreach (var (recordType, recordTypeId) in relatedEntities)

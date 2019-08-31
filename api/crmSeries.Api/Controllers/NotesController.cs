@@ -12,7 +12,6 @@ namespace crmSeries.API.Controllers
 {
     [Produces("application/json")]
     [Route("api/notes")]
-    [AcceptsApiKey(true)]
     public class NotesController : BaseApiController
     {
         /// <summary>

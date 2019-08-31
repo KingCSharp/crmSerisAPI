@@ -11,7 +11,6 @@ namespace crmSeries.API.Controllers
 {
     [Produces("application/json")]
     [Route("api/contacts")]
-    [AcceptsApiKey]
     public class ContactsController : BaseApiController
     {
         /// <summary>

@@ -38,7 +38,7 @@ namespace crmSeries.Api.Configuration
                 }
                 return new DeferredHttpIdentityUserContext(
                     new Lazy<HttpIdentityUserContext>(_container.GetInstance<HttpIdentityUserContext>));
-            });
+            }, Lifestyle.Scoped);
 
 
             _container.Register<HttpIdentityApiContext>(Lifestyle.Scoped);
@@ -50,7 +50,7 @@ namespace crmSeries.Api.Configuration
                 }
                 return new DeferredHttpIdentityApiContext(
                     new Lazy<HttpIdentityApiContext>(_container.GetInstance<HttpIdentityApiContext>));
-            });
+            }, Lifestyle.Scoped);
 
             _container.RegisterInitializer<BaseApiController>(controller =>
             {

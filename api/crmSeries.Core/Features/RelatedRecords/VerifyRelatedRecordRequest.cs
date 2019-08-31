@@ -239,7 +239,6 @@ namespace crmSeries.Core.Features.RelatedRecords
         {
             public VerifyRelatedRecordValidator()
             {
-                RuleFor(x => x.RecordTypeId).GreaterThan(0);
                 RuleFor(x => x.RecordType).Must(BeAValidRelatedRecordType);
             }
 

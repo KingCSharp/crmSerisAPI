@@ -406,6 +406,11 @@
             Adds a task object based on the data in the request.
             </summary>
         </member>
+        <member name="M:crmSeries.API.Controllers.TasksController.EditTaskStatus(crmSeries.Core.Features.Tasks.UpdateTaskStatusRequest)">
+            <summary>
+            Updates a task status based on the status in the request.
+            </summary>
+        </member>
         <member name="M:crmSeries.API.Controllers.TasksController.Edit(crmSeries.Core.Features.Tasks.EditTaskRequest)">
             <summary>
             Updates a task object based on the data in the request.
@@ -440,6 +445,12 @@
             Emails a DocuSign template to a chain of signatories
             </summary>
             <param name="request">The SendTemplateRequest request object</param>
+        </member>
+        <member name="M:crmSeries.API.Controllers.UserController.GetContacts(crmSeries.Core.Features.Contacts.GetUsersRequest)">
+            <summary>
+            Gets a list of all contacts assigned to the current user.
+            </summary>
+            <param name="request">The request information for this API endpoint.</param>
         </member>
     </members>
 </doc>
