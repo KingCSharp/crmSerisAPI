@@ -86,7 +86,7 @@ namespace crmSeries.Api.Configuration
 
                 case "AZURE":
                     _container.Register<IFileStorageProvider>(() =>
-                        new AzureBlobFileStorageProvider());
+                        new AzureBlobFileStorageProvider(config["FileStorage:AzureStorageConnectionString"]));
                     break;
 
                 default: break;

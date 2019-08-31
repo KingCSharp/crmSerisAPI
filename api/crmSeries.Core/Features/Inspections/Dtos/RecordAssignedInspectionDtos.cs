@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace crmSeries.Core.Features.Inspections.Dtos
 {
@@ -70,8 +71,6 @@ namespace crmSeries.Core.Features.Inspections.Dtos
 
         public bool RequireComment { get; set; }
         
-        public List<RecordAssignedInspectionImageDto> Images { get; set; } = new List<RecordAssignedInspectionImageDto>();
-
         public List<RecordAssignedInspectionItemResponseDto> Responses { get; set; } = new List<RecordAssignedInspectionItemResponseDto>();
     }
 
@@ -82,12 +81,29 @@ namespace crmSeries.Core.Features.Inspections.Dtos
         public int Sequence { get; set; }
     }
 
-    public class RecordAssignedInspectionImageDto
+    public class RecordAssignedInspectionItemImageDto
     {
+        public int AssignedInspectionId { get; set; }
+
+        public int AssignedItemId { get; set; }
+
         public string FileName { get; set; }
 
-        public string ContentType { get; set; }
+        public int FileLength { get; set; }
 
-        public byte[] Data { get; set; }
+        public Stream FileStream { get; set; }
+    }
+
+    public class GetRecordAssignedInspectionItemImageDto
+    {
+        public int ImageId { get; set; }
+
+        public int AssignedInspectionId { get; set; }
+
+        public int AssignedItemId { get; set; }
+
+        public string ImagePath { get; set; }
+
+        public string FileName { get; set; }
     }
 }

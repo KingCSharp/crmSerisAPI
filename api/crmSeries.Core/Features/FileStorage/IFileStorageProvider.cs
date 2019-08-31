@@ -7,6 +7,6 @@ namespace crmSeries.Core.Features.FileStorage
     {
         string Root { get; }
 
-        Task StoreFile(string container, string fileName, Stream stream, string mimeType);
+        Task<string> StoreFileAsync(string container, string fileName, Stream stream, string mimeType);
     }
 }

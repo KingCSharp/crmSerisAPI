@@ -59,5 +59,68 @@ namespace crmSeries.Core.Extensions
                 stringBuilder.Append(source);
             return stringBuilder.ToString(0, maxLength);
         }
+
+        public static string GetMimeType(this string fileExt)
+        {
+            var ext = fileExt?.ToLower();
+
+            switch (ext)
+            {
+                case ".doc":
+                    return "application/msword";
+
+                case ".pdf":
+                    return "application/pdf";
+                    
+                case ".zip":
+                    return "application/zip";
+                case ".bmp":
+                    return "image/bmp";
+
+                case ".gif":
+                    return "image/gif";
+
+                case ".jpg":
+                case ".jpeg":
+                case ".jpe":
+                    return "image/jpeg";
+
+                case ".png":
+                    return "image/png";
+
+                case ".tiff":
+                case ".tif":
+                    return "image/tiff";
+
+                case ".htm":
+                case ".html":
+                    return "text/html";
+
+                case ".txt":
+                    return "text/plain";
+
+                case ".rtf":
+                    return "text/richtext";
+
+                case ".mpg":
+                case ".mpeg":
+                case ".mpe":
+                    return "video/mpeg";
+
+                case ".viv":
+                case ".vivo":
+                    return "video/vnd.vivo";
+
+                case ".qt":
+                case ".mov":
+                    return "video/quicktime";
+
+                case ".avi":
+                    return "video/x-msvideo";
+
+                default:
+                    return "application/octet-stream";
+            }
+        }
     }
 }

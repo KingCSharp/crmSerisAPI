@@ -15,7 +15,7 @@ namespace crmSeries.Core.Features.FileStorage
 
         public string Root { get; }
 
-        public Task StoreFile(string container, string fileName, Stream stream, string mimeType)
+        public Task<string> StoreFileAsync(string container, string fileName, Stream stream, string mimeType)
         {
             var containerPath = Path.Combine(_RootPath, container);
 
@@ -32,7 +32,7 @@ namespace crmSeries.Core.Features.FileStorage
                 stream.CopyTo(fileStream);
             }
 
-            return Task.CompletedTask;
+            return Task.FromResult($"{Root}/{container}/{fileName}");
         }
     }
 }

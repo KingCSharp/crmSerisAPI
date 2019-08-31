@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using crmSeries.Core.Domain.HeavyEquipment;
+using crmSeries.Core.Extensions;
 using crmSeries.Core.Features.Inspections.Dtos;
 
 namespace crmSeries.Core.Inspections.Mapping
@@ -105,6 +106,13 @@ namespace crmSeries.Core.Inspections.Mapping
             CreateMap<RecordAssignedInspectionItemResponseDto, RecordAssignedInspectionItemResponse>()
                 .ForMember(x => x.ResponseId, options => options.Ignore())
                 .ForMember(x => x.AssignedItemId, options => options.Ignore());
+
+            CreateMap<RecordAssignedInspectionItemImageDto, RecordAssignedInspectionImage>()
+                .ForMember(x => x.AssignedInspectionId, options => options.MapFrom(x => x.AssignedInspectionId))
+                .ForMember(x => x.AssignedItemId, options => options.MapFrom(x => x.AssignedItemId))
+                .IgnoreRest();
+
+            CreateMap<RecordAssignedInspectionImage, GetRecordAssignedInspectionItemImageDto>();
         }
     }
 }
