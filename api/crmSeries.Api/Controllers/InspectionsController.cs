@@ -89,7 +89,7 @@ namespace crmSeries.API.Controllers
         /// <summary>
         /// Upload and attach an image to an inspection item
         /// </summary>
-        [HttpPost("{assignedInspectionId}/{assignedItemId}/image")]
+        [HttpPost("{assignedInspectionId}/images/{assignedItemId}")]
         [Produces(typeof(Response<GetRecordAssignedInspectionItemImageDto>))]
         public Task<IActionResult> Upload([FromRoute] int assignedInspectionId, [FromRoute] int assignedItemId, IFormFile file)
         {
