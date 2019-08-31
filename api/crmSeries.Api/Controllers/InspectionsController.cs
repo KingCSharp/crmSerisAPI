@@ -108,7 +108,7 @@ namespace crmSeries.API.Controllers
         /// <summary>
         /// Adds a new inspection
         /// </summary>
-        [HttpPost]
+        [HttpPost("record")]
         [Produces(typeof(Response<AddResponse>))]
         public Task<IActionResult> Post([FromBody] RecordAssignedInspectionDto inspection)
         {
@@ -118,7 +118,7 @@ namespace crmSeries.API.Controllers
         /// <summary>
         /// Updates an existing inspection
         /// </summary>
-        [HttpPut("{assignedInspectionId}")]
+        [HttpPut("record/{assignedInspectionId}")]
         [Produces(typeof(Response<AddResponse>))]
         public Task<IActionResult> Edit([FromRoute] int assignedInspectionId, [FromBody] RecordAssignedInspectionDto inspection)
         {
