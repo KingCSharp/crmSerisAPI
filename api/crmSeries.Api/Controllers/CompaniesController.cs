@@ -4,6 +4,7 @@ using crmSeries.Api.Controllers;
 using crmSeries.Api.Filters;
 using crmSeries.Core.Features.Companies;
 using crmSeries.Core.Features.Companies.Dtos;
+using crmSeries.Core.Features.Notes.Dtos;
 using crmSeries.Core.Logic.Queries;
 using crmSeries.Core.Mediator;
 using Microsoft.AspNetCore.Mvc;
@@ -28,6 +29,20 @@ namespace crmSeries.API.Controllers
             {
                 Query = pagedQuery
             });
+        }
+
+        /// <summary>
+        /// Gets all notes either associated with the company or all notes who are 
+        /// associated with a contact belonging to this company.
+        /// </summary>
+        [HttpGet("{id}/notes")]
+        [Produces(typeof(PagedQueryResult<GetNoteDto>))]
+        public Task<IActionResult> GetNotes(int id, PagedQueryRequest query)
+        {
+            var request = 
+                new GetNotesForCompanyRequest(id, query.PageSize, query.PageNumber);
+
+            return HandleAsync(request);
         }
 
         /// <summary>

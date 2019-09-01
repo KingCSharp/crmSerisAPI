@@ -70,6 +70,12 @@
             </summary>
             <param name="pagedQuery">Contains information for the current page and page count.</param>
         </member>
+        <member name="M:crmSeries.API.Controllers.CompaniesController.GetNotes(System.Int32,crmSeries.Core.Logic.Queries.PagedQueryRequest)">
+            <summary>
+            Gets all notes either associated with the contact or all notes who are 
+            associated with a contact belonging to this company.
+            </summary>
+        </member>
         <member name="M:crmSeries.API.Controllers.CompaniesController.GetCompaniesFull">
             <summary>
             Gets a list of all companies assigned to the current user including all addresses and contacts.
@@ -441,7 +447,7 @@
             </summary>
             <param name="request">The SendTemplateRequest request object</param>
         </member>
-        <member name="M:crmSeries.API.Controllers.UserController.GetContacts(crmSeries.Core.Features.Contacts.GetUsersRequest)">
+        <member name="M:crmSeries.API.Controllers.UsersController.GetContacts(crmSeries.Core.Features.Contacts.GetUsersRequest)">
             <summary>
             Gets a list of all contacts assigned to the current user.
             </summary>
