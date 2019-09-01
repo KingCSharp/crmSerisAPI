@@ -55,6 +55,9 @@ namespace crmSeries.Core.Features.Inspections.Validator
 
             RuleFor(x => x.Sequence)
                 .GreaterThanOrEqualTo(0);
+
+            RuleFor(x => x.Comments)
+                .NotNull();
         }
     }
 
