@@ -171,7 +171,7 @@ namespace crmSeries.Core.Features.Inspections
                 RuleFor(x => x.Inspection.Inspection)
                     .NotNull()
                     .WithName(nameof(SaveInspectionDto.Inspection))
-                    ;//.SetValidator(inspectionValidator);  TODO: InspectionDto validator
+                    .SetValidator(inspectionValidator);
             });
         }
     }
