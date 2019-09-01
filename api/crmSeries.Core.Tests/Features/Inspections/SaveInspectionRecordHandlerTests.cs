@@ -245,7 +245,7 @@ namespace crmSeries.Core.Tests.Features.Inspections
             {
                 var handler = new SaveInspectionRecordHandler(context, new VerifyRelatedRecordHandler(context));
 
-                _request.Inspection.AssignedInspectionId = 1;
+                _request.Inspection.AssignedInspectionId = 10;
                 await CreateRelatedRecords(context);
                 
                 // Act
