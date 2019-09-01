@@ -65,7 +65,32 @@ namespace crmSeries.Core.Features.Inspections
             var items = await CreateItems(request.Inspection.Inspection.Groups, groups);
             var responses = await CreateItemResponses(request.Inspection.Inspection.Groups.SelectMany(x => x.Items), items);
             
-            return inspection.MapTo<GetRecordAssignedInspectionDto>().AsResponse();
+            var itemResults = items
+                .GroupBy(x => x.AssignedGroupId)
+                .ToDictionary(x => x.Key, x => x.MapTo<List<GetRecordAssignedInspectionItemDto>>());
+
+            var responseResults = responses
+                .GroupBy(x => x.AssignedItemId)
+                .ToDictionary(x => x.Key, x => x.MapTo<List<GetRecordAssignedInspectionItemResponseDto>>());
+
+            var inspectionResult = inspection.MapTo<GetRecordAssignedInspectionDto>();
+
+            inspectionResult.Groups = groups.MapTo<List<GetRecordAssignedInspectionGroupDto>>();
+            inspectionResult.Groups.ForEach(group =>
+            {
+                group.Items = itemResults.ContainsKey(group.AssignedGroupId)
+                    ? itemResults[group.AssignedGroupId]
+                    : new List<GetRecordAssignedInspectionItemDto>();
+
+                group.Items.ForEach(item =>
+                {
+                    item.Responses = responseResults.ContainsKey(item.AssignedItemId)
+                        ? responseResults[item.AssignedItemId]
+                        : new List<GetRecordAssignedInspectionItemResponseDto>();
+                });
+            });
+
+            return inspectionResult.AsResponse();
         }
 
         private Task<Response> VerifyRelatedRecords(RecordAssignedInspectionDto inspectionDto)
@@ -156,23 +181,11 @@ namespace crmSeries.Core.Features.Inspections
 
     public class SaveInspectionRecordValidator : AbstractValidator<SaveInspectionRecordRequest>
     {
-        public SaveInspectionRecordValidator(IValidator<RecordAssignedInspectionDto> inspectionValidator)
+        public SaveInspectionRecordValidator(IValidator<SaveInspectionDto> inspectionValidator)
         {
             RuleFor(x => x.Inspection)
-                .NotNull();
-
-            When(x => x.Inspection != null, () =>
-            {
-                When(x => x.Inspection.AssignedInspectionId.HasValue, 
-                    () => RuleFor(x => x.Inspection.AssignedInspectionId)
-                        .GreaterThan(0)
-                        .WithName(nameof(SaveInspectionDto.AssignedInspectionId)));
-
-                RuleFor(x => x.Inspection.Inspection)
-                    .NotNull()
-                    .WithName(nameof(SaveInspectionDto.Inspection))
-                    .SetValidator(inspectionValidator);
-            });
+                .NotNull()
+                .SetValidator(inspectionValidator);
         }
     }
 }

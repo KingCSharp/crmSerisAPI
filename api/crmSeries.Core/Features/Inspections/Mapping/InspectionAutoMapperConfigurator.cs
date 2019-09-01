@@ -85,7 +85,7 @@ namespace crmSeries.Core.Inspections.Mapping
     {
         public RecordAssignedInspectionMapperConfigurator()
         {
-            CreateMap<RecordAssignedInspectionDto, RecordAssignedInspection>()
+            CreateMap<BaseRecordAssignedInspectionDto, RecordAssignedInspection>()
                 .ForMember(x => x.AssignedInspectionId, options => options.Ignore())
                 .ForMember(x => x.UserId, options => options.Ignore())
                 .ForMember(x => x.InspectionNo, options => options.Ignore())
@@ -93,19 +93,42 @@ namespace crmSeries.Core.Inspections.Mapping
                 .ForMember(x => x.IncludeReconditionAmount, options => options.Ignore())
                 .ForMember(x => x.Deleted, options => options.MapFrom(_ => false));
 
-            CreateMap<RecordAssignedInspectionGroupDto, RecordAssignedInspectionGroup>()
+            CreateMap<RecordAssignedInspectionDto, RecordAssignedInspection>()
+                .IncludeBase<BaseRecordAssignedInspectionDto, RecordAssignedInspection>();
+
+            CreateMap<RecordAssignedInspection, GetRecordAssignedInspectionDto>()
+                .ForMember(x => x.Groups, options => options.Ignore());
+
+            CreateMap<BaseRecordAssignedInspectionGroupDto, RecordAssignedInspectionGroup>()
                 .ForMember(x => x.AssignedGroupId, options => options.Ignore())
                 .ForMember(x => x.AssignedInspectionId, options => options.Ignore());
 
-            CreateMap<RecordAssignedInspectionItemDto, RecordAssignedInspectionItem>()
+            CreateMap<RecordAssignedInspectionGroupDto, RecordAssignedInspectionGroup>()
+                .IncludeBase<BaseRecordAssignedInspectionGroupDto, RecordAssignedInspectionGroup>();
+
+            CreateMap<RecordAssignedInspectionGroup, GetRecordAssignedInspectionGroupDto>()
+                .ForMember(x => x.Items, options => options.Ignore());
+            
+            CreateMap<BaseRecordAssignedInspectionItemDto, RecordAssignedInspectionItem>()
                 .ForMember(x => x.AssignedItemId, options => options.Ignore())
                 .ForMember(x => x.AssignedGroupId, options => options.Ignore())
                 .ForMember(x => x.RequirementFilter, options => options.Ignore())
                 .ForMember(x => x.ReconditionAmount, options => options.Ignore());
 
-            CreateMap<RecordAssignedInspectionItemResponseDto, RecordAssignedInspectionItemResponse>()
+            CreateMap<RecordAssignedInspectionItemDto, RecordAssignedInspectionItem>()
+                .IncludeBase<BaseRecordAssignedInspectionItemDto, RecordAssignedInspectionItem>();
+
+            CreateMap<RecordAssignedInspectionItem, GetRecordAssignedInspectionItemDto>()
+                .ForMember(x => x.Responses, options => options.Ignore());
+
+            CreateMap<BaseRecordAssignedInspectionItemResponseDto, RecordAssignedInspectionItemResponse>()
                 .ForMember(x => x.ResponseId, options => options.Ignore())
                 .ForMember(x => x.AssignedItemId, options => options.Ignore());
+
+            CreateMap<RecordAssignedInspectionItemResponseDto, RecordAssignedInspectionItemResponse>()
+                .IncludeBase<BaseRecordAssignedInspectionItemResponseDto, RecordAssignedInspectionItemResponse>();
+
+            CreateMap<RecordAssignedInspectionItemResponse, GetRecordAssignedInspectionItemResponseDto>();
 
             CreateMap<RecordAssignedInspectionItemImageDto, RecordAssignedInspectionImage>()
                 .ForMember(x => x.AssignedInspectionId, options => options.MapFrom(x => x.AssignedInspectionId))
