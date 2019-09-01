@@ -19,6 +19,5 @@ namespace crmSeries.Core.Features.Inspections.Dtos
 
     public class GetInspectionTypeDto : BaseInspectionTypeDto
     {
-
     }
 }
