@@ -24,21 +24,19 @@ namespace crmSeries.Core.Features.Contacts
         public ActiveOptions ActiveOptions { get; set; } = ActiveOptions.ActiveOnly;
 
         /// <summary>
-        /// The contact's first name.  Any value entered here will return contacts whose
-        /// first name starts with the value entered in the input box.
+        /// Returns contacts whose first or last name starts with this field.
         /// </summary>
-        public string FirstName { get; set; }
-
-        /// <summary>
-        /// The contact's last name.  Any value entered here will return contacts whose
-        /// last name starts with the value entered in the input box.
-        /// </summary>
-        public string LastName { get; set; }
+        public string Search { get; set; }
 
         /// <summary>
         /// The identifier of the company the contact is associated with.
         /// </summary>
         public int CompanyId { get; set; }
+
+        /// <summary>
+        /// Setting this field returns contacts returned assigned to this user.
+        /// </summary>
+        public int UserId { get; set; }
     }
 
     public class GetContactsRequestHandler :
@@ -60,33 +58,34 @@ namespace crmSeries.Core.Features.Contacts
 
             var contacts =
                 (from c in _context.Set<Contact>()
-                 join assignedUser in _context.Set<CompanyAssignedUser>()
-                     on c.CompanyId equals assignedUser.CompanyId
-                 join company in _context.Set<Company>()
-                     on c.CompanyId equals company.CompanyId
-                 where assignedUser.UserId == _identity.RequestingUser.UserId && !c.Deleted
-                 select new
-                 {
-                     c.ContactId,
-                     c.CompanyId,
-                     c.FirstName,
-                     c.MiddleName,
-                     c.LastName,
-                     c.NickName,
-                     c.Phone,
-                     c.Cell,
-                     c.Fax,
-                     c.Email,
-                     c.Title,
-                     c.Position,
-                     c.Department,
-                     c.Active,
-                     c.LastModified,
-                     company.CompanyName,
-                     company.AccountNo
-                 })
-                 .OrderBy(x => x.ContactId)
-                 .AsQueryable();
+                    //join assignedUser in _context.Set<CompanyAssignedUser>()
+                    //    on c.CompanyId equals assignedUser.CompanyId
+                    join company in _context.Set<Company>()
+                        on c.CompanyId equals company.CompanyId
+                    where !c.Deleted
+                    select new
+                     {
+                         c.ContactId,
+                         c.CompanyId,
+                         c.FirstName,
+                         c.MiddleName,
+                         c.LastName,
+                         c.NickName,
+                         c.Phone,
+                         c.Cell,
+                         c.Fax,
+                         c.Email,
+                         c.Title,
+                         c.Position,
+                         c.Department,
+                         c.Active,
+                         c.LastModified,
+                         company.CompanyName,
+                         company.AccountNo
+                     })
+                     .OrderBy(x => x.CompanyName)
+                     .ThenBy(x => x.FirstName)
+                     .AsQueryable();
 
             if (request.ActiveOptions == ActiveOptions.ActiveOnly)
                 contacts = contacts.Where(x => x.Active);
@@ -94,11 +93,8 @@ namespace crmSeries.Core.Features.Contacts
             if (request.ActiveOptions == ActiveOptions.InactiveOnly)
                 contacts = contacts.Where(x => !x.Active);
 
-            if (!string.IsNullOrEmpty(request.FirstName))
-                contacts = contacts.Where(x => x.FirstName.ToLower().StartsWith(request.FirstName.ToLower()));
-
-            if (!string.IsNullOrEmpty(request.LastName))
-                contacts = contacts.Where(x => x.LastName.ToLower().StartsWith(request.LastName.ToLower()));
+            if (!string.IsNullOrEmpty(request.Search))
+                contacts = contacts.Where(x => x.FirstName.ToLower().StartsWith(request.Search.ToLower()) || x.LastName.ToLower().StartsWith(request.Search.ToLower()));
 
             if (request.CompanyId > 0)
                 contacts = contacts.Where(x => x.CompanyId == request.CompanyId);

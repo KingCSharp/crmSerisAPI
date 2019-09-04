@@ -578,6 +578,7 @@ namespace crmSeries.Core.Tests.Features.Contacts
                         ContactId = entityId,
                         CompanyId = entityId,
                         FirstName = names[i],
+                        LastName = "",
                         Active = true,
                         Deleted = false
                     });
@@ -606,7 +607,7 @@ namespace crmSeries.Core.Tests.Features.Contacts
                 {
                     PageNumber = 1,
                     PageSize = 10,
-                    FirstName = firstNameRequest
+                    Search = firstNameRequest
                 };
 
                 // Act
@@ -644,6 +645,7 @@ namespace crmSeries.Core.Tests.Features.Contacts
                         ContactId = entityId,
                         CompanyId = entityId,
                         FirstName = names[i].ToLower(),
+                        LastName = "",
                         Active = true,
                         Deleted = false
                     });
@@ -672,7 +674,7 @@ namespace crmSeries.Core.Tests.Features.Contacts
                 {
                     PageNumber = 1,
                     PageSize = 10,
-                    FirstName = firstNameRequest
+                    Search = firstNameRequest
                 };
 
                 // Act
@@ -709,6 +711,7 @@ namespace crmSeries.Core.Tests.Features.Contacts
                     {
                         ContactId = entityId,
                         CompanyId = entityId,
+                        FirstName = "",
                         LastName = names[i],
                         Active = true,
                         Deleted = false
@@ -738,7 +741,7 @@ namespace crmSeries.Core.Tests.Features.Contacts
                 {
                     PageNumber = 1,
                     PageSize = 10,
-                    LastName = lastNameRequest
+                    Search = lastNameRequest
                 };
 
                 // Act
@@ -776,6 +779,7 @@ namespace crmSeries.Core.Tests.Features.Contacts
                         ContactId = entityId,
                         CompanyId = entityId,
                         FirstName = names[i].ToLower(),
+                        LastName = "",
                         Active = true,
                         Deleted = false
                     });
@@ -804,7 +808,7 @@ namespace crmSeries.Core.Tests.Features.Contacts
                 {
                     PageNumber = 1,
                     PageSize = 10,
-                    FirstName = lastNameRequest
+                    Search = lastNameRequest
                 };
 
                 // Act

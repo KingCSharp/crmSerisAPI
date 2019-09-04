@@ -72,7 +72,7 @@
         </member>
         <member name="M:crmSeries.API.Controllers.CompaniesController.GetNotes(System.Int32,crmSeries.Core.Logic.Queries.PagedQueryRequest)">
             <summary>
-            Gets all notes either associated with the contact or all notes who are 
+            Gets all notes either associated with the company or all notes who are 
             associated with a contact belonging to this company.
             </summary>
         </member>
