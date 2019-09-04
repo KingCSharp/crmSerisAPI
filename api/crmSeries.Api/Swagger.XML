@@ -215,9 +215,19 @@
             Gets an inspection item's responses
             </summary>
         </member>
-        <member name="M:crmSeries.API.Controllers.InspectionsController.Post(crmSeries.Core.Features.Inspections.AddInspectionRequest)">
+        <member name="M:crmSeries.API.Controllers.InspectionsController.Upload(System.Int32,System.Int32,Microsoft.AspNetCore.Http.IFormFile)">
+            <summary>
+            Upload and attach an image to an inspection item
+            </summary>
+        </member>
+        <member name="M:crmSeries.API.Controllers.InspectionsController.Post(crmSeries.Core.Features.Inspections.Dtos.RecordAssignedInspectionDto)">
             <summary>
             Adds a new inspection
+            </summary>
+        </member>
+        <member name="M:crmSeries.API.Controllers.InspectionsController.Edit(System.Int32,crmSeries.Core.Features.Inspections.Dtos.RecordAssignedInspectionDto)">
+            <summary>
+            Updates an existing inspection
             </summary>
         </member>
         <member name="M:crmSeries.API.Controllers.InventoryController.Get(crmSeries.Core.Features.Inventory.GetInventoryRequest)">

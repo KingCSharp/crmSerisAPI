@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using crmSeries.Core.Configuration;
 using crmSeries.Core.Data;
+using crmSeries.Core.Features.FileStorage;
+using crmSeries.Core.Features.Geocoding;
+using crmSeries.Core.Logging;
 using crmSeries.Core.Mediator;
+using crmSeries.Core.Mediator.Configuration;
 using crmSeries.Core.Security;
+using crmSeries.Core.Tests.Mocks;
 using FizzWare.NBuilder;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
 using SimpleInjector;
-using System.Reflection;
-using crmSeries.Core.Mediator.Configuration;
-using crmSeries.Core.Features.Geocoding;
-using crmSeries.Core.Mediator.Decorators;
-using crmSeries.Core.Logging;
-using crmSeries.Core.Tests.Mocks;
 
 namespace crmSeries.Core.Tests
 {
@@ -46,6 +46,7 @@ namespace crmSeries.Core.Tests
             };
             Container.ConfigureMediator(assemblies);
             Container.RegisterInstance<ILogger>(new MockLogger());
+            Container.Register<IFileStorageProvider, MockFileStorageProvider>();
         }
 
         public DbContextOptions<AdminContext> GetAdminContextOptions()

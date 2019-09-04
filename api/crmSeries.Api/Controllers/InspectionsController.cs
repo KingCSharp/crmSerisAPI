@@ -1,10 +1,12 @@
-﻿using System.Threading.Tasks;
+﻿using System.Net;
+using System.Threading.Tasks;
 using crmSeries.Api.Controllers;
 using crmSeries.Api.Filters;
 using crmSeries.Core.Features.Inspections;
 using crmSeries.Core.Features.Inspections.Dtos;
 using crmSeries.Core.Logic.Queries;
 using crmSeries.Core.Mediator;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace crmSeries.API.Controllers
@@ -83,15 +85,44 @@ namespace crmSeries.API.Controllers
         {
             return HandleAsync(new GetInspectionResponsesRequest(itemId, request));
         }
-        
+
+        /// <summary>
+        /// Upload and attach an image to an inspection item
+        /// </summary>
+        [HttpPost("{assignedInspectionId}/images/{assignedItemId}")]
+        [Produces(typeof(Response<GetRecordAssignedInspectionItemImageDto>))]
+        public Task<IActionResult> Upload([FromRoute] int assignedInspectionId, [FromRoute] int assignedItemId, IFormFile file)
+        {
+            var request = new AttachInspectionItemImageRequest
+            {
+                AssignedInspectionId = assignedInspectionId,
+                AssignedItemId = assignedItemId,
+                FileName = file.FileName,
+                FileLength = (int)file.Length,
+                FileStream = file.OpenReadStream()
+            };
+
+            return HandleAsync(request, HttpStatusCode.Created);
+        }
+
         /// <summary>
         /// Adds a new inspection
         /// </summary>
-        [HttpPost("create")]
-        [Produces(typeof(Response<AddResponse>))]
-        public Task<IActionResult> Post([FromBody]AddInspectionRequest request)
+        [HttpPost("record")]
+        [Produces(typeof(Response<GetRecordAssignedInspectionDto>))]
+        public Task<IActionResult> Post([FromBody] RecordAssignedInspectionDto inspection)
         {
-            return HandleAsync(request);
+            return HandleAsync(new SaveInspectionRecordRequest(inspection));
+        }
+
+        /// <summary>
+        /// Updates an existing inspection
+        /// </summary>
+        [HttpPut("record/{assignedInspectionId}")]
+        [Produces(typeof(Response<GetRecordAssignedInspectionDto>))]
+        public Task<IActionResult> Edit([FromRoute] int assignedInspectionId, [FromBody] RecordAssignedInspectionDto inspection)
+        {
+            return HandleAsync(new SaveInspectionRecordRequest(assignedInspectionId, inspection));
         }
     }
 }

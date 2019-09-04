@@ -1216,6 +1216,236 @@
             The name of the InspectionType. 
             </summary>
         </member>
+        <member name="P:crmSeries.Core.Features.Inspections.Dtos.SaveInspectionDto.AssignedInspectionId">
+            <summary>
+            The previously assigned identifier of this inspection record if editing an existing record
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Inspections.Dtos.SaveInspectionDto.Inspection">
+            <summary>
+            The inspection data
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Inspections.Dtos.BaseRecordAssignedInspectionDto.InspectionId">
+            <summary>
+            The identifier of the record's Inspection.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Inspections.Dtos.BaseRecordAssignedInspectionDto.RecordId">
+            <summary>
+            The identifier of the related record.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Inspections.Dtos.BaseRecordAssignedInspectionDto.RecordType">
+            <summary>
+            The type of the related record.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Inspections.Dtos.BaseRecordAssignedInspectionDto.InspectionName">
+            <summary>
+            The name of the record's Inspection.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Inspections.Dtos.BaseRecordAssignedInspectionDto.InspectionType">
+            <summary>
+            The type of the record's Inspection.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Inspections.Dtos.BaseRecordAssignedInspectionDto.InspectionDate">
+            <summary>
+            Date the inspection was created.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Inspections.Dtos.BaseRecordAssignedInspectionDto.InspectionHours">
+            <summary>
+            Hours on the equipment when the inspection was created.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Inspections.Dtos.BaseRecordAssignedInspectionDto.Comments">
+            <summary>
+            Overall comments from the inspection.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Inspections.Dtos.BaseRecordAssignedInspectionGroupDto.GroupName">
+            <summary>
+            The name of the record's Group.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Inspections.Dtos.BaseRecordAssignedInspectionGroupDto.Sequence">
+            <summary>
+            The sequence of the record's Group.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Inspections.Dtos.BaseRecordAssignedInspectionGroupDto.Comments">
+            <summary>
+            Comments that the user added for the group.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Inspections.Dtos.BaseRecordAssignedInspectionItemDto.Item">
+            <summary>
+            The name of the record's Item.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Inspections.Dtos.BaseRecordAssignedInspectionItemDto.Sequence">
+            <summary>
+            The sequence of the record's Item.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Inspections.Dtos.BaseRecordAssignedInspectionItemDto.DataType">
+            <summary>
+            The data type of the record's Item.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Inspections.Dtos.BaseRecordAssignedInspectionItemDto.Response">
+            <summary>
+            The user's response.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Inspections.Dtos.BaseRecordAssignedInspectionItemDto.Comments">
+            <summary>
+            Comments the user added for the item.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Inspections.Dtos.BaseRecordAssignedInspectionItemDto.RequireResponse">
+            <summary>
+            Whether or not the record's Item requires a response.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Inspections.Dtos.BaseRecordAssignedInspectionItemDto.RequireImage">
+            <summary>
+            Whether or not the record's Item requires an image.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Inspections.Dtos.BaseRecordAssignedInspectionItemDto.RequireComment">
+            <summary>
+            Whether or not the record's Item requires a comment.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Inspections.Dtos.BaseRecordAssignedInspectionItemResponseDto.Response">
+            <summary>
+            The response of the record's Item Response.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Inspections.Dtos.BaseRecordAssignedInspectionItemResponseDto.Sequence">
+            <summary>
+            The sequence of the record's Item Response.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Inspections.Dtos.RecordAssignedInspectionDto.Groups">
+            <summary>
+            The inspection's groups.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Inspections.Dtos.RecordAssignedInspectionGroupDto.Items">
+            <summary>
+            The groups's items.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Inspections.Dtos.RecordAssignedInspectionItemDto.Responses">
+            <summary>
+            The item's responses.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Inspections.Dtos.GetRecordAssignedInspectionDto.AssignedInspectionId">
+            <summary>
+            The identifier assigned to this record.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Inspections.Dtos.GetRecordAssignedInspectionDto.Groups">
+            <summary>
+            The recorded inspection's groups.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Inspections.Dtos.GetRecordAssignedInspectionGroupDto.AssignedGroupId">
+            <summary>
+            The identifier assigned to this record.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Inspections.Dtos.GetRecordAssignedInspectionGroupDto.AssignedInspectionId">
+            <summary>
+            The assigned identifier of the inspection record that is the parent of this record.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Inspections.Dtos.GetRecordAssignedInspectionGroupDto.Items">
+            <summary>
+            The recorded group's items.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Inspections.Dtos.GetRecordAssignedInspectionItemDto.AssignedItemId">
+            <summary>
+            The identifier assigned to this record.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Inspections.Dtos.GetRecordAssignedInspectionItemDto.AssignedGroupId">
+            <summary>
+            The assigned identifier of the group record that is the parent of this record.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Inspections.Dtos.GetRecordAssignedInspectionItemDto.Responses">
+            <summary>
+            The recorded item's responses
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Inspections.Dtos.GetRecordAssignedInspectionItemResponseDto.ResponseId">
+            <summary>
+            The identifier assigned to this record.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Inspections.Dtos.GetRecordAssignedInspectionItemResponseDto.AssignedItemId">
+            <summary>
+            The assigned identifier of the item record that is the parent of this record.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Inspections.Dtos.RecordAssignedInspectionItemImageDto.AssignedInspectionId">
+            <summary>
+            The identifier of the recorded inspection to which the item belongs.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Inspections.Dtos.RecordAssignedInspectionItemImageDto.AssignedItemId">
+            <summary>
+            The identifier of the recorded item to which this image should be attached.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Inspections.Dtos.RecordAssignedInspectionItemImageDto.FileName">
+            <summary>
+            The file name of the image.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Inspections.Dtos.RecordAssignedInspectionItemImageDto.FileLength">
+            <summary>
+             The file size (in bytes) of the image.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Inspections.Dtos.RecordAssignedInspectionItemImageDto.FileStream">
+            <summary>
+            A readable stream of the image's data.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Inspections.Dtos.GetRecordAssignedInspectionItemImageDto.ImageId">
+            <summary>
+            The identifier assigned to this record.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Inspections.Dtos.GetRecordAssignedInspectionItemImageDto.AssignedInspectionId">
+            <summary>
+            The identifier of the recorded inspection to which the item belongs.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Inspections.Dtos.GetRecordAssignedInspectionItemImageDto.AssignedItemId">
+            <summary>
+            The identifier of the recorded item to which this image is attached.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Inspections.Dtos.GetRecordAssignedInspectionItemImageDto.ImagePath">
+            <summary>
+            An accessible url to view or download the attached image.
+            </summary>
+        </member>
+        <member name="P:crmSeries.Core.Features.Inspections.Dtos.GetRecordAssignedInspectionItemImageDto.FileName">
+            <summary>
+            The image's file name.
+            </summary>
+        </member>
         <member name="P:crmSeries.Core.Features.Inventory.BaseInventoryDto.ParentId">
             <summary>
             The id of the parent entity for this inventory equipment.

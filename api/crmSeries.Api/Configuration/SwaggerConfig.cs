@@ -41,6 +41,7 @@ namespace crmSeries.Api.Configuration
                 options.IncludeXmlComments(
                     $@"{AppDomain.CurrentDomain.BaseDirectory}\SwaggerCore.XML");
                 
+                options.OperationFilter<FileUploadFilter>();
                 options.OperationFilter<APIKeyHeaderFilter>();
                 options.OperationFilter<HideRouteParams>();
                 options.DescribeAllEnumsAsStrings();

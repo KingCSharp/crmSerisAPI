@@ -26,7 +26,7 @@ namespace crmSeries.API.Filters
                 {
                     new Error
                     {
-                        ErrorMessage = exception.Message ?? "Unauthorized."
+                        ErrorMessage = exception?.Message ?? "Unauthorized."
                     }
                 }
             };
@@ -44,7 +44,7 @@ namespace crmSeries.API.Filters
             }
             else
             {
-                context.Exception.ToExceptionless().Submit();
+                context.Exception?.ToExceptionless().Submit();
                 context.Result = new ObjectResult(new
                 {
                     errors = response.Errors,

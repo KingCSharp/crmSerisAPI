@@ -64,6 +64,8 @@ namespace crmSeries.Core.Security
                     DealerName = dealer.DealerName,
                     DatabaseConnectionString = dealer.Dbstring,
                     DealerId = dealer.DealerId,
+                    StorageAccount = dealer.StorageAccount,
+                    StorageAccountKey = dealer.StorageAccountKey,
                     UserEmail = userEmail
                 };
 

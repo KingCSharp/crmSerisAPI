@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using crmSeries.Api.Configuration;
+using crmSeries.API.Configuration;
+using crmSeries.Core.Configuration;
+using Exceptionless;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using crmSeries.API.Configuration;
-using crmSeries.Core.Configuration;
-using crmSeries.Api.Configuration;
-using Exceptionless;
 
 namespace crmSeries.Api
 {
@@ -36,7 +36,7 @@ namespace crmSeries.Api
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             AutoMapperConfig.Configure();
-            SimpleInjectorConfig.Configure(app);
+            SimpleInjectorConfig.Configure(app, env, _configuration);
             RewriteConfig.Configure(app, env);
             CorsConfig.Configure(app, _configuration, env);
             AuthenticationConfig.Configure(app);
