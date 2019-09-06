@@ -399,6 +399,11 @@
             The flag for whether this contact is active or not.
             </summary>
         </member>
+        <member name="P:crmSeries.Core.Features.Contacts.Dtos.GetContactDto.Favorite">
+            <summary>
+            Determines if the contact is a favorite for this user.
+            </summary>
+        </member>
         <member name="P:crmSeries.Core.Features.Contacts.Dtos.GetContactDto.LastModified">
             <summary>
             The date, if any, that the entity was modified.
@@ -442,17 +447,13 @@
         </member>
         <member name="P:crmSeries.Core.Features.Contacts.GetContactsRequest.Search">
             <summary>
-            Returns contacts whose first or last name starts with this field.
+            Any value entered here will return contacts whose
+            first or last name starts with the value entered in the input box.
             </summary>
         </member>
         <member name="P:crmSeries.Core.Features.Contacts.GetContactsRequest.CompanyId">
             <summary>
             The identifier of the company the contact is associated with.
-            </summary>
-        </member>
-        <member name="P:crmSeries.Core.Features.Contacts.GetContactsRequest.UserId">
-            <summary>
-            Setting this field returns contacts returned assigned to this user.
             </summary>
         </member>
         <member name="P:crmSeries.Core.Features.Contacts.GetUsersRequest.Search">

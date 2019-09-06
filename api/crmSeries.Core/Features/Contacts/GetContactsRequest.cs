@@ -24,7 +24,8 @@ namespace crmSeries.Core.Features.Contacts
         public ActiveOptions ActiveOptions { get; set; } = ActiveOptions.ActiveOnly;
 
         /// <summary>
-        /// Returns contacts whose first or last name starts with this field.
+        /// Any value entered here will return contacts whose
+        /// first or last name starts with the value entered in the input box.
         /// </summary>
         public string Search { get; set; }
 
@@ -32,11 +33,6 @@ namespace crmSeries.Core.Features.Contacts
         /// The identifier of the company the contact is associated with.
         /// </summary>
         public int CompanyId { get; set; }
-
-        /// <summary>
-        /// Setting this field returns contacts returned assigned to this user.
-        /// </summary>
-        public int UserId { get; set; }
     }
 
     public class GetContactsRequestHandler :
@@ -58,34 +54,33 @@ namespace crmSeries.Core.Features.Contacts
 
             var contacts =
                 (from c in _context.Set<Contact>()
-                    //join assignedUser in _context.Set<CompanyAssignedUser>()
-                    //    on c.CompanyId equals assignedUser.CompanyId
-                    join company in _context.Set<Company>()
-                        on c.CompanyId equals company.CompanyId
-                    where !c.Deleted
-                    select new
-                     {
-                         c.ContactId,
-                         c.CompanyId,
-                         c.FirstName,
-                         c.MiddleName,
-                         c.LastName,
-                         c.NickName,
-                         c.Phone,
-                         c.Cell,
-                         c.Fax,
-                         c.Email,
-                         c.Title,
-                         c.Position,
-                         c.Department,
-                         c.Active,
-                         c.LastModified,
-                         company.CompanyName,
-                         company.AccountNo
-                     })
-                     .OrderBy(x => x.CompanyName)
-                     .ThenBy(x => x.FirstName)
-                     .AsQueryable();
+                 join company in _context.Set<Company>()
+                     on c.CompanyId equals company.CompanyId
+                 where !c.Deleted
+                 select new
+                 {
+                     c.ContactId,
+                     c.CompanyId,
+                     c.FirstName,
+                     c.MiddleName,
+                     c.LastName,
+                     c.NickName,
+                     c.Phone,
+                     c.Cell,
+                     c.Fax,
+                     c.Email,
+                     c.Title,
+                     c.Position,
+                     c.Department,
+                     c.Active,
+                     c.LastModified,
+                     company.CompanyName,
+                     company.AccountNo
+                 })
+                 .OrderBy(x => x.FirstName)
+                 .ThenBy(x => x.LastName)
+                 .Distinct()
+                 .AsQueryable();
 
             if (request.ActiveOptions == ActiveOptions.ActiveOnly)
                 contacts = contacts.Where(x => x.Active);
@@ -94,10 +89,18 @@ namespace crmSeries.Core.Features.Contacts
                 contacts = contacts.Where(x => !x.Active);
 
             if (!string.IsNullOrEmpty(request.Search))
-                contacts = contacts.Where(x => x.FirstName.ToLower().StartsWith(request.Search.ToLower()) || x.LastName.ToLower().StartsWith(request.Search.ToLower()));
+                contacts = contacts.Where(x => x.FirstName.ToLower().StartsWith(request.Search.ToLower())
+                || x.LastName.ToLower().StartsWith(request.Search.ToLower()));
 
             if (request.CompanyId > 0)
                 contacts = contacts.Where(x => x.CompanyId == request.CompanyId);
+
+            var favorites = _context.UserFavoriteRecord
+                .Where(x =>
+                    x.RecordType == RelatedRecords.Constants.RelatedRecord.Types.Contact &&
+                    x.UserId == _identity.RequestingUser.UserId)
+                .Select(x => x.RecordId)
+                .ToList();
 
             var count = contacts.Count();
 
@@ -110,6 +113,11 @@ namespace crmSeries.Core.Features.Contacts
                 .ProjectTo<GetContactDto>()
                 .GetPagedData(request)
                 .ToList();
+
+            result.Items
+                .Where(x => favorites.Contains(x.ContactId))
+                .ToList()
+                .ForEach(x => { x.Favorite = true; });
 
             return result.AsResponseAsync();
         }

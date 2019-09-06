@@ -96,6 +96,11 @@ namespace crmSeries.Core.Features.Contacts.Dtos
         public bool Active { get; set; }
 
         /// <summary>
+        /// Determines if the contact is a favorite for this user.
+        /// </summary>
+        public bool Favorite { get; set; }
+
+        /// <summary>
         /// The date, if any, that the entity was modified.
         /// </summary>
         public DateTime? LastModified { get; set; }

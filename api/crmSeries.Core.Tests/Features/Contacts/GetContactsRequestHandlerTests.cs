@@ -835,7 +835,7 @@ namespace crmSeries.Core.Tests.Features.Contacts
 
                 var entityId = 1;
                 var companyId = 33;
-                
+
                 var company = new Company
                 {
                     CompanyId = companyId,

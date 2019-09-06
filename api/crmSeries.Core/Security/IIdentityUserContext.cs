@@ -18,16 +18,13 @@ namespace crmSeries.Core.Security
     public class HttpIdentityUserContext : IIdentityUserContext
     {
         private readonly IIdentityApiContext _apiIdentity;
-        private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly HeavyEquipmentContext _userContext;
         private IdentityUser _cachedUser;
 
         public HttpIdentityUserContext(IIdentityApiContext apiIdentity,
-            IHttpContextAccessor httpContextAccessor,
             HeavyEquipmentContext userContext)
         {
             _apiIdentity = apiIdentity;
-            _httpContextAccessor = httpContextAccessor;
             _userContext = userContext;
         }
 

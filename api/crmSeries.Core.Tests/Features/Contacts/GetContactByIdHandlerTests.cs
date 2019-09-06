@@ -1,6 +1,8 @@
 ﻿using crmSeries.Core.Data;
 using crmSeries.Core.Domain.HeavyEquipment;
 using crmSeries.Core.Features.Contacts;
+using crmSeries.Core.Security;
+using NSubstitute;
 using NUnit.Framework;
 
 namespace crmSeries.Core.Tests.Features.Contacts
@@ -33,7 +35,14 @@ namespace crmSeries.Core.Tests.Features.Contacts
                 context.Contact.Add(contact);
 
                 context.SaveChanges();
-                var handler = new GetContactByIdHandler(context);
+
+                var identityContext = Substitute.For<IIdentityUserContext>();
+                identityContext.RequestingUser.Returns(x => new IdentityUser
+                {
+                    UserId = 1
+                });
+
+                var handler = new GetContactByIdHandler(context, identityContext);
 
                 // Act
                 var response = handler.HandleAsync(new GetContactByIdRequest(1));
@@ -52,9 +61,20 @@ namespace crmSeries.Core.Tests.Features.Contacts
             // Arrange 
             var options = GetHeavyEquipmentContextOptions();
 
+            var identityContext = Substitute.For<IIdentityUserContext>();
+            identityContext.RequestingUser.Returns(x => new IdentityUser
+            {
+                UserId = 1
+            });
+
             using (var context = new HeavyEquipmentContext(options))
             {
-                var handler = new GetContactByIdHandler(context);
+                context.Contact.Add(new Contact
+                {
+                    ContactId = 2
+                });
+
+                var handler = new GetContactByIdHandler(context, identityContext);
 
                 // Act
                 var response = handler.HandleAsync(new GetContactByIdRequest(1));
