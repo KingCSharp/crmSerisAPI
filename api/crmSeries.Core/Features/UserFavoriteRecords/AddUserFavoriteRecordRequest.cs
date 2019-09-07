@@ -47,10 +47,12 @@ namespace crmSeries.Core.Features.UserFavoriteRecords
             _context.Set<UserFavoriteRecord>().Add(userFavoriteRecord);
             _context.SaveChanges();
 
-            return new AddResponse
+            var response = new AddResponse
             {
                 Id = userFavoriteRecord.FavoriteId
-            }.AsResponseAsync();
+            };
+
+            return response.AsResponseAsync();
         }
 
         private bool IsValid(AddUserFavoriteRecordDto request, out Task<Response<AddResponse>> errorAsync)

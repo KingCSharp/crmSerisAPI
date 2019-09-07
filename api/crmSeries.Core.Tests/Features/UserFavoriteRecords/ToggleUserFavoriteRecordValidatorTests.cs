@@ -28,8 +28,8 @@ namespace crmSeries.Core.Tests.Features.UserFavoriteRecords
         }
 
         [TestCase(1, true)]
-        [TestCase(0, false, "'User Id' must be greater than '0'.")]
-        [TestCase(-1, false, "'User Id' must be greater than '0'.")]
+        [TestCase(0, true)]
+        [TestCase(-1, false, "'User Id' must be greater than '-1'.")]
         public void Validate_UserId_Validates(
             int userId,
             bool isValid,
