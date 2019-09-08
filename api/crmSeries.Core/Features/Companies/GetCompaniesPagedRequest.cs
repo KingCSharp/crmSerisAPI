@@ -109,7 +109,7 @@ namespace crmSeries.Core.Features.Companies
                 .ToList()
                 .ForEach(x => { x.Favorite = true; });
 
-            result.PageCount = resultCount / request.PageSize;
+            result.PageCount = (resultCount + request.PageSize - 1) / request.PageSize;
             result.TotalItemCount = resultCount;
             result.PageNumber = request.PageNumber;
             result.PageSize = request.PageSize;

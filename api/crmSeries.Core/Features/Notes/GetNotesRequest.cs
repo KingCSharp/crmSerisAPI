@@ -32,8 +32,6 @@ namespace crmSeries.Core.Features.Notes
 
         /// <summary>
         /// Setting this value will return all notes that have comments containing your search phrase.
-        /// For obvious reasons, we are requiring the length of your search criteria to be at least
-        /// 4 characters.
         /// </summary>
         public string Comments { get; set; }
 
@@ -97,7 +95,7 @@ namespace crmSeries.Core.Features.Notes
 
             var count = notes.Count();
 
-            result.PageCount = count / request.PageSize;
+            result.PageCount = (count + request.PageSize - 1) / request.PageSize;
             result.TotalItemCount = count;
             result.PageNumber = request.PageNumber;
             result.PageSize = request.PageSize;
@@ -134,8 +132,6 @@ namespace crmSeries.Core.Features.Notes
                 .SetValidator(new DateTimeDefaultValidator())
                 .WithMessage(Common.Constants.ErrorMessages.InvalidDate)
                 .Unless(x => x.ToDate == default);
-
-            RuleFor(x => x.Comments).MaximumLength(4);
         }
 
         private bool HaveAFromDateLessThanOrEqualToTheToDate(GetNotesRequest request)
