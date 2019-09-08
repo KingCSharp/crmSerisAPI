@@ -1,5 +1,4 @@
 ﻿using crmSeries.Core.Features.Companies;
-using crmSeries.Core.Logic.Queries;
 using NUnit.Framework;
 
 namespace crmSeries.Core.Tests.Features.Companies
@@ -21,11 +20,8 @@ namespace crmSeries.Core.Tests.Features.Companies
         {
             _getCompaniesPagedRequest = new GetCompaniesPagedRequest
             {
-                Query = new PagedQueryRequest
-                {
-                    PageNumber = 1,
-                    PageSize = 50
-                }
+                PageNumber = 1,
+                PageSize = 50
             };
         }
 
@@ -37,7 +33,7 @@ namespace crmSeries.Core.Tests.Features.Companies
             int pageSize)
         {
             // Arrange 
-            _getCompaniesPagedRequest.Query = new PagedQueryRequest
+            _getCompaniesPagedRequest = new GetCompaniesPagedRequest
             {
                 PageNumber = pageNumber,
                 PageSize = pageSize
@@ -65,7 +61,7 @@ namespace crmSeries.Core.Tests.Features.Companies
             bool isValid)
         {
             // Arrange 
-            _getCompaniesPagedRequest.Query = new PagedQueryRequest
+            _getCompaniesPagedRequest = new GetCompaniesPagedRequest
             {
                 PageNumber = pageNumber,
                 PageSize = pageSize

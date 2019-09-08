@@ -1,11 +1,7 @@
-﻿using crmSeries.Core.Common;
-using crmSeries.Core.Data;
+﻿using crmSeries.Core.Data;
 using crmSeries.Core.Domain.HeavyEquipment;
 using crmSeries.Core.Features.Companies;
-using crmSeries.Core.Logic.Queries;
-using crmSeries.Core.Security;
 using NUnit.Framework;
-
 
 namespace crmSeries.Core.Tests.Features.Companies
 {
@@ -39,20 +35,20 @@ namespace crmSeries.Core.Tests.Features.Companies
                 var handler = new GetCompaniesPagedRequestHandler(
                     context, 
                     GetUserContextStub(user.UserId));
-
-                var query = new PagedQueryRequest { PageNumber = 1, PageSize = 5 };
-
+                
+                var request = new GetCompaniesPagedRequest { PageNumber = 1, PageSize = 5 };
+                
                 // Act
-                var response = handler.HandleAsync(new GetCompaniesPagedRequest { Query = query });
+                var response = handler.HandleAsync(request);
 
                 //Assert 
                 Assert.AreEqual(response.Result.HasErrors, false);
                 Assert.IsNotNull(response.Result.Data);
                 Assert.AreEqual(response.Result.Data.TotalItemCount, itemCount);
                 Assert.AreEqual(response.Result.Data.PageNumber, 1);
-                Assert.AreEqual(response.Result.Data.PageCount, itemCount / query.PageSize);
-                Assert.AreEqual(response.Result.Data.PageNumber, query.PageNumber);
-                Assert.AreEqual(response.Result.Data.PageSize, query.PageSize);
+                Assert.AreEqual(response.Result.Data.PageCount, itemCount / request.PageSize);
+                Assert.AreEqual(response.Result.Data.PageNumber, request.PageNumber);
+                Assert.AreEqual(response.Result.Data.PageSize, request.PageSize);
             }
         }
 
@@ -72,10 +68,10 @@ namespace crmSeries.Core.Tests.Features.Companies
                     context,
                     GetUserContextStub(user.UserId));
 
-                var query = new PagedQueryRequest { PageNumber = 1, PageSize = 5 };
+                var request = new GetCompaniesPagedRequest { PageNumber = 1, PageSize = 5 };
 
                 // Act
-                var response = handler.HandleAsync(new GetCompaniesPagedRequest { Query = query });
+                var response = handler.HandleAsync(request);
 
                 //Assert 
                 Assert.AreEqual(response.Result.HasErrors, false);
@@ -83,8 +79,8 @@ namespace crmSeries.Core.Tests.Features.Companies
                 Assert.AreEqual(response.Result.Data.TotalItemCount, 0);
                 Assert.AreEqual(response.Result.Data.PageNumber, 1);
                 Assert.AreEqual(response.Result.Data.PageCount, 0);
-                Assert.AreEqual(response.Result.Data.PageNumber, query.PageNumber);
-                Assert.AreEqual(response.Result.Data.PageSize, query.PageSize);
+                Assert.AreEqual(response.Result.Data.PageNumber, request.PageNumber);
+                Assert.AreEqual(response.Result.Data.PageSize, request.PageSize);
             }
         }
     }

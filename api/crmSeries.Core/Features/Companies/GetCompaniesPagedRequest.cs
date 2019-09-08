@@ -14,15 +14,16 @@ using AutoMapper.QueryableExtensions;
 namespace crmSeries.Core.Features.Companies
 {
     [HeavyEquipmentContext]
-    public class GetCompaniesPagedRequest : IRequest<PagedQueryResult<GetCompanyDto>>
+    public class GetCompaniesPagedRequest : PagedQueryRequest, IRequest<PagedQueryResult<GetCompanyDto>>
     {
-        public PagedQueryRequest Query { get; set; }
+        public string Search { get; set; }
     }
 
     public class GetCompaniesPagedRequestHandler : IRequestHandler<GetCompaniesPagedRequest, PagedQueryResult<GetCompanyDto>>
     {
         private readonly HeavyEquipmentContext _context;
         private readonly IIdentityUserContext _identity;
+
         public GetCompaniesPagedRequestHandler(HeavyEquipmentContext context,
             IIdentityUserContext identity)
         {
@@ -34,9 +35,7 @@ namespace crmSeries.Core.Features.Companies
         {
             var result = new PagedQueryResult<GetCompanyDto>();
 
-            var companyTotalList = (from company in _context.Company
-                    join assignedUser in _context.CompanyAssignedUser
-                        on company.CompanyId equals assignedUser.CompanyId
+            var companies = (from company in _context.Company
                     join joinedBranch in _context.Branch
                         on company.BranchId equals joinedBranch.BranchId into branchLeft
                     from branch in branchLeft.DefaultIfEmpty()
@@ -49,8 +48,7 @@ namespace crmSeries.Core.Features.Companies
                     join joinedCompany in _context.Company
                         on company.ParentId equals joinedCompany.CompanyId into companyLeft
                     from parentCompany in companyLeft.DefaultIfEmpty()
-                    where assignedUser.UserId == _identity.RequestingUser.UserId
-                          && !company.Deleted
+                    where !company.Deleted
                     select new
                     {
                         company.ParentId,
@@ -87,10 +85,15 @@ namespace crmSeries.Core.Features.Companies
                 .OrderBy(x => x.CompanyId)
                 .Distinct();
 
-            int resultCount = companyTotalList.Count();
-            var companyList = companyTotalList
-                .Skip((request.Query.PageNumber - 1) * request.Query.PageSize)
-                .Take(request.Query.PageSize)
+            if (!string.IsNullOrEmpty(request.Search))
+            {
+                companies = companies.Where(x => x.CompanyName.ToLower().Contains(request.Search.ToLower()));
+            }
+
+            int resultCount = companies.Count();
+            var companyList = companies
+                .Skip((request.PageNumber - 1) * request.PageSize)
+                .Take(request.PageSize)
                 .ToList();
 
             var favorites = _context.UserFavoriteRecord
@@ -106,10 +109,10 @@ namespace crmSeries.Core.Features.Companies
                 .ToList()
                 .ForEach(x => { x.Favorite = true; });
 
-            result.PageCount = resultCount / request.Query.PageSize;
+            result.PageCount = resultCount / request.PageSize;
             result.TotalItemCount = resultCount;
-            result.PageNumber = request.Query.PageNumber;
-            result.PageSize = request.Query.PageSize;
+            result.PageNumber = request.PageNumber;
+            result.PageSize = request.PageSize;
 
             return result.AsResponseAsync();
         }
@@ -119,10 +122,10 @@ namespace crmSeries.Core.Features.Companies
     {
         public GetCompaniesPagedValidator()
         {
-            RuleFor(x => x.Query.PageNumber)
+            RuleFor(x => x.PageNumber)
                 .GreaterThan(0);
 
-            RuleFor(x => x.Query.PageSize)
+            RuleFor(x => x.PageSize)
                 .GreaterThan(0);
         }
     }

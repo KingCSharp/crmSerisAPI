@@ -64,11 +64,10 @@
             Toggles a record as a user favorite based on the data in the request.
             </summary>
         </member>
-        <member name="M:crmSeries.API.Controllers.CompaniesController.GetPagedCompanies(crmSeries.Core.Logic.Queries.PagedQueryRequest)">
+        <member name="M:crmSeries.API.Controllers.CompaniesController.GetPagedCompanies(crmSeries.Core.Features.Companies.GetCompaniesPagedRequest)">
             <summary>
             Gets a paged list of companies assigned to the current user.
             </summary>
-            <param name="pagedQuery">Contains information for the current page and page count.</param>
         </member>
         <member name="M:crmSeries.API.Controllers.CompaniesController.GetNotes(System.Int32,crmSeries.Core.Logic.Queries.PagedQueryRequest)">
             <summary>

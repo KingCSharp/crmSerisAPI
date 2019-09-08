@@ -18,17 +18,13 @@ namespace crmSeries.API.Controllers
         /// <summary>
         /// Gets a paged list of companies assigned to the current user.
         /// </summary>
-        /// <param name="pagedQuery">Contains information for the current page and page count.</param>
         // GET: api/companies/paged
         [HttpGet]
         [Produces(typeof(PagedQueryResult<GetCompanyDto>))]
         [Route("paged")]
-        public Task<IActionResult> GetPagedCompanies(PagedQueryRequest pagedQuery)
+        public Task<IActionResult> GetPagedCompanies(GetCompaniesPagedRequest request)
         {
-            return HandleAsync(new GetCompaniesPagedRequest
-            {
-                Query = pagedQuery
-            });
+            return HandleAsync(request);
         }
 
         /// <summary>

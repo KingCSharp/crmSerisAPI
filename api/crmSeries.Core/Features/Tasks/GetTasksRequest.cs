@@ -169,7 +169,6 @@ namespace crmSeries.Core.Features.Tasks
                 .GreaterThan(0);
 
             RuleFor(x => x.Search)
-                .MinimumLength(3)
                 .MaximumLength(25);
         }
     }
