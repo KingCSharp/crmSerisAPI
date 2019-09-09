@@ -1046,8 +1046,6 @@
         <member name="P:crmSeries.Core.Features.Notes.GetNotesRequest.Comments">
             <summary>
             Setting this value will return all notes that have comments containing your search phrase.
-            For obvious reasons, we are requiring the length of your search criteria to be at least
-            4 characters.
             </summary>
         </member>
         <member name="P:crmSeries.Core.Features.Notes.GetNotesRequest.ContactId">

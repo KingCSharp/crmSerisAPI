@@ -40,6 +40,13 @@ namespace crmSeries.Core.Features.Tasks
                 return errorAsync;
 
             var task = request.MapTo<Domain.HeavyEquipment.Task>();
+
+            if (request.ContactId > 0)
+            {
+                task.RelatedRecordType = Constants.RelatedRecord.Types.Contact;
+                task.RelatedRecordId = request.ContactId;
+            }
+
             task.UserId = GetUserId(request.UserId);
             task.LastModified = DateTime.UtcNow;
 
@@ -54,7 +61,7 @@ namespace crmSeries.Core.Features.Tasks
 
         private int GetUserId(int userId)
         {
-            if (userId != default(int))
+            if (userId == default(int))
                 return _identityContext.RequestingUser.UserId;
             else
                 return userId;
